@@ -17,31 +17,23 @@ public class ExcelFileReader implements FileReader {
 	private int headerRow = 1;
 
 	@Override
-	public ArrayList<Order> readFileToOrders(String fileName) {
-		OrderFactory of = new OrderFactory();
-		ArrayList<Order> orders = new ArrayList<Order>();
+	public void readFileToOrders(String fileName) {
 		try {
 			File file = new File(fileName);
 			FileInputStream fis = new FileInputStream(file);
-			Workbook wb = new XSSFWorkbook(fis);  // todo: what if not xlsx file
+			Workbook wb = new XSSFWorkbook(fis);  
 			Sheet sheet = wb.getSheetAt(0);
 			
-			String orderType = sheet.getRow(orderTypeRow).getCell(orderTypeColumn).getStringCellValue();
 			Row headers = sheet.getRow(headerRow);
-			int lastRow = sheet.getLastRowNum();
 			ArrayList<String> arrHeaders = convertRowToArrayList(headers);
+			ArrayList<String> currRow = convertRowToArrayList(sheet.getRow(1));
 			
-			for (int c = 2; c <= lastRow; c++) {
-				ArrayList<String> currRow = convertRowToArrayList(sheet.getRow(c));
-				Order currOrder = of.makeOrder(orderType, arrHeaders, currRow);
-				orders.add(currOrder);
-			}
+			
+			
 		}
 		catch (IOException exception) {
 			exception.printStackTrace();
 		} 
-		
-		return orders;
 	}
 	
 	private ArrayList<String> convertRowToArrayList(Row headers) {
