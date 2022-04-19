@@ -1,14 +1,21 @@
 TODO
 
--Make tests... duhhhh. cause this is getting really ugly
+- tests
+- refactor/clean
+- commenting
 
 Using a nice IDE - DONE
 Backup to GitHub - DONE
 Read from an Excel file - DONE
 Print a label - 
-Print multiple labels from Excel File
-
-
+	Graphics library - 
+		Trying Java 2D: https://docs.oracle.com/javase/tutorial/2d/ - 
+Read order from Excel file - 
+Print multiple labels from Excel File - 
+Write existing orders to excel file - 
+Display of stored orders - 
+Print stored orders - 
+Write order to correct format for IIF file for import to quickbooks - 
 
 
 Later:
