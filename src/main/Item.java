@@ -1,23 +1,31 @@
 package main;
 
-public class Order {
+/**
+ * Represents a single item in an order
+ * with a name, GTIN, pack date, unit, and voice pick code.
+ */
+public class Item {
 	private String gtin;
 	private String customer;
 	private String productName;
 	private Date packDate;
+	private String unit;
+	private String voicePickCode = "";
 	
-	public Order() {
+	public Item() {
 		customer = "None";
 		productName = "Nothing";
-		gtin = "0000000000000";
+		gtin = "00000818180000";
 		packDate = new DateImp();
+		unit = "Empty";
 	}
 	
-	public Order(String cust, String pn, String gt, Date pd) {
+	public Item(String cust, String pn, String ut, String gt, Date pd) {
 		customer = cust;
 		productName = pn;
 		gtin = gt;
 		packDate = pd;
+		unit = ut;
 	}
 
 	public String getGtin() {

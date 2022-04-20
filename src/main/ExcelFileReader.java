@@ -15,6 +15,8 @@ public class ExcelFileReader implements FileReader {
 	private int orderTypeRow = 0;
 	private int orderTypeColumn = 1;
 	private int headerRow = 1;
+	
+	// TODO and tests
 
 	@Override
 	public void readFileToOrders(String fileName) {

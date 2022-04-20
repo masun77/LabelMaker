@@ -1,6 +1,10 @@
 package main;
 
 public interface GraphicsRenderer {
-	public void renderLabel(Order o);   // todo: order class and multiple orders
-	// todo who prints stuff? the renderer? the labels themselves? 
+	/**
+	 * Render a label for printing with the bar code, name, unit, 
+	 * farm info, pack date, and voice pick code. 
+	 * @param it the item to render a label for
+	 */
+	public void renderLabel(Item it);   
 }

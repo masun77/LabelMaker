@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * A simple date implementation with getters 
+ * for month, day, and year. 
+ *
+ */
 public class DateImp implements Date {
 	private static HashMap<Integer, String> monthToMonthName = 
 			(HashMap<Integer,String>)
@@ -49,6 +54,11 @@ public class DateImp implements Date {
 		return dateString;
 	}
 	
+	/**
+	 * Append a zero to numbers less than 10 and return.
+	 * @param number the number to return
+	 * @return the number as a String if it is greater than 10, otherwise the number preceded by a 0
+	 */
 	private String zerosHelper(int number) {
 		if (number < 10) {
 			return "0" + Integer.toString(number);

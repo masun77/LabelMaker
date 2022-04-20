@@ -1,15 +1,38 @@
 TODO
 
-- tests
-- refactor/clean
-- commenting
+TDD cycle: 
+1. Add a test
+2. Run all tests to see if any fail
+3. Add a small amount of code
+4. Run tests to see if it passes.
+5. Refactor. 
+6. Run all tests again. 
+
+Why TDD? 
+1. Make sure you're clear on what your goal actually is. 2. Don't write useless code. 
+3. Write code in small enough chunks that you can verify that it's correct, and debugging is easy.
+4. Maintain your focus by writing small things so you don't get distracted, lost, or confused or write useless code;
+and by creating easy times to take breaks and check-in on your goals - in between cycles. 
+5. Keep your code correct at all times or know immediately that it doesn't work and what broke, by
+having tests for all your code that are easy to run, and running them frequently - every cycle. 
+6. Keep your code clean by refactoring frequently - every cycle. 
 
 Using a nice IDE - DONE
 Backup to GitHub - DONE
 Read from an Excel file - DONE
-Print a label - 
-	Graphics library - 
-		Trying Java 2D: https://docs.oracle.com/javase/tutorial/2d/ - 
+Make a label graphic - 
+	Graphics library - DONE
+		Trying Java 2D: https://docs.oracle.com/javase/tutorial/2d/ - Nice!
+	Bar code - 
+		lines - DONE
+		human readable version - 
+	Customer - 
+	Product - 
+	Generic label info - 
+	Pack date - 
+	Voice pick code - 
+Print label graphic to paper - 
+	print label graphic to correct size on label - 
 Read order from Excel file - 
 Print multiple labels from Excel File - 
 Write existing orders to excel file - 
@@ -20,3 +43,4 @@ Write order to correct format for IIF file for import to quickbooks -
 
 Later:
 what if the input isn't an excel file
+error check people invalid input - customers, products, invalid dates, gtins
