@@ -1,12 +1,9 @@
 TODO
 
 TDD cycle: 
-1. Add a test
-2. Run all tests to see if any fail
-3. Add a small amount of code
-4. Run tests to see if it passes.
-5. Refactor. 
-6. Run all tests again. 
+1. Write a test. Run it to see if it fails.
+2. Add a small amount of code to make it run; run all tests to verify it passes. 
+4. Refactor and run tests again to verify.  
 
 Why TDD? 
 1. Make sure you're clear on what your goal actually is. 2. Don't write useless code. 
@@ -23,16 +20,20 @@ Read from an Excel file - DONE
 Make a label graphic - 
 	Graphics library - DONE
 		Trying Java 2D: https://docs.oracle.com/javase/tutorial/2d/ - Nice!
-	Bar code - 
+		See also: example: https://docs.oracle.com/javase/tutorial/2d/basic2d/examples/WeatherWizard.java
+				Javadocs for graphics2D library 
+	Bar code - DONE
 		lines - DONE
-		human readable version - 
+		human readable version - DONE
 	Customer - 
 	Product - 
 	Generic label info - 
 	Pack date - 
 	Voice pick code - 
+	Rectangle around whole thing - 
 Print label graphic to paper - 
 	print label graphic to correct size on label - 
+	dimensions, e.g. of bar code
 Read order from Excel file - 
 Print multiple labels from Excel File - 
 Write existing orders to excel file - 
@@ -44,3 +45,4 @@ Write order to correct format for IIF file for import to quickbooks -
 Later:
 what if the input isn't an excel file
 error check people invalid input - customers, products, invalid dates, gtins
+bar code dimensions within specs
