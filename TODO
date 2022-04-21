@@ -2,11 +2,12 @@ TODO
 
 TDD cycle: 
 1. Write a test. Run it to see if it fails.
-2. Add a small amount of code to make it run; run all tests to verify it passes. 
+2. Add a small amount of code to make it run. Run all tests to verify it passes. 
 4. Refactor and run tests again to verify.  
 
 Why TDD? 
-1. Make sure you're clear on what your goal actually is. 2. Don't write useless code. 
+1. Make sure you're clear on what your goal actually is. 
+2. Don't write useless code. 
 3. Write code in small enough chunks that you can verify that it's correct, and debugging is easy.
 4. Maintain your focus by writing small things so you don't get distracted, lost, or confused or write useless code;
 and by creating easy times to take breaks and check-in on your goals - in between cycles. 

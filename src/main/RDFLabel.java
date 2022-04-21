@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -9,6 +10,7 @@ public class RDFLabel extends Component {
 
 	public RDFLabel(Item o) {
 		item = o;
+		this.setMinimumSize(new Dimension(1000,400));
 	}
 
 	public void paint(Graphics g) {
