@@ -19,14 +19,26 @@ class DateImpTest {
 
 	@Test
 	void testGetDate() {
-		assertEquals(d.getDate(), "01/01/1900");
-		assertEquals(d2.getDate(), "04/20/2022");
+		assertEquals(d.getDateMMDDYYYY(), "01/01/1900");
+		assertEquals(d2.getDateMMDDYYYY(), "04/20/2022");
 	}
 
 	@Test
 	void testGetMonthName() {
 		assertEquals(d.getMonthName(), "January");
 		assertEquals(d2.getMonthName(), "April");
+	}
+	
+	@Test
+	void testGetPackDateName() {
+		assertEquals(d.getAsPackDate(), "Jan 01");
+		assertEquals(d2.getAsPackDate(), "Apr 20");
+	}
+	
+	@Test
+	void testYYMMDD() {
+		assertEquals(d.getDateYYMMDD(), "000101");
+		assertEquals(d2.getDateYYMMDD(), "220420");
 	}
 
 }

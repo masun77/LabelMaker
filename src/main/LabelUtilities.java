@@ -6,9 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 
 public class LabelUtilities {
-	private static final int MOD_WIDTH = 4;    // todo: dimensions. may need to change to paramaeters rather than static
+	private static final int MOD_WIDTH = 4;    // todo: dimensions. may need to change to parameters rather than static
 	private static final int MOD_HEIGHT = 130;  
 	private static final int[] START_CHAR = {2,1,1,2,3,2};
 	private static final int[] FNC1 = {4,1,1,1,3,1};
@@ -16,6 +17,109 @@ public class LabelUtilities {
 	private static final int[] QUIET_ZONE_LENGTH = {0,10};
 	private static final String AI_CODE = "01";
 	private static final int MODS_TO_FIRST_CHAR = 32; // 10 quiet zone + 11 start char + 11 FNC1
+	private static final int[][] characterCodesSetC = {
+	        {2,1,2,2,2,2},
+	        {2,2,2,1,2,2},
+	        {2,2,2,2,2,1},
+	        {1,2,1,2,2,3},
+	        {1,2,1,3,2,2},
+	        {1,3,1,2,2,2},
+	        {1,2,2,2,1,3},
+	        {1,2,2,3,1,2},
+	        {1,3,2,2,1,2},
+	        {2,2,1,2,1,3}, // 09
+	        {2,2,1,3,1,2}, 
+	        {2,3,1,2,1,2},
+	        {1,1,2,2,3,2},
+	        {1,2,2,1,3,2},
+	        {1,1,3,2,2,2},
+	        {1,2,3,1,2,2},
+	        {1,2,3,1,2,2},
+	        {1,2,3,2,2,1},
+	        {2,2,3,2,1,1},
+	        {2,2,1,1,3,2}, // 19
+	        {2,2,1,2,3,1},
+	        {2,1,3,2,1,2},
+	        {2,2,3,1,1,2},
+	        {3,1,2,1,3,1},
+	        {3,1,1,2,2,2},
+	        {3,2,1,1,2,2},
+	        {3,2,1,2,2,1},
+	        {3,1,2,2,1,2},
+	        {3,2,2,1,1,2},
+	        {3,2,2,2,1,1}, //29
+	        {2,1,2,1,2,3},
+	        {2,1,2,3,2,1},
+	        {2,3,2,1,2,1},
+	        {1,1,1,3,2,3},
+	        {1,3,1,1,2,3},
+	        {1,3,1,3,2,1},
+	        {1,1,2,3,1,3},
+	        {1,3,2,1,1,3},
+	        {1,3,2,3,1,1},
+	        {2,1,1,3,1,3},//39
+	        {2,3,1,1,1,3},
+	        {2,3,1,3,1,1},
+	        {1,1,2,1,3,3},
+	        {1,1,2,3,3,1},
+	        {1,3,2,1,3,1},
+	        {1,1,3,1,2,3},
+	        {1,1,3,3,2,1},
+	        {1,3,3,1,2,1},
+	        {3,1,3,1,2,1},
+	        {2,1,1,3,3,1},//49
+	        {2,3,1,1,3,1},
+	        {2,1,3,1,1,3},
+	        {2,1,3,3,1,1},
+	        {2,1,3,1,3,1},
+	        {3,1,1,1,2,3},
+	        {3,1,1,3,2,1},
+	        {3,3,1,1,2,1},
+	        {3,1,2,1,1,3},
+	        {3,1,2,3,1,1},
+	        {3,3,2,1,1,1},//59
+	        {3,1,4,1,1,1},
+	        {2,2,1,4,1,1},
+	        {4,3,1,1,1,1},
+	        {1,1,1,2,2,4},
+	        {1,1,1,4,2,2},
+	        {1,2,1,1,2,4},
+	        {1,2,1,4,2,1},
+	        {1,4,1,1,2,2},
+	        {1,4,1,2,2,1},
+	        {1,1,2,2,1,4}, //69
+	        {1,1,2,4,1,2},
+	        {1,2,2,1,1,4},
+	        {1,2,2,4,1,1},
+	        {1,4,2,1,1,2},
+	        {1,4,2,2,1,1},
+	        {2,4,1,2,1,1},
+	        {2,2,1,1,1,4},
+	        {4,1,3,1,1,1},
+	        {2,4,1,1,1,2},
+	        {1,3,4,1,1,1},//79
+	        {1,1,1,2,4,2},
+	        {1,2,1,1,4,2},
+	        {1,2,1,2,4,1},
+	        {1,1,4,2,1,2},
+	        {1,2,4,1,1,2},
+	        {1,2,4,2,1,1},
+	        {4,1,1,2,1,2},
+	        {4,2,1,1,1,2},
+	        {4,2,1,2,1,1},
+	        {2,1,2,1,4,1},//89
+	        {2,1,4,1,2,1},
+	        {4,1,2,1,2,1},
+	        {1,1,1,1,4,3},
+	        {1,1,1,3,4,1},
+	        {1,3,1,1,4,1},
+	        {1,1,4,1,1,3},
+	        {1,1,4,3,1,1},
+	        {4,1,1,1,1,3},
+	        {4,1,1,3,1,1},
+	        {1,1,3,1,4,1},//99
+	    };
+	private static final int[] ASCII_VALUES = {48,49,50,51,52,53,54,55,56,57};
 	
 	/**
 	 * Create a GS1-128 language C GTIN bar code as a pattern of black and white bars
@@ -50,13 +154,14 @@ public class LabelUtilities {
         g2.setFont(font);
         g2.setColor(Color.black);
 
-        FontRenderContext frc = ((Graphics2D)g2).getFontRenderContext();
-        Rectangle2D boundsTemp = font.getStringBounds(hrv, frc);  
-		int currY = startY + MOD_HEIGHT + (int) boundsTemp.getHeight();
-		int currX = startX + MODS_TO_FIRST_CHAR * MOD_WIDTH;
-        
-        g2.drawString(hrv, currX, currY);
-		
+        drawStringHelper(g2, font, hrv, startY + MOD_HEIGHT, startX + MODS_TO_FIRST_CHAR * MOD_WIDTH);
+	}
+	
+	public static void drawStringHelper(Graphics2D g2, Font font, String str, int startY, int startX) {
+		FontRenderContext frc = ((Graphics2D)g2).getFontRenderContext();
+        Rectangle2D boundsTemp = font.getStringBounds(str, frc);  
+		startY += (int) boundsTemp.getHeight();
+        g2.drawString(str, startX, startY);
 	}
 
 	/**
@@ -176,108 +281,33 @@ public class LabelUtilities {
 	 * @return the pattern of black-white modules in GS1-128 Language C as an int[] for the given number
 	 */
 	private static int[] getCharacter(int number) {
-	    int[][] characterCodesSetC = {
-	        {2,1,2,2,2,2},
-	        {2,2,2,1,2,2},
-	        {2,2,2,2,2,1},
-	        {1,2,1,2,2,3},
-	        {1,2,1,3,2,2},
-	        {1,3,1,2,2,2},
-	        {1,2,2,2,1,3},
-	        {1,2,2,3,1,2},
-	        {1,3,2,2,1,2},
-	        {2,2,1,2,1,3}, // 09
-	        {2,2,1,3,1,2}, 
-	        {2,3,1,2,1,2},
-	        {1,1,2,2,3,2},
-	        {1,2,2,1,3,2},
-	        {1,1,3,2,2,2},
-	        {1,2,3,1,2,2},
-	        {1,2,3,1,2,2},
-	        {1,2,3,2,2,1},
-	        {2,2,3,2,1,1},
-	        {2,2,1,1,3,2}, // 19
-	        {2,2,1,2,3,1},
-	        {2,1,3,2,1,2},
-	        {2,2,3,1,1,2},
-	        {3,1,2,1,3,1},
-	        {3,1,1,2,2,2},
-	        {3,2,1,1,2,2},
-	        {3,2,1,2,2,1},
-	        {3,1,2,2,1,2},
-	        {3,2,2,1,1,2},
-	        {3,2,2,2,1,1}, //29
-	        {2,1,2,1,2,3},
-	        {2,1,2,3,2,1},
-	        {2,3,2,1,2,1},
-	        {1,1,1,3,2,3},
-	        {1,3,1,1,2,3},
-	        {1,3,1,3,2,1},
-	        {1,1,2,3,1,3},
-	        {1,3,2,1,1,3},
-	        {1,3,2,3,1,1},
-	        {2,1,1,3,1,3},//39
-	        {2,3,1,1,1,3},
-	        {2,3,1,3,1,1},
-	        {1,1,2,1,3,3},
-	        {1,1,2,3,3,1},
-	        {1,3,2,1,3,1},
-	        {1,1,3,1,2,3},
-	        {1,1,3,3,2,1},
-	        {1,3,3,1,2,1},
-	        {3,1,3,1,2,1},
-	        {2,1,1,3,3,1},//49
-	        {2,3,1,1,3,1},
-	        {2,1,3,1,1,3},
-	        {2,1,3,3,1,1},
-	        {2,1,3,1,3,1},
-	        {3,1,1,1,2,3},
-	        {3,1,1,3,2,1},
-	        {3,3,1,1,2,1},
-	        {3,1,2,1,1,3},
-	        {3,1,2,3,1,1},
-	        {3,3,2,1,1,1},//59
-	        {3,1,4,1,1,1},
-	        {2,2,1,4,1,1},
-	        {4,3,1,1,1,1},
-	        {1,1,1,2,2,4},
-	        {1,1,1,4,2,2},
-	        {1,2,1,1,2,4},
-	        {1,2,1,4,2,1},
-	        {1,4,1,1,2,2},
-	        {1,4,1,2,2,1},
-	        {1,1,2,2,1,4}, //69
-	        {1,1,2,4,1,2},
-	        {1,2,2,1,1,4},
-	        {1,2,2,4,1,1},
-	        {1,4,2,1,1,2},
-	        {1,4,2,2,1,1},
-	        {2,4,1,2,1,1},
-	        {2,2,1,1,1,4},
-	        {4,1,3,1,1,1},
-	        {2,4,1,1,1,2},
-	        {1,3,4,1,1,1},//79
-	        {1,1,1,2,4,2},
-	        {1,2,1,1,4,2},
-	        {1,2,1,2,4,1},
-	        {1,1,4,2,1,2},
-	        {1,2,4,1,1,2},
-	        {1,2,4,2,1,1},
-	        {4,1,1,2,1,2},
-	        {4,2,1,1,1,2},
-	        {4,2,1,2,1,1},
-	        {2,1,2,1,4,1},//89
-	        {2,1,4,1,2,1},
-	        {4,1,2,1,2,1},
-	        {1,1,1,1,4,3},
-	        {1,1,1,3,4,1},
-	        {1,3,1,1,4,1},
-	        {1,1,4,1,1,3},
-	        {1,1,4,3,1,1},
-	        {4,1,1,1,1,3},
-	        {4,1,1,3,1,1},
-	        {1,1,3,1,4,1},//99
-	    };
 	    return characterCodesSetC[number];
+	}
+	
+	public static void addVoicePickCode(Graphics2D g2, int startX, int startY, String gtin, Date date, int smallFontSize, int largeFontSize, int fontStyle) {
+		String vpc = calculateVoicePickCode(gtin, date);
+		String smallNums = vpc.substring(0,2);
+		String bigNums = vpc.substring(2);
+		
+		g2.setColor(Color.BLACK);
+		Font font = new Font("Serif", fontStyle, largeFontSize); 
+		g2.setFont(font);
+		FontRenderContext frc = ((Graphics2D)g2).getFontRenderContext();
+        Rectangle2D boundsTemp = font.getStringBounds(vpc, frc);  
+    	g2.fill(new Rectangle(startX, startY, (int) boundsTemp.getWidth(), (int) boundsTemp.getHeight()));
+    	
+    	g2.setColor(Color.WHITE);
+    	drawStringHelper(g2, font, bigNums, startY, startX + (int) boundsTemp.getWidth()/2);
+    	font = new Font("Serif", fontStyle, smallFontSize); 
+    	g2.setFont(font);
+    	drawStringHelper(g2, font, smallNums, startY, startX);
+		
+	}
+
+	protected static String calculateVoicePickCode(String gtin, Date date) {
+		String plainText = gtin + date.getDateYYMMDD();
+		int result = CRC16.crc16(plainText);
+		String res = Integer.toString(result);
+		return res.substring(res.length() -4);
 	}
 }

@@ -10,12 +10,22 @@ public interface Date {
 	/**
 	 * @return the date as a String in the format mm/dd/yyyy.
 	 */
-	public String getDate();
+	public String getDateMMDDYYYY();
+	
+	/**
+	 * @return the data in the form YYMMDDD, no slashes
+	 */
+	public String getDateYYMMDD();
 	
 	/**
 	 * @return the month name, January through December
 	 */
 	public String getMonthName();
+	
+	/**
+	 * @return the month name as a three-letter abbreviation, plus the day of the month
+	 */
+	public String getAsPackDate();
 	
 	/**
 	 * @return the month as a number, 1-12

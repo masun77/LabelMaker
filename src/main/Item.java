@@ -44,5 +44,7 @@ public class Item {
 		return packDate;
 	}
 	
-	
+	public String getUnit() {
+		return unit;
+	}
 }

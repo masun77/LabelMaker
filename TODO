@@ -26,15 +26,19 @@ Make a label graphic -
 	Bar code - DONE
 		lines - DONE
 		human readable version - DONE
-	Customer - 
-	Product - 
-	Generic label info - 
-	Pack date - 
+	Customer - DONE
+	Product - DONE
+	Generic label info - DONE
+	Pack date - DONE
 	Voice pick code - 
-	Rectangle around whole thing - 
+		Calculate - DONE
+		ck against examples - DONE
+		formatting - 
+	Rectangles - 
+	Make all lay out nicely, font sizes right, and change magic numbers to constants/variables - 
 Print label graphic to paper - 
 	print label graphic to correct size on label - 
-	dimensions, e.g. of bar code
+	dimensions, e.g. of bar code - 
 Read order from Excel file - 
 Print multiple labels from Excel File - 
 Write existing orders to excel file - 
@@ -47,3 +51,5 @@ Later:
 what if the input isn't an excel file
 error check people invalid input - customers, products, invalid dates, gtins
 bar code dimensions within specs
+ck lot code with Jessie - I did YYMMDD. can change to whatever. 
+get own CRC code working

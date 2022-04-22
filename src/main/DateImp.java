@@ -45,7 +45,7 @@ public class DateImp implements Date {
 	}
 	
 	@Override
-	public String getDate() {
+	public String getDateMMDDYYYY() {
 		String dateString = zerosHelper(monthOfYear);
 		dateString += "/";
 		dateString += zerosHelper(dayOfMonth);
@@ -86,4 +86,16 @@ public class DateImp implements Date {
 		return dayOfMonth;
 	}
 	
+	@Override
+	public String getAsPackDate() {
+		String mon = monthToMonthName.get(monthOfYear).substring(0,3);
+		mon += " ";
+		mon += zerosHelper(dayOfMonth);
+		return mon;
+	}
+	
+	@Override
+	public String getDateYYMMDD() {
+		return zerosHelper(year % 100) + zerosHelper(monthOfYear) + zerosHelper(dayOfMonth);
+	}
 }
