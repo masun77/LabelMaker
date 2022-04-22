@@ -17,10 +17,15 @@ public class RDFLabel extends Component {
 	private final String FARM = "Riverdog Farm";
 	private final String LOCATION = "Guinda, CA 95637";
 	private final String PACK_DATE = "Pack Date";
+	private int startX, startY;
+	private final int LABEL_WIDTH = 950;
+	private final int LABEL_HEIGHT = 600;
 
-	public RDFLabel(Item o) {
+	public RDFLabel(Item o, int x, int y) {
 		item = o;
 		this.setMinimumSize(new Dimension(1000,1000));
+		startX = x;
+		startY = y;
 	}
 
 	public void paint(Graphics g) {
@@ -33,14 +38,16 @@ public class RDFLabel extends Component {
 	 * @param g2
 	 */
 	private void createLabel() {
-		addText(800, 2, item.getCustomer().toUpperCase(), FONT_SIZES[2], Font.PLAIN);
+		g2.drawRect(startX + 5, startY + FONT_SIZES[1], LABEL_WIDTH, LABEL_HEIGHT);
 		LabelUtilities.createGS1_128GTINBarCode(g2, 10,FONT_SIZES[2], item.getGtin());
+		addText(800, 2, item.getCustomer().toUpperCase(), FONT_SIZES[2], Font.PLAIN);
 		addText(10, 220, item.getProductName().toUpperCase(), FONT_SIZES[3], Font.BOLD);
 		addText(10, 300, item.getUnit(), FONT_SIZES[2], Font.BOLD);
 		addStandardRDText();
 		addText(750, 300, PACK_DATE, FONT_SIZES[1], Font.PLAIN);
 		addText(750, 350, item.getPackDate().getAsPackDate(), FONT_SIZES[2], Font.BOLD);
-		LabelUtilities.addVoicePickCode(g2, 750, 430, item.getGtin(), item.getPackDate(), FONT_SIZES[1], FONT_SIZES[3], Font.PLAIN);
+		g2.drawRect(740, 380, 200, FONT_SIZES[2]);
+		LabelUtilities.addVoicePickCode(g2, 750, 450, item.getGtin(), item.getPackDate(), FONT_SIZES[1], FONT_SIZES[3], Font.PLAIN);
 	}
 	
 	private void addStandardRDText() {

@@ -33,8 +33,8 @@ Make a label graphic -
 	Voice pick code - 
 		Calculate - DONE
 		ck against examples - DONE
-		formatting - 
-	Rectangles - 
+		formatting - DONE
+	Rectangles - DONE
 	Make all lay out nicely, font sizes right, and change magic numbers to constants/variables - 
 Print label graphic to paper - 
 	print label graphic to correct size on label - 
