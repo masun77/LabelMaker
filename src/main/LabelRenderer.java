@@ -39,6 +39,10 @@ public class LabelRenderer implements GraphicsRenderer {
 		f.setVisible(true);
 	}
 	
+	/**
+	 * Set the frame's size to the maximum minimum width and height of its children
+	 * @param frame the frame to set the size of
+	 */
 	private void localPack(JFrame frame) {
 		Component[] children = frame.getComponents();
 		int height = 0;
@@ -56,6 +60,10 @@ public class LabelRenderer implements GraphicsRenderer {
 		frame.setSize(width, height);
 	}
 	
+	/**
+	 * Open a print dialog for the current graphic.
+	 * Print if user selects okay, otherwise do nothing. 
+	 */
 	public void print() {
 		PrinterJob  job = PrinterJob.getPrinterJob();
 		Printable printer = new Printer(window);

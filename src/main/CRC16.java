@@ -1,5 +1,8 @@
 package main;
 
+/**
+ * Generates the CRC16 hash for the given input String in ASCII. 
+ */
 public class CRC16 { 
 
     public static int crc16(String arg) { 
@@ -48,50 +51,5 @@ public class CRC16 {
 
         return crc;
     }
-    
-    /**
-     * Not functional CRC16 :(
-     * 
-	
-	protected static String localCRC(String plaintext, String divisor, int resultLength) {
-		int firstOne = plaintext.indexOf("1");
-		while (firstOne < plaintext.length() - resultLength) {
-			plaintext = plaintext.substring(firstOne);
-			plaintext = localXOR(plaintext, divisor);  
-			firstOne = plaintext.indexOf("1");
-		}
-		int lastOriginalChar = plaintext.length() - resultLength;
-		System.out.println(plaintext + " " +  lastOriginalChar);
-		return plaintext.substring(lastOriginalChar);
-	}
-	
-	protected static String localXOR(String text, String divisor) {
-		int len = divisor.length();
-		String sub = text.substring(0, len);
-		String result = "";
-		for (int i = 0; i < len; i++) {
-			if (sub.substring(i,i+1).equals(divisor.substring(i, i+1))) {
-				result += "0";
-			}
-			else {
-				result += "1";
-			}
-		}
-		return result + text.substring(len);
-	}
-	
-	protected static String getTextAsBinary(String text) {
-		String ret = "";
-		for (int i = 0; i < text.length(); i++) {
-			ret += getBinary(Integer.parseInt(text.substring(i, i+1)));
-		}
-		return ret;
-	}
-	
-	protected static String getBinary(int num) {
-		return Integer.toBinaryString(ASCII_VALUES[num]);
-	}
-     * 
-     */
 
 }

@@ -125,9 +125,12 @@ public class LabelUtilities {
 	 * Create a GS1-128 language C GTIN bar code as a pattern of black and white bars
 	 * in the given graphics context.
 	 * @param g2 the graphics context
-	 * @param currX the starting x coordinate
+	 * @param startX the starting x coordinate
 	 * @param startY the starting y coordinate
 	 * @param gtin the GTIN to represent in the bar code
+	 * @param mw the module width for the bar code
+	 * @param mh the module height for the bar code
+	 * @param fontSize the font-size for the human-readable version under the bar code
 	 */
 	public static void createGS1_128GTINBarCode(Graphics2D g2, int startX, int startY, String gtin, int mw, int mh, int fontSize) {
 		modWidth = mw;
@@ -148,6 +151,7 @@ public class LabelUtilities {
 	 * @param startX the starting x coordinate of the bar code
 	 * @param startY the starting y coordinate of the bar code
 	 * @param gtin the GTIN to represent in the text
+	 * @param fontSize the size of the font to use
 	 */
 	private static void appendHumanReadableVersion(Graphics2D g2, int startX, int startY, String gtin, int fontSize) {
 		String hrv = "(" + AI_CODE + ")" + gtin;
@@ -159,6 +163,14 @@ public class LabelUtilities {
         drawStringHelper(g2, font, hrv, startY + modHeight, startX + MODS_TO_FIRST_CHAR * modWidth);
 	}
 	
+	/**
+	 * Draw a string on this graphics object 
+	 * @param g2 the graphics object
+	 * @param font the font to use
+	 * @param str the string to draw
+	 * @param startY the top left y coordinate
+	 * @param startX the top left x coordinate
+	 */
 	public static void drawStringHelper(Graphics2D g2, Font font, String str, int startY, int startX) {
 		FontRenderContext frc = ((Graphics2D)g2).getFontRenderContext();
         Rectangle2D boundsTemp = font.getStringBounds(str, frc);  
@@ -286,6 +298,17 @@ public class LabelUtilities {
 	    return characterCodesSetC[number];
 	}
 	
+	/**
+	 * Add a voice pick code to this graphics object
+	 * @param g2 the graphics object
+	 * @param startX the top left x coordinate
+	 * @param startY the top left y coordinate
+	 * @param gtin the GTIN to use for calculating the voice pick code
+	 * @param date the date to use for calculating the voice pick code
+	 * @param smallFontSize the font size to use for the two small numbers
+	 * @param largeFontSize the font size to use for the two large numbers
+	 * @param fontStyle the font style to use
+	 */
 	public static void addVoicePickCode(Graphics2D g2, int startX, int startY, String gtin, Date date, int smallFontSize, int largeFontSize, int fontStyle) {
 		String vpc = calculateVoicePickCode(gtin, date);
 		String smallNums = vpc.substring(0,2);
@@ -305,6 +328,13 @@ public class LabelUtilities {
     	drawStringHelper(g2, font, smallNums, startY + 5, startX + 5);
 	}
 
+	/**
+	 * Calculate the Voice Pick code as defined by the specifications, by taking the last 4 digits of
+	 * the CRC16 hash of the lot code (here simply the date) appended to the GTIN
+	 * @param gtin the GTIN to use for calculation
+	 * @param date the date to use for calculation
+	 * @return the last 4 digits of the CRC16 hash of the gtin and date
+	 */
 	protected static String calculateVoicePickCode(String gtin, Date date) {
 		String plainText = gtin + date.getDateYYMMDD();
 		int result = CRC16.crc16(plainText);

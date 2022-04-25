@@ -8,6 +8,11 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
+/**
+ * A printable class. 
+ *
+ */
+
 public class Printer implements Printable {
 	private Container comp;
 	
@@ -17,7 +22,7 @@ public class Printer implements Printable {
 	
 	@Override
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		if (pageIndex >= comp.getComponentCount()) {
+		if (pageIndex >= comp.getComponentCount()) {    // Print one page for each component
 			return NO_SUCH_PAGE; 
 		}
 		else {

@@ -14,13 +14,13 @@ import java.awt.print.PrinterException;
 
 public class RDFLabel extends Component {
 	private Item item;
-	private final int[] FONT_SIZES = {30, 20, 12, 10};
+	private int startX, startY;
 	private Graphics2D g2 = null;
+	private final int[] FONT_SIZES = {30, 20, 12, 10};
 	private final String PRODUCT_OF = "Product of USA";
 	private final String FARM = "Riverdog Farm";
 	private final String LOCATION = "Guinda, CA 95637";
 	private final String PACK_DATE = "Pack Date";
-	private int startX, startY;
 	private final int LABEL_WIDTH = 400;
 	private final int LABEL_HEIGHT = 200;
 	private final int CUSTOMER_WIDTH = 100;
@@ -44,6 +44,10 @@ public class RDFLabel extends Component {
 		createLabel();
 	}
 	
+	/**
+	 * Set the background to white by filling it with a white rectangle.
+	 * @param g
+	 */
 	private void setBackgroundWhite(Graphics g) {
 		this.setBackground(Color.white);
 		g.setColor(getBackground());
@@ -52,8 +56,7 @@ public class RDFLabel extends Component {
 	}
 	
 	/**
-	 * Create
-	 * @param g2
+	 * Create a label in the RDF format. 
 	 */
 	private void createLabel() {
 		int currX = startX + LABEL_WIDTH - CUSTOMER_WIDTH;
@@ -81,6 +84,11 @@ public class RDFLabel extends Component {
 		LabelUtilities.addVoicePickCode(g2, currX, currY, item.getGtin(), item.getPackDate(), FONT_SIZES[1], FONT_SIZES[0], Font.PLAIN);
 	}
 	
+	/**
+	 * Add the standard text that appears at the bottom left of the label.
+	 * @param startX the top left x coordinate
+	 * @param startY the top left y coordinate
+	 */
 	private void addStandardRDText(int startX, int startY) {
 		addText(startX, startY, PRODUCT_OF, FONT_SIZES[1], Font.BOLD);
 		int currY = startY + FONT_SIZES[1] + SPACING;
@@ -89,6 +97,14 @@ public class RDFLabel extends Component {
 		addText(startX, currY, LOCATION, FONT_SIZES[2], Font.PLAIN);
 	}
 	
+	/**
+	 * Add text to this label.
+	 * @param startX the top left x coordinate
+	 * @param startY the top left y coordinate
+	 * @param text the text to add
+	 * @param fontSize the font size for the text
+	 * @param fontStyle the font style for the text
+	 */
 	private void addText(int startX, int startY, String text, int fontSize, int fontStyle) {
 		Font font = new Font("Serif", fontStyle, fontSize);
         g2.setFont(font);

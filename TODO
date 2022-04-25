@@ -15,19 +15,10 @@ and by creating easy times to take breaks and check-in on your goals - in betwee
 having tests for all your code that are easy to run, and running them frequently - every cycle. 
 6. Keep your code clean by refactoring frequently - every cycle. 
 
-Print label graphic - 
-	Make all lay out nicely, font sizes right, and change magic numbers to constants/variables - DONE
-	to paper - YEAH! DONE
-	dimensions, e.g. of bar code - DONE
-	test whether printAll prints 1 page - sweet it does! DONE 
-	make background white so doesn't use ink to print - DONE
-	print label graphic to correct size on label - 
-	
-Refactor, clean, and comment again
-	
-View orders in scrollable pane - 
-Read order from Excel file - 
+Print label graphic to correct size and orientation on label - 
+Read orders from Excel file - 
 Print multiple labels from Excel File - 
+	verify GTINs correct
 Write existing orders to excel file - 
 Display of stored orders - 
 Print stored orders - 
@@ -35,6 +26,7 @@ Write order to correct format for IIF file for import to quickbooks -
 
 
 Later:
+View orders in scrollable pane - 
 make hrv align with bar segments
 what if the input isn't an excel file
 error check people invalid input - customers, products, invalid dates, gtins
@@ -65,3 +57,9 @@ Make a label graphic - DONE
 		ck against examples - DONE
 		formatting - DONE
 	Rectangles - DONE
+Print label graphic - DONE
+	Make all lay out nicely, font sizes right, and change magic numbers to constants/variables - DONE
+	to paper - YEAH! DONE
+	dimensions, e.g. of bar code - DONE
+	test whether printAll prints 1 page - sweet it does! DONE 
+	make background white so doesn't use ink to print - DONE
