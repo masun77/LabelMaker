@@ -57,8 +57,8 @@ public class RDFLabel extends Component {
 	 */
 	private void createLabel() {
 		int currX = startX + LABEL_WIDTH - CUSTOMER_WIDTH;
-		int currY = startY + UPPER_BUFFER;
-		addText(currX, currY, item.getCustomer().toUpperCase(), FONT_SIZES[1], Font.PLAIN);
+		int currY = startY;
+		addText(currX, currY, item.getCustomer().toUpperCase(), FONT_SIZES[1], Font.BOLD);
 		currX = startX + LEFT_BUFFER /2;
 		currY = currY + 30 + SPACING;
 		g2.drawRect(currX, currY, LABEL_WIDTH, LABEL_HEIGHT - FONT_SIZES[1]);

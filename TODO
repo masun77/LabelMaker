@@ -36,12 +36,16 @@ Make a label graphic - DONE
 		formatting - DONE
 	Rectangles - DONE
 Print label graphic - 
-	Make all lay out nicely, font sizes right, and change magic numbers to constants/variables - 
+	Make all lay out nicely, font sizes right, and change magic numbers to constants/variables - DONE
 	to paper - YEAH! DONE
-	dimensions, e.g. of bar code - 
-	test whether printAll prints 1 page or many on actual printer (vs print to pdf), eg take all but 2-3 pages out of machine and cancel if needed - 
+	dimensions, e.g. of bar code - DONE
+	test whether printAll prints 1 page - sweet it does! DONE 
 	make background white so doesn't use ink to print - DONE
 	print label graphic to correct size on label - 
+	
+Refactor, clean, and comment again
+	
+View orders in scrollable pane - 
 Read order from Excel file - 
 Print multiple labels from Excel File - 
 Write existing orders to excel file - 

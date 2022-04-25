@@ -2,24 +2,41 @@ package main;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.print.*;
+import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class LabelRenderer implements GraphicsRenderer {
-	private Component window = null;
+	private Container window = null;
+	private ArrayList<Item> items = null;
+	private final int LABEL_HEIGHT = 260;
 	
 	@Override
-	public void renderLabel(Item item) {
-		 JFrame f = new JFrame("View Labels");
-	     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	     f.setOpacity(1);
-	     
-	     f.add("Center", new RDFLabel(item, 0, 0));
-	     localPack(f);
-	     f.setVisible(true);
-	     window = f;
+	public void renderLabels(ArrayList<Item> items) {
+		this.items = items;
+		JFrame f = new JFrame("View Labels");
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setOpacity(1);
+		
+		JPanel mainPanel= new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		window = mainPanel;
+		
+		for (int i = 0; i < items.size(); i++) {
+			RDFLabel label = new RDFLabel(items.get(i), 0, 0);
+		    mainPanel.add(label);
+		    System.out.println("Adding: " + items.get(i).getCustomer() + " " + mainPanel.getComponents().length);
+		}
+		
+		f.add(mainPanel);
+		
+		localPack(f);
+		f.setVisible(true);
 	}
 	
 	private void localPack(JFrame frame) {
@@ -35,11 +52,11 @@ public class LabelRenderer implements GraphicsRenderer {
 				width = (int) d.getWidth();
 			}
 		}
+		height = height * 2;
 		frame.setSize(width, height);
 	}
 	
 	public void print() {
-		// may need to move this elsewhere/other class
 		PrinterJob  job = PrinterJob.getPrinterJob();
 		Printable printer = new Printer(window);
 		job.setPrintable(printer);
@@ -49,8 +66,7 @@ public class LabelRenderer implements GraphicsRenderer {
 			try {
 		        job.print();
 		    } catch (PrinterException e) {
-		        // The job did not successfully
-		        // complete
+		        e.printStackTrace();
 		    }
 		}
 	}
