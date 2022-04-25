@@ -15,26 +15,6 @@ and by creating easy times to take breaks and check-in on your goals - in betwee
 having tests for all your code that are easy to run, and running them frequently - every cycle. 
 6. Keep your code clean by refactoring frequently - every cycle. 
 
-Using a nice IDE - DONE
-Backup to GitHub - DONE
-Read from an Excel file - DONE
-Make a label graphic - DONE
-	Graphics library - DONE
-		Trying Java 2D: https://docs.oracle.com/javase/tutorial/2d/ - Nice!
-		See also: example: https://docs.oracle.com/javase/tutorial/2d/basic2d/examples/WeatherWizard.java
-				Javadocs for graphics2D library 
-	Bar code - DONE
-		lines - DONE
-		human readable version - DONE
-	Customer - DONE
-	Product - DONE
-	Generic label info - DONE
-	Pack date - DONE
-	Voice pick code - DONE
-		Calculate - DONE
-		ck against examples - DONE
-		formatting - DONE
-	Rectangles - DONE
 Print label graphic - 
 	Make all lay out nicely, font sizes right, and change magic numbers to constants/variables - DONE
 	to paper - YEAH! DONE
@@ -61,3 +41,27 @@ error check people invalid input - customers, products, invalid dates, gtins
 bar code dimensions within specs
 ck lot code with Jessie - I did YYMMDD. can change to whatever. 
 get own CRC code working
+
+
+
+DONE:
+Using a nice IDE - DONE
+Backup to GitHub - DONE
+Read from an Excel file - DONE
+Make a label graphic - DONE
+	Graphics library - DONE
+		Trying Java 2D: https://docs.oracle.com/javase/tutorial/2d/ - Nice!
+		See also: example: https://docs.oracle.com/javase/tutorial/2d/basic2d/examples/WeatherWizard.java
+				Javadocs for graphics2D library 
+	Bar code - DONE
+		lines - DONE
+		human readable version - DONE
+	Customer - DONE
+	Product - DONE
+	Generic label info - DONE
+	Pack date - DONE
+	Voice pick code - DONE
+		Calculate - DONE
+		ck against examples - DONE
+		formatting - DONE
+	Rectangles - DONE
