@@ -1,21 +1,25 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.print.*;
 
 import javax.swing.JFrame;
 
 public class LabelRenderer implements GraphicsRenderer {
-
+	private Component window = null;
+	
 	@Override
 	public void renderLabel(Item item) {
 		 JFrame f = new JFrame("View Labels");
 	     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     
+	     f.setOpacity(1);
 	     
-	     f.add("Center", new RDFLabel(item));
+	     f.add("Center", new RDFLabel(item, 0, 0));
 	     localPack(f);
 	     f.setVisible(true);
+	     window = f;
 	}
 	
 	private void localPack(JFrame frame) {
@@ -33,4 +37,23 @@ public class LabelRenderer implements GraphicsRenderer {
 		}
 		frame.setSize(width, height);
 	}
+	
+	public void print() {
+		// may need to move this elsewhere/other class
+		PrinterJob  job = PrinterJob.getPrinterJob();
+		Printable printer = new Printer(window);
+		job.setPrintable(printer);
+		boolean doPrint = job.printDialog();
+		
+		if (doPrint) {
+			try {
+		        job.print();
+		    } catch (PrinterException e) {
+		        // The job did not successfully
+		        // complete
+		    }
+		}
+	}
+	
+	
 }

@@ -8,6 +8,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 
 public class RDFLabel extends Component {
 	private Item item;
@@ -26,9 +29,14 @@ public class RDFLabel extends Component {
 		this.setMinimumSize(new Dimension(1000,1000));
 		startX = x;
 		startY = y;
+		this.setBackground(Color.white);
 	}
 
+	@Override
 	public void paint(Graphics g) {
+		g.setColor(getBackground());
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.setColor(getForeground());
 		g2 = (Graphics2D) g;
 		createLabel();
 	}

@@ -18,7 +18,7 @@ having tests for all your code that are easy to run, and running them frequently
 Using a nice IDE - DONE
 Backup to GitHub - DONE
 Read from an Excel file - DONE
-Make a label graphic - 
+Make a label graphic - DONE
 	Graphics library - DONE
 		Trying Java 2D: https://docs.oracle.com/javase/tutorial/2d/ - Nice!
 		See also: example: https://docs.oracle.com/javase/tutorial/2d/basic2d/examples/WeatherWizard.java
@@ -30,15 +30,18 @@ Make a label graphic -
 	Product - DONE
 	Generic label info - DONE
 	Pack date - DONE
-	Voice pick code - 
+	Voice pick code - DONE
 		Calculate - DONE
 		ck against examples - DONE
 		formatting - DONE
 	Rectangles - DONE
+Print label graphic - 
 	Make all lay out nicely, font sizes right, and change magic numbers to constants/variables - 
-Print label graphic to paper - 
-	print label graphic to correct size on label - 
+	to paper - YEAH! DONE
 	dimensions, e.g. of bar code - 
+	test whether printAll prints 1 page or many on actual printer (vs print to pdf), eg take all but 2-3 pages out of machine and cancel if needed - 
+	make background white so doesn't use ink to print - DONE
+	print label graphic to correct size on label - 
 Read order from Excel file - 
 Print multiple labels from Excel File - 
 Write existing orders to excel file - 
