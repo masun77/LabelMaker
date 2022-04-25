@@ -51,6 +51,7 @@ Write order to correct format for IIF file for import to quickbooks -
 
 
 Later:
+make hrv align with bar segments
 what if the input isn't an excel file
 error check people invalid input - customers, products, invalid dates, gtins
 bar code dimensions within specs

@@ -28,7 +28,7 @@ public class LabelMakerMain {
 		lr.renderLabel(new Item("cust", "lettuce", "5 lb bag", "00081812345", new DateImp(1,2,2021)));
 		
 		// Print labels
-		lr.print();
+		//lr.print();
 		
 	}
 

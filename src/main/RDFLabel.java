@@ -14,31 +14,41 @@ import java.awt.print.PrinterException;
 
 public class RDFLabel extends Component {
 	private Item item;
-	private final int[] FONT_SIZES = {40, 50, 60, 70};
+	private final int[] FONT_SIZES = {30, 20, 12, 10};
 	private Graphics2D g2 = null;
 	private final String PRODUCT_OF = "Product of USA";
 	private final String FARM = "Riverdog Farm";
 	private final String LOCATION = "Guinda, CA 95637";
 	private final String PACK_DATE = "Pack Date";
 	private int startX, startY;
-	private final int LABEL_WIDTH = 950;
-	private final int LABEL_HEIGHT = 600;
+	private final int LABEL_WIDTH = 400;
+	private final int LABEL_HEIGHT = 200;
+	private final int CUSTOMER_WIDTH = 100;
+	private final int UPPER_BUFFER = 10;
+	private final int LEFT_BUFFER = 10;
+	private final int SPACING = 3;
+	private final int BAR_CODE_HEIGHT = 50;
+	private final int BAR_MODULE_WIDTH = 2;
 
 	public RDFLabel(Item o, int x, int y) {
 		item = o;
-		this.setMinimumSize(new Dimension(1000,1000));
+		this.setMinimumSize(new Dimension(LABEL_WIDTH + LEFT_BUFFER * 3,LABEL_HEIGHT + 50 + UPPER_BUFFER*2));
 		startX = x;
 		startY = y;
-		this.setBackground(Color.white);
 	}
 
 	@Override
 	public void paint(Graphics g) {
+		setBackgroundWhite(g);
+		g2 = (Graphics2D) g;
+		createLabel();
+	}
+	
+	private void setBackgroundWhite(Graphics g) {
+		this.setBackground(Color.white);
 		g.setColor(getBackground());
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.setColor(getForeground());
-		g2 = (Graphics2D) g;
-		createLabel();
 	}
 	
 	/**
@@ -46,22 +56,37 @@ public class RDFLabel extends Component {
 	 * @param g2
 	 */
 	private void createLabel() {
-		g2.drawRect(startX + 5, startY + FONT_SIZES[1], LABEL_WIDTH, LABEL_HEIGHT);
-		LabelUtilities.createGS1_128GTINBarCode(g2, 10,FONT_SIZES[2], item.getGtin());
-		addText(800, 2, item.getCustomer().toUpperCase(), FONT_SIZES[2], Font.PLAIN);
-		addText(10, 220, item.getProductName().toUpperCase(), FONT_SIZES[3], Font.BOLD);
-		addText(10, 300, item.getUnit(), FONT_SIZES[2], Font.BOLD);
-		addStandardRDText();
-		addText(750, 300, PACK_DATE, FONT_SIZES[1], Font.PLAIN);
-		addText(750, 350, item.getPackDate().getAsPackDate(), FONT_SIZES[2], Font.BOLD);
-		g2.drawRect(740, 380, 200, FONT_SIZES[2]);
-		LabelUtilities.addVoicePickCode(g2, 750, 450, item.getGtin(), item.getPackDate(), FONT_SIZES[1], FONT_SIZES[3], Font.PLAIN);
+		int currX = startX + LABEL_WIDTH - CUSTOMER_WIDTH;
+		int currY = startY + UPPER_BUFFER;
+		addText(currX, currY, item.getCustomer().toUpperCase(), FONT_SIZES[1], Font.PLAIN);
+		currX = startX + LEFT_BUFFER /2;
+		currY = currY + 30 + SPACING;
+		g2.drawRect(currX, currY, LABEL_WIDTH, LABEL_HEIGHT - FONT_SIZES[1]);
+		currX = startX + LEFT_BUFFER;
+		currY += SPACING;
+		LabelUtilities.createGS1_128GTINBarCode(g2, currX,currY, item.getGtin(), BAR_MODULE_WIDTH, BAR_CODE_HEIGHT, FONT_SIZES[2]);
+		currY += BAR_CODE_HEIGHT + FONT_SIZES[3] + SPACING;		
+		addText(currX, currY, item.getProductName().toUpperCase(), FONT_SIZES[0], Font.BOLD);
+		currY += FONT_SIZES[0] + SPACING;
+		addText(currX, currY, item.getUnit(), FONT_SIZES[1], Font.BOLD);
+		currY += FONT_SIZES[1];
+		addStandardRDText(currX, currY);
+		currX = startX + LABEL_WIDTH - LABEL_WIDTH / 4;
+		currY = startY + UPPER_BUFFER + FONT_SIZES[1] + LABEL_HEIGHT /2;
+		addText(currX, currY, PACK_DATE, FONT_SIZES[2], Font.PLAIN);
+		currY += FONT_SIZES[2] + SPACING;
+		addText(currX, currY, item.getPackDate().getAsPackDate(), FONT_SIZES[1], Font.BOLD);
+		g2.drawRect(currX -10, currY + SPACING*2, LABEL_WIDTH / 4, FONT_SIZES[1]);
+		currY += FONT_SIZES[1] + SPACING * 4;
+		LabelUtilities.addVoicePickCode(g2, currX, currY, item.getGtin(), item.getPackDate(), FONT_SIZES[1], FONT_SIZES[0], Font.PLAIN);
 	}
 	
-	private void addStandardRDText() {
-		addText(10, 360, PRODUCT_OF, FONT_SIZES[2], Font.BOLD);
-		addText(10, 420, FARM, FONT_SIZES[1], Font.PLAIN);
-		addText(10, 480, LOCATION, FONT_SIZES[1], Font.PLAIN);
+	private void addStandardRDText(int startX, int startY) {
+		addText(startX, startY, PRODUCT_OF, FONT_SIZES[1], Font.BOLD);
+		int currY = startY + FONT_SIZES[1] + SPACING;
+		addText(startX, currY, FARM, FONT_SIZES[2], Font.PLAIN);
+		currY += FONT_SIZES[2];
+		addText(startX, currY, LOCATION, FONT_SIZES[2], Font.PLAIN);
 	}
 	
 	private void addText(int startX, int startY, String text, int fontSize, int fontStyle) {

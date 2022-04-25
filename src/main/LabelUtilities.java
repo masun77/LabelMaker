@@ -9,8 +9,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 public class LabelUtilities {
-	private static final int MOD_WIDTH = 4;    // todo: dimensions. may need to change to parameters rather than static
-	private static final int MOD_HEIGHT = 130;  
+	private static int modWidth = 4;    
+	private static int modHeight = 130;  
 	private static final int[] START_CHAR = {2,1,1,2,3,2};
 	private static final int[] FNC1 = {4,1,1,1,3,1};
 	private static final int[] STOP_CHAR = {2,3,3,1,1,1,2};
@@ -129,7 +129,9 @@ public class LabelUtilities {
 	 * @param startY the starting y coordinate
 	 * @param gtin the GTIN to represent in the bar code
 	 */
-	public static void createGS1_128GTINBarCode(Graphics2D g2, int startX, int startY, String gtin) {
+	public static void createGS1_128GTINBarCode(Graphics2D g2, int startX, int startY, String gtin, int mw, int mh, int fontSize) {
+		modWidth = mw;
+		modHeight = mh;
 		int currX = startX;
 	    currX = appendQuietZone(g2, currX, startY);
 	    currX = appendStartCharacters(g2, currX, startY);
@@ -138,7 +140,7 @@ public class LabelUtilities {
 	    currX = appendSymbolCheck(g2, gtin, currX, startY);
 	    currX = appendStopCharacter(g2, currX, startY);
 	    appendQuietZone(g2, currX, startY);
-	    appendHumanReadableVersion(g2, startX, startY, gtin);
+	    appendHumanReadableVersion(g2, startX, startY, gtin, fontSize);
 	}
 	/**
 	 * Append a text version of the GTIN under the bar code in the given graphics context. 
@@ -147,14 +149,14 @@ public class LabelUtilities {
 	 * @param startY the starting y coordinate of the bar code
 	 * @param gtin the GTIN to represent in the text
 	 */
-	private static void appendHumanReadableVersion(Graphics2D g2, int startX, int startY, String gtin) {
+	private static void appendHumanReadableVersion(Graphics2D g2, int startX, int startY, String gtin, int fontSize) {
 		String hrv = "(" + AI_CODE + ")" + gtin;
 		
-		Font font = new Font("Serif", Font.PLAIN, 40);
+		Font font = new Font("Serif", Font.PLAIN, fontSize);
         g2.setFont(font);
         g2.setColor(Color.black);
 
-        drawStringHelper(g2, font, hrv, startY + MOD_HEIGHT, startX + MODS_TO_FIRST_CHAR * MOD_WIDTH);
+        drawStringHelper(g2, font, hrv, startY + modHeight, startX + MODS_TO_FIRST_CHAR * modWidth);
 	}
 	
 	public static void drawStringHelper(Graphics2D g2, Font font, String str, int startY, int startX) {
@@ -257,13 +259,13 @@ public class LabelUtilities {
 	private static int appendBlackWhite(Graphics2D g2, int currX, int startY, int[] lengths) {
 	    Color[] colors = {Color.BLACK, Color.WHITE}; // white or transparent? whatever doesn't print
 	    int currColor = 0;
-	    currX += MOD_WIDTH;
+	    currX += modWidth;
 	    for (int mod = 0; mod < lengths.length; mod++) {
 	        int numMods = lengths[mod];
 	        for (int n = 0; n < numMods; n++) {	        	
 	        	g2.setColor(colors[currColor]);
-	        	g2.fill(new Rectangle(currX, startY, (int) MOD_WIDTH, MOD_HEIGHT));
-	            currX += MOD_WIDTH;
+	        	g2.fill(new Rectangle(currX, startY, (int) modWidth, modHeight));
+	            currX += modWidth;
 	        }
 	        if (currColor == 1) {
 	            currColor = 0;
@@ -272,7 +274,7 @@ public class LabelUtilities {
 	            currColor = 1;
 	        }
 	    }
-	    return currX - MOD_WIDTH;
+	    return currX - modWidth;
 	}
 
 	/**
@@ -297,11 +299,10 @@ public class LabelUtilities {
     	g2.fill(new Rectangle(startX, startY, (int) boundsTemp.getWidth(), (int) boundsTemp.getHeight()));
     	
     	g2.setColor(Color.WHITE);
-    	drawStringHelper(g2, font, bigNums, startY, startX + (int) boundsTemp.getWidth()/2);
+    	drawStringHelper(g2, font, bigNums, startY - 5, startX + (int) boundsTemp.getWidth()/2);
     	font = new Font("Serif", fontStyle, smallFontSize); 
     	g2.setFont(font);
-    	drawStringHelper(g2, font, smallNums, startY, startX);
-		
+    	drawStringHelper(g2, font, smallNums, startY + 5, startX + 5);
 	}
 
 	protected static String calculateVoicePickCode(String gtin, Date date) {
