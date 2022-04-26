@@ -63,7 +63,7 @@ public class RDFLabel extends Component {
 		int y = startY;
 		addCustomer(x, y);
 		x = startX + LEFT_BUFFER /2;
-		y = startY + FONT_SIZES[1] + SPACING;
+		y = startY + FONT_SIZES[1] + SPACING*2;
 		addOuterBorder(x, y);
 		x = startX + LEFT_BUFFER;
 		y += SPACING;
@@ -75,12 +75,12 @@ public class RDFLabel extends Component {
 		y += FONT_SIZES[1];
 		addStandardRDText(x, y);
 		x = startX + LABEL_WIDTH - LABEL_WIDTH / 4;
-		y = startY + UPPER_BUFFER + FONT_SIZES[1] + LABEL_HEIGHT /2;
+		y = startY + LABEL_HEIGHT /2 + FONT_SIZES[2];
 		addPackDateText(x, y);
 		y += FONT_SIZES[2] + SPACING;
 		addItemDate(x, y);
 		y += FONT_SIZES[1] + SPACING * 4;
-		LabelUtilities.addVoicePickCode(g2, x, y, item.getGtin(), item.getPackDate(), FONT_SIZES[1], FONT_SIZES[0], Font.PLAIN);
+		LabelUtilities.addVoicePickCode(g2, x, y, item.getGtin(), item.getPackDate(), FONT_SIZES[2], FONT_SIZES[0], Font.PLAIN);
 	}
 	
 	private void addCustomer(int x, int y) {
