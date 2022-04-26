@@ -16,6 +16,9 @@ having tests for all your code that are easy to run, and running them frequently
 6. Keep your code clean by refactoring frequently - every cycle. 
 
 Print label graphic to correct size and orientation on label - 
+	label is 4" wide by 3.5" tall
+	see: https://answers.microsoft.com/en-us/windows/forum/windows_10-hardware-winpc/microsoft-print-to-pdf-custom-paper-sizes-possible/90ed3d48-1ece-4ca5-8d3b-ff0af24a7b37
+
 Read orders from Excel file - 
 Print multiple labels from Excel File - 
 	verify GTINs correct

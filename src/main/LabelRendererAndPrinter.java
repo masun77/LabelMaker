@@ -16,6 +16,7 @@ import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.MediaSize;
 import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,7 +25,6 @@ import javax.swing.UIManager;
 public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printable {
 	private Container itemParent = null;
 	private ArrayList<Item> items = null;
-	private final int LABEL_HEIGHT = 260;
 
 	@Override
 	public void renderLabels(ArrayList<Item> items) {
@@ -66,6 +66,7 @@ public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printa
 				width = (int) d.getWidth();
 			}
 		}
+		height = height * 2;
 		frame.setSize(width, height);
 	}
 
@@ -86,6 +87,9 @@ public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printa
 		job.setPrintable(this);
 		boolean doPrint = job.printDialog(attrSet);
 
+		//attrSet.add(MediaSizeName.ISO_A7);
+		attrSet.add(OrientationRequested.LANDSCAPE);
+		
 		if (doPrint) {
 			try {
 				job.print(attrSet);

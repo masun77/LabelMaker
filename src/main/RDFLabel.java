@@ -21,8 +21,8 @@ public class RDFLabel extends Component {
 	private final String FARM = "Riverdog Farm";
 	private final String LOCATION = "Guinda, CA 95637";
 	private final String PACK_DATE = "Pack Date";
-	private final int LABEL_WIDTH = 300;
-	private final int LABEL_HEIGHT = 150;
+	private final int LABEL_WIDTH = 400;
+	private final int LABEL_HEIGHT = 175;
 	private final int CUSTOMER_WIDTH = 50;
 	private final int UPPER_BUFFER = 10;
 	private final int LEFT_BUFFER = 10;

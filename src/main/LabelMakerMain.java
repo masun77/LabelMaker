@@ -26,7 +26,7 @@ public class LabelMakerMain {
 		// Render labels
 		LabelRendererAndPrinter lr = new LabelRendererAndPrinter();
 		ArrayList<Item> items = new ArrayList<Item>();
-		items.add(new Item("cust", "lettuce", "5 lb bag", "00081812345", new DateImp(1,2,2021)));
+		//items.add(new Item("cust", "lettuce", "5 lb bag", "00081812345", new DateImp(1,2,2021)));
 		items.add(new Item("Maya", "carrots", "10 bunches", "00000818187777", new DateImp(4,25,2022)));
 		lr.renderLabels(items);
 		
