@@ -86,8 +86,6 @@ public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printa
 		PrintRequestAttributeSet attrSet = new HashPrintRequestAttributeSet();
 		job.setPrintable(this);
 		boolean doPrint = job.printDialog(attrSet);
-
-		//attrSet.add(MediaSizeName.ISO_A7);
 		attrSet.add(OrientationRequested.LANDSCAPE);
 		
 		if (doPrint) {
