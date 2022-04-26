@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.print.*;
 import java.util.ArrayList;
 
@@ -11,30 +13,29 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class LabelRenderer implements GraphicsRenderer {
-	private Container window = null;
+public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printable {
+	private Container itemParent = null;
 	private ArrayList<Item> items = null;
 	private final int LABEL_HEIGHT = 260;
 	
 	@Override
 	public void renderLabels(ArrayList<Item> items) {
 		this.items = items;
+		
 		JFrame f = new JFrame("View Labels");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setOpacity(1);
 		
 		JPanel mainPanel= new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		window = mainPanel;
+		itemParent = mainPanel;
 		
 		for (int i = 0; i < items.size(); i++) {
 			RDFLabel label = new RDFLabel(items.get(i), 0, 0);
 		    mainPanel.add(label);
-		    System.out.println("Adding: " + items.get(i).getCustomer() + " " + mainPanel.getComponents().length);
 		}
 		
 		f.add(mainPanel);
-		
 		localPack(f);
 		f.setVisible(true);
 	}
@@ -64,10 +65,9 @@ public class LabelRenderer implements GraphicsRenderer {
 	 * Open a print dialog for the current graphic.
 	 * Print if user selects okay, otherwise do nothing. 
 	 */
-	public void print() {
+	public void printLabels() {
 		PrinterJob  job = PrinterJob.getPrinterJob();
-		Printable printer = new Printer(window);
-		job.setPrintable(printer);
+		job.setPrintable(this);
 		boolean doPrint = job.printDialog();
 		
 		if (doPrint) {
@@ -79,5 +79,25 @@ public class LabelRenderer implements GraphicsRenderer {
 		}
 	}
 	
+	@Override
+	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+		if (pageIndex >= itemParent.getComponentCount()) {    // Print one page for each component
+			return NO_SUCH_PAGE; 
+		}
+		else {
+			double maxHeight = pageFormat.getImageableHeight();
+			double maxWidth = pageFormat.getImageableWidth();
+			Dimension dim = itemParent.getSize();
+			
+			double xScale = maxWidth / dim.getWidth();
+			double yScale = maxHeight / dim.getHeight();
 	
+			Graphics2D g2 = (Graphics2D) graphics;
+			g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+			g2.scale(xScale, yScale);
+			itemParent.getComponent(pageIndex).paint(graphics);
+			
+			return PAGE_EXISTS;
+		}
+	}
 }

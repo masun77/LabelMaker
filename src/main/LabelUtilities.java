@@ -119,7 +119,6 @@ public class LabelUtilities {
 	        {4,1,1,3,1,1},
 	        {1,1,3,1,4,1},//99
 	    };
-	private static final int[] ASCII_VALUES = {48,49,50,51,52,53,54,55,56,57};
 	
 	/**
 	 * Create a GS1-128 language C GTIN bar code as a pattern of black and white bars
@@ -317,12 +316,14 @@ public class LabelUtilities {
 		g2.setColor(Color.BLACK);
 		Font font = new Font("Serif", fontStyle, largeFontSize); 
 		g2.setFont(font);
+		
 		FontRenderContext frc = ((Graphics2D)g2).getFontRenderContext();
         Rectangle2D boundsTemp = font.getStringBounds(vpc, frc);  
     	g2.fill(new Rectangle(startX, startY, (int) boundsTemp.getWidth(), (int) boundsTemp.getHeight()));
     	
     	g2.setColor(Color.WHITE);
     	drawStringHelper(g2, font, bigNums, startY - 5, startX + (int) boundsTemp.getWidth()/2);
+    	
     	font = new Font("Serif", fontStyle, smallFontSize); 
     	g2.setFont(font);
     	drawStringHelper(g2, font, smallNums, startY + 5, startX + 5);
