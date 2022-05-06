@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import main.Date;
-import main.DateImp;
+import labels.Date;
+import labels.DateImp;
 
 class DateImpTest {
 	private static Date d;

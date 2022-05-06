@@ -1,4 +1,4 @@
-package main;
+package labels;
 
 /**
  * Generates the CRC16 hash for the given input String in ASCII. 

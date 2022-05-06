@@ -1,4 +1,4 @@
-package main;
+package labels;
 
 import java.util.HashMap;
 import java.util.stream.Collectors;

@@ -26,6 +26,10 @@ Change graphic to exclude info -
 	scannable - 
 
 De-couple classes and make interfaces for everything - 
+	tests for:
+		CRC16
+		Bar code maker
+		Voice pick code maker
 
 Make savable/printable from other formats - 
 	jpg or what format can every printer print?

@@ -1,4 +1,4 @@
-package main;
+package printing;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -21,6 +21,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+
+import labels.RDFLabel;
 
 public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printable {
 	private Container itemParent = null;

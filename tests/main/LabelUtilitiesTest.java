@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import labels.CRC16;
+import labels.DateImp;
+import labels.LabelUtilities;
+
 class LabelUtilitiesTest {
 	@Test
 	void testVPCode() {
