@@ -66,7 +66,9 @@ public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printa
 				width = (int) d.getWidth();
 			}
 		}
-		height = height * 2;
+		if (itemParent.getComponentCount() == 1) {
+			height = (int) (height * 1.5);
+		}
 		frame.setSize(width, height);
 	}
 
@@ -86,7 +88,8 @@ public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printa
 		PrintRequestAttributeSet attrSet = new HashPrintRequestAttributeSet();
 		job.setPrintable(this);
 		boolean doPrint = job.printDialog(attrSet);
-		attrSet.add(OrientationRequested.LANDSCAPE);
+		attrSet.add(OrientationRequested.REVERSE_LANDSCAPE);
+		attrSet.add(new MediaPrintableArea((float)1, (float)1, (float)7.4,(float)9.9, MediaPrintableArea.INCH));
 		
 		if (doPrint) {
 			try {

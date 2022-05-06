@@ -17,16 +17,17 @@ public class LabelMakerMain {
 //		Scanner scanner = new Scanner(System.in);
 //		System.out.println("Enter order filename: "); // todo: better way to get file? e.g. select? or autoname or sth?
 //		String fileName = scanner.nextLine();
+		String fileName = "resources/test.xlsx";
 		
 		// Read order file into program
-		//FileReader fr = new ExcelFileReader();
-		//ArrayList<Order> orders = fr.readFileToOrders(fileName);
+		FileReader fr = new ExcelFileReader();
+		ArrayList<Order> orders = fr.readFileToOrders(fileName);
 		//System.out.println(orders.get(0).toString());
 		
 		// Render labels
 		LabelRendererAndPrinter lr = new LabelRendererAndPrinter();
 		ArrayList<Item> items = new ArrayList<Item>();
-		//items.add(new Item("cust", "lettuce", "5 lb bag", "00081812345", new DateImp(1,2,2021)));
+		items.add(new Item("cust", "lettuce", "5 lb bag", "00081812345", new DateImp(1,2,2021)));
 		items.add(new Item("Maya", "carrots", "10 bunches", "00000818187777", new DateImp(4,25,2022)));
 		lr.renderLabels(items);
 		

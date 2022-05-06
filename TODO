@@ -18,17 +18,51 @@ having tests for all your code that are easy to run, and running them frequently
 Print label graphic to correct size and orientation on label - 
 	label is 4" wide by 3.5" tall
 	see: https://answers.microsoft.com/en-us/windows/forum/windows_10-hardware-winpc/microsoft-print-to-pdf-custom-paper-sizes-possible/90ed3d48-1ece-4ca5-8d3b-ff0af24a7b37
+	make larger - DONE
+	make save on other 180 deg - DONE
+	just need to make it bigger - so it's scannable - 
+	
+Change graphic to exclude info - 
+	scannable - 
+
+De-couple classes and make interfaces for everything - 
+
+Make savable/printable from other formats - 
+	jpg or what format can every printer print?
+	can every printer print from the print dialog? what is the universal printer specification? 
 
 Read orders from Excel file - 
+	open Excel file and read any data - DONE
+	choose what data need to be able to read, and what format it will be in - 
+	read data into orders and items - 
+		ah - I need a product code -> description, name, unit, GTIN database/sheet
+	what to do on errors, e.g.: - 
+		 bad customer - 
+		 not enough info on line - 
+		 wrong spreadsheet format - 
+		 wrong filetype - 
+		 file not found - 
+		 bad shipvia - 
+		 bad item code - 
+		 bad rate (e.g. not a number) - 
+	autopopulation needed at all? e.g. to verify they typed in the item they meant to type, show description? -> maybe happens in excel sheet rather than here
+	minimize duplication of entered info? eg date, accounts receivable, 
 Print multiple labels from Excel File - 
 	verify GTINs correct
 Write existing orders to excel file - 
 Display of stored orders - 
 Print stored orders - 
 Write order to correct format for IIF file for import to quickbooks - 
+	how get invoice number? user enters? or auto on import? or? 
+
+TESTS:
+- print with 1 label
+- print with multiple labels
+- bar codes scannable
 
 
-Later:
+LATER:
+go straight to print on label printer, instead of from app to pdf to print? ck what format works for all printers
 View orders in scrollable pane - 
 make hrv align with bar segments
 what if the input isn't an excel file

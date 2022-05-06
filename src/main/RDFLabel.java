@@ -16,7 +16,7 @@ public class RDFLabel extends Component {
 	private Item item;
 	private int startX, startY;
 	private Graphics2D g2 = null;
-	private final int[] FONT_SIZES = {20, 15, 12, 10};
+	private final int[] FONT_SIZES = {20, 13, 11, 9};
 	private final String PRODUCT_OF = "Product of USA";
 	private final String FARM = "Riverdog Farm";
 	private final String LOCATION = "Guinda, CA 95637";
@@ -26,13 +26,13 @@ public class RDFLabel extends Component {
 	private final int CUSTOMER_WIDTH = 50;
 	private final int UPPER_BUFFER = 10;
 	private final int LEFT_BUFFER = 10;
-	private final int SPACING = 3;
+	private final int SPACING = 5;
 	private final int BAR_CODE_HEIGHT = 30;
 	private final int BAR_MODULE_WIDTH = 1;
 
 	public RDFLabel(Item o, int x, int y) {
 		item = o;
-		this.setMinimumSize(new Dimension(LABEL_WIDTH + LEFT_BUFFER * 3,LABEL_HEIGHT + 50 + UPPER_BUFFER*2));
+		this.setMinimumSize(new Dimension(LABEL_WIDTH + LEFT_BUFFER * 3,LABEL_HEIGHT + UPPER_BUFFER*2));
 		startX = x;
 		startY = y;
 	}
@@ -68,6 +68,7 @@ public class RDFLabel extends Component {
 		x = startX + LEFT_BUFFER;
 		y += SPACING;
 		LabelUtilities.createGS1_128GTINBarCode(g2, x, y, item.getGtin(), BAR_MODULE_WIDTH, BAR_CODE_HEIGHT, FONT_SIZES[2]);
+		x += 10* BAR_MODULE_WIDTH;
 		y += BAR_CODE_HEIGHT + FONT_SIZES[3] + SPACING;		
 		addProductName(x, y);
 		y += FONT_SIZES[0] + SPACING;
@@ -75,12 +76,12 @@ public class RDFLabel extends Component {
 		y += FONT_SIZES[1];
 		addStandardRDText(x, y);
 		x = startX + LABEL_WIDTH - LABEL_WIDTH / 4;
-		y = startY + LABEL_HEIGHT /2 + FONT_SIZES[2];
+		y = startY + LABEL_HEIGHT /2 ;
 		addPackDateText(x, y);
-		y += FONT_SIZES[2] + SPACING;
+		y += FONT_SIZES[2];
 		addItemDate(x, y);
-		y += FONT_SIZES[1] + SPACING * 4;
-		LabelUtilities.addVoicePickCode(g2, x, y, item.getGtin(), item.getPackDate(), FONT_SIZES[2], FONT_SIZES[0], Font.PLAIN);
+		y += FONT_SIZES[1] + SPACING * 2;
+		LabelUtilities.addVoicePickCode(g2, x, y, item.getGtin(), item.getPackDate(), FONT_SIZES[1], FONT_SIZES[0], Font.PLAIN);
 	}
 	
 	private void addCustomer(int x, int y) {
@@ -88,7 +89,7 @@ public class RDFLabel extends Component {
 	}
 	
 	private void addOuterBorder(int x, int y) {
-		g2.drawRect(x, y, LABEL_WIDTH, LABEL_HEIGHT - FONT_SIZES[1]);
+		g2.drawRect(x, y, LABEL_WIDTH, (int)(LABEL_HEIGHT *.77));
 	}
 	
 	private void addProductName(int x, int y) {
@@ -105,7 +106,7 @@ public class RDFLabel extends Component {
 	
 	private void addItemDate(int x, int y) {
 		addText(x, y, item.getPackDate().getAsPackDate(), FONT_SIZES[1], Font.BOLD);
-		g2.drawRect(x -10, y + SPACING*2, LABEL_WIDTH / 4, FONT_SIZES[1]);
+		g2.drawRect(x -10, y + SPACING, LABEL_WIDTH / 6, FONT_SIZES[1]+2);
 	}
 	
 	/**
@@ -130,7 +131,7 @@ public class RDFLabel extends Component {
 	 * @param fontStyle the font style for the text
 	 */
 	private void addText(int startX, int startY, String text, int fontSize, int fontStyle) {
-		Font font = new Font("Serif", fontStyle, fontSize);
+		Font font = new Font("SansSerif", fontStyle, fontSize);
         g2.setFont(font);
         g2.setColor(Color.black);
         

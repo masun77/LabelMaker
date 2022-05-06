@@ -155,11 +155,11 @@ public class LabelUtilities {
 	private static void appendHumanReadableVersion(Graphics2D g2, int startX, int startY, String gtin, int fontSize) {
 		String hrv = "(" + AI_CODE + ")" + gtin;
 		
-		Font font = new Font("Serif", Font.PLAIN, fontSize);
+		Font font = new Font("SansSerif", Font.PLAIN, fontSize);
         g2.setFont(font);
         g2.setColor(Color.black);
 
-        drawStringHelper(g2, font, hrv, startY + modHeight, startX + MODS_TO_FIRST_CHAR * modWidth);
+        drawStringHelper(g2, font, hrv, startY + modHeight, startX +20);
 	}
 	
 	/**
@@ -314,7 +314,7 @@ public class LabelUtilities {
 		String bigNums = vpc.substring(2);
 		
 		g2.setColor(Color.BLACK);
-		Font font = new Font("Serif", fontStyle, largeFontSize); 
+		Font font = new Font("SansSerif", fontStyle, largeFontSize); 
 		g2.setFont(font);
 		
 		FontRenderContext frc = ((Graphics2D)g2).getFontRenderContext();
@@ -324,9 +324,9 @@ public class LabelUtilities {
     	g2.setColor(Color.WHITE);
     	drawStringHelper(g2, font, bigNums, startY - 5, startX + (int) boundsTemp.getWidth()/2);
     	
-    	font = new Font("Serif", fontStyle, smallFontSize); 
+    	font = new Font("SanSerif", fontStyle, smallFontSize-2); 
     	g2.setFont(font);
-    	drawStringHelper(g2, font, smallNums, startY + 5, startX + 5);
+    	drawStringHelper(g2, font, smallNums, startY + 3, startX + 2);
 	}
 
 	/**
