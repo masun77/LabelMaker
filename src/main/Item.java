@@ -8,12 +8,12 @@ import labels.DateImp;
  * with a name, GTIN, pack date, unit, and voice pick code.
  */
 public class Item {
-	private String gtin;
-	private String customer;
-	private String productName;
-	private Date packDate;
-	private String unit;
-	private String voicePickCode = "";
+	protected String gtin;
+	protected String customer;
+	protected String productName;
+	protected Date packDate;
+	protected String unit;
+	protected String voicePickCode = "";
 	
 	public Item() {
 		customer = "None";

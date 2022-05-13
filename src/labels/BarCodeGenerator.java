@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface BarCodeGenerator {
 	/**
-	 * Calculate the white-black pattern for a GS-158 bar code for a given gtin 
+	 * Calculate the white-black pattern for a GS1-128 bar code for a given gtin 
 	 * and return it as an array list in the form
 	 * [# white modules, # black modules, # white modules, # black modules...]
 	 * @param gtin the gtin to get the barcode for

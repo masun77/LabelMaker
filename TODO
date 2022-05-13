@@ -1,7 +1,7 @@
 TDD cycle: 
 1. Write a test. Run it to see if it fails.
 2. Add a small amount of code to make it run. Run all tests to verify it passes. 
-4. Refactor and run tests again to verify.  
+4. Refactor (simplify, make interfaces, de-couple classes) and run tests again to verify.  
 
 Why TDD? 
 1. Make sure you're clear on what your goal actually is. 
@@ -14,50 +14,36 @@ having tests for all your code that are easy to run, and running them frequently
 6. Keep your code clean by refactoring frequently - every cycle. 
 
 TODO: 
-De-couple classes, make interfaces, and write tests for everything - 
-	Date - DONE
-	CRC16 generator - DONE
-	Bar code generator - IN PROG
-
-Write tests for:
-		CRC16
-		Bar code maker
-		Voice pick code maker
-
-Which pieces do I not understand that I need to research and understand better?
-	jpg or what format can every printer print? make savable/printable in other formats/printers
-	can every printer print from the print dialog? what is the universal printer specification? how do you connect to a printer?
-
-Print label graphic to correct size and orientation on label - 
-	make Tim's edits - 
-	scannable - 
-	size to PTI/whoever's specs - 
+Understand and write classes for:
+	display the label to the screen - 
+	build a label -> specifically the RDFlabel
+		make Tim's edits
+		scannable
+		size to PTI/whoever specs - 
+	print the label -
+		how can you talk to a printer?
+		or, what format - jpg, pdf, etc - can every printer print? 
 
 Easy entry of items - <- KEEP this in mind
-	starting with reading from Excel file - 
-		open Excel file and read any data - DONE
-		choose what data need to be able to read, and what format it will be in - 
+	starting with an order-entry form - 
+		what info do we put on an invoice/Christina's page - 
+		autopopulation - 
+		error checking e.g.: - 
+			bad customer - 
+			bad shipvia - 
+			bad item code - 
+			bad rate (e.g. not a number) - 
+			...other?
 	read data into orders and items - 
-		ah - I need a product code -> description, name, unit, GTIN database/sheet
-	what to do on errors, e.g.: - 
-		 bad customer - 
-		 not enough info on line - 
-		 wrong spreadsheet format - 
-		 wrong filetype - 
-		 file not found - 
-		 bad shipvia - 
-		 bad item code - 
-		 bad rate (e.g. not a number) - 
-	autopopulation needed at all? e.g. to verify they typed in the item they meant to type, show description? -> maybe happens in excel sheet rather than here
-	minimize duplication of entered info? eg date, accounts receivable, 
+		need data to go from product code -> description, name, unit, GTIN database/sheet
 
-EASY printing of multiple labels from program <- keep this in mind
-	verify GTINs correct & scannable
-	
 Display of stored orders - 
 	table of companies/orders and items - 
 	select which want to print - 
 	update in real time - 
+
+EASY printing of multiple labels from program <- keep this in mind
+	verify GTINs correct & scannable
 
 Write order to correct format for import to quickbooks - 
 	select which orders to import - 
@@ -111,3 +97,9 @@ Print label graphic - DONE
 	see: https://answers.microsoft.com/en-us/windows/forum/windows_10-hardware-winpc/microsoft-print-to-pdf-custom-paper-sizes-possible/90ed3d48-1ece-4ca5-8d3b-ff0af24a7b37
 	make larger - DONE
 	make save on other 180 deg - DONE
+	
+De-couple classes, make interfaces, and write tests for everything - 
+	Date - DONE
+	CRC16 generator - DONE
+	Bar code generator - DONE
+	Voice pick code generator - DONE

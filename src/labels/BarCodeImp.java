@@ -14,18 +14,17 @@ public class BarCodeImp implements BarCodeGenerator {
 		appendQuietZone(barCode);
 		appendStartCharacters(barCode);
 		appendAI(barCode);
-		appendGTIN(barCode);
-		appendSymbolCheck(barCode);
+		appendGTIN(barCode, gtin);
+		appendSymbolCheck(barCode, gtin);
 		appendStopCharacter(barCode);
 		appendQuietZone(barCode);
 		
-		return new ArrayList<Integer>(Arrays.asList(10,0,10));
+		return barCode;
 	}
 	
 	/**
 	 * Append a quiet zone of 10 white modules, as defined by GS1-128 bar code specifications. 
 	 * @param barCode the existing bar code representation as an ArrayList
-	 * @return the arrayLIst with the quiet zone appended
 	 */
 	private void appendQuietZone(ArrayList<Integer> barCode) {
 	    appendBlackWhite(barCode, QUIET_ZONE_LENGTH); 
@@ -34,14 +33,57 @@ public class BarCodeImp implements BarCodeGenerator {
 	/**
 	 * Append to the given arrayList the GS1-128 GTIN start characters in language C - start character and FNC1 - 
 	 * as a pattern of integers representing the number of black and white rectangles 
-	 * @param g2 the graphics context
-	 * @param currX the starting x coordinate
-	 * @param startY the starting y coordinate
-	 * @return the x-coordinate of the right edge of the last rectangle appended.
+	 * @param g2 barCode the arrayList to append to
 	 */
 	private void appendStartCharacters(ArrayList<Integer> barCode) {
 	    appendBlackWhite(barCode, START_CHAR);
 	    appendBlackWhite(barCode, FNC1);
+	}
+	
+	/**
+	 * Append to the given arrayList the application indicator of a GTIN
+	 * in GS1-128 language C. 
+	 * @param barCode the arrayList to append to
+	 */
+	private void appendAI(ArrayList<Integer> barCode) {
+	    appendBlackWhite(barCode, getCharacter(Integer.parseInt(AI_CODE)));
+	}
+	
+	/**
+	 * Append a GTIN as a pattern of black and white rectangles defined by GS1-128 to the given arrayList
+	 * @param gtin the gtin to append the bar code pattern for
+	 * @param barCode the arrayLIst to append to
+	 */
+	private void appendGTIN(ArrayList<Integer> barCode, String gtin) {
+	    for (int leftDigit = 0; leftDigit < gtin.length() - 1; leftDigit += 2) {
+	        appendBlackWhite(barCode,
+	        		getCharacter(Integer.parseInt(gtin.substring(leftDigit, leftDigit + 2))));
+	    }
+	}
+	
+	/**
+	 * Append the GS1-128 symbol check character to the given arrayList as a pattern of black and white rectangles.
+	 * Calculation as described in the GS1-128 specifications. 
+	 * @param barCode the arrayList to append the symbol check pattern to 
+	 * @param gtin the GTIN to calculate the symbol check character for
+	 */
+	private void appendSymbolCheck(ArrayList<Integer> barCode, String gtin) {
+	    int startCValue = 105;
+	    int FNC1Value = 102;
+	    int AI01Value = 1;
+	    int sumTotal = startCValue + FNC1Value + AI01Value * 2;
+	    int weight = 3;
+	    for (int leftDigit = 0; leftDigit < gtin.length() - 1; leftDigit += 2) {
+	        int currValue = Integer.parseInt(gtin.substring(leftDigit, leftDigit + 2));
+	        sumTotal += currValue * weight;
+	        weight += 1;
+	    }
+	    sumTotal = sumTotal % 103;
+	    appendBlackWhite(barCode, getCharacter(sumTotal));
+	}
+
+	private void appendStopCharacter(ArrayList<Integer> barCode) {
+	    appendBlackWhite(barCode, STOP_CHAR);
 	}
 	
 	/**
@@ -57,6 +99,14 @@ public class BarCodeImp implements BarCodeGenerator {
 	    }
 	}
 	
+	/**
+	 * Return black-white pattern as an int[] for the given number in GS1-128 bar code language C
+	 * @param number the number to return the pattern for
+	 * @return the pattern of black-white modules in GS1-128 Language C as an int[] for the given number
+	 */
+	private static int[] getCharacter(int number) {
+	    return characterCodesSetC[number];
+	}
 
 	private static final int[] START_CHAR = {2,1,1,2,3,2};
 	private static final int[] FNC1 = {4,1,1,1,3,1};
@@ -64,7 +114,7 @@ public class BarCodeImp implements BarCodeGenerator {
 	private static final int[] QUIET_ZONE_LENGTH = {10};
 	private static final String AI_CODE = "01";
 	private static final int[][] characterCodesSetC = {
-	        {2,1,2,2,2,2},
+	        {2,1,2,2,2,2}, //0
 	        {2,2,2,1,2,2},
 	        {2,2,2,2,2,1},
 	        {1,2,1,2,2,3},

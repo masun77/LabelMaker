@@ -1,4 +1,4 @@
-package printing;
+package main;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -22,57 +22,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-import labels.RDFLabel;
-
-public class LabelRendererAndPrinter implements GraphicsRenderAndPrinter, Printable {
+public class LabelRendererAndPrinter implements Printable {
 	private Container itemParent = null;
 	private ArrayList<Item> items = null;
-
-	@Override
-	public void renderLabels(ArrayList<Item> items) {
-		this.items = items;
-
-		JFrame f = new JFrame("View Labels");
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setOpacity(1);
-
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		itemParent = mainPanel;
-
-		for (int i = 0; i < items.size(); i++) {
-			RDFLabel label = new RDFLabel(items.get(i), 0, 0);
-			mainPanel.add(label);
-		}
-
-		f.add(mainPanel);
-		localPack(f);
-		f.setVisible(true);
-	}
-
-	/**
-	 * Set the frame's size to the maximum minimum width and height of its children
-	 * 
-	 * @param frame the frame to set the size of
-	 */
-	private void localPack(JFrame frame) {
-		Component[] children = frame.getComponents();
-		int height = 0;
-		int width = 0;
-		Component current = null;
-		for (int i = 0; i < children.length; i++) {
-			current = children[i];
-			Dimension d = current.getMinimumSize();
-			height += d.getHeight();
-			if (d.getWidth() > width) {
-				width = (int) d.getWidth();
-			}
-		}
-		if (itemParent.getComponentCount() == 1) {
-			height = (int) (height * 1.5);
-		}
-		frame.setSize(width, height);
-	}
 
 	/**
 	 * Open a print dialog for the current graphic. Print if user selects okay,
