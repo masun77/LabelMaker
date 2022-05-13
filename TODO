@@ -16,6 +16,7 @@ having tests for all your code that are easy to run, and running them frequently
 TODO: 
 Understand and write classes for:
 	display the label to the screen - 
+		start over with the label graphics - can be so much cleaner - 
 	build a label -> specifically the RDFlabel
 		make Tim's edits
 		scannable
