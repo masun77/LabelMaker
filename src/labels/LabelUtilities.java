@@ -338,7 +338,7 @@ public class LabelUtilities {
 	 */
 	protected static String calculateVoicePickCode(String gtin, Date date) {
 		String plainText = gtin + date.getDateYYMMDD();
-		int result = CRC16.crc16(plainText);
+		int result = CRC16Imp.crc16(plainText);
 		String res = Integer.toString(result);
 		return res.substring(res.length() -4);
 	}

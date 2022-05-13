@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import labels.CRC16;
+import labels.CRC16Imp;
 import labels.DateImp;
 import labels.LabelUtilities;
 
@@ -19,7 +19,7 @@ class LabelUtilitiesTest {
 
 	@Test
 	void testCRC() {
-		if (CRC16.crc16("00000818182345210102") == 45071) {
+		if (CRC16Imp.crc16("00000818182345210102") == 45071) {
 			assertTrue(true);
 		}
 		else {

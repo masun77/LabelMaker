@@ -3,9 +3,9 @@ package labels;
 /**
  * Generates the CRC16 hash for the given input String in ASCII. 
  */
-public class CRC16 { 
+public class CRC16Imp implements CRC16Generator { 
 
-    public static int crc16(String arg) { 
+    public int crc16(String plaintext) { 
 
         int[] table = {
             0x0000, 0xC0C1, 0xC181, 0x0140, 0xC301, 0x03C0, 0x0280, 0xC241,
@@ -43,7 +43,7 @@ public class CRC16 {
         };
 
 
-        byte[] bytes = arg.getBytes();
+        byte[] bytes = plaintext.getBytes();
         int crc = 0x0000;
         for (byte b : bytes) {
             crc = (crc >>> 8) ^ table[(crc ^ b) & 0xff];

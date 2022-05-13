@@ -1,5 +1,3 @@
-TODO
-
 TDD cycle: 
 1. Write a test. Run it to see if it fails.
 2. Add a small amount of code to make it run. Run all tests to verify it passes. 
@@ -15,29 +13,30 @@ and by creating easy times to take breaks and check-in on your goals - in betwee
 having tests for all your code that are easy to run, and running them frequently - every cycle. 
 6. Keep your code clean by refactoring frequently - every cycle. 
 
-Print label graphic to correct size and orientation on label - 
-	label is 4" wide by 3.5" tall
-	see: https://answers.microsoft.com/en-us/windows/forum/windows_10-hardware-winpc/microsoft-print-to-pdf-custom-paper-sizes-possible/90ed3d48-1ece-4ca5-8d3b-ff0af24a7b37
-	make larger - DONE
-	make save on other 180 deg - DONE
-	just need to make it bigger - so it's scannable - 
-	
-Change graphic to exclude info - 
-	scannable - 
+TODO: 
+De-couple classes, make interfaces, and write tests for everything - 
+	Date - DONE
+	CRC16 generator - DONE
+	Bar code generator - IN PROG
 
-De-couple classes and make interfaces for everything - 
-	tests for:
+Write tests for:
 		CRC16
 		Bar code maker
 		Voice pick code maker
 
-Make savable/printable from other formats - 
-	jpg or what format can every printer print?
-	can every printer print from the print dialog? what is the universal printer specification? 
+Which pieces do I not understand that I need to research and understand better?
+	jpg or what format can every printer print? make savable/printable in other formats/printers
+	can every printer print from the print dialog? what is the universal printer specification? how do you connect to a printer?
 
-Read orders from Excel file - 
-	open Excel file and read any data - DONE
-	choose what data need to be able to read, and what format it will be in - 
+Print label graphic to correct size and orientation on label - 
+	make Tim's edits - 
+	scannable - 
+	size to PTI/whoever's specs - 
+
+Easy entry of items - <- KEEP this in mind
+	starting with reading from Excel file - 
+		open Excel file and read any data - DONE
+		choose what data need to be able to read, and what format it will be in - 
 	read data into orders and items - 
 		ah - I need a product code -> description, name, unit, GTIN database/sheet
 	what to do on errors, e.g.: - 
@@ -51,13 +50,21 @@ Read orders from Excel file -
 		 bad rate (e.g. not a number) - 
 	autopopulation needed at all? e.g. to verify they typed in the item they meant to type, show description? -> maybe happens in excel sheet rather than here
 	minimize duplication of entered info? eg date, accounts receivable, 
-Print multiple labels from Excel File - 
-	verify GTINs correct
-Write existing orders to excel file - 
+
+EASY printing of multiple labels from program <- keep this in mind
+	verify GTINs correct & scannable
+	
 Display of stored orders - 
-Print stored orders - 
-Write order to correct format for IIF file for import to quickbooks - 
+	table of companies/orders and items - 
+	select which want to print - 
+	update in real time - 
+
+Write order to correct format for import to quickbooks - 
+	select which orders to import - 
+	IIF file - 
 	how get invoice number? user enters? or auto on import? or? 
+	
+Editable/runnable from multiple computers at once so can change in office, packing shed - 
 
 TESTS:
 - print with 1 label
@@ -66,12 +73,8 @@ TESTS:
 
 
 LATER:
-go straight to print on label printer, instead of from app to pdf to print? ck what format works for all printers
-View orders in scrollable pane - 
 make hrv align with bar segments
-what if the input isn't an excel file
 error check people invalid input - customers, products, invalid dates, gtins
-bar code dimensions within specs
 ck lot code with Jessie - I did YYMMDD. can change to whatever. 
 get own CRC code working
 
@@ -104,3 +107,7 @@ Print label graphic - DONE
 	dimensions, e.g. of bar code - DONE
 	test whether printAll prints 1 page - sweet it does! DONE 
 	make background white so doesn't use ink to print - DONE
+	label is 4" wide by 3.5" tall
+	see: https://answers.microsoft.com/en-us/windows/forum/windows_10-hardware-winpc/microsoft-print-to-pdf-custom-paper-sizes-possible/90ed3d48-1ece-4ca5-8d3b-ff0af24a7b37
+	make larger - DONE
+	make save on other 180 deg - DONE

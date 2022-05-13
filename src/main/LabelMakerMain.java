@@ -18,16 +18,11 @@ import printing.LabelRendererAndPrinter;
 public class LabelMakerMain {
 
 	public static void main(String[] args) {
-		// get order file name
-//		Scanner scanner = new Scanner(System.in);
-//		System.out.println("Enter order filename: "); // todo: better way to get file? e.g. select? or autoname or sth?
-//		String fileName = scanner.nextLine();
-		String fileName = "resources/test.xlsx";
+		// Display orders
 		
-		// Read order file into program
-		FileReader fr = new ExcelFileReader();
-		ArrayList<Order> orders = fr.readFileToOrders(fileName);
-		//System.out.println(orders.get(0).toString());
+		// Enter orders
+		
+		// View and print labels
 		
 		// Render labels
 		LabelRendererAndPrinter lr = new LabelRendererAndPrinter();
@@ -39,6 +34,7 @@ public class LabelMakerMain {
 		// Print labels
 		lr.printLabels();
 		
+		// Export to QB
 	}
 
 }

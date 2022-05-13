@@ -13,7 +13,7 @@ public interface Date {
 	public String getDateMMDDYYYY();
 	
 	/**
-	 * @return the data in the form YYMMDDD, no slashes
+	 * @return the data in the form YYMMDD, no slashes
 	 */
 	public String getDateYYMMDD();
 	
