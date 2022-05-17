@@ -21,9 +21,11 @@ Understand and write classes for:
 		make Tim's edits
 		scannable
 		size to PTI/whoever specs - 
+	make viewing labels scrollable
 	print the label -
 		how can you talk to a printer?
 		or, what format - jpg, pdf, etc - can every printer print? 
+	labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
 
 Easy entry of items - <- KEEP this in mind
 	starting with an order-entry form - 
@@ -64,7 +66,7 @@ make hrv align with bar segments
 error check people invalid input - customers, products, invalid dates, gtins
 ck lot code with Jessie - I did YYMMDD. can change to whatever. 
 get own CRC code working
-
+what do if company name is really long? do they only put in abbreviations? right now I have up to 24 characters, size-wise
 
 
 DONE:

@@ -23,12 +23,12 @@ public class Item {
 		unit = "Empty";
 	}
 	
-	public Item(String cust, String pn, String ut, String gt, Date pd) {
+	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate) {
 		customer = cust;
-		productName = pn;
-		gtin = gt;
-		packDate = pd;
-		unit = ut;
+		productName = prodName;
+		gtin = gtnum;
+		packDate = pkdate;
+		unit = unt;
 	}
 
 	public String getGtin() {

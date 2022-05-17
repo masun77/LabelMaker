@@ -2,6 +2,11 @@ package main;
 
 
 import display.LabelViewerImp;
+import display.Labelable;
+import labels.DateImp;
+
+import java.util.ArrayList;
+
 import display.LabelView;
 
 /**
@@ -17,8 +22,11 @@ public class LabelMakerMain {
 		// Select labels to print
 		
 		// Display labels
+		ArrayList<Labelable> items = new ArrayList<Labelable>();
+		items.add(new RDFItem());
+		items.add(new RDFItem("Long company name", "Arugula", "3 lbs", "00000123456789", new DateImp(5,15,2022)));
 		LabelView lv = new LabelViewerImp();
-		lv.showLabels(null);
+		lv.showLabels(items);
 		System.out.println("done");
 				
 		// Print labels

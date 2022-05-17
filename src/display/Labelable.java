@@ -8,6 +8,6 @@ public interface Labelable {
 	 * Get the label for this item, displayable as a component. 
 	 * @return
 	 */
-	Component getLabel();
+	public Component getLabel();
 	
 }
