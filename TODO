@@ -14,19 +14,21 @@ having tests for all your code that are easy to run, and running them frequently
 6. Keep your code clean by refactoring frequently - every cycle. 
 
 TODO: 
-Understand and write classes for:
-	display the label to the screen - 
-		start over with the label graphics - can be so much cleaner - 
-	build a label -> specifically the RDFlabel
-		make Tim's edits
-		scannable
-		size to PTI/whoever specs - 
-	make viewing labels scrollable
+Specifications - 
+	ask Evelyn who these are from?
+		GS1-128
+		PTI
+		whole foods
+		?
+		bar code max 6.5" in length - DONE
+		module width between .25 and 1.016mm - 
+		minimum height of bar code 1.25in - 
+make viewing labels scrollable - DONE
 	print the label -
 		how can you talk to a printer?
 		or, what format - jpg, pdf, etc - can every printer print? 
 	labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
-	Refactor
+	Refactor and comment
 
 Easy entry of items - <- KEEP this in mind
 	starting with an order-entry form - 
@@ -60,9 +62,11 @@ TESTS:
 - print with 1 label
 - print with multiple labels
 - bar codes scannable
+		https://www.producetraceability.org/resources/ has a GTIN checker and VPC checker
 
 
 LATER:
+possibly I should include a lot # and/or pack date in the bar code
 make hrv align with bar segments
 error check people invalid input - customers, products, invalid dates, gtins
 ck lot code with Jessie - I did YYMMDD. can change to whatever. 
@@ -101,9 +105,14 @@ Print label graphic - DONE
 	see: https://answers.microsoft.com/en-us/windows/forum/windows_10-hardware-winpc/microsoft-print-to-pdf-custom-paper-sizes-possible/90ed3d48-1ece-4ca5-8d3b-ff0af24a7b37
 	make larger - DONE
 	make save on other 180 deg - DONE
-	
 De-couple classes, make interfaces, and write tests for everything - 
 	Date - DONE
 	CRC16 generator - DONE
 	Bar code generator - DONE
 	Voice pick code generator - DONE
+Understand and write classes for:
+	display the label to the screen - DONE
+		start over with the label graphics - can be so much cleaner - DONE
+	build a label -> specifically the RDFlabel - DONE
+		make Tim's edits - DONE
+		scannable - DONE

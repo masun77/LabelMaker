@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class LabelViewerImp implements LabelView {
 
@@ -24,9 +25,12 @@ public class LabelViewerImp implements LabelView {
 		for (int i = 0; i < items.size(); i++) {
 			mainPanel.add(items.get(i).getLabel());
 		}
-
-		f.add(mainPanel);
-		localPack(f);
+		localPack(mainPanel);
+		
+		JScrollPane scrollPane = new JScrollPane(mainPanel);
+				
+		f.add(scrollPane);
+		f.setSize(new Dimension(500,700));
 		f.setVisible(true);
 	}
 	
@@ -49,5 +53,6 @@ public class LabelViewerImp implements LabelView {
 			}
 		}
 		frame.setSize(width, height);
+		frame.setPreferredSize(new Dimension(width, height));
 	}
 }
