@@ -214,5 +214,8 @@ public class BarCodeImp implements BarCodeGenerator {
 	        {4,1,1,1,1,3},
 	        {4,1,1,3,1,1},
 	        {1,1,3,1,4,1},//99
+	        {1,1,4,1,3,1},
+	        {3,1,1,1,4,1},
+	        {4,1,1,1,3,1} // up to 102 for symbol check character	        
 	    };
 }

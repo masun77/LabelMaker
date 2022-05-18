@@ -23,8 +23,11 @@ public class LabelMakerMain {
 		
 		// Display labels
 		ArrayList<Labelable> items = new ArrayList<Labelable>();
+		items.add(new RDFItem("Long company name", "Arugula", "3 lbs", "00000123456789", new DateImp(4,2,2022)));
+
 		items.add(new RDFItem());
-		items.add(new RDFItem("Long company name", "Arugula", "3 lbs", "00000123456789", new DateImp(5,15,2022)));
+		//items.add(new RDFItem("MAya", "Cucumbers", "10 lb case", "9876654", new DateImp(5,1,2022)));
+		//items.add(new RDFItem("Marshall", "Kale", "12 bunches", "474747", new DateImp(4,20,2022)));
 		LabelView lv = new LabelViewerImp();
 		lv.showLabels(items);
 		System.out.println("done");

@@ -26,6 +26,7 @@ Understand and write classes for:
 		how can you talk to a printer?
 		or, what format - jpg, pdf, etc - can every printer print? 
 	labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
+	Refactor
 
 Easy entry of items - <- KEEP this in mind
 	starting with an order-entry form - 

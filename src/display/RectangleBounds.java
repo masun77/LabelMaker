@@ -25,4 +25,12 @@ public class RectangleBounds {
 	public int getEndY() {
 		return endY;
 	}
+	
+	public int getWidth() {
+		return endX - startX;
+	}
+	
+	public int getHeight() {
+		return endY - startY;
+	}
 }

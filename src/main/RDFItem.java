@@ -15,11 +15,16 @@ import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.util.ArrayList;
 
 import display.Alignment;
 import display.Labelable;
 import display.RectangleBounds;
+import labels.BarCodeGenerator;
+import labels.BarCodeImp;
 import labels.Date;
+import labels.VoicePickCodeGenerator;
+import labels.VoicePickImp;
 
 public class RDFItem extends Item implements Labelable {
 	private RDFLabel label = null;
@@ -42,19 +47,27 @@ public class RDFItem extends Item implements Labelable {
 	
 	private class RDFLabel extends Component {
 		private Graphics2D g2 = null;
-		private final Dimension labelSize = new Dimension(400,175);
+		private final Dimension viewSize = new Dimension(410,185);  // label size: 400 x 175
 		private final RectangleBounds customerBounds = new RectangleBounds(300,5,380,25);
-		private final RectangleBounds barCodeBounds = new RectangleBounds(5,30,300,100);
+		private final RectangleBounds borderBounds = new RectangleBounds(3,27,390,160);
+		private final RectangleBounds barCodeBounds = new RectangleBounds(5,30,300,80);
+		private final RectangleBounds humanReadableBounds = new RectangleBounds(90,80,300,95);
 		private final RectangleBounds prodNameBounds = new RectangleBounds(5,105,300,125);
 		private final RectangleBounds unitBounds = new RectangleBounds(5,130,300,150);
-		private final RectangleBounds dateLabelBounds = new RectangleBounds(305,70,380,85);
-		private final RectangleBounds packDateBounds = new RectangleBounds(315,90,380,105);
-		private final RectangleBounds voicePickCodeBounds = new RectangleBounds(305,140,380,170);
+		private final RectangleBounds dateLabelBounds = new RectangleBounds(305,100,380,113);
+		private final RectangleBounds packDateBounds = new RectangleBounds(315,118,380,132);
+		private final RectangleBounds packDateBox = new RectangleBounds(305,113,370,133);
+		private final RectangleBounds voicePickCodeBounds = new RectangleBounds(307,134,360,157);
+		private final RectangleBounds vpcLargeBounds = new RectangleBounds(330,137,380,157);
+		private final RectangleBounds vpcSmallBounds = new RectangleBounds(310,142,340,152);
 		private final String PACK_DATE = "Pack Date";
+		private final String AI_CODE = "(01)";
+		private final int BAR_HEIGHT = 45;
+		private final int BAR_WIDTH = 2;
 		
 		public RDFLabel() {
 			super();
-			this.setMinimumSize(labelSize);
+			this.setMinimumSize(viewSize);
 		}
 		
 		@Override
@@ -80,40 +93,38 @@ public class RDFItem extends Item implements Labelable {
 		 */
 		private void createLabel() {
 			addCustomer();
-
-			// Bar code w human readable GTIN
-			
+			addOuterBorder();
+			addBarCode();
 			addProductName();
 			addUnit();
 			addDateLabel();
 			addPackDate();
-			
-			// Voice pick code
+			addVoicePickCode();
 		}
 		
 		private void addCustomer() {
-			addText(customer.toUpperCase(), Font.BOLD, Alignment.RIGHT_ALIGN, customerBounds);
+			addText(customer.toUpperCase(), Font.BOLD, Alignment.RIGHT_ALIGN, Color.black,  customerBounds);
+		}
+		
+		private void addOuterBorder() {
+			g2.drawRect(borderBounds.getStartX(), borderBounds.getStartY(), borderBounds.getWidth(), borderBounds.getHeight());
 		}
 		
 		private void addProductName() {
-			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, prodNameBounds);
+			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  prodNameBounds);
 		}
 		
 		private void addUnit() {
-			addText(unit, Font.BOLD, Alignment.LEFT_ALIGN, unitBounds);
+			addText(unit, Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  unitBounds);
 		}
 		
 		private void addDateLabel() {
-			addText(PACK_DATE, Font.PLAIN, Alignment.LEFT_ALIGN, dateLabelBounds);
+			addText(PACK_DATE, Font.PLAIN, Alignment.LEFT_ALIGN, Color.black,  dateLabelBounds);
 		}
 		
 		private void addPackDate() {
-			addText(packDate.getAsPackDate(), Font.BOLD, Alignment.LEFT_ALIGN, packDateBounds);
-			int x = packDateBounds.getStartX() - 5;
-			int y = packDateBounds.getStartY() - 5;
-			int width = packDateBounds.getEndX() - x;
-			int height = packDateBounds.getEndY() - y;
-			g2.drawRect(x, y, width, height);
+			addText(packDate.getAsPackDate(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black, packDateBounds);
+			g2.drawRect(packDateBox.getStartX(), packDateBox.getStartY(), packDateBox.getWidth(), packDateBox.getHeight());
 		}
 		
 		/**
@@ -124,10 +135,10 @@ public class RDFItem extends Item implements Labelable {
 		 * @param fontSize the font size for the text
 		 * @param fontStyle the font style for the text
 		 */
-		private void addText(String text, int fontStyle, Alignment align, RectangleBounds bounds) {
+		private void addText(String text, int fontStyle, Alignment align, Color color, RectangleBounds bounds) {
 			Font font = new Font("SansSerif", fontStyle, bounds.getEndY()-bounds.getStartY());
 	        g2.setFont(font);
-	        g2.setColor(Color.black);
+	        g2.setColor(color);
 	        FontRenderContext frc = g2.getFontRenderContext();
 			TextLayout tl = new TextLayout(text, font, frc);
 	        Rectangle2D textBounds = tl.getBounds(); 
@@ -138,12 +149,35 @@ public class RDFItem extends Item implements Labelable {
 			}
 	        g2.drawString(text, fontStartX, fontStartY);
 		}
-				
 		
-		private static int modWidth = 4;    
-		private static int modHeight = 130;  
-		private static final int MODS_TO_FIRST_CHAR = 32; // 10 quiet zone + 11 start char + 11 FNC1
-			
+		private void addBarCode() {
+			BarCodeGenerator bcg = new BarCodeImp();
+			ArrayList<Integer> barCode = bcg.getBarCode(gtin);
+			addBarRectangles(barCode);
+			appendHumanReadableVersion();
+		}
+		
+		private void addBarRectangles(ArrayList<Integer> barCode) {
+			int x = barCodeBounds.getStartX();
+			int y = barCodeBounds.getStartY();
+			Color[] colors = {Color.white, Color.black};
+			int currColor = 0;
+			for (int block = 0; block < barCode.size(); block++) {
+				int numMods = barCode.get(block);
+				for (int mod = 0; mod < numMods; mod++) {
+					g2.setColor(colors[currColor]);
+					g2.fillRect(x, y, BAR_WIDTH, BAR_HEIGHT);
+					x += BAR_WIDTH;
+				}
+				if (currColor == 0) {
+					currColor = 1;
+				} 
+				else {
+					currColor = 0;
+				}
+			}
+		}
+				
 		/**
 		 * Append a text version of the GTIN under the bar code in the given graphics context. 
 		 * @param g2 the graphics context
@@ -152,14 +186,8 @@ public class RDFItem extends Item implements Labelable {
 		 * @param gtin the GTIN to represent in the text
 		 * @param fontSize the size of the font to use
 		 */
-		private static void appendHumanReadableVersion(Graphics2D g2, int startX, int startY, String gtin, int fontSize) {
-			String hrv = "(" + AI_CODE + ")" + gtin;
-			
-			Font font = new Font("SansSerif", Font.PLAIN, fontSize);
-	        g2.setFont(font);
-	        g2.setColor(Color.black);
-
-	        drawStringHelper(g2, font, hrv, startY + modHeight, startX +20);
+		private void appendHumanReadableVersion() {
+	        addText(AI_CODE + gtin, Font.PLAIN, Alignment.LEFT_ALIGN, Color.black, humanReadableBounds);
 		}
 		
 		/**
@@ -173,25 +201,16 @@ public class RDFItem extends Item implements Labelable {
 		 * @param largeFontSize the font size to use for the two large numbers
 		 * @param fontStyle the font style to use
 		 */
-		public static void addVoicePickCode(Graphics2D g2, int startX, int startY, String gtin, Date date, int smallFontSize, int largeFontSize, int fontStyle) {
-			String vpc = calculateVoicePickCode(gtin, date);
+		private void addVoicePickCode() {
+			VoicePickCodeGenerator vpcg = new VoicePickImp();
+			String vpc = vpcg.calculateVoicePickCode(gtin, packDate.getDateYYMMDD());
 			String smallNums = vpc.substring(0,2);
 			String bigNums = vpc.substring(2);
-			
-			g2.setColor(Color.BLACK);
-			Font font = new Font("SansSerif", fontStyle, largeFontSize); 
-			g2.setFont(font);
-			
-			FontRenderContext frc = ((Graphics2D)g2).getFontRenderContext();
-	        Rectangle2D boundsTemp = font.getStringBounds(vpc, frc);  
-	    	g2.fill(new Rectangle(startX, startY, (int) boundsTemp.getWidth(), (int) boundsTemp.getHeight()));
+						 
+	    	g2.fillRect(voicePickCodeBounds.getStartX(), voicePickCodeBounds.getStartY(), voicePickCodeBounds.getWidth(), voicePickCodeBounds.getHeight());
 	    	
-	    	g2.setColor(Color.WHITE);
-	    	drawStringHelper(g2, font, bigNums, startY - 5, startX + (int) boundsTemp.getWidth()/2);
-	    	
-	    	font = new Font("SanSerif", fontStyle, smallFontSize-2); 
-	    	g2.setFont(font);
-	    	drawStringHelper(g2, font, smallNums, startY + 3, startX + 2);
+	    	addText(smallNums, Font.BOLD, Alignment.LEFT_ALIGN, Color.white, vpcSmallBounds);
+	    	addText(bigNums, Font.BOLD, Alignment.LEFT_ALIGN, Color.white, vpcLargeBounds);
 		}
 	}
 }
