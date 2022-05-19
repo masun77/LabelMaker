@@ -15,20 +15,16 @@ having tests for all your code that are easy to run, and running them frequently
 
 TODO: 
 Specifications - 
-	ask Evelyn who these are from?
-		GS1-128
-		PTI
-		whole foods
-		?
-		bar code max 6.5" in length - DONE
-		module width between .25 and 1.016mm - 
-		minimum height of bar code 1.25in - 
-make viewing labels scrollable - DONE
+	ask Tim what are the requirements/who are they from
+		GS1-128, PTI, whole foods, ccof, ?
+		
+Make a label for each in qty - 
+	
+Printing
 	print the label -
 		how can you talk to a printer?
 		or, what format - jpg, pdf, etc - can every printer print? 
 	labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
-	Refactor and comment
 
 Easy entry of items - <- KEEP this in mind
 	starting with an order-entry form - 
@@ -66,6 +62,7 @@ TESTS:
 
 
 LATER:
+change settings within app, eg label size
 possibly I should include a lot # and/or pack date in the bar code
 make hrv align with bar segments
 error check people invalid input - customers, products, invalid dates, gtins
@@ -116,3 +113,4 @@ Understand and write classes for:
 	build a label -> specifically the RDFlabel - DONE
 		make Tim's edits - DONE
 		scannable - DONE
+	make viewing labels scrollable - DONE

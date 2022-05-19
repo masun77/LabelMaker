@@ -1,4 +1,4 @@
-package display;
+package labels;
 
 public class RectangleBounds {
 	private int startX, startY, endX, endY;

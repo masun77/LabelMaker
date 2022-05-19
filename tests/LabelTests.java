@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import display.LabelView;
-import display.LabelViewerImp;
-import display.Labelable;
 import labels.DateImp;
+import labels.LabelView;
+import labels.LabelViewerImp;
+import labels.Labelable;
 import main.RDFItem;
 
 class LabelTests {

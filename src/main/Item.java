@@ -14,6 +14,7 @@ public class Item {
 	protected Date packDate;
 	protected String unit;
 	protected String voicePickCode = "";
+	protected int quantity;
 	
 	public Item() {
 		customer = "None";
@@ -21,14 +22,16 @@ public class Item {
 		gtin = "00000818180000";
 		packDate = new DateImp();
 		unit = "Empty";
+		quantity = 0;
 	}
 	
-	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate) {
+	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, int qt) {
 		customer = cust;
 		productName = prodName;
 		gtin = gtnum;
 		packDate = pkdate;
 		unit = unt;
+		quantity = qt;
 	}
 
 	public String getGtin() {
@@ -49,5 +52,9 @@ public class Item {
 	
 	public String getUnit() {
 		return unit;
+	}
+
+	public int getQuantity() {
+		return quantity;
 	}
 }

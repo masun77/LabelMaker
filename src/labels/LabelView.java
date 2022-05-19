@@ -1,4 +1,4 @@
-package display;
+package labels;
 
 import java.util.ArrayList;
 

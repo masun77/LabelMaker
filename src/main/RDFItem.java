@@ -17,12 +17,12 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.ArrayList;
 
-import display.Alignment;
-import display.Labelable;
-import display.RectangleBounds;
+import labels.Alignment;
 import labels.BarCodeGenerator;
 import labels.BarCodeImp;
 import labels.Date;
+import labels.Labelable;
+import labels.RectangleBounds;
 import labels.VoicePickCodeGenerator;
 import labels.VoicePickImp;
 
@@ -34,8 +34,8 @@ public class RDFItem extends Item implements Labelable {
 		label = new RDFLabel();
 	}
 	
-	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate) {
-		super(cust, prodName, unit, gtin, packDate);
+	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate, int qt) {
+		super(cust, prodName, unit, gtin, packDate, qt);
 		label = new RDFLabel();
 	}
 	
@@ -45,6 +45,11 @@ public class RDFItem extends Item implements Labelable {
 		return label;
 	}
 	
+	/**
+	 * Displayable label representing this item. 
+	 * @author mayaj
+	 *
+	 */
 	private class RDFLabel extends Component {
 		private Graphics2D g2 = null;
 		private final Dimension viewSize = new Dimension(410,185);  // label size: 400 x 175

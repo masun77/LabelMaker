@@ -1,34 +1,44 @@
 package main;
 
 
-import display.LabelViewerImp;
-import display.Labelable;
 import labels.DateImp;
+import labels.LabelView;
+import labels.LabelViewerImp;
+import labels.Labelable;
+import userInterface.RDFInterface;
+import userInterface.UserInterface;
 
 import java.util.ArrayList;
-
-import display.LabelView;
+import java.util.Arrays;
 
 /**
  * Uses the input order information to create labels that can be printed. 
  */
 public class LabelMakerMain {
 
-	public static void main(String[] args) {
-		// Display orders
-		
+	public static void main(String[] args) {		
 		// Enter orders
+		 
+		// Display existing orders
+		ArrayList<Order> orders = new ArrayList<Order>();
+		orders.add(new Order(getItemArrayList(
+				new RDFItem("Long company name", "Arugula", "3 lbs", "00000123456789", new DateImp(4,2,2022), 1))));
+		orders.add(new Order(getItemArrayList(new RDFItem())));
+		orders.add(new Order(getItemArrayList(
+				new RDFItem("Maya", "Kale", "10 lb case", "474747", new DateImp(5,1,2022), 5))));
+		orders.add(new Order(getItemArrayList(
+				new RDFItem("Kris", "Kale", "12 bunches", "474747", new DateImp(4,20,2022), 4))));
+		orders.add(new Order(new ArrayList<Item>(Arrays.asList(
+				new RDFItem("Yao", "Kale", "10 lb case", "474747", new DateImp(1,1,2022), 2),
+				new RDFItem("Yao", "Arugula", "10 lb case", "00000123456789", new DateImp(1,1,2022), 3)))));
+		UserInterface ui = new RDFInterface();
+		ui.showInterface(orders);
 		
 		// Select labels to print
 		
 		// Display labels
-		ArrayList<Labelable> items = new ArrayList<Labelable>();
-		items.add(new RDFItem("Long company name", "Arugula", "3 lbs", "00000123456789", new DateImp(4,2,2022)));
-		items.add(new RDFItem());
-		items.add(new RDFItem("MAya", "Cucumbers", "10 lb case", "9876654", new DateImp(5,1,2022)));
-		items.add(new RDFItem("Marshall", "Kale", "12 bunches", "474747", new DateImp(4,20,2022)));
-		LabelView lv = new LabelViewerImp();
-		lv.showLabels(items);
+//		LabelView lv = new LabelViewerImp();
+//		lv.showLabels(items);
 				
 		// Print labels
 		
@@ -36,6 +46,18 @@ public class LabelMakerMain {
 		
 		// other manipulation of existing orders?
 		// multi-user
+	}
+	
+	private static ArrayList<Item> getItemArrayList(Item i) {
+		ArrayList<Item> items = new ArrayList<Item>();
+		items.add(i);
+		return items;
+	}
+	
+	private static ArrayList<Order> getOrderArrayList(Order o) {
+		ArrayList<Order> ord = new ArrayList<Order>();
+		ord.add(o);
+		return ord;
 	}
 
 }
