@@ -1,15 +1,16 @@
 package userInterface;
 
+import java.awt.Button;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,6 +22,8 @@ public class RDFInterface implements UserInterface {
 	ArrayList<Order> orders = new ArrayList<Order>();
 	ArrayList<String> gtins = new ArrayList<String>();
 	ArrayList<String> prodNames = new ArrayList<String>();
+	JFrame orderDisplay = new JFrame("Label Program");
+	JFrame orderEntry = new JFrame("Enter New Order");
 
 	// todo: update interface(vs recreating the whole thing)
 	
@@ -28,8 +31,7 @@ public class RDFInterface implements UserInterface {
 	public void showInterface(ArrayList<Order> ords) {
 		orders.addAll(ords); // is this going to duplicate stuff? 
 		
-		JFrame f = new JFrame("Label Program");
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		orderDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -40,15 +42,53 @@ public class RDFInterface implements UserInterface {
 		
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
 				
-		f.add(scrollPane);
-		f.setSize(new Dimension(500,700));
-		f.setVisible(true);
+		orderDisplay.add(scrollPane);
+		orderDisplay.setSize(new Dimension(500,700));
+		orderDisplay.setVisible(true);
+		
+		initializeEntryForm();
 		
 		System.out.println("displayed");
 	}
 	
+	private void initializeEntryForm() {
+		JPanel entryForm = new JPanel();
+		entryForm.setLayout(new BoxLayout(entryForm, BoxLayout.Y_AXIS));
+		JButton returnHome = new JButton("Return to order display");
+		returnHome.addActionListener(new HomeButtonListener());
+		entryForm.add(returnHome);
+		orderEntry.add(entryForm);
+		
+		JScrollPane scrollPane = new JScrollPane(entryForm);
+		orderEntry.add(scrollPane);
+		orderEntry.setSize(new Dimension(500,700));
+		orderEntry.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	
 	private Component addButtons() {
-		return new JPanel();
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		JButton enterOrderButton = new JButton("Add new order");
+		enterOrderButton.addActionListener(new EntryButtonListener());
+		buttonPanel.add(enterOrderButton);
+		return buttonPanel;
+	}
+	
+	private class EntryButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			orderDisplay.setVisible(false);
+			orderEntry.setVisible(true);
+		}
+	}
+	
+	private class HomeButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			orderEntry.setVisible(false);
+			orderDisplay.setVisible(true);
+		}
 	}
 	
 	private Component showOrders() {
