@@ -1,16 +1,14 @@
 package labels;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import userInterface.DisplayUtilities;
 
 public class LabelViewerImp implements LabelView {
 
@@ -25,34 +23,12 @@ public class LabelViewerImp implements LabelView {
 		for (int i = 0; i < items.size(); i++) {
 			mainPanel.add(items.get(i).getLabel());
 		}
-		localPack(mainPanel);
+		DisplayUtilities.localPack(mainPanel);
 		
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
 				
 		f.add(scrollPane);
 		f.setSize(new Dimension(500,700));
 		f.setVisible(true);
-	}
-	
-	/**
-	 * Set the frame's size to the maximum minimum width and height of its children
-	 * 
-	 * @param frame the frame to set the size of
-	 */
-	private void localPack(Container frame) {
-		Component[] children = frame.getComponents();
-		int height = 0;
-		int width = 0;
-		Component current = null;
-		for (int i = 0; i < children.length; i++) {
-			current = children[i];
-			Dimension d = current.getMinimumSize();
-			height += d.getHeight();
-			if (d.getWidth() > width) {
-				width = (int) d.getWidth();
-			}
-		}
-		frame.setSize(width, height);
-		frame.setPreferredSize(new Dimension(width, height));
 	}
 }

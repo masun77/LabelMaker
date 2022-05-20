@@ -1,32 +1,25 @@
 package main;
 
-import java.awt.Canvas;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
 import java.util.ArrayList;
 
 import labels.Alignment;
 import labels.BarCodeGenerator;
 import labels.BarCodeImp;
 import labels.Date;
-import labels.Labelable;
 import labels.RectangleBounds;
 import labels.VoicePickCodeGenerator;
 import labels.VoicePickImp;
 
-public class RDFItem extends Item implements Labelable {
+public class RDFItem extends Item {
 	private RDFLabel label = null;
 
 	public RDFItem() {

@@ -38,7 +38,7 @@ public class LabelMakerMain {
 		
 		// Display labels
 //		LabelView lv = new LabelViewerImp();
-//		lv.showLabels(items);
+//		lv.showLabels(getItemArrayList(new RDFItem()));
 				
 		// Print labels
 		

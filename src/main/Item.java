@@ -2,12 +2,13 @@ package main;
 
 import labels.Date;
 import labels.DateImp;
+import labels.Labelable;
 
 /**
  * Represents a single item in an order
  * with a name, GTIN, pack date, unit, and voice pick code.
  */
-public class Item {
+public abstract class Item implements Labelable {
 	protected String gtin;
 	protected String customer;
 	protected String productName;

@@ -25,34 +25,34 @@ Printing
 		how can you talk to a printer?
 		or, what format - jpg, pdf, etc - can every printer print? 
 	labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
+	verify GTINs correct and scannable
 
-Easy entry of items - <- KEEP this in mind
-	starting with an order-entry form - 
-		what info do we put on an invoice/Christina's page - 
-		autopopulation - 
-		error checking e.g.: - 
-			bad customer - 
-			bad shipvia - 
-			bad item code - 
-			bad rate (e.g. not a number) - 
-			...other?
-	read data into orders and items - 
-		need data to go from product code -> description, name, unit, GTIN database/sheet
+Order-entry form - 
+	what info do we put on an invoice/Christina's page - 
+	info from spreadsheets - 
+		gtin - 
+		description - 
+		name - 
+		unit - 
+	save to display - 
+	save to csv - 
+
+Initialize program from saved order csv - 	
+
+Run on computer as application - 
+	run on Mac as application - 
+	run on multiple computers at once - 
 
 Display of stored orders - 
-	table of companies/orders and items - 
+	table of companies/orders and items - DONE
 	select which want to print - 
 	update in real time - 
+	make pretty - 
 
-EASY printing of multiple labels from program <- keep this in mind
-	verify GTINs correct & scannable
-
-Write order to correct format for import to quickbooks - 
+Import to quickbooks - 
 	select which orders to import - 
 	IIF file - 
-	how get invoice number? user enters? or auto on import? or? 
-	
-Editable/runnable from multiple computers at once so can change in office, packing shed - 
+	how get invoice number? user enters? or auto on import? or?  
 
 TESTS:
 - print with 1 label
@@ -62,6 +62,8 @@ TESTS:
 
 
 LATER:
+autopopulation eg of company, item
+error checking of input info
 change settings within app, eg label size
 possibly I should include a lot # and/or pack date in the bar code
 make hrv align with bar segments
@@ -69,7 +71,7 @@ error check people invalid input - customers, products, invalid dates, gtins
 ck lot code with Jessie - I did YYMMDD. can change to whatever. 
 get own CRC code working
 what do if company name is really long? do they only put in abbreviations? right now I have up to 24 characters, size-wise
-
+UI bugs - ahh, UI testing is a pain
 
 DONE:
 Using a nice IDE - DONE

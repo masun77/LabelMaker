@@ -29,8 +29,16 @@ public class RDFInterface implements UserInterface {
 	
 	@Override
 	public void showInterface(ArrayList<Order> ords) {
-		orders.addAll(ords); // is this going to duplicate stuff? 
+		orders.addAll(ords); // is this going to duplicate stuff?  or just call it once at start of program - reading from
+		// existing csv for example
 		
+		initializeOrderDisplay();		
+		initializeEntryForm();
+		
+		System.out.println("displayed");
+	}
+	
+	private void initializeOrderDisplay() {
 		orderDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel mainPanel = new JPanel();
@@ -38,26 +46,27 @@ public class RDFInterface implements UserInterface {
 		
 		mainPanel.add(addButtons());
 		mainPanel.add(showOrders());
-		//localPack(mainPanel);
+		DisplayUtilities.localPack(mainPanel);
 		
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
 				
 		orderDisplay.add(scrollPane);
-		orderDisplay.setSize(new Dimension(500,700));
+		orderDisplay.setSize(new Dimension(1000,700));
 		orderDisplay.setVisible(true);
-		
-		initializeEntryForm();
-		
-		System.out.println("displayed");
 	}
 	
 	private void initializeEntryForm() {
 		JPanel entryForm = new JPanel();
 		entryForm.setLayout(new BoxLayout(entryForm, BoxLayout.Y_AXIS));
-		JButton returnHome = new JButton("Return to order display");
-		returnHome.addActionListener(new HomeButtonListener());
-		entryForm.add(returnHome);
-		orderEntry.add(entryForm);
+		
+		addHomeButton(entryForm);
+		addOrderDate();
+		addOrderCompany();
+		addPurchaseOrder();
+		addShipVia();
+		addItems();
+		
+		DisplayUtilities.localPack(entryForm);
 		
 		JScrollPane scrollPane = new JScrollPane(entryForm);
 		orderEntry.add(scrollPane);
@@ -65,12 +74,39 @@ public class RDFInterface implements UserInterface {
 		orderEntry.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	private void addOrderDate() {
+		
+	}
+	
+	private void addOrderCompany() {
+		
+	}
+	
+	private void addPurchaseOrder() {
+		
+	}
+	
+	private void addShipVia() {
+		
+	}
+	
+	private void addItems() {
+		
+	}
+	
+	private void addHomeButton(Container cont) {
+		JButton returnHome = new JButton("Return to order display");
+		returnHome.addActionListener(new HomeButtonListener());
+		returnHome.setMinimumSize(new Dimension(100,50));
+		cont.add(returnHome);
+	}
 	
 	private Component addButtons() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		JButton enterOrderButton = new JButton("Add new order");
 		enterOrderButton.addActionListener(new EntryButtonListener());
+		enterOrderButton.setMinimumSize(new Dimension(100,50));
 		buttonPanel.add(enterOrderButton);
 		return buttonPanel;
 	}
@@ -92,13 +128,14 @@ public class RDFInterface implements UserInterface {
 	}
 	
 	private Component showOrders() {
-		JPanel orderDisplay = new JPanel();
-		orderDisplay.setLayout(new BoxLayout(orderDisplay, BoxLayout.Y_AXIS));
-		orderDisplay.add(getColumnNames());
+		JPanel orderPanel = new JPanel();
+		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
+		orderPanel.add(getColumnNames());
 		ArrayList<ArrayList<Integer>> displayArray = getDisplayArray();
-		addRows(displayArray, orderDisplay);
+		addRows(displayArray, orderPanel);
+		DisplayUtilities.localPack(orderPanel);
 		
-		return orderDisplay;
+		return orderPanel;
 	}
 	
 	private Component getColumnNames() {
@@ -108,6 +145,7 @@ public class RDFInterface implements UserInterface {
 		for(int n = 0; n < colNames.size(); n++) {
 			headerRow.add(new Label(colNames.get(n)));
 		}
+		headerRow.setMinimumSize(new Dimension(colNames.size()*10,10));
 		return headerRow;
 	}
 	
@@ -155,7 +193,7 @@ public class RDFInterface implements UserInterface {
 		return arr;
 	}
 	
-	private void addRows(ArrayList<ArrayList<Integer>> displayArray, Container orderDisplay) {
+	private void addRows(ArrayList<ArrayList<Integer>> displayArray, Container orderPanel) {
 		for (int r = 0; r < displayArray.size(); r++) {
 			ArrayList<Integer> row = displayArray.get(r);
 			JPanel rowPanel = new JPanel();
@@ -164,7 +202,8 @@ public class RDFInterface implements UserInterface {
 			for (int it = 0; it < row.size(); it++) {
 				rowPanel.add(new Label(Integer.toString(row.get(it))));
 			}
-			orderDisplay.add(rowPanel);
+			rowPanel.setMinimumSize(new Dimension(row.size()*80,displayArray.size()*30));
+			orderPanel.add(rowPanel);
 		}
 	}
 }
