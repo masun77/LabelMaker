@@ -58,4 +58,8 @@ public abstract class Item implements Labelable {
 	public int getQuantity() {
 		return quantity;
 	}
+	
+	public String stringRep() {
+		return customer + " " + packDate.getDateMMDDYYYY() + " " + quantity + " " + productName + " " + unit + " " + gtin + " ";
+	}
 }

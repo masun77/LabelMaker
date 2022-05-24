@@ -8,7 +8,6 @@ public class Order {
 	
 	public Order(ArrayList<Item> its) {
 		items = its;
-		company = its.get(0).getCustomer();
 	}
 	
 	public ArrayList<Item> getItems() {
@@ -16,6 +15,19 @@ public class Order {
 	}
 	
 	public String getCompany() {
-		return company;
+		if (items != null && items.size() > 0) {
+			return items.get(0).getCustomer();
+		}
+		return "None";
+	}
+	
+	public void setItems(ArrayList<Item> newIts) {
+		items = newIts;
+	}
+	
+	public void printItems() {
+		for (int i = 0; i < items.size(); i++) {
+			System.out.println(items.get(i).stringRep());
+		}
 	}
 }

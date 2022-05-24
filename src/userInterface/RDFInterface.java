@@ -20,6 +20,7 @@ import main.Order;
 
 public class RDFInterface implements UserInterface {
 	ArrayList<Order> orders = new ArrayList<Order>();
+	Order newOrder = new Order(null);
 	ArrayList<String> gtins = new ArrayList<String>();
 	ArrayList<String> prodNames = new ArrayList<String>();
 	JFrame orderDisplay = new JFrame("Label Program");
@@ -59,7 +60,7 @@ public class RDFInterface implements UserInterface {
 	}
 	
 	private void initializeEntryForm() {
-		JPanel entryForm = new EntryForm(new HomeButtonListener(), new OrderSaveButtonListener());
+		JPanel entryForm = new EntryForm(new HomeButtonListener(), new OrderSaveButtonListener(), newOrder);
 		JScrollPane scrollPane = new JScrollPane(entryForm);
 		orderEntry.add(scrollPane);
 		orderEntry.setSize(new Dimension(1000,700));
@@ -95,7 +96,9 @@ public class RDFInterface implements UserInterface {
 	private class OrderSaveButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// todo on order save - save and add to display
+			orderEntry.setVisible(false);
+			orderDisplay.setVisible(true);
+			updateOrders();
 		}
 	}
 		
@@ -108,6 +111,10 @@ public class RDFInterface implements UserInterface {
 		DisplayUtilities.localPack(orderPanel);
 		
 		return orderPanel;
+	}
+	
+	private void updateOrders() {
+		// TODO
 	}
 	
 	private Component getColumnNames() {

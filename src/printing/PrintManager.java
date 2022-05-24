@@ -10,13 +10,17 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.OrientationRequested;
 
+import labels.Labelable;
 import main.Item;
 
 public class PrintManager {
 	public void printLabels(ArrayList<Item> items) { 
 		ArrayList<Component> labels = new ArrayList<Component>();
 		for (int i = 0; i < items.size(); i++) {
-			labels.add(items.get(i).getLabel());
+			Labelable currItem = items.get(i);
+			for (int j = 0; j < ((Item) currItem).getQuantity(); j++) {
+				labels.add(currItem.getLabel());
+			}
 		}
 		
 		Printable labelPrinter = new LabelPrinter(labels);

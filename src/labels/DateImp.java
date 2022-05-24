@@ -98,4 +98,29 @@ public class DateImp implements Date {
 	public String getDateYYMMDD() {
 		return zerosHelper(year % 100) + zerosHelper(monthOfYear) + zerosHelper(dayOfMonth);
 	}
+	
+	public static Date parseDate(String d) {
+		Date date = new DateImp();
+		String day = "1";
+		String month = "1";
+		String year = "2022";
+		int slash = d.indexOf("/");
+		if (slash > 0) {
+			month = d.substring(0, slash > 2? 2 : slash);
+		}
+		slash += 1;
+		int secSlash = d.indexOf("/", slash);
+		if (secSlash > 0) {
+			day = d.substring(slash, secSlash - slash > 2? slash + 2 : secSlash);
+		}
+		secSlash += 1;
+		if (secSlash < d.length() - 1) {
+			year = d.substring(secSlash, secSlash + 4 > d.length()? d.length() : secSlash + 4);
+		}
+		if (year.equals("22")) {
+			year = "2022";
+		}
+		
+		return new DateImp(Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(year));
+	}
 }

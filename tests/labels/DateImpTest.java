@@ -40,5 +40,11 @@ class DateImpTest {
 		assertEquals(d.getDateYYMMDD(), "000101");
 		assertEquals(d2.getDateYYMMDD(), "220420");
 	}
+	
+	@Test
+	void testParseDate() {
+		assertEquals(DateImp.parseDate("").getDateMMDDYYYY(), "01/01/2022");
+		assertEquals(DateImp.parseDate("5/1/22").getDateMMDDYYYY(), "05/01/2022");
+	}
 
 }

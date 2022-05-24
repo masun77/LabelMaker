@@ -22,14 +22,13 @@ Printing -
 	print the label -
 		how can you talk to a printer? the printer driver does it. So if your computer can talk to it, 
 			and you can open a print dialog with that printer, you should be good - DONE
-		try printing to office printer - 
-		try printing on label - 
+		try printing to office printer - problem with graying, is that because of scaling/translating?
+			also, think I need to re-add that line about imageable area - the margins are too big
+		try printing on label printer - 
 	verify GTINs correct and scannable - 
-	
-
-	
+		
 Order-entry form - 
-	what info do we put on an invoice/Christina's page - 
+	what info do we put on an invoice/Christina's page - DONE
 		company - DONE
 		PO num - DONE
 		shipVia - DONE
@@ -39,10 +38,13 @@ Order-entry form -
 		description - 
 		name - 
 		unit - 
+	autopopulation of amounts - DONE
 	save to order display - 
 	save to csv - 
 	make pretty - 
 	debug - 
+	more than 20 items - 
+	ah shit - amounts that are doubles rather than ints - 
 
 Edit orders - 
 Delete orders - 
@@ -59,6 +61,9 @@ Run on computer as application -
 	run on Mac as application - 
 
 Run on multiple computers at once - 
+	update in real time - 
+
+Print labels without needing an order - can just have save, print, save and print buttons on order entry
 
 Import to quickbooks - 
 	select which orders to import - 
