@@ -27,11 +27,10 @@ public class RDFItem extends Item {
 		label = new RDFLabel();
 	}
 	
-	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate, int qt) {
-		super(cust, prodName, unit, gtin, packDate, qt);
+	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate) {
+		super(cust, prodName, unit, gtin, packDate);
 		label = new RDFLabel();
 	}
-	
 
 	@Override
 	public Component getLabel() {

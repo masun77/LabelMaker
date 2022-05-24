@@ -15,7 +15,6 @@ public abstract class Item implements Labelable {
 	protected Date packDate;
 	protected String unit;
 	protected String voicePickCode = "";
-	protected int quantity;
 	
 	public Item() {
 		customer = "None";
@@ -23,16 +22,14 @@ public abstract class Item implements Labelable {
 		gtin = "00000818180000";
 		packDate = new DateImp();
 		unit = "Empty";
-		quantity = 0;
 	}
 	
-	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, int qt) {
+	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate) {
 		customer = cust;
 		productName = prodName;
 		gtin = gtnum;
 		packDate = pkdate;
 		unit = unt;
-		quantity = qt;
 	}
 
 	public String getGtin() {
@@ -53,9 +50,5 @@ public abstract class Item implements Labelable {
 	
 	public String getUnit() {
 		return unit;
-	}
-
-	public int getQuantity() {
-		return quantity;
 	}
 }

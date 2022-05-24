@@ -17,10 +17,8 @@ TODO:
 Specifications - 
 	ask Tim what are the requirements/who are they from
 		GS1-128, PTI, whole foods, ccof, ?
-		
-Make a label for each in qty - 
 	
-Printing
+Printing - 
 	print the label -
 		how can you talk to a printer? the printer driver does it. So if your computer can talk to it, 
 			and you can open a print dialog with that printer, you should be good - DONE
@@ -28,29 +26,33 @@ Printing
 		try printing on label - 
 	verify GTINs correct and scannable - 
 	
-labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
-
 Order-entry form - 
 	what info do we put on an invoice/Christina's page - 
-	info from spreadsheets/datebase - 
+		company - 
+		PO num -
+		shipVia -
+		list of itemCode, qty, price - 
+	info from spreadsheets/datebase (ie, what shows up on a QB invoice) - 
 		gtin - 
 		description - 
 		name - 
 		unit - 
+	choose qty - 
 	save to display - 
 	save to csv - 
-
-Initialize program from saved order csv - 	
-
-Run on computer as application - 
-	run on Mac as application - 
-	run on multiple computers at once - 
-
+	
 Display of stored orders - 
 	table of companies/orders and items - DONE
 	select which want to print - 
 	update in real time - 
 	make pretty - 
+
+Initialize program from saved order csv - 	
+
+Run on computer as application - 
+	run on Mac as application - 
+
+Run on multiple computers at once - 
 
 Import to quickbooks - 
 	select which orders to import - 
@@ -74,7 +76,8 @@ error check people invalid input - customers, products, invalid dates, gtins
 ck lot code with Jessie - I did YYMMDD. can change to whatever. 
 get own CRC code working
 what do if company name is really long? do they only put in abbreviations? right now I have up to 24 characters, size-wise
-UI bugs - ahh, UI testing is a pain
+User Interface bugs - ahh, UI testing is a pain
+labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
 
 DONE:
 Using a nice IDE - DONE

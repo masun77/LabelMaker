@@ -44,7 +44,7 @@ public class LabelMakerMain {
 				
 		// Print labels
 		ArrayList<Item> items = new ArrayList<Item>();
-		items.add(new RDFItem("Maya", "Kale", "10 lb case", "474747", new DateImp(5,1,2022), 1));
+		items.add(new RDFItem("Maya", "Kale", "10 lb case", "474747", new DateImp(5,1,2022)));
 		PrintManager pm = new PrintManager();
 		pm.printLabels(items);
 		
