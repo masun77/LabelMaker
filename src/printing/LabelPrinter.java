@@ -16,7 +16,7 @@ public class LabelPrinter implements Printable {
 
 	@Override
 	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-		if (pageIndex >= labels.size()) { // Print one page for each component
+		if (pageIndex >= labels.size()) { // Print one page for each label
 			return NO_SUCH_PAGE;
 		} else {
 			Component currLabel = labels.get(pageIndex);

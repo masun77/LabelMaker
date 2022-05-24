@@ -25,7 +25,7 @@ public class RDFInterface implements UserInterface {
 	JFrame orderDisplay = new JFrame("Label Program");
 	JFrame orderEntry = new JFrame("Enter New Order");
 
-	// todo: update interface(vs recreating the whole thing)
+	// todo: update interface with new orders (vs recreating the whole thing)
 	
 	@Override
 	public void showInterface(ArrayList<Order> ords) {
@@ -52,55 +52,20 @@ public class RDFInterface implements UserInterface {
 				
 		orderDisplay.add(scrollPane);
 		orderDisplay.setSize(new Dimension(1000,700));
-		orderDisplay.setVisible(true);
+		
+		// todo change
+		orderDisplay.setVisible(false);
+		orderEntry.setVisible(true);
 	}
 	
 	private void initializeEntryForm() {
-		JPanel entryForm = new JPanel();
-		entryForm.setLayout(new BoxLayout(entryForm, BoxLayout.Y_AXIS));
-		
-		addHomeButton(entryForm);
-		addOrderDate();
-		addOrderCompany();
-		addPurchaseOrder();
-		addShipVia();
-		addItems();
-		
-		DisplayUtilities.localPack(entryForm);
-		
+		JPanel entryForm = new EntryForm(new HomeButtonListener(), new OrderSaveButtonListener());
 		JScrollPane scrollPane = new JScrollPane(entryForm);
 		orderEntry.add(scrollPane);
-		orderEntry.setSize(new Dimension(500,700));
+		orderEntry.setSize(new Dimension(1000,700));
 		orderEntry.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	private void addOrderDate() {
 		
-	}
-	
-	private void addOrderCompany() {
-		
-	}
-	
-	private void addPurchaseOrder() {
-		
-	}
-	
-	private void addShipVia() {
-		
-	}
-	
-	private void addItems() {
-		
-	}
-	
-	private void addHomeButton(Container cont) {
-		JButton returnHome = new JButton("Return to order display");
-		returnHome.addActionListener(new HomeButtonListener());
-		returnHome.setMinimumSize(new Dimension(100,50));
-		cont.add(returnHome);
-	}
-	
 	private Component addButtons() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
@@ -127,6 +92,13 @@ public class RDFInterface implements UserInterface {
 		}
 	}
 	
+	private class OrderSaveButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// todo on order save - save and add to display
+		}
+	}
+		
 	private Component showOrders() {
 		JPanel orderPanel = new JPanel();
 		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));

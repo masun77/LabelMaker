@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import main.Item;
 import userInterface.DisplayUtilities;
 
 public class LabelViewerImp implements LabelView {
@@ -21,7 +22,10 @@ public class LabelViewerImp implements LabelView {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
 		for (int i = 0; i < items.size(); i++) {
-			mainPanel.add(items.get(i).getLabel());
+			Labelable currItem = items.get(i);
+			for (int j = 0; j < ((Item) currItem).getQuantity(); j++) {
+				mainPanel.add(currItem.getLabel());
+			}
 		}
 		DisplayUtilities.localPack(mainPanel);
 		

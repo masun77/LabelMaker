@@ -20,21 +20,18 @@ import labels.VoicePickCodeGenerator;
 import labels.VoicePickImp;
 
 public class RDFItem extends Item {
-	private RDFLabel label = null;
 
 	public RDFItem() {
 		super();
-		label = new RDFLabel();
 	}
 	
-	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate) {
-		super(cust, prodName, unit, gtin, packDate);
-		label = new RDFLabel();
+	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate, int qty) {
+		super(cust, prodName, unit, gtin, packDate, qty);
 	}
 
 	@Override
 	public Component getLabel() {
-		return label;
+		return new RDFLabel();
 	}
 	
 	/**
