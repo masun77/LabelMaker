@@ -45,7 +45,7 @@ public class RDFItem extends Item {
 	 */
 	private class RDFLabel extends Component {
 		private Graphics2D g2 = null;
-		private final Dimension viewSize = new Dimension(410,185);  // label size: 400 x 175
+		private final Dimension viewSize = new Dimension(410,300);  // label size: 400 x 175; 400x300 for whole label
 		private final RectangleBounds customerBounds = new RectangleBounds(300,5,380,25);
 		private final RectangleBounds borderBounds = new RectangleBounds(3,27,390,160);
 		private final RectangleBounds barCodeBounds = new RectangleBounds(5,30,300,80);
@@ -66,6 +66,8 @@ public class RDFItem extends Item {
 		public RDFLabel() {
 			super();
 			this.setMinimumSize(viewSize);
+			this.setPreferredSize(viewSize);
+			this.setSize(viewSize);
 		}
 		
 		@Override

@@ -22,14 +22,17 @@ Make a label for each in qty -
 	
 Printing
 	print the label -
-		how can you talk to a printer?
-		or, what format - jpg, pdf, etc - can every printer print? 
-	labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
-	verify GTINs correct and scannable
+		how can you talk to a printer? the printer driver does it. So if your computer can talk to it, 
+			and you can open a print dialog with that printer, you should be good - DONE
+		try printing to office printer - 
+		try printing on label - 
+	verify GTINs correct and scannable - 
+	
+labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
 
 Order-entry form - 
 	what info do we put on an invoice/Christina's page - 
-	info from spreadsheets - 
+	info from spreadsheets/datebase - 
 		gtin - 
 		description - 
 		name - 
