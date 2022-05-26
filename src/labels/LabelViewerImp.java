@@ -27,7 +27,7 @@ public class LabelViewerImp implements LabelView {
 				mainPanel.add(currItem.getLabel());
 			}
 		}
-		Utilities.localPack(mainPanel);
+		Utilities.localVPack(mainPanel);
 		
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
 				

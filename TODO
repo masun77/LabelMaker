@@ -22,26 +22,24 @@ Printing -
 	print the label -
 		how can you talk to a printer? the printer driver does it. So if your computer can talk to it, 
 			and you can open a print dialog with that printer, you should be good - DONE
-		try printing to office printer - problem with graying, is that because of scaling/translating?
-			also, think I need to re-add that line about imageable area - the margins are too big
+		change margins - 
 		try printing on label printer - 
 	verify GTINs correct and scannable - 
-		
-
-	debug - 
-	more than 20 items - 
-	ah shit - amounts that are doubles rather than ints, and quantities that aren't ints - 
-	info from spreadsheets/datebase (ie, what shows up on a QB invoice) - 
-		gtin - 
-		description - 
-		name - 
-		unit - 
 
 Edit orders - 
 
 Delete orders - 
 	
 Select orders to print and print  - 
+
+Info from spreadsheets/datebase (ie, what shows up on a QB invoice) - 
+		gtin - 
+		description - 
+		name - 
+		unit - 
+
+UI - more than 20 items - 
+	ah shit - amounts that are doubles rather than ints, and quantities that aren't ints - 
 
 Run on computer as application - 
 	run on Mac as application - 
@@ -76,7 +74,7 @@ User Interface bugs - ahh, UI testing is a pain
 labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
 make my own HBox and VBox - inherit from JPanel or whatever - so I don't have to keep creating and setting the layout
 print labels without needing an order? 
-make UI prettier/cleaner
+make UI prettier/cleaner, remove all bugs - 
 search for all todos - 
 
 DONE:

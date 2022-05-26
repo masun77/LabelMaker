@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.OrientationRequested;
 
 import labels.Labelable;
@@ -30,6 +31,7 @@ public class PrintManager {
 		PrintRequestAttributeSet attrSet = new HashPrintRequestAttributeSet();
 		boolean doPrint = job.printDialog(attrSet);
 		attrSet.add(OrientationRequested.REVERSE_LANDSCAPE);
+		attrSet.add(new MediaPrintableArea(5f, 5f, 95f,39f, MediaPrintableArea.MM));
 				
 		if (doPrint) {
 			try {

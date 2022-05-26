@@ -24,7 +24,7 @@ public abstract class Item implements Labelable {
 		gtin = "00000818180000";
 		packDate = new DateImp();
 		unit = "Empty";
-		quantity = 0;
+		quantity = 1;
 		price = 0;
 	}
 	
