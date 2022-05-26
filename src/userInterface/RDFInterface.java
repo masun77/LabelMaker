@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import export.DataSaver;
 import main.Item;
 import main.Order;
 
@@ -25,6 +26,8 @@ public class RDFInterface implements UserInterface {
 	private JFrame orderEntry = new JFrame("Enter New Order");
 	private JPanel orderPanel = null;
 	private JPanel displayMainPanel = new JPanel();
+	private final String[] SAVE_FILE_NAMES = {"resources/Orders1.csv", "resources/Orders2.csv"};
+	private int currentSaveFile = 0;
 
 	// todo: update interface with new orders (vs recreating the whole thing)
 	
@@ -102,6 +105,8 @@ public class RDFInterface implements UserInterface {
 			displayMainPanel.add(orderPanel);
 			DisplayUtilities.localPack(displayMainPanel);
 			orderDisplay.setVisible(true);
+			DataSaver.writeOrdersToCSV(orders, SAVE_FILE_NAMES[currentSaveFile]);
+			currentSaveFile = currentSaveFile == 0? 1 : 0;
 		}
 	}
 		

@@ -39,8 +39,9 @@ Order-entry form -
 		name - 
 		unit - 
 	autopopulation of amounts - DONE
-	save to order display - 
-	save to csv - 
+	save to order display - DONE
+	save to csv - DONE!
+	clear order entry after save - doesn't work yet, I think it's just adding stuff or something... - 
 	make pretty - 
 	debug - 
 	more than 20 items - 
