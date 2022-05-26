@@ -1,7 +1,6 @@
 package userInterface;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,7 @@ import javax.swing.JScrollPane;
 import export.DataSaver;
 import main.Item;
 import main.Order;
+import main.Utilities;
 
 public class RDFInterface implements UserInterface {
 	private ArrayList<Order> orders = new ArrayList<Order>();
@@ -28,8 +28,8 @@ public class RDFInterface implements UserInterface {
 	private JPanel displayMainPanel = new JPanel();
 	private final String[] SAVE_FILE_NAMES = {"resources/Orders1.csv", "resources/Orders2.csv"};
 	private int currentSaveFile = 0;
-
-	// todo: update interface with new orders (vs recreating the whole thing)
+	private final Dimension NAME_SIZE = new Dimension(80,15);
+	private final Dimension WINDOW_SIZE = new Dimension(500,300);
 	
 	public RDFInterface(ArrayList<Order> ords) {
 		orders.addAll(ords); 
@@ -63,23 +63,22 @@ public class RDFInterface implements UserInterface {
 		setOrderArray();
 		displayMainPanel.add(addButtons());
 		displayMainPanel.add(orderPanel);
-		DisplayUtilities.localPack(displayMainPanel);
+		Utilities.localVPack(displayMainPanel);
 		
 		JScrollPane scrollPane = new JScrollPane(displayMainPanel);
 				
 		orderDisplay.add(scrollPane);
-		orderDisplay.setSize(new Dimension(1000,700));
+		orderDisplay.setSize(WINDOW_SIZE);
 		
-		// todo change
-		orderDisplay.setVisible(false);
-		orderEntry.setVisible(true);
+		orderDisplay.setVisible(true);
+		orderEntry.setVisible(false);
 	}
 	
 	private void initializeEntryForm() {
 		JPanel entryForm = new EntryForm(new HomeButtonListener(), new OrderSaveButtonListener(), orders);
 		JScrollPane scrollPane = new JScrollPane(entryForm);
 		orderEntry.add(scrollPane);
-		orderEntry.setSize(new Dimension(1000,700));
+		orderEntry.setSize(WINDOW_SIZE);
 		orderEntry.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 		
@@ -90,6 +89,7 @@ public class RDFInterface implements UserInterface {
 		enterOrderButton.addActionListener(new EntryButtonListener());
 		enterOrderButton.setMinimumSize(new Dimension(100,50));
 		buttonPanel.add(enterOrderButton);
+		Utilities.localHPack(buttonPanel);
 		return buttonPanel;
 	}
 	
@@ -116,7 +116,7 @@ public class RDFInterface implements UserInterface {
 			displayMainPanel.remove(1);
 			setOrderArray();
 			displayMainPanel.add(orderPanel);
-			DisplayUtilities.localPack(displayMainPanel);
+			Utilities.localVPack(displayMainPanel);
 			orderDisplay.setVisible(true);
 			DataSaver.writeOrdersToCSV(orders, SAVE_FILE_NAMES[currentSaveFile]);
 			currentSaveFile = currentSaveFile == 0? 1 : 0;
@@ -129,7 +129,7 @@ public class RDFInterface implements UserInterface {
 		orderPanel.add(getColumnNames());
 		ArrayList<ArrayList<Integer>> displayArray = getDisplayArray();
 		addRows(displayArray);
-		DisplayUtilities.localPack(orderPanel);
+		Utilities.localVPack(orderPanel);
 	}
 	
 	private Component getColumnNames() {
@@ -137,9 +137,11 @@ public class RDFInterface implements UserInterface {
 		headerRow.setLayout(new BoxLayout(headerRow, BoxLayout.X_AXIS));
 		ArrayList<String> colNames = getCompanyNames();
 		for(int n = 0; n < colNames.size(); n++) {
-			headerRow.add(new Label(colNames.get(n)));
+			Label nameLabel = new Label(colNames.get(n));
+			Utilities.setMinMax(nameLabel, NAME_SIZE);
+			headerRow.add(nameLabel);
 		}
-		headerRow.setMinimumSize(new Dimension(colNames.size()*10,10));
+		Utilities.localHPack(headerRow);
 		return headerRow;
 	}
 	
@@ -194,11 +196,15 @@ public class RDFInterface implements UserInterface {
 			ArrayList<Integer> row = displayArray.get(r);
 			JPanel rowPanel = new JPanel();
 			rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
-			rowPanel.add(new Label(prodNames.get(r)));
+			Label prodName = new Label(prodNames.get(r));
+			Utilities.setMinMax(prodName, NAME_SIZE);
+			rowPanel.add(prodName);
 			for (int it = 0; it < row.size(); it++) {
-				rowPanel.add(new Label(Integer.toString(row.get(it))));
+				Label qty = new Label(Integer.toString(row.get(it)));
+				Utilities.setMinMax(qty, NAME_SIZE);
+				rowPanel.add(qty);
 			}
-			rowPanel.setMinimumSize(new Dimension(row.size()*80,displayArray.size()*30));
+			Utilities.localHPack(rowPanel);
 			orderPanel.add(rowPanel);
 		}
 	}

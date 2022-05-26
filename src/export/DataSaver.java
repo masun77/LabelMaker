@@ -24,10 +24,9 @@ public class DataSaver {
 	public static void writeOrdersToCSV(ArrayList<Order> orders, String filePath)
 	{
 	    File file = new File(filePath);
-	    // todo: first clear existing file; or save with backups - 2 copies? or 3? or new one each time?
 	  
 	    try {
-	        FileWriter outputfile = new FileWriter(file);
+	        FileWriter outputfile = new FileWriter(file, false);
 	        CSVWriter writer = new CSVWriter(outputfile, '|',
 	        		CSVWriter.NO_QUOTE_CHARACTER,
 	        		CSVWriter.DEFAULT_ESCAPE_CHARACTER,
@@ -88,8 +87,6 @@ public class DataSaver {
 		            item.setQuantity(Integer.parseInt(row[7]));
 		            item.setPrice(Float.parseFloat(row[8]));
 		            order.addItem(item);
-		            
-		            order.printOrder();
 		        }
 		    }
 		    catch (Exception e) {

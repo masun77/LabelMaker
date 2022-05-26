@@ -27,18 +27,7 @@ Printing -
 		try printing on label printer - 
 	verify GTINs correct and scannable - 
 		
-Order-entry form - 
-	what info do we put on an invoice/Christina's page - DONE
-		company - DONE
-		PO num - DONE
-		shipVia - DONE
-		list of itemCode, qty, price - DONE
-	autopopulation of amounts - DONE
-	save to order display - DONE
-	save to csv - DONE!
-	clear order entry after save - DONE
-	Initialize program from saved order csv - 	DONE
-	make pretty - 
+
 	debug - 
 	more than 20 items - 
 	ah shit - amounts that are doubles rather than ints, and quantities that aren't ints - 
@@ -49,13 +38,10 @@ Order-entry form -
 		unit - 
 
 Edit orders - 
+
 Delete orders - 
 	
-Display of stored orders - 
-	table of companies/orders and items - DONE
-	select which want to print - 
-	update in real time - 
-	make pretty - 
+Select orders to print and print  - 
 
 Run on computer as application - 
 	run on Mac as application - 
@@ -63,15 +49,11 @@ Run on computer as application -
 Run on multiple computers at once - 
 	update in real time - 
 
-Print labels without needing an order - can just have save, print, save and print buttons on order entry
-
 Import to quickbooks - 
 	select which orders to import - 
 	IIF file - 
 	how get invoice number? user enters? or auto on import? or?  
 	
-Search for all todos and do - 
-
 TESTS:
 - print with 1 label
 - print with multiple labels
@@ -82,6 +64,7 @@ TESTS:
 LATER:
 autopopulation eg of company, item
 error checking of input info
+save orders in 1 big csv, all orders ever entered? vs writing over them each time - keep with a fixed order num
 change settings within app, eg label size
 possibly I should include a lot # and/or pack date in the bar code
 make hrv align with bar segments
@@ -92,6 +75,9 @@ what do if company name is really long? do they only put in abbreviations? right
 User Interface bugs - ahh, UI testing is a pain
 labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
 make my own HBox and VBox - inherit from JPanel or whatever - so I don't have to keep creating and setting the layout
+print labels without needing an order? 
+make UI prettier/cleaner
+search for all todos - 
 
 DONE:
 Using a nice IDE - DONE
@@ -137,3 +123,24 @@ Understand and write classes for:
 		scannable - DONE
 	make viewing labels scrollable - DONE
 	Add label for each qty - DONE
+Order-entry form/UI - 
+	what info do we put on an invoice/Christina's page - DONE
+		company - DONE
+		PO num - DONE
+		shipVia - DONE
+		list of itemCode, qty, price - DONE
+	autopopulation of amounts - DONE
+	save to order display - DONE
+	save to csv - DONE!
+	clear order entry after save - DONE
+	Initialize program from saved order csv - 	DONE
+	table of companies/orders and items - DONE
+UI - 
+	make pretty - 
+		Make all company names, item names, and item qtys the same size - DONE
+		space all near the top instead of taking up the whole space of the Jpanel - DONE
+		order entry:
+			left align top stuff - DONE
+			right align total stuff - DONE
+			Make textfields have minimum sizes - DONE
+			make textfields and their headers have the same minimum size - DONE

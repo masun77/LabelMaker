@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import main.Item;
-import userInterface.DisplayUtilities;
+import main.Utilities;
 
 public class LabelViewerImp implements LabelView {
 
@@ -27,7 +27,7 @@ public class LabelViewerImp implements LabelView {
 				mainPanel.add(currItem.getLabel());
 			}
 		}
-		DisplayUtilities.localPack(mainPanel);
+		Utilities.localPack(mainPanel);
 		
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
 				

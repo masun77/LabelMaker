@@ -1,6 +1,7 @@
 package userInterface;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Label;
 import java.awt.TextField;
@@ -14,11 +15,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import labels.Date;
 import labels.DateImp;
 import main.Item;
 import main.Order;
 import main.RDFItem;
+import main.Utilities;
 
 public class EntryForm extends JPanel {
 	private ArrayList<Order> orders = new ArrayList<Order>();
@@ -30,8 +31,15 @@ public class EntryForm extends JPanel {
 	private TextField shipVia = new TextField(15);
 	private final int NUM_ITEMS = 20;
 	private JPanel itemPanel = new JPanel();
-	private Label totalLabel = new Label();
+	private Label totalLabel = new Label("$0");
 	private ArrayList<TextField> amounts = new ArrayList<TextField>();
+	private final Dimension LABEL_SIZE = new Dimension(100,15);
+	private final Dimension QTY_SIZE = new Dimension(30,15);
+	private final Dimension CODE_SIZE = new Dimension(80,15);
+	private final Dimension DESCRIP_SIZE = new Dimension(200,15);
+	private final Dimension PRICE_SIZE = new Dimension(40,15);
+	private final Dimension AMOUNT_SIZE = new Dimension(60,15);
+	private final Dimension BUTTON_SIZE = new Dimension(100,50);
 
 	public EntryForm(ActionListener homeLstn, ActionListener saveLstn, ArrayList<Order> ords) {
 		orders = ords;
@@ -51,15 +59,17 @@ public class EntryForm extends JPanel {
 		addTotal();
 		addSaveButton(saveListener);
 		
-		DisplayUtilities.localPack(this);
+		Utilities.localVPack(this);
 	}
 	
 	private void addLabelComponentPair(String label, Component tf) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		panel.add(new Label(label));
+		Label labelComp = new Label(label);
+		Utilities.setMinMax(labelComp, LABEL_SIZE);
+		panel.add(labelComp);
 		panel.add(tf);
-		tf.setMaximumSize(new Dimension(30,15));
+		Utilities.setMinMax(tf, LABEL_SIZE);
 		add(panel);
 	}
 	
@@ -85,6 +95,7 @@ public class EntryForm extends JPanel {
 		for (int i = 0; i < NUM_ITEMS; i++) {
 			addItemRow();
 		}
+		Utilities.localVPack(itemPanel);
 		add(itemPanel);
 	}
 	
@@ -155,11 +166,10 @@ public class EntryForm extends JPanel {
 	}
 	
 	private void clearForm() {
-		// date po company total shipvia itempanel
 		date.setText("");
 		company.setText("");
 		purchaseOrder.setText("");
-		totalLabel.setText("");
+		totalLabel.setText("$0");
 		shipVia.setText("");
 		itemPanel.removeAll();
 		for (int i = 0; i < NUM_ITEMS; i++) {
@@ -202,17 +212,22 @@ public class EntryForm extends JPanel {
 				total += Integer.parseInt(amt);	
 			}
 		}
-		totalLabel.setText(Integer.toString(total));
+		totalLabel.setText("$" + Integer.toString(total));
 	}
 	
 	private void addItemRow() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		TextField quantity = new TextField(5);
-		TextField code = new TextField(20);
-		TextField description = new TextField(30);
-		TextField price = new TextField(10);
-		TextField amount = new TextField(10);
+		TextField quantity = new TextField();
+		TextField code = new TextField();
+		TextField description = new TextField();
+		TextField price = new TextField();
+		TextField amount = new TextField();
+		Utilities.setMinMax(quantity, QTY_SIZE);
+		Utilities.setMinMax(code, CODE_SIZE);
+		Utilities.setMinMax(description, DESCRIP_SIZE);
+		Utilities.setMinMax(price, PRICE_SIZE);
+		Utilities.setMinMax(amount, AMOUNT_SIZE);
 		code.addFocusListener(new CodeListener(code, description));
 		price.addFocusListener(new PriceListener(price, quantity, amount));
 		quantity.addFocusListener(new PriceListener(price, quantity, amount));
@@ -230,11 +245,21 @@ public class EntryForm extends JPanel {
 	private void addItemHeaders() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		panel.add(new Label("Quantity"));
-		panel.add(new Label("Item Code"));
-		panel.add(new Label("Description"));
-		panel.add(new Label("Price"));
-		panel.add(new Label("Amount"));
+		Label qty = new Label("Qty"); 
+		Utilities.setMinMax(qty, QTY_SIZE);
+		Label code = new Label("Code");
+		Utilities.setMinMax(code, CODE_SIZE);
+		Label descrip = new Label("Description");
+		Utilities.setMinMax(descrip, DESCRIP_SIZE);
+		Label price = new Label("Price");
+		Utilities.setMinMax(price, PRICE_SIZE);
+		Label amt = new Label("Amount");
+		Utilities.setMinMax(amt, AMOUNT_SIZE);
+		panel.add(qty);
+		panel.add(code);
+		panel.add(descrip);
+		panel.add(price);
+		panel.add(amt);
 		add(panel);
 	}
 	
@@ -246,14 +271,14 @@ public class EntryForm extends JPanel {
 		JButton saveButton = new JButton("Save Order");
 		saveButton.addActionListener(saveListener);
 		saveButton.addActionListener(new SaveOrderListener());
-		saveButton.setMinimumSize(new Dimension(50,10));
+		Utilities.setMinMax(saveButton, BUTTON_SIZE);
 		add(saveButton);
 	}
 	
 	private void addHomeButton(ActionListener homeButton) {
-		JButton returnHome = new JButton("Return to order display");
+		JButton returnHome = new JButton("Return Home");
 		returnHome.addActionListener(homeButton);
-		returnHome.setMinimumSize(new Dimension(100,50));
+		Utilities.setMinMax(returnHome, BUTTON_SIZE);
 		add(returnHome);
 	}
 }
