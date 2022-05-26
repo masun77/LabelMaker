@@ -16,6 +16,7 @@ public abstract class Item implements Labelable {
 	protected String unit;
 	protected String voicePickCode = "";
 	protected int quantity;
+	private float price;
 	
 	public Item() {
 		customer = "None";
@@ -24,9 +25,10 @@ public abstract class Item implements Labelable {
 		packDate = new DateImp();
 		unit = "Empty";
 		quantity = 0;
+		price = 0;
 	}
 	
-	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, int qty) {
+	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, int qty, float price) {
 		customer = cust;
 		productName = prodName;
 		gtin = gtnum;
@@ -46,6 +48,10 @@ public abstract class Item implements Labelable {
 	public String getProductName() {
 		return productName;
 	}
+	
+	public float getPrice() {
+		return price;
+	}
 
 	public Date getPackDate() {
 		return packDate;
@@ -60,6 +66,38 @@ public abstract class Item implements Labelable {
 	}
 	
 	public String stringRep() {
-		return customer + " " + packDate.getDateMMDDYYYY() + " " + quantity + " " + productName + " " + unit + " " + gtin + " ";
+		return customer + " " + packDate.getDateMMDDYYYY() + " " + quantity + " " + productName + " " + unit + " " + gtin + " " + price;
+	}
+
+	public void setGtin(String gtin) {
+		this.gtin = gtin;
+	}
+
+	public void setCustomer(String customer) {
+		this.customer = customer;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public void setPackDate(Date packDate) {
+		this.packDate = packDate;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public void setVoicePickCode(String voicePickCode) {
+		this.voicePickCode = voicePickCode;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
 	}
 }

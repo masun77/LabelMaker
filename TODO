@@ -33,19 +33,20 @@ Order-entry form -
 		PO num - DONE
 		shipVia - DONE
 		list of itemCode, qty, price - DONE
+	autopopulation of amounts - DONE
+	save to order display - DONE
+	save to csv - DONE!
+	clear order entry after save - DONE
+	Initialize program from saved order csv - 	DONE
+	make pretty - 
+	debug - 
+	more than 20 items - 
+	ah shit - amounts that are doubles rather than ints, and quantities that aren't ints - 
 	info from spreadsheets/datebase (ie, what shows up on a QB invoice) - 
 		gtin - 
 		description - 
 		name - 
 		unit - 
-	autopopulation of amounts - DONE
-	save to order display - DONE
-	save to csv - DONE!
-	clear order entry after save - doesn't work yet, I think it's just adding stuff or something... - 
-	make pretty - 
-	debug - 
-	more than 20 items - 
-	ah shit - amounts that are doubles rather than ints - 
 
 Edit orders - 
 Delete orders - 
@@ -55,8 +56,6 @@ Display of stored orders -
 	select which want to print - 
 	update in real time - 
 	make pretty - 
-
-Initialize program from saved order csv - 	
 
 Run on computer as application - 
 	run on Mac as application - 
@@ -70,6 +69,8 @@ Import to quickbooks -
 	select which orders to import - 
 	IIF file - 
 	how get invoice number? user enters? or auto on import? or?  
+	
+Search for all todos and do - 
 
 TESTS:
 - print with 1 label

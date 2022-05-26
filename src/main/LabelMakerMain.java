@@ -10,10 +10,6 @@ import printing.PrintManager;
 import userInterface.RDFInterface;
 import userInterface.UserInterface;
 
-import java.awt.Component;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * Uses the input order information to create labels that can be printed. 
  */
@@ -23,19 +19,7 @@ public class LabelMakerMain {
 		// Enter orders
 		 
 		// Display existing orders
-		ArrayList<Order> orders = new ArrayList<Order>();
-		orders.add(new Order(Utilities.getItemArrayList(
-				new RDFItem("Long company name", "Arugula", "3 lbs", "00000123456789", new DateImp(4,2,2022), 1))));
-		orders.add(new Order(Utilities.getItemArrayList(new RDFItem())));
-		orders.add(new Order(Utilities.getItemArrayList(
-				new RDFItem("Maya", "Kale", "10 lb case", "474747", new DateImp(5,1,2022), 5))));
-		orders.add(new Order(Utilities.getItemArrayList(
-				new RDFItem("Kris", "Kale", "12 bunches", "474747", new DateImp(4,20,2022), 4))));
-		orders.add(new Order(new ArrayList<Item>(Arrays.asList(
-				new RDFItem("Yao", "Kale", "10 lb case", "474747", new DateImp(1,1,2022), 2),
-				new RDFItem("Yao", "Arugula", "10 lb case", "00000123456789", new DateImp(1,1,2022), 3)))));
 		UserInterface ui = new RDFInterface();
-		ui.showInterface(orders);
 		
 		// Select labels to print
 		

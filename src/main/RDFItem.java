@@ -25,8 +25,8 @@ public class RDFItem extends Item {
 		super();
 	}
 	
-	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate, int qty) {
-		super(cust, prodName, unit, gtin, packDate, qty);
+	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate, int qty, float price) {
+		super(cust, prodName, unit, gtin, packDate, qty, price);
 	}
 
 	@Override

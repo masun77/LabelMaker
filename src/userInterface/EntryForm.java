@@ -54,7 +54,7 @@ public class EntryForm extends JPanel {
 		DisplayUtilities.localPack(this);
 	}
 	
-	private void addLabelTextFieldPair(String label, TextField tf) {
+	private void addLabelComponentPair(String label, Component tf) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		panel.add(new Label(label));
@@ -64,19 +64,19 @@ public class EntryForm extends JPanel {
 	}
 	
 	private void addOrderDate() {
-		addLabelTextFieldPair("Date: ", date);
+		addLabelComponentPair("Date: ", date);
 	}
 	
 	private void addOrderCompany() {
-		addLabelTextFieldPair("Company: ", company);
+		addLabelComponentPair("Company: ", company);
 	}
 	
 	private void addPurchaseOrder() {
-		addLabelTextFieldPair("PO num: ", purchaseOrder);
+		addLabelComponentPair("PO num: ", purchaseOrder);
 	}
 	
 	private void addShipVia() {
-		addLabelTextFieldPair("Ship Via: ", shipVia);
+		addLabelComponentPair("Ship Via: ", shipVia);
 	}
 	
 	private void addItems() {
@@ -154,11 +154,23 @@ public class EntryForm extends JPanel {
 		}
 	}
 	
+	private void clearForm() {
+		// date po company total shipvia itempanel
+		date.setText("");
+		company.setText("");
+		purchaseOrder.setText("");
+		totalLabel.setText("");
+		shipVia.setText("");
+		itemPanel.removeAll();
+		for (int i = 0; i < NUM_ITEMS; i++) {
+			addItemRow();
+		}
+	}
+	
 	private class SaveOrderListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Save data to new order, if any data entered.");
 			ArrayList<Item> items = new ArrayList<Item>();
 			Component[] itemRows = itemPanel.getComponents();
 			for (int i = 0; i < itemRows.length; i++) {
@@ -168,20 +180,16 @@ public class EntryForm extends JPanel {
 					items.add(getItemFromRow(row));
 				}
 			}
-			Order newOrder = new Order(items);
+			Order newOrder = new Order(items, purchaseOrder.getText(), shipVia.getText());
 			newOrder.printItems();
 			clearForm();
 			orders.add(newOrder);			
 		}
 		
-		private Item getItemFromRow(JPanel row) {   // todo: where do the prices go? and amounts? and PO num and shipvia? 
+		private Item getItemFromRow(JPanel row) {   
 			return new RDFItem(company.getText(), "Name__", "unit__", "GTIN__", 
-					DateImp.parseDate(date.getText()), Integer.parseInt(((TextField)row.getComponents()[0]).getText()));
-		}
-		
-		private void clearForm() {
-			removeAll();
-			initialize();
+					DateImp.parseDate(date.getText()), Integer.parseInt(((TextField)row.getComponents()[0]).getText()),
+					Float.parseFloat(((TextField)row.getComponents()[3]).getText()));
 		}
 		
 	}
@@ -231,7 +239,7 @@ public class EntryForm extends JPanel {
 	}
 	
 	private void addTotal() {
-		add(totalLabel);
+		addLabelComponentPair("Total: ", totalLabel);
 	}
 	
 	private void addSaveButton(ActionListener saveListener) {

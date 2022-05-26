@@ -31,10 +31,23 @@ public class RDFInterface implements UserInterface {
 
 	// todo: update interface with new orders (vs recreating the whole thing)
 	
+	public RDFInterface(ArrayList<Order> ords) {
+		orders.addAll(ords); 
+		showInterface();
+	}
+	
+	public RDFInterface(String csvname) {
+		orders = DataSaver.readOrdersFromCSV(csvname);
+		showInterface();
+	}
+	
+	public RDFInterface() {
+		orders = DataSaver.readOrdersFromCSV(SAVE_FILE_NAMES[currentSaveFile]);
+		showInterface();
+	}
+	
 	@Override
-	public void showInterface(ArrayList<Order> ords) {
-		orders.addAll(ords); // is this going to duplicate stuff?  or just call it once at start of program - reading from
-		// existing csv for example
+	public void showInterface() {
 		
 		initializeOrderDisplay();		
 		initializeEntryForm();
