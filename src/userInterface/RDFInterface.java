@@ -1,6 +1,5 @@
 package userInterface;
 
-import java.awt.Button;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -19,12 +18,13 @@ import main.Item;
 import main.Order;
 
 public class RDFInterface implements UserInterface {
-	ArrayList<Order> orders = new ArrayList<Order>();
-	Order newOrder = new Order(null);
-	ArrayList<String> gtins = new ArrayList<String>();
-	ArrayList<String> prodNames = new ArrayList<String>();
-	JFrame orderDisplay = new JFrame("Label Program");
-	JFrame orderEntry = new JFrame("Enter New Order");
+	private ArrayList<Order> orders = new ArrayList<Order>();
+	private ArrayList<String> gtins = new ArrayList<String>();
+	private ArrayList<String> prodNames = new ArrayList<String>();
+	private JFrame orderDisplay = new JFrame("Label Program");
+	private JFrame orderEntry = new JFrame("Enter New Order");
+	private JPanel orderPanel = null;
+	private JPanel displayMainPanel = new JPanel();
 
 	// todo: update interface with new orders (vs recreating the whole thing)
 	
@@ -36,20 +36,20 @@ public class RDFInterface implements UserInterface {
 		initializeOrderDisplay();		
 		initializeEntryForm();
 		
-		System.out.println("displayed");
+		System.out.println("displaying UI");
 	}
 	
 	private void initializeOrderDisplay() {
 		orderDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		displayMainPanel.setLayout(new BoxLayout(displayMainPanel, BoxLayout.Y_AXIS));
 		
-		mainPanel.add(addButtons());
-		mainPanel.add(showOrders());
-		DisplayUtilities.localPack(mainPanel);
+		setOrderArray();
+		displayMainPanel.add(addButtons());
+		displayMainPanel.add(orderPanel);
+		DisplayUtilities.localPack(displayMainPanel);
 		
-		JScrollPane scrollPane = new JScrollPane(mainPanel);
+		JScrollPane scrollPane = new JScrollPane(displayMainPanel);
 				
 		orderDisplay.add(scrollPane);
 		orderDisplay.setSize(new Dimension(1000,700));
@@ -60,7 +60,7 @@ public class RDFInterface implements UserInterface {
 	}
 	
 	private void initializeEntryForm() {
-		JPanel entryForm = new EntryForm(new HomeButtonListener(), new OrderSaveButtonListener(), newOrder);
+		JPanel entryForm = new EntryForm(new HomeButtonListener(), new OrderSaveButtonListener(), orders);
 		JScrollPane scrollPane = new JScrollPane(entryForm);
 		orderEntry.add(scrollPane);
 		orderEntry.setSize(new Dimension(1000,700));
@@ -97,24 +97,21 @@ public class RDFInterface implements UserInterface {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			orderEntry.setVisible(false);
+			displayMainPanel.remove(1);
+			setOrderArray();
+			displayMainPanel.add(orderPanel);
+			DisplayUtilities.localPack(displayMainPanel);
 			orderDisplay.setVisible(true);
-			updateOrders();
 		}
 	}
 		
-	private Component showOrders() {
-		JPanel orderPanel = new JPanel();
+	private void setOrderArray() {
+		orderPanel = new JPanel();
 		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
 		orderPanel.add(getColumnNames());
 		ArrayList<ArrayList<Integer>> displayArray = getDisplayArray();
-		addRows(displayArray, orderPanel);
+		addRows(displayArray);
 		DisplayUtilities.localPack(orderPanel);
-		
-		return orderPanel;
-	}
-	
-	private void updateOrders() {
-		// TODO
 	}
 	
 	private Component getColumnNames() {
@@ -141,6 +138,8 @@ public class RDFInterface implements UserInterface {
 	}
 	
 	private ArrayList<ArrayList<Integer>> getDisplayArray() {
+		gtins = new ArrayList<String>();
+		prodNames = new ArrayList<String>();
 		ArrayList<ArrayList<Integer>> displayArray = new ArrayList<ArrayList<Integer>>();
 		for (int ord = 0; ord < orders.size(); ord++) {
 			Order order = orders.get(ord);
@@ -172,7 +171,7 @@ public class RDFInterface implements UserInterface {
 		return arr;
 	}
 	
-	private void addRows(ArrayList<ArrayList<Integer>> displayArray, Container orderPanel) {
+	private void addRows(ArrayList<ArrayList<Integer>> displayArray) {
 		for (int r = 0; r < displayArray.size(); r++) {
 			ArrayList<Integer> row = displayArray.get(r);
 			JPanel rowPanel = new JPanel();

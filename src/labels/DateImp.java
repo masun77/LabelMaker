@@ -114,7 +114,7 @@ public class DateImp implements Date {
 			day = d.substring(slash, secSlash - slash > 2? slash + 2 : secSlash);
 		}
 		secSlash += 1;
-		if (secSlash < d.length() - 1) {
+		if (secSlash > 0 && secSlash < d.length() - 1) {
 			year = d.substring(secSlash, secSlash + 4 > d.length()? d.length() : secSlash + 4);
 		}
 		if (year.equals("22")) {

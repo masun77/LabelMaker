@@ -21,7 +21,7 @@ import main.Order;
 import main.RDFItem;
 
 public class EntryForm extends JPanel {
-	Order newOrder;
+	private ArrayList<Order> orders = new ArrayList<Order>();
 	private ActionListener homeListener;
 	private ActionListener saveListener;
 	private TextField date = new TextField(10);
@@ -33,8 +33,8 @@ public class EntryForm extends JPanel {
 	private Label totalLabel = new Label();
 	private ArrayList<TextField> amounts = new ArrayList<TextField>();
 
-	public EntryForm(ActionListener homeLstn, ActionListener saveLstn, Order ord) {
-		newOrder = ord;
+	public EntryForm(ActionListener homeLstn, ActionListener saveLstn, ArrayList<Order> ords) {
+		orders = ords;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		homeListener = homeLstn;
 		saveListener = saveLstn;
@@ -168,9 +168,10 @@ public class EntryForm extends JPanel {
 					items.add(getItemFromRow(row));
 				}
 			}
-			newOrder.setItems(items);
-			clearForm();
+			Order newOrder = new Order(items);
 			newOrder.printItems();
+			clearForm();
+			orders.add(newOrder);			
 		}
 		
 		private Item getItemFromRow(JPanel row) {   // todo: where do the prices go? and amounts? and PO num and shipvia? 
