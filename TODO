@@ -14,9 +14,7 @@ having tests for all your code that are easy to run, and running them frequently
 6. Keep your code clean by refactoring frequently - every cycle. 
 
 TODO: 
-Specifications - 
-	ask Tim what are the requirements/who are they from
-		GS1-128, PTI, whole foods, ccof, ?
+Specifications - vp code readable, bar code scannable
 	
 Printing - 
 	print the label -
@@ -27,13 +25,11 @@ Printing -
 	verify GTINs correct and scannable - 
 
 Edit orders - 
-
-Delete orders - 
 	
 Select orders to print and print  - 
 
 Info from spreadsheets/datebase (ie, what shows up on a QB invoice) - 
-		gtin - 
+		GTINS! - 
 		description - 
 		name - 
 		unit - 
@@ -60,6 +56,7 @@ TESTS:
 
 
 LATER:
+edit existing orders
 autopopulation eg of company, item
 error checking of input info
 save orders in 1 big csv, all orders ever entered? vs writing over them each time - keep with a fixed order num
@@ -76,6 +73,7 @@ make my own HBox and VBox - inherit from JPanel or whatever - so I don't have to
 print labels without needing an order? 
 make UI prettier/cleaner, remove all bugs - 
 search for all todos - 
+add warning popup before deleting order - 
 
 DONE:
 Using a nice IDE - DONE
@@ -142,3 +140,4 @@ UI -
 			right align total stuff - DONE
 			Make textfields have minimum sizes - DONE
 			make textfields and their headers have the same minimum size - DONE
+Delete orders - DONE

@@ -39,7 +39,7 @@ public class EntryForm extends JPanel {
 	private final Dimension DESCRIP_SIZE = new Dimension(200,15);
 	private final Dimension PRICE_SIZE = new Dimension(40,15);
 	private final Dimension AMOUNT_SIZE = new Dimension(60,15);
-	private final Dimension BUTTON_SIZE = new Dimension(100,50);
+	private final Dimension BUTTON_SIZE = new Dimension(150,50);
 
 	public EntryForm(ActionListener homeLstn, ActionListener saveLstn, ArrayList<Order> ords) {
 		orders = ords;
@@ -172,6 +172,7 @@ public class EntryForm extends JPanel {
 		totalLabel.setText("$0");
 		shipVia.setText("");
 		itemPanel.removeAll();
+		amounts.removeAll(amounts);
 		for (int i = 0; i < NUM_ITEMS; i++) {
 			addItemRow();
 		}
