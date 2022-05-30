@@ -6,11 +6,14 @@ import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import export.DataSaver;
@@ -22,10 +25,13 @@ public class OrderDisplay extends JPanel {
 	private ArrayList<Order> orders = null;
 	private JPanel orderPanel = null;
 	private final Dimension NAME_SIZE = new Dimension(80,15);
+	private final Dimension SPACE = new Dimension(10,15);
+	private final Dimension TRASH_BTN_SIZE = new Dimension(20,20);
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 	private ActionListener entryListener;
 	private String saveFileName;
+	ArrayList<ArrayList<JCheckBox>> checkBoxArray;
 
 	public OrderDisplay(ArrayList<Order> ords, ActionListener entryList, String saveFile) {
 		orders = ords;
@@ -76,15 +82,87 @@ public class OrderDisplay extends JPanel {
 		for(int n = 0; n < colNames.size(); n++) {
 			Label nameLabel = new Label(colNames.get(n));
 			Utilities.setMinMax(nameLabel, NAME_SIZE);
-			headerRow.add(new TrashButton(n));
+			headerRow.add(new CompanyCheckBox(n));
 			headerRow.add(nameLabel);
+			headerRow.add(new TrashButton(n));
+			Label spacer = new Label();
+			Utilities.setMinMax(spacer, SPACE);
+			headerRow.add(spacer);
 		}
 		Utilities.localHPack(headerRow);
 		return headerRow;
 	}
 	
+	private class CompanyCheckBox extends JCheckBox {
+		private int orderNum;
+		
+		public CompanyCheckBox(int o) {
+			orderNum = o;
+			addItemListener(new CompanyCheckListener(orderNum, this));
+		}
+	}
+	
+	private class CompanyCheckListener implements ItemListener {
+		private int orderIndex;
+		private JCheckBox button;
+		
+		public CompanyCheckListener(int ind, JCheckBox btn) {
+			orderIndex = ind;
+			button = btn;
+		}
+		
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			boolean state = button.isSelected();
+			for (int r = 0; r < checkBoxArray.size(); r++) {
+				checkBoxArray.get(r).get(orderIndex).setSelected(state);
+			}
+		}
+		
+	}
+	
+	private class ItemCheckBox extends JCheckBox {
+		private int rowNum;
+		
+		public ItemCheckBox(int row) {
+			rowNum = row;
+			addItemListener(new ItemCheckListener(row, this));
+		}
+	}
+	
+	private class ItemCheckListener implements ItemListener {
+		private int rowNum;
+		private JCheckBox button;
+		
+		public ItemCheckListener(int rn, JCheckBox btn) {
+			rowNum = rn;
+			button = btn;
+		}
+		
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			boolean state = button.isSelected();
+			ArrayList<JCheckBox> row = checkBoxArray.get(rowNum);
+			for (int r = 0; r < row.size(); r++) {
+				row.get(r).setSelected(state);
+			}
+		}
+	}
+	
+	private class PrintCheckBox extends JCheckBox {
+		int orderCol;
+		Item item;
+		
+		public PrintCheckBox(int oNum, Item it) {
+			item = it;
+			orderCol = oNum;
+			Utilities.setMinMax(this, TRASH_BTN_SIZE);
+		}
+	}
+	
+	
+	
 	private class TrashButton extends JButton {
-		private final Dimension TRASH_BTN_SIZE = new Dimension(20,20);
 		private int index = 0;
 		
 		public TrashButton(int indx) {
@@ -149,7 +227,21 @@ public class OrderDisplay extends JPanel {
 				currArr.set(ord, item.getQuantity());
 			}
 		}
+		setCheckBoxes(displayArray);
 		return displayArray;
+	}
+	
+	private void setCheckBoxes(ArrayList<ArrayList<Integer>> array) {
+		int rows = array.size();
+		int cols = array.get(0).size();
+		checkBoxArray = new ArrayList<ArrayList<JCheckBox>>(rows);
+		for (int r = 0; r < rows; r++) {
+			ArrayList<JCheckBox> row = new ArrayList<JCheckBox>();
+			for (int c = 0; c < cols; c++) {
+				row.add(new PrintCheckBox(c, orders.get(c).getItem(prodNames.get(r))));
+			}
+			checkBoxArray.add(row);
+		}
 	}
 	
 	private ArrayList<Integer> createZeroArray(int numZeros) {
@@ -167,10 +259,12 @@ public class OrderDisplay extends JPanel {
 			rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
 			Label prodName = new Label(prodNames.get(r));
 			Utilities.setMinMax(prodName, NAME_SIZE);
+			rowPanel.add(new ItemCheckBox(r));
 			rowPanel.add(prodName);
-			for (int it = 0; it < row.size(); it++) {
-				Label qty = new Label(Integer.toString(row.get(it)));
+			for (int q = 0; q < row.size(); q++) {
+				Label qty = new Label(Integer.toString(row.get(q)));
 				Utilities.setMinMax(qty, NAME_SIZE);
+				rowPanel.add(checkBoxArray.get(r).get(q));
 				rowPanel.add(qty);
 			}
 			Utilities.localHPack(rowPanel);

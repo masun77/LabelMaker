@@ -67,4 +67,13 @@ public class Order {
 		System.out.println(company + "\t" + PONum + "\t" + shipVia);
 		printItems();
 	}
+	
+	public Item getItem(String prodName) {
+		for (Item i: items) {
+			if (i.getCustomer().equals(prodName)) {
+				return i;
+			}
+		}
+		return null;
+	}
 }
