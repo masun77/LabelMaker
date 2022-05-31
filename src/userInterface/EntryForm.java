@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import export.DataSaver;
 import labels.DateImp;
 import main.Item;
 import main.Order;
@@ -40,6 +41,7 @@ public class EntryForm extends JPanel {
 	private final Dimension PRICE_SIZE = new Dimension(40,15);
 	private final Dimension AMOUNT_SIZE = new Dimension(60,15);
 	private final Dimension BUTTON_SIZE = new Dimension(150,50);
+	private final String ITEM_DATA_CSV_PATH = "resources/itemData.csv";
 
 	public EntryForm(ActionListener homeLstn, ActionListener saveLstn, ArrayList<Order> ords) {
 		orders = ords;
@@ -116,7 +118,8 @@ public class EntryForm extends JPanel {
 		@Override
 		public void focusLost(FocusEvent e) {
 			if (itemCode.getText().length() > 0) {
-				description.setText("Description!");					
+				String descrip = DataSaver.getDescriptionFromCSV(itemCode.getText(), ITEM_DATA_CSV_PATH);
+				description.setText(descrip);					
 			}		
 		}
 	}
@@ -191,16 +194,19 @@ public class EntryForm extends JPanel {
 					items.add(getItemFromRow(row));
 				}
 			}
-			Order newOrder = new Order(items, purchaseOrder.getText(), shipVia.getText());
+			Order newOrder = new Order(items, purchaseOrder.getText(), shipVia.getText(), DateImp.parseDate(date.getText()));
 			newOrder.printItems();
 			clearForm();
 			orders.add(newOrder);			
 		}
 		
-		private Item getItemFromRow(JPanel row) {   
-			return new RDFItem(company.getText(), "Name__", "unit__", "00000", 
-					DateImp.parseDate(date.getText()), Integer.parseInt(((TextField)row.getComponents()[0]).getText()),
-					Float.parseFloat(((TextField)row.getComponents()[3]).getText()));
+		private Item getItemFromRow(JPanel row) { 
+			Component[] rowData = row.getComponents();
+			ArrayList<String> itemData = DataSaver.getItemData(((TextField)rowData[1]).getText(), ITEM_DATA_CSV_PATH);
+			return new RDFItem(company.getText(), itemData.get(1), itemData.get(2), itemData.get(0), 
+					DateImp.parseDate(date.getText()), Integer.parseInt(((TextField)rowData[0]).getText()),
+					Float.parseFloat(((TextField)rowData[3]).getText()),
+					((TextField)rowData[1]).getText());
 		}
 		
 	}

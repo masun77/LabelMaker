@@ -16,7 +16,8 @@ public abstract class Item implements Labelable {
 	protected String unit;
 	protected String voicePickCode = "";
 	protected int quantity;
-	private float price;
+	protected float price;
+	protected String itemCode = "";
 	
 	public Item() {
 		customer = "None";
@@ -28,13 +29,22 @@ public abstract class Item implements Labelable {
 		price = 0;
 	}
 	
-	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, int qty, float price) {
+	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, int qty, float price, String itCd) {
 		customer = cust;
 		productName = prodName;
 		gtin = gtnum;
 		packDate = pkdate;
 		unit = unt;
 		quantity = qty;
+		itemCode = itCd;
+	}
+
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
 	}
 
 	public String getGtin() {

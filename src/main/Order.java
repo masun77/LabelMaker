@@ -2,11 +2,24 @@ package main;
 
 import java.util.ArrayList;
 
+import labels.Date;
+import labels.DateImp;
+
 public class Order {
 	private ArrayList<Item> items = null;
 	private String company = "";
 	private String PONum = "";
 	private String shipVia = "";
+	
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public void setShipDate(Date shipDate) {
+		this.shipDate = shipDate;
+	}
+
+	private Date shipDate = new DateImp();
 	
 	public Order(ArrayList<Item> its) {
 		items = its;
@@ -16,10 +29,11 @@ public class Order {
 		items = new ArrayList<Item>();
 	}
 	
-	public Order(ArrayList<Item> its, String po, String sv) {
+	public Order(ArrayList<Item> its, String po, String sv, Date d) {
 		items = its;
 		PONum = po;
 		shipVia = sv;
+		shipDate = d;
 	}
 	
 	public ArrayList<Item> getItems() {
@@ -43,6 +57,10 @@ public class Order {
 	
 	public void setPONum(String po) {
 		PONum = po;
+	}
+	
+	public Date getShipDate() {
+		return shipDate;
 	}
 	
 	public void setShipVia(String sv) {

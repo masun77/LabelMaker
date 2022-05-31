@@ -28,6 +28,11 @@ public interface Date {
 	public String getAsPackDate();
 	
 	/**
+	 * @return the month and day, eg. 05/14
+	 */
+	public String getMMDD();
+	
+	/**
 	 * @return the month as a number, 1-12
 	 */
 	public int getMonthofYear();

@@ -20,19 +20,27 @@ Printing: rotate label -
 	verify GTINs correct and scannable - 
 	VP code readable - 
 	
-3. Info from spreadsheets/datebase (ie, what shows up on a QB invoice) - 
-		GTINS! - 
-		description - 
-		name - 
-		unit - 
+
+Create actual spreadsheet with that code, descrip, GTIN, name, unit - 
 
 5. Run on multiple computers at once - 
-	update in real time - 
+	update button - 
+	auto-update on startup - 
+	pull request to server - 
+	server running with csv file - 
+	send back csv - 
+	read csv into display - 
+	push to server on saved order - 
+	server saves new csv - 
 	
 6. UI - more than 20 items in an order - 
 	prices, amounts, quantities that are doubles rather than ints - 
 	some glitches with saving orders when you don't put in all the info... 
-	row alignment
+	row alignment - DONE
+	ship date vs pack/pick date in item, order, display, csv
+	price not saving to csv/item
+	
+7. orders from multiple days- put all on one screen but in order? or diff screens to click thru? 
 	
 TESTS:
 - print with 1 label
@@ -148,3 +156,10 @@ Printing -
 Run on computer as application - DONE! 
 	how use resource files like images, csv with a jar? - I put it in a folder by the jar - DONE
 	run on Mac as application - DONE, except for print problem
+Info from spreadsheets/datebase (ie, what shows up on a QB invoice) - 
+		GTINS! - DONE
+		description - DONE
+		name (stored in item-> show on order display) - DONE
+		unit, not sure this is real or not - DONE
+		
+		

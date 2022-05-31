@@ -253,9 +253,10 @@ public class OrderDisplay extends JPanel {
 	private ArrayList<String> getCompanyNames() {
 		ArrayList<String> colNames = new ArrayList<String>();
 		for (int ord = 0; ord < orders.size(); ord++) {
-			String comp = orders.get(ord).getCompany();
-			if (!colNames.contains(comp)) {
-				colNames.add(comp);
+			String name = orders.get(ord).getCompany();
+			String nameDate = name.substring(0, 7 > name.length()? name.length(): 7) + ", " + orders.get(ord).getShipDate().getMMDD();
+			if (!colNames.contains(nameDate)) {
+				colNames.add(nameDate);
 			}
 		}
 		return colNames;

@@ -97,6 +97,11 @@ public class DateImp implements Date {
 		return zerosHelper(year % 100) + zerosHelper(monthOfYear) + zerosHelper(dayOfMonth);
 	}
 	
+	@Override
+	public String getMMDD() {
+		return zerosHelper(monthOfYear) + "/" + zerosHelper(dayOfMonth);
+	}
+	
 	public static Date parseDate(String d) {
 		Date date = new DateImp();
 		String day = "1";
