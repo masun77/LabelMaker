@@ -30,8 +30,11 @@ public class OrderDisplay extends JPanel {
 	private JPanel orderPanel = null;
 	private final Dimension NAME_SIZE = new Dimension(80,15);
 	private final Dimension SPACE = new Dimension(10,15);
-	private final Dimension TRASH_BTN_SIZE = new Dimension(20,20);
+	private final Dimension TRASH_BTN_SIZE = new Dimension(20,15);
 	private final Dimension BTN_SIZE = new Dimension(200,25);
+	private final Dimension NUMBER_SIZE = new Dimension(110,15);
+	private final Dimension CHECK_SIZE = new Dimension(15,15);
+	private final Dimension ITEM_NAME_SIZE = new Dimension(65,15);
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 	private ActionListener entryListener;
@@ -143,6 +146,7 @@ public class OrderDisplay extends JPanel {
 		public CompanyCheckBox(int o) {
 			orderNum = o;
 			addItemListener(new CompanyCheckListener(orderNum, this));
+			Utilities.setMinMax(this, CHECK_SIZE);
 		}
 	}
 	
@@ -174,6 +178,7 @@ public class OrderDisplay extends JPanel {
 		public ItemCheckBox(int row) {
 			rowNum = row;
 			addItemListener(new ItemCheckListener(row, this));
+			Utilities.setMinMax(this, CHECK_SIZE);
 		}
 	}
 	
@@ -204,7 +209,7 @@ public class OrderDisplay extends JPanel {
 		
 		public PrintCheckBox(Item it) {
 			item = it;
-			Utilities.setMinMax(this, TRASH_BTN_SIZE);
+			Utilities.setMinMax(this, CHECK_SIZE);
 		}
 		
 		public Labelable getItem() {
@@ -316,12 +321,12 @@ public class OrderDisplay extends JPanel {
 			JPanel rowPanel = new JPanel();
 			rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
 			Label prodName = new Label(prodNames.get(r));
-			Utilities.setMinMax(prodName, NAME_SIZE);
+			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
 			rowPanel.add(new ItemCheckBox(r));
 			rowPanel.add(prodName);
 			for (int q = 0; q < row.size(); q++) {
 				Label qty = new Label(Integer.toString(row.get(q)));
-				Utilities.setMinMax(qty, NAME_SIZE);
+				Utilities.setMinMax(qty, NUMBER_SIZE);
 				rowPanel.add(checkBoxArray.get(r).get(q));
 				rowPanel.add(qty);
 			}

@@ -1,8 +1,6 @@
 package labels;
 
 import java.util.HashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A simple date implementation with getters 
@@ -11,22 +9,7 @@ import java.util.stream.Stream;
  */
 public class DateImp implements Date {
 	private static HashMap<Integer, String> monthToMonthName = 
-			(HashMap<Integer,String>)
-			Stream.of(new Object[][] { 
-			     { 1, "January" }, 
-			     { 2, "February"}, 
-			     { 3, "March"}, 
-			     { 4, "April"}, 
-			     { 5, "May"}, 
-			     { 6, "June"}, 
-			     { 7, "July"}, 
-			     { 8, "August"}, 
-			     { 9, "September"}, 
-			     { 10, "October"}, 
-			     { 11, "November"}, 
-			     { 12, "December"}, 
-			 })
-			.collect(Collectors.toMap(data -> (Integer) data[0], data -> (String) data[1]));
+			new HashMap<Integer,String>();
 
 	private int dayOfMonth;
 	private int monthOfYear;
@@ -36,6 +19,21 @@ public class DateImp implements Date {
 		dayOfMonth = d;
 		monthOfYear = m;
 		year = y;
+		
+		if (monthToMonthName.get(1) == null) {
+			monthToMonthName.put(1, "January");
+			monthToMonthName.put(2, "February");
+			monthToMonthName.put(3, "March");
+			monthToMonthName.put(4, "April");
+			monthToMonthName.put(5, "May");
+			monthToMonthName.put(6, "June");
+			monthToMonthName.put(7, "July");
+			monthToMonthName.put(8, "August");
+			monthToMonthName.put(9, "September");
+			monthToMonthName.put(10, "October");
+			monthToMonthName.put(11, "November");
+			monthToMonthName.put(12, "December");
+		}
 	}
 	
 	public DateImp() {
