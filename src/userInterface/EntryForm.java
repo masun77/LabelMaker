@@ -198,7 +198,7 @@ public class EntryForm extends JPanel {
 		}
 		
 		private Item getItemFromRow(JPanel row) {   
-			return new RDFItem(company.getText(), "Name__", "unit__", "GTIN__", 
+			return new RDFItem(company.getText(), "Name__", "unit__", "00000", 
 					DateImp.parseDate(date.getText()), Integer.parseInt(((TextField)row.getComponents()[0]).getText()),
 					Float.parseFloat(((TextField)row.getComponents()[3]).getText()));
 		}

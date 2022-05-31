@@ -10,6 +10,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +18,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import export.DataSaver;
+import labels.LabelView;
+import labels.LabelViewerImp;
+import labels.Labelable;
 import main.Item;
 import main.Order;
 import main.Utilities;
@@ -27,11 +31,12 @@ public class OrderDisplay extends JPanel {
 	private final Dimension NAME_SIZE = new Dimension(80,15);
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension TRASH_BTN_SIZE = new Dimension(20,20);
+	private final Dimension BTN_SIZE = new Dimension(200,25);
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 	private ActionListener entryListener;
 	private String saveFileName;
-	ArrayList<ArrayList<JCheckBox>> checkBoxArray;
+	ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();;
 
 	public OrderDisplay(ArrayList<Order> ords, ActionListener entryList, String saveFile) {
 		orders = ords;
@@ -41,12 +46,13 @@ public class OrderDisplay extends JPanel {
 		
 		setOrderArray();
 		add(addButtons());
+		add(Box.createRigidArea(new Dimension(1,10)));
 		add(orderPanel);
 		Utilities.localVPack(this);
 	}
 	
 	public void refresh() {
-		remove(1);
+		remove(2);
 		setOrderArray();
 		add(orderPanel);
 		Utilities.localVPack(this);
@@ -64,21 +70,59 @@ public class OrderDisplay extends JPanel {
 	private Component addButtons() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		
 		JButton enterOrderButton = new JButton("Add new order");
 		enterOrderButton.addActionListener(entryListener);
-		enterOrderButton.setMinimumSize(new Dimension(100,50));
+		Utilities.setMinMax(enterOrderButton, BTN_SIZE);
 		buttonPanel.add(enterOrderButton);
+		
+		buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
+		
+		JButton printButton = new JButton("View/Print Selected Labels");
+		printButton.addActionListener(new PrintListener());
+		Utilities.setMinMax(printButton, BTN_SIZE);
+		buttonPanel.add(printButton);
+		
 		Utilities.localHPack(buttonPanel);
 		return buttonPanel;
+	}
+	
+	private class PrintListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Labelable> items = getCheckedItems();
+			LabelView lv = new LabelViewerImp();
+			lv.showLabels(items);
+		}
+	}
+	
+	private ArrayList<Labelable> getCheckedItems() {
+		ArrayList<Labelable> items = new ArrayList<Labelable>();
+
+		if (checkBoxArray.size() > 0) {
+			int cols = checkBoxArray.get(0).size();
+			for (int row = 0; row < checkBoxArray.size(); row++) {
+				for (int col = 0; col < cols; col++) {
+					PrintCheckBox check = checkBoxArray.get(row).get(col);
+					if (check.isSelected()) {
+						items.add(check.getItem());
+					}
+				}
+			}		
+		}
+		return items;
 	}
 	
 	private Component getColumnNames() {
 		JPanel headerRow = new JPanel();
 		headerRow.setLayout(new BoxLayout(headerRow, BoxLayout.X_AXIS));
 		ArrayList<String> colNames = getCompanyNames();
-		Label compLabel = new Label("Company:");
-		Utilities.setMinMax(compLabel, NAME_SIZE);
-		headerRow.add(compLabel);
+		if (colNames.size() > 0) {
+			Label compLabel = new Label("Company:");
+			Utilities.setMinMax(compLabel, NAME_SIZE);
+			headerRow.add(compLabel);			
+		}
 		for(int n = 0; n < colNames.size(); n++) {
 			Label nameLabel = new Label(colNames.get(n));
 			Utilities.setMinMax(nameLabel, NAME_SIZE);
@@ -115,7 +159,10 @@ public class OrderDisplay extends JPanel {
 		public void itemStateChanged(ItemEvent e) {
 			boolean state = button.isSelected();
 			for (int r = 0; r < checkBoxArray.size(); r++) {
-				checkBoxArray.get(r).get(orderIndex).setSelected(state);
+				PrintCheckBox box = checkBoxArray.get(r).get(orderIndex);
+				if (box.isEnabled()) {
+					box.setSelected(state);
+				}
 			}
 		}
 		
@@ -142,21 +189,26 @@ public class OrderDisplay extends JPanel {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			boolean state = button.isSelected();
-			ArrayList<JCheckBox> row = checkBoxArray.get(rowNum);
+			ArrayList<PrintCheckBox> row = checkBoxArray.get(rowNum);
 			for (int r = 0; r < row.size(); r++) {
-				row.get(r).setSelected(state);
+				PrintCheckBox box = row.get(r);
+				if (box.isEnabled()) {
+					box.setSelected(state);
+				}
 			}
 		}
 	}
 	
 	private class PrintCheckBox extends JCheckBox {
-		int orderCol;
 		Item item;
 		
-		public PrintCheckBox(int oNum, Item it) {
+		public PrintCheckBox(Item it) {
 			item = it;
-			orderCol = oNum;
 			Utilities.setMinMax(this, TRASH_BTN_SIZE);
+		}
+		
+		public Labelable getItem() {
+			return item;
 		}
 	}
 	
@@ -232,15 +284,21 @@ public class OrderDisplay extends JPanel {
 	}
 	
 	private void setCheckBoxes(ArrayList<ArrayList<Integer>> array) {
-		int rows = array.size();
-		int cols = array.get(0).size();
-		checkBoxArray = new ArrayList<ArrayList<JCheckBox>>(rows);
-		for (int r = 0; r < rows; r++) {
-			ArrayList<JCheckBox> row = new ArrayList<JCheckBox>();
-			for (int c = 0; c < cols; c++) {
-				row.add(new PrintCheckBox(c, orders.get(c).getItem(prodNames.get(r))));
-			}
-			checkBoxArray.add(row);
+		if (array.size() > 0) {
+			int rows = array.size();
+			int cols = array.get(0).size();
+			checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>(rows);
+			for (int r = 0; r < rows; r++) {
+				ArrayList<PrintCheckBox> row = new ArrayList<PrintCheckBox>();
+				for (int c = 0; c < cols; c++) {
+					PrintCheckBox box = new PrintCheckBox(orders.get(c).getItem(prodNames.get(r)));
+					if (array.get(r).get(c) == 0) {
+						box.setEnabled(false);
+					}
+					row.add(box);
+				}
+				checkBoxArray.add(row);
+			}						
 		}
 	}
 	

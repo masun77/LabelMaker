@@ -15,7 +15,7 @@ import labels.Labelable;
 import main.Item;
 
 public class PrintManager {
-	public void printLabels(ArrayList<Item> items) { 
+	public void printLabels(ArrayList<Labelable> items) { 
 		ArrayList<Component> labels = new ArrayList<Component>();
 		for (int i = 0; i < items.size(); i++) {
 			Labelable currItem = items.get(i);
@@ -31,7 +31,7 @@ public class PrintManager {
 		PrintRequestAttributeSet attrSet = new HashPrintRequestAttributeSet();
 		boolean doPrint = job.printDialog(attrSet);
 		attrSet.add(OrientationRequested.REVERSE_LANDSCAPE);
-		attrSet.add(new MediaPrintableArea(5f, 5f, 95f,39f, MediaPrintableArea.MM));
+		attrSet.add(new MediaPrintableArea(5f, 5f, 78f,95f, MediaPrintableArea.MM));
 				
 		if (doPrint) {
 			try {

@@ -1,8 +1,6 @@
 package userInterface;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class RDFInterface implements UserInterface {
 	private JFrame orderEntry = new JFrame("Enter New Order");
 	private OrderDisplay homePanel;
 	private final String SAVE_FILE_NAME = "resources/Orders1.csv";
-	private final Dimension WINDOW_SIZE = new Dimension(500,300);
+	private final Dimension WINDOW_SIZE = new Dimension(1000,700);
 	
 	public RDFInterface(ArrayList<Order> ords) {
 		orders.addAll(ords); 

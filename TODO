@@ -13,32 +13,23 @@ and by creating easy times to take breaks and check-in on your goals - in betwee
 having tests for all your code that are easy to run, and running them frequently - every cycle. 
 6. Keep your code clean by refactoring frequently - every cycle. 
 
-TODO: 	
-	
-1. Select orders to print and print  - 
-	items have checkboxes, checking them selects/deselects all those - DONE
-	companies have checkboxes, checking them selects/deselects - DONE
-	each individual item in an order has a checkbox - DONE
-	print button exists - 
-	when print label button clicked, labels whose checkboxes are checked will print
-	
+TODO: 		
 2. Printing - 
-	print the label -
-		how can you talk to a printer? the printer driver does it. So if your computer can talk to it, 
+	how can you talk to a printer? the printer driver does it. So if your computer can talk to it, 
 			and you can open a print dialog with that printer, you should be good - DONE
-		change margins - 
-		try printing on label printer - 
+	change margins - DONE
+	try printing on label printer - 
 	verify GTINs correct and scannable - 
-	VP code readable
+	VP code readable - 
 
+4. Run on computer as application - 
+	run on Mac as application - 
+	
 3. Info from spreadsheets/datebase (ie, what shows up on a QB invoice) - 
 		GTINS! - 
 		description - 
 		name - 
 		unit - 
-
-4. Run on computer as application - 
-	run on Mac as application - 
 
 5. Run on multiple computers at once - 
 	update in real time - 
@@ -46,6 +37,7 @@ TODO:
 6. UI - more than 20 items - 
 	ah shit - amounts that are doubles rather than ints, and quantities that aren't ints - 
 	some glitches with saving orders when you don't put in all the info... 
+	row alignment
 	
 TESTS:
 - print with 1 label
@@ -96,6 +88,13 @@ Make a label graphic - DONE
 	Generic label info - DONE
 	Pack date - DONE
 	Voice pick code - DONE
+Select orders to print and print  - 
+	items have checkboxes, checking them selects/deselects all those - DONE
+	companies have checkboxes, checking them selects/deselects - DONE
+	each individual item in an order has a checkbox - DONE
+	print button exists - DONE
+	when print label button clicked, labels whose checkboxes are checked will view as labels - DONE
+	add Print button to label view, print dialog when clicked - DONE
 		Calculate - DONE
 		ck against examples - DONE
 		formatting - DONE
