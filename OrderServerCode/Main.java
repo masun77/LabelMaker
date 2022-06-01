@@ -2,7 +2,7 @@ package server;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("main");
+		System.out.println("Starting server");
 		
 		Server server = new Server();
 		server.startServer();
@@ -16,7 +16,7 @@ public class Main {
             e.printStackTrace();
         }
 
-		System.out.println("main stopping");
+		System.out.println("Stopping server");
         server.stopServer();
 	}
 }

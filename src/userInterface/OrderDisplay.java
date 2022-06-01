@@ -15,9 +15,11 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import export.DataSaver;
+import export.SocketClient;
 import labels.LabelView;
 import labels.LabelViewerImp;
 import labels.Labelable;
@@ -59,6 +61,7 @@ public class OrderDisplay extends JPanel {
 		setOrderArray();
 		add(orderPanel);
 		Utilities.localVPack(this);
+		DataSaver.writeOrdersToCSV(orders, saveFileName);
 	}
 	
 	private void setOrderArray() {
@@ -87,12 +90,24 @@ public class OrderDisplay extends JPanel {
 		buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
 		
 		JButton updateButton = new JButton("Update Orders");
-		//printButton.addActionListener(new PrintListener());
+		updateButton.addActionListener(new UpdateListener());
 		Utilities.setMinMax(updateButton, BTN_SIZE);
 		buttonPanel.add(updateButton);
 		
 		Utilities.localHPack(buttonPanel);
 		return buttonPanel;
+	}
+	
+	private class UpdateListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Order> ords = new SocketClient().getOrders();
+			if (ords.size() > 0) {
+				orders = ords;
+			}
+			refresh();
+		}		
 	}
 	
 	private class PrintListener implements ActionListener {
@@ -250,21 +265,36 @@ public class OrderDisplay extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			orders.remove(index);
 			refresh();
-			DataSaver.writeOrdersToCSV(orders, saveFileName);
 		}
 		
 	}
 	
 	private ArrayList<String> getCompanyNames() {
 		ArrayList<String> colNames = new ArrayList<String>();
+		ArrayList<String> display = new ArrayList<String>();
 		for (int ord = 0; ord < orders.size(); ord++) {
 			String name = orders.get(ord).getCompany();
+			display.add(name);
 			String nameDate = name.substring(0, 7 > name.length()? name.length(): 7) + ", " + orders.get(ord).getShipDate().getMMDD();
 			if (!colNames.contains(nameDate)) {
 				colNames.add(nameDate);
 			}
+			display.add(nameDate);
 		}
 		return colNames;
+	}
+	
+	private void displayAll(ArrayList<String> strs) {
+		JPanel p = new JPanel();
+		
+		for (int i = 0; i < strs.size(); i++) {
+			p.add(new Label(strs.get(i)));
+		}
+		
+		JFrame f = new JFrame();
+		f.setSize(new Dimension(400,400));
+		f.add(p);
+		f.setVisible(true);
 	}
 	
 	private ArrayList<ArrayList<Integer>> getDisplayArray() {

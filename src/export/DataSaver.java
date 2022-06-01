@@ -59,7 +59,6 @@ public class DataSaver {
 	}
 	
 	public static ArrayList<Order> readOrdersFromCSV(String filePath) {
-		ArrayList<Order> orders = new ArrayList<Order>();
 		 try {
 		        FileReader filereader = new FileReader(filePath);
 		        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
@@ -68,43 +67,48 @@ public class DataSaver {
 		                                  .build();
 		 
 		        List<String[]> allData = csvReader.readAll();
+				return getOrdersFromList(allData);
 		 
-		        for (String[] row : allData) {
-		        	Order order = new Order();
-		        	if (Integer.parseInt(row[0]) < orders.size()) {
-		        		order = orders.get(0);
-		        	}
-		        	else {
-		        		orders.add(order);
-		        	}
-		            order.setPONum(row[1]);
-		            order.setShipVia(row[2]);
-		            order.setCompany(row[3]);
-		            Date date = DateImp.parseDate(row[4]);
-		            order.setShipDate(date);
-		        	
-		        	Item item = new RDFItem();
-		            item.setCustomer(row[3]);
-		            item.setPackDate(date);
-		            
-		            item.setItemCode(row[5]);
-		            item.setGtin(row[6]);
-		            item.setProductName(row[7]);
-		            item.setUnit(row[8]);
-		            
-		            item.setQuantity(Integer.parseInt(row[9]));
-		            item.setPrice(Float.parseFloat(row[10]));
-		            order.addItem(item);
-		        }
 		    }
 		    catch (Exception e) {
 		        e.printStackTrace();
 		    }
+		 return new ArrayList<Order>();
+	}
+	
+	public static ArrayList<Order> getOrdersFromList(List<String[]> allData) {
+		ArrayList<Order> orders = new ArrayList<Order>();
+		for (String[] row : allData) {
+        	Order order = new Order();
+        	if (Integer.parseInt(row[0]) < orders.size()) {
+        		order = orders.get(0);
+        	}
+        	else {
+        		orders.add(order);
+        	}
+            order.setPONum(row[1]);
+            order.setShipVia(row[2]);
+            order.setCompany(row[3]);
+            Date date = DateImp.parseDate(row[4]);
+            order.setShipDate(date);
+        	
+        	Item item = new RDFItem();
+            item.setCustomer(row[3]);
+            item.setPackDate(date);
+            
+            item.setItemCode(row[5]);
+            item.setGtin(row[6]);
+            item.setProductName(row[7]);
+            item.setUnit(row[8]);
+            
+            item.setQuantity(Integer.parseInt(row[9]));
+            item.setPrice(Float.parseFloat(row[10]));
+            order.addItem(item);
+        }
 		return orders;
 	}
 	
 	public static String getDescriptionFromCSV(String itemCode, String filePath) {
-		String descrip = "";
 		 try {
 		        FileReader filereader = new FileReader(filePath);
 		        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();

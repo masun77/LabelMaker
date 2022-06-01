@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import export.DataSaver;
+import export.SocketClient;
 import main.Order;
 
 public class RDFInterface implements UserInterface {
@@ -31,7 +32,10 @@ public class RDFInterface implements UserInterface {
 	}
 	
 	public RDFInterface() {
-		orders = DataSaver.readOrdersFromCSV(SAVE_FILE_NAME);
+		orders = new SocketClient().getOrders();
+		if (orders.size() == 0) {
+			orders = DataSaver.readOrdersFromCSV(SAVE_FILE_NAME);
+		}
 		showInterface();
 	}
 	

@@ -24,13 +24,14 @@ Create actual spreadsheet with that code, descrip, GTIN, name, unit -
 
 5. Run on multiple computers at once - 
 	update button - DONE
-	pull request to server - 
-	server running with csv file - 
-	send back csv - 
-	read csv into display - 
+	server running with csv file - DONE
+	send back csv - epic! DONE
+	pull request to server - DONE!
+	read csv into display - DONE
 	push to server on saved order - 
 	server saves new csv - 
 	auto-update on startup - 
+	change server to actual computer - 
 	
 6. UI - more than 20 items in an order - 
 	prices, amounts, quantities that are doubles rather than ints - 
@@ -73,6 +74,7 @@ Import to quickbooks -
 	IIF file - 
 	how get invoice number? user enters? or auto on import? or?  
 better - non glitchy - implementation of scrollbar
+clear printlns
 
 DONE:
 Using a nice IDE - DONE

@@ -1,5 +1,6 @@
 package server;
 
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -7,7 +8,19 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+
+import labels.Date;
+import labels.DateImp;
+import main.Item;
+import main.Order;
+import main.RDFItem;
 
 public class Server extends Thread {
 	private ServerSocket servSocket;
@@ -90,16 +103,58 @@ public class Server extends Thread {
 				boolean done = false;
 				while (!done && scanner.hasNextLine()) {
 					String line = scanner.nextLine();
-					serverPrintOut.println("Echo from server: " + line);
-					if (line.trim().equals("q")) {
-						done = true;
-					}
+					//serverPrintOut.println("Echo from server: " + line);
+					serverPrintOut.flush();
+					serverPrintOut.println("Server. respect.");
+					serverPrintOut.flush();
+					serverPrintOut.println("Server. what the.");
+					serverPrintOut.flush();
+					
+					
+//					serverPrintOut.println("what?");
+//					serverPrintOut.flush();
+//					if (line.trim().equals("q")) {
+//						done = true;
+//					}
+//					else if (line.contains("GET")) {
+//						int space = line.indexOf(" ");
+//						int secondSpace = line.indexOf(" ", space + 1);
+//						String fileName = line.substring(space + 1, secondSpace);
+//						sendFile(fileName);
+//						serverPrintOut.println("hmm");
+//					}
 				}
 				closeAll();
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		
+		private void sendFile(String fileName) {
+			serverPrintOut.println("accessing csv");
+			ArrayList<Order> orders = new ArrayList<Order>();
+			try {
+		        FileReader filereader = new FileReader("resources/" + fileName);
+		        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
+		        CSVReader csvReader = new CSVReaderBuilder(filereader)
+		                                  .withCSVParser(parser)
+		                                  .build();
+		 
+		        List<String[]> allData = csvReader.readAll();
+		        for (String[] line: allData) {
+//		        	String data = "";
+//		        	for (int i = 0; i < line.length; i++) {
+//		        		
+//		        	}
+			        serverPrintOut.println("CSv: " + line);
+		        }
+		        
+		    }
+		    catch (Exception e) {
+		    	serverPrintOut.println("Server: File not found.");
+		    }
+			return orders;
 		}
 		
 		public void closeAll() {
