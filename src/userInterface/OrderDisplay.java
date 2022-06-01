@@ -77,14 +77,19 @@ public class OrderDisplay extends JPanel {
 		JButton enterOrderButton = new JButton("Add new order");
 		enterOrderButton.addActionListener(entryListener);
 		Utilities.setMinMax(enterOrderButton, BTN_SIZE);
-		buttonPanel.add(enterOrderButton);
-		
+		buttonPanel.add(enterOrderButton);		
 		buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
 		
 		JButton printButton = new JButton("View/Print Selected Labels");
 		printButton.addActionListener(new PrintListener());
 		Utilities.setMinMax(printButton, BTN_SIZE);
-		buttonPanel.add(printButton);
+		buttonPanel.add(printButton);		
+		buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
+		
+		JButton updateButton = new JButton("Update Orders");
+		//printButton.addActionListener(new PrintListener());
+		Utilities.setMinMax(updateButton, BTN_SIZE);
+		buttonPanel.add(updateButton);
 		
 		Utilities.localHPack(buttonPanel);
 		return buttonPanel;

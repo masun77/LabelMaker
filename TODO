@@ -20,18 +20,17 @@ Printing: rotate label -
 	verify GTINs correct and scannable - 
 	VP code readable - 
 	
-
 Create actual spreadsheet with that code, descrip, GTIN, name, unit - 
 
 5. Run on multiple computers at once - 
-	update button - 
-	auto-update on startup - 
+	update button - DONE
 	pull request to server - 
 	server running with csv file - 
 	send back csv - 
 	read csv into display - 
 	push to server on saved order - 
 	server saves new csv - 
+	auto-update on startup - 
 	
 6. UI - more than 20 items in an order - 
 	prices, amounts, quantities that are doubles rather than ints - 
