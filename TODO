@@ -15,32 +15,21 @@ having tests for all your code that are easy to run, and running them frequently
 
 TODO: 		
 
-Printing: rotate label - 
+2. Printing: rotate label - 
 	size label correctly - 
 	verify GTINs correct and scannable - 
 	VP code readable - 
 	
-Create actual spreadsheet with that code, descrip, GTIN, name, unit - 
+1. Create actual spreadsheet with code, descrip, GTIN, name, unit - 
 
-5. Run on multiple computers at once - 
-	update button - DONE
-	server running with csv file - DONE
-	send back csv - epic! DONE
-	pull request to server - DONE!
-	read csv into display - (whew that was easy then frustrating) DONE
-	push to server on saved order - DONE
-	server saves new csv - DONE!
-	auto-update on startup - DONE
-	change server to actual computer - 
+4. Change server to actual computer - 
 	
-6. UI - more than 20 items in an order - 
+3. UI - more than 20 items in an order - 
 	prices, amounts, quantities that are doubles rather than ints - 
 	some glitches with saving orders when you don't put in all the info... 
-	row alignment - DONE
 	ship date vs pack/pick date in item, order, display, csv
 	price not saving to csv/item
-	
-7. orders from multiple days- put all on one screen but in order? or diff screens to click thru? 
+
 	
 TESTS:
 - print with 1 label
@@ -50,6 +39,7 @@ TESTS:
 
 
 LATER:
+orders from multiple days- put all on one screen but in order? or diff screens to click thru? 
 edit existing orders
 autopopulation eg of company, item
 error checking of input info
@@ -148,6 +138,7 @@ UI -
 			right align total stuff - DONE
 			Make textfields have minimum sizes - DONE
 			make textfields and their headers have the same minimum size - DONE
+	row alignment - DONE
 Delete orders - DONE
 Printing - 
 	how can you talk to a printer? the printer driver does it. So if your computer can talk to it, 
@@ -162,5 +153,15 @@ Info from spreadsheets/datebase (ie, what shows up on a QB invoice) -
 		description - DONE
 		name (stored in item-> show on order display) - DONE
 		unit, not sure this is real or not - DONE
-		
+Run on multiple computers at once - 
+	update button - DONE
+	server running with csv file - DONE
+	send back csv - epic! DONE
+	pull request to server - DONE!
+	read csv into display - (whew that was easy then frustrating) DONE
+	push to server on saved order - DONE
+	server saves new csv - DONE!
+	auto-update on startup - DONE
+	
+	
 		
