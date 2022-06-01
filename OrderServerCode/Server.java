@@ -16,22 +16,16 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
-import labels.Date;
-import labels.DateImp;
-import main.Item;
-import main.Order;
-import main.RDFItem;
 
 public class Server extends Thread {
 	private ServerSocket servSocket;
 	private boolean running = true;
 	private ArrayList<RequestHandler> runningSockets = new ArrayList<RequestHandler>();
+	private final String FILE_NAME = "resources/saveOrders.csv";
 	
 	public void startServer( ) {
 		try {
-			System.out.println("starting server");
-			int port = 9999;
-
+			int port = 9998;
 			servSocket = new ServerSocket(port);
 			running = true;
 			start();
@@ -54,7 +48,6 @@ public class Server extends Thread {
 				rh.start();
 			}
 			catch (Exception e) {
-                //e.printStackTrace();
 				System.out.println("socket closed");
             }
 		}
@@ -78,7 +71,7 @@ public class Server extends Thread {
 	private class RequestHandler extends Thread {
 		private Socket socket;
 		private Scanner scanner; 
-		private PrintWriter serverPrintOut;
+		private PrintWriter sout;
 		private InputStream inputToServer;
 		private OutputStream outputFromServer;
 		
@@ -89,40 +82,40 @@ public class Server extends Thread {
 		@Override
 		public void run() {
 			try {
-				System.out.println("Connection received");
+				System.out.println("Single request received " + this);
 				
 				inputToServer = socket.getInputStream();
 				outputFromServer = socket.getOutputStream();
 				
 				scanner = new Scanner(inputToServer, "UTF-8");
-				serverPrintOut = new PrintWriter(new OutputStreamWriter(outputFromServer, "UTF-8"), true);
-							
-				serverPrintOut.println("Server. Enter q to exit.");
-				serverPrintOut.flush();
-				
+				sout = new PrintWriter(new OutputStreamWriter(outputFromServer, "UTF-8"), true);
+											
 				boolean done = false;
+				boolean readingFile = false;
+				ArrayList<String> data = new ArrayList<String>();
 				while (!done && scanner.hasNextLine()) {
 					String line = scanner.nextLine();
-					//serverPrintOut.println("Echo from server: " + line);
-					serverPrintOut.flush();
-					serverPrintOut.println("Server. respect.");
-					serverPrintOut.flush();
-					serverPrintOut.println("Server. what the.");
-					serverPrintOut.flush();
-					
-					
-//					serverPrintOut.println("what?");
-//					serverPrintOut.flush();
-//					if (line.trim().equals("q")) {
-//						done = true;
-//					}
-//					else if (line.contains("GET")) {
-//						int space = line.indexOf(" ");
-//						int secondSpace = line.indexOf(" ", space + 1);
-//						String fileName = line.substring(space + 1, secondSpace);
-//						sendFile(fileName);
-//						serverPrintOut.println("hmm");
-//					}
+					if (line.contains("GET")) {
+						System.out.println("accessing csv");
+						int space = line.indexOf(" ") + 1;
+						int secondSpace = line.indexOf(" ", space);
+						String fileName = line.substring(space, secondSpace);
+						sendCSV(fileName);
+						done = true;
+					}
+					else if (line.contains("PUSH")) {
+						System.out.println("Saving csv");
+						readingFile = true;
+					}
+					else if (line.contains("EOF")) {
+						done = true;
+					}
+					else if (readingFile) {
+						data.add(line + "\n");
+					}
+				}
+				if (data.size() > 0) {
+					DataSaver.writeOrdersToCSV(data, FILE_NAME);
 				}
 				closeAll();
 			}
@@ -131,9 +124,7 @@ public class Server extends Thread {
 			}
 		}
 		
-		private void sendFile(String fileName) {
-			serverPrintOut.println("accessing csv");
-			ArrayList<Order> orders = new ArrayList<Order>();
+		private void sendCSV(String fileName) {
 			try {
 		        FileReader filereader = new FileReader("resources/" + fileName);
 		        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
@@ -142,19 +133,19 @@ public class Server extends Thread {
 		                                  .build();
 		 
 		        List<String[]> allData = csvReader.readAll();
-		        for (String[] line: allData) {
-//		        	String data = "";
-//		        	for (int i = 0; i < line.length; i++) {
-//		        		
-//		        	}
-			        serverPrintOut.println("CSv: " + line);
+		        for (int i = 0; i < allData.size(); i++) {
+		        	String row = "";
+		        	String[] wholeRow = allData.get(i);
+		        	for (int s = 0; s < wholeRow.length; s++) {
+		        		row += wholeRow[s] + "|";
+		        	}
+		        	sout.println(row);
 		        }
-		        
+		        sout.println("EOF");
 		    }
 		    catch (Exception e) {
-		    	serverPrintOut.println("Server: File not found.");
+		        e.printStackTrace();
 		    }
-			return orders;
 		}
 		
 		public void closeAll() {
@@ -163,8 +154,8 @@ public class Server extends Thread {
 				inputToServer.close();
 				outputFromServer.close();
 				socket.close();
-				System.out.println("connection closed");
 				runningSockets.remove(this);
+				System.out.println("single connection closed");
 			}
 			catch (Exception e) {
 				e.printStackTrace();

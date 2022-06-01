@@ -152,6 +152,11 @@ public class DataSaver {
 		    catch (Exception e) {
 		        e.printStackTrace();
 		    }
+		if (data.size() == 0) {
+			data.add("");
+			data.add("");
+			data.add("");
+		}
 		return data;
 	}
 }

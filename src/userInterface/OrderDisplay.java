@@ -62,6 +62,7 @@ public class OrderDisplay extends JPanel {
 		add(orderPanel);
 		Utilities.localVPack(this);
 		DataSaver.writeOrdersToCSV(orders, saveFileName);
+		new SocketClient().sendOrders(orders);
 	}
 	
 	private void setOrderArray() {

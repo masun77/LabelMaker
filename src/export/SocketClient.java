@@ -7,16 +7,52 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import main.Item;
 import main.Order;
 
 public class SocketClient {
 	private final String SERVER = "127.0.0.1";
 	private final int PORT = 9998;
 	private final String PATH = "saveOrders.csv";
+	
+	public void sendOrders(ArrayList<Order> orders) {
+		try {
+			Socket socket = new Socket(SERVER, PORT);
+			
+			PrintStream out = new PrintStream( socket.getOutputStream() );
+            BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
+
+            out.println("PUSH");
+
+            for (int o = 0; o < orders.size(); o++) {
+            	Order ord = orders.get(o);
+            	ArrayList<Item> items = ord.getItems();
+        		for (int i = 0; i < items.size(); i++) {
+        			Item item = items.get(i);
+                    String data = o + "|" + ord.getPONum() + "|" + ord.getShipVia() 
+                    		+ "|" + item.getCustomer() + "|" + item.getPackDate().getDateMMDDYYYY()
+                    		+ "|" + item.getItemCode() + "|" + item.getGtin() + "|" + item.getProductName() 
+                    		+ "|" + item.getUnit()
+                    		+ "|" + Integer.toString(item.getQuantity()) + "|" + Float.toString(item.getPrice());
+            		out.println(data);
+        		}
+            }
+            out.println("EOF");
+            
+            in.close();
+            out.close();
+            socket.close();
+			
+		} 
+		catch( Exception e ) {
+            System.out.println("Connection refused");
+        }
+	}
 	
 	public ArrayList<Order> getOrders() {
         ArrayList<String[]> allData = new ArrayList<String[]>();
@@ -43,7 +79,7 @@ public class SocketClient {
 			
 		} 
 		catch( Exception e ) {
-            e.printStackTrace();
+            System.out.println("Connection refused");
         }
 		return DataSaver.getOrdersFromList(allData);
 	}
