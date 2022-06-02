@@ -20,7 +20,7 @@ TODO:
 	verify GTINs correct and scannable - 
 	VP code readable - 
 	
-1. Create actual spreadsheet with code, descrip, GTIN, name, unit - 
+
 
 4. Change server to actual computer - 
 	
@@ -162,6 +162,6 @@ Run on multiple computers at once -
 	push to server on saved order - DONE
 	server saves new csv - DONE!
 	auto-update on startup - DONE
-	
+Create actual spreadsheet with code, descrip, GTIN, name, unit - DONE
 	
 		

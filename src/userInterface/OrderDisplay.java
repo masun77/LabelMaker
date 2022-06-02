@@ -36,7 +36,7 @@ public class OrderDisplay extends JPanel {
 	private final Dimension BTN_SIZE = new Dimension(200,25);
 	private final Dimension NUMBER_SIZE = new Dimension(110,15);
 	private final Dimension CHECK_SIZE = new Dimension(15,15);
-	private final Dimension ITEM_NAME_SIZE = new Dimension(65,15);
+	private final Dimension ITEM_NAME_SIZE = new Dimension(100,15);
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 	private ActionListener entryListener;
