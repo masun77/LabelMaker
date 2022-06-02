@@ -1,4 +1,6 @@
-0|2|RDF 1|Mom|01/01/2022|GREAT|12345|Great stuff|5 lbs|3|0.0
-1|99|mkt|New comp|05/01/2022|GR||||1|0.0
-2|||ABC|03/01/2022|LETT20|00000818185555|Lettuce 20hd|20 hds|2|0.0
-3|||what?|01/01/2022|BR||||4|0.0
+0|||Mom|01/01/2022|GREAT|12345|Great stuff|5 lbs|3|0.0
+0|||gts|01/01/2022|PTT25|00818181027514|Purple Top Turnips| 25 lbs/cs|2|0.0
+0|||gts|01/01/2022|LG10|00818181023585|Little Gem Lettuce| 10 lbs/cs|4|0.0
+0|||gts|01/01/2022|WHSO10|00818181024520|White Spring Onions| 10 lbs/cs|5|0.0
+1|||ABC|03/01/2022|LETT20|00000818185555|Lettuce 20hd|20 hds|2|0.0
+2|||gts|01/01/2022|GRG10|00818181022021|Green Garlic| 10 lbs/cs|1|0.0
