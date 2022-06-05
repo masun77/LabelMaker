@@ -13,18 +13,21 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import export.DataSaver;
 import labels.DateImp;
+import labels.LabelableItem;
 import main.Item;
 import main.Order;
 import main.RDFItem;
 import main.Utilities;
 
-public class EntryForm extends JPanel {
+public class EntryForm extends JFrame {
+	private final JPanel mainPanel = new JPanel();
 	private ArrayList<Order> orders = new ArrayList<Order>();
-	private ActionListener homeListener;
 	private ActionListener saveListener;
 	private TextField date = new TextField(10);
 	private TextField company = new TextField(30);
@@ -43,16 +46,16 @@ public class EntryForm extends JPanel {
 	private final Dimension BUTTON_SIZE = new Dimension(150,50);
 	private final String ITEM_DATA_CSV_PATH = "resources/itemData.csv";
 
-	public EntryForm(ActionListener homeLstn, ActionListener saveLstn, ArrayList<Order> ords) {
+	public EntryForm(ActionListener saveLstn, ArrayList<Order> ords) {
 		orders = ords;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		homeListener = homeLstn;
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		saveListener = saveLstn;
 		initialize();
+		JScrollPane scrollPane = new JScrollPane(mainPanel);
+		this.add(scrollPane);
 	}
 	
 	private void initialize() {
-		addHomeButton(homeListener);
 		addOrderDate();
 		addOrderCompany();
 		addPurchaseOrder();
@@ -61,7 +64,7 @@ public class EntryForm extends JPanel {
 		addTotal();
 		addSaveButton(saveListener);
 		
-		Utilities.localVPack(this);
+		Utilities.localVPack(mainPanel);
 	}
 	
 	private void addLabelComponentPair(String label, Component tf) {
@@ -72,7 +75,7 @@ public class EntryForm extends JPanel {
 		panel.add(labelComp);
 		panel.add(tf);
 		Utilities.setMinMax(tf, LABEL_SIZE);
-		add(panel);
+		mainPanel.add(panel);
 	}
 	
 	private void addOrderDate() {
@@ -98,7 +101,7 @@ public class EntryForm extends JPanel {
 			addItemRow();
 		}
 		Utilities.localVPack(itemPanel);
-		add(itemPanel);
+		mainPanel.add(itemPanel);
 	}
 	
 	private class CodeListener implements FocusListener {
@@ -185,7 +188,7 @@ public class EntryForm extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ArrayList<Item> items = new ArrayList<Item>();
+			ArrayList<LabelableItem> items = new ArrayList<LabelableItem>();
 			Component[] itemRows = itemPanel.getComponents();
 			for (int i = 0; i < itemRows.length; i++) {
 				JPanel row = (JPanel) itemRows[i];
@@ -267,7 +270,7 @@ public class EntryForm extends JPanel {
 		panel.add(descrip);
 		panel.add(price);
 		panel.add(amt);
-		add(panel);
+		mainPanel.add(panel);
 	}
 	
 	private void addTotal() {
@@ -279,13 +282,6 @@ public class EntryForm extends JPanel {
 		saveButton.addActionListener(saveListener);
 		saveButton.addActionListener(new SaveOrderListener());
 		Utilities.setMinMax(saveButton, BUTTON_SIZE);
-		add(saveButton);
-	}
-	
-	private void addHomeButton(ActionListener homeButton) {
-		JButton returnHome = new JButton("Return Home");
-		returnHome.addActionListener(homeButton);
-		Utilities.setMinMax(returnHome, BUTTON_SIZE);
-		add(returnHome);
+		mainPanel.add(saveButton);
 	}
 }

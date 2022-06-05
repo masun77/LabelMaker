@@ -17,10 +17,10 @@ import main.Utilities;
 import printing.PrintManager;
 
 public class LabelViewerImp implements LabelView {
-	ArrayList<Labelable> items;
+	ArrayList<LabelableItem> items;
 
 	@Override
-	public void showLabels(ArrayList<Labelable> its) {
+	public void showLabels(ArrayList<LabelableItem> its) {
 		items = its;
 		
 		JFrame f = new JFrame("View Labels");
@@ -33,8 +33,8 @@ public class LabelViewerImp implements LabelView {
 		mainPanel.add(printButton);
 
 		for (int i = 0; i < items.size(); i++) {
-			Labelable currItem = items.get(i);
-			for (int j = 0; j < ((Item) currItem).getQuantity(); j++) {
+			LabelableItem currItem = items.get(i);
+			for (int j = 0; j < ((Item) currItem).getQuantityRoundedUp(); j++) {
 				mainPanel.add(currItem.getLabel());
 			}
 		}

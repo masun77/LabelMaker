@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import labels.Date;
 import labels.DateImp;
+import labels.LabelableItem;
 
 public class Order {
-	private ArrayList<Item> items = null;
+	private ArrayList<LabelableItem> items = null;
 	private String company = "";
 	private String PONum = "";
 	private String shipVia = "";
@@ -21,22 +22,22 @@ public class Order {
 
 	private Date shipDate = new DateImp();
 	
-	public Order(ArrayList<Item> its) {
+	public Order(ArrayList<LabelableItem> its) {
 		items = its;
 	}
 	
 	public Order() {
-		items = new ArrayList<Item>();
+		items = new ArrayList<LabelableItem>();
 	}
 	
-	public Order(ArrayList<Item> its, String po, String sv, Date d) {
+	public Order(ArrayList<LabelableItem> its, String po, String sv, Date d) {
 		items = its;
 		PONum = po;
 		shipVia = sv;
 		shipDate = d;
 	}
 	
-	public ArrayList<Item> getItems() {
+	public ArrayList<LabelableItem> getItems() {
 		return items;
 	}
 	
@@ -67,11 +68,11 @@ public class Order {
 		shipVia = sv;
 	}
 	
-	public void setItems(ArrayList<Item> newIts) {
+	public void setItems(ArrayList<LabelableItem> newIts) {
 		items = newIts;
 	}
 	
-	public void addItem(Item it) {
+	public void addItem(LabelableItem it) {
 		items.add(it);
 	}
 	
@@ -85,8 +86,8 @@ public class Order {
 		printItems();
 	}
 	
-	public Item getItem(String prodName) {
-		for (Item i: items) {
+	public LabelableItem getItem(String prodName) {
+		for (LabelableItem i: items) {
 			if (i.getProductName().equals(prodName)) {
 				return i;
 			}

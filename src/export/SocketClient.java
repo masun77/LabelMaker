@@ -1,18 +1,12 @@
 package export;
 
-import java.awt.Dimension;
-import java.awt.Label;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import main.Item;
+import labels.LabelableItem;
 import main.Order;
 
 public class SocketClient {
@@ -31,14 +25,14 @@ public class SocketClient {
 
             for (int o = 0; o < orders.size(); o++) {
             	Order ord = orders.get(o);
-            	ArrayList<Item> items = ord.getItems();
+            	ArrayList<LabelableItem> items = ord.getItems();
         		for (int i = 0; i < items.size(); i++) {
-        			Item item = items.get(i);
+        			LabelableItem item = items.get(i);
                     String data = o + "|" + ord.getPONum() + "|" + ord.getShipVia() 
                     		+ "|" + item.getCustomer() + "|" + item.getPackDate().getDateMMDDYYYY()
                     		+ "|" + item.getItemCode() + "|" + item.getGtin() + "|" + item.getProductName() 
                     		+ "|" + item.getUnit()
-                    		+ "|" + Integer.toString(item.getQuantity()) + "|" + Float.toString(item.getPrice());
+                    		+ "|" + Float.toString(item.getQuantity()) + "|" + Float.toString(item.getPrice());
             		out.println(data);
         		}
             }

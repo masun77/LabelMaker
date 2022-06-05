@@ -13,24 +13,27 @@ and by creating easy times to take breaks and check-in on your goals - in betwee
 having tests for all your code that are easy to run, and running them frequently - every cycle. 
 6. Keep your code clean by refactoring frequently - every cycle. 
 
-TODO: 		
+TODO: 	
+
+1. Refactoring, esp. the UI
+	why are things so ugly?
+	decouple, simplify, clarify
+	make factories
+	
+2. UI - more than 20 items in an order - 
+	prices, amounts, quantities that are doubles rather than ints - 
+	some glitches with saving orders when you don't put in all the info... 
+	ship date vs pack/pick date in item, order, display, csv
+	price not saving to csv/item
+	another problem with the display of info from the csv - not in the right columns... 
 
 2. Printing: rotate label - 
 	size label correctly - 
 	verify GTINs correct and scannable - 
 	VP code readable - 
 	
-
-
 4. Change server to actual computer - 
-	
-3. UI - more than 20 items in an order - 
-	prices, amounts, quantities that are doubles rather than ints - 
-	some glitches with saving orders when you don't put in all the info... 
-	ship date vs pack/pick date in item, order, display, csv
-	price not saving to csv/item
-
-	
+		
 TESTS:
 - print with 1 label
 - print with multiple labels
@@ -65,6 +68,7 @@ Import to quickbooks -
 	how get invoice number? user enters? or auto on import? or?  
 better - non glitchy - implementation of scrollbar
 clear printlns
+deal with fractional items
 
 DONE:
 Using a nice IDE - DONE

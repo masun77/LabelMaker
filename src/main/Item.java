@@ -2,34 +2,34 @@ package main;
 
 import labels.Date;
 import labels.DateImp;
-import labels.Labelable;
+import labels.LabelableItem;
 
 /**
  * Represents a single item in an order
  * with a name, GTIN, pack date, unit, and voice pick code.
  */
-public abstract class Item implements Labelable {
+public abstract class Item implements LabelableItem {
 	protected String gtin;
 	protected String customer;
 	protected String productName;
 	protected Date packDate;
 	protected String unit;
 	protected String voicePickCode = "";
-	protected int quantity;
+	protected float quantity;
 	protected float price;
 	protected String itemCode = "";
 	
 	public Item() {
 		customer = "None";
 		productName = "Nothing";
-		gtin = "00000818180000";
+		gtin = "00818181020000";
 		packDate = new DateImp();
 		unit = "Empty";
 		quantity = 1;
 		price = 0;
 	}
 	
-	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, int qty, float price, String itCd) {
+	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, float qty, float price, String itCd) {
 		customer = cust;
 		productName = prodName;
 		gtin = gtnum;
@@ -43,10 +43,6 @@ public abstract class Item implements Labelable {
 		return itemCode;
 	}
 
-	public void setItemCode(String itemCode) {
-		this.itemCode = itemCode;
-	}
-
 	public String getGtin() {
 		return gtin;
 	}
@@ -55,6 +51,7 @@ public abstract class Item implements Labelable {
 		return customer;
 	}
 
+	@Override
 	public String getProductName() {
 		return productName;
 	}
@@ -71,12 +68,25 @@ public abstract class Item implements Labelable {
 		return unit;
 	}
 	
-	public int getQuantity() {
+	public float getQuantity() {
 		return quantity;
 	}
 	
+	public int getQuantityRoundedUp() {
+		int q = (int) quantity / 1;
+		if (quantity > q) {
+			return q + 1;
+		}
+		return q;
+	}
+	
+	@Override
 	public String stringRep() {
 		return customer + " " + packDate.getDateMMDDYYYY() + " " + quantity + " " + productName + " " + unit + " " + gtin + " " + price;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
 	}
 
 	public void setGtin(String gtin) {
@@ -103,7 +113,7 @@ public abstract class Item implements Labelable {
 		this.voicePickCode = voicePickCode;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(float quantity) {
 		this.quantity = quantity;
 	}
 

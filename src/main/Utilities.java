@@ -5,29 +5,11 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-import labels.Labelable;
+import labels.LabelableItem;
 
 public class Utilities {
-	public static ArrayList<Item> getItemArrayList(Item i) {
-		ArrayList<Item> items = new ArrayList<Item>();
-		items.add(i);
-		return items;
-	}
-	
-	public static ArrayList<Labelable> getLabelableArrayList(Item i) {
-		ArrayList<Labelable> items = new ArrayList<Labelable>();
-		items.add(i);
-		return items;
-	}
-	
-	public static ArrayList<Order> getOrderArrayList(Order o) {
-		ArrayList<Order> ord = new ArrayList<Order>();
-		ord.add(o);
-		return ord;
-	}
-
 	/**
-	 * Set the frame's size to the maximum minimum width and combined height of its children
+	 * Set the frame's size to the maximum minimum width and the combined height of its children
 	 * 
 	 * @param frame the frame to set the size of
 	 */
@@ -44,13 +26,11 @@ public class Utilities {
 				width = (int) d.getWidth();
 			}
 		}
-		frame.setSize(width, height);
-		frame.setMinimumSize(new Dimension(width, height));
-		frame.setPreferredSize(new Dimension(width, height));
+		setAllSizes(frame, width, height);
 	}
 	
 	/**
-	 * Set the frame's size to the maximum minimum height and combined width of its children
+	 * Set the frame's size to the maximum minimum height and the combined width of its children
 	 * 
 	 * @param frame the frame to set the size of
 	 */
@@ -67,6 +47,10 @@ public class Utilities {
 				height = (int) d.getHeight();
 			}
 		}
+		setAllSizes(frame, width, height);
+	}
+	
+	private static void setAllSizes(Container frame, int width, int height) {
 		frame.setSize(width, height);
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setPreferredSize(new Dimension(width, height));

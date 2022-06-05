@@ -11,15 +11,16 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.OrientationRequested;
 
-import labels.Labelable;
+import labels.LabelableItem;
 import main.Item;
 
 public class PrintManager {
-	public void printLabels(ArrayList<Labelable> items) { 
+	public void printLabels(ArrayList<LabelableItem> items) { 
 		ArrayList<Component> labels = new ArrayList<Component>();
 		for (int i = 0; i < items.size(); i++) {
-			Labelable currItem = items.get(i);
-			for (int j = 0; j < ((Item) currItem).getQuantity(); j++) {
+			LabelableItem currItem = items.get(i);
+			int quantity = ((LabelableItem) currItem).getQuantityRoundedUp();
+			for (int j = 0; j < quantity; j++) {
 				labels.add(currItem.getLabel());
 			}
 		}

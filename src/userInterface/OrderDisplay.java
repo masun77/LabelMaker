@@ -22,8 +22,7 @@ import export.DataSaver;
 import export.SocketClient;
 import labels.LabelView;
 import labels.LabelViewerImp;
-import labels.Labelable;
-import main.Item;
+import labels.LabelableItem;
 import main.Order;
 import main.Utilities;
 
@@ -69,7 +68,7 @@ public class OrderDisplay extends JPanel {
 		orderPanel = new JPanel();
 		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
 		orderPanel.add(getColumnNames());
-		ArrayList<ArrayList<Integer>> displayArray = getDisplayArray();
+		ArrayList<ArrayList<Float>> displayArray = getDisplayArray();
 		addRows(displayArray);
 		Utilities.localVPack(orderPanel);
 	}
@@ -115,14 +114,14 @@ public class OrderDisplay extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ArrayList<Labelable> items = getCheckedItems();
+			ArrayList<LabelableItem> items = getCheckedItems();
 			LabelView lv = new LabelViewerImp();
 			lv.showLabels(items);
 		}
 	}
 	
-	private ArrayList<Labelable> getCheckedItems() {
-		ArrayList<Labelable> items = new ArrayList<Labelable>();
+	private ArrayList<LabelableItem> getCheckedItems() {
+		ArrayList<LabelableItem> items = new ArrayList<LabelableItem>();
 
 		if (checkBoxArray.size() > 0) {
 			int cols = checkBoxArray.get(0).size();
@@ -226,14 +225,14 @@ public class OrderDisplay extends JPanel {
 	}
 	
 	private class PrintCheckBox extends JCheckBox {
-		Item item;
+		LabelableItem item;
 		
-		public PrintCheckBox(Item it) {
+		public PrintCheckBox(LabelableItem it) {
 			item = it;
 			Utilities.setMinMax(this, CHECK_SIZE);
 		}
 		
-		public Labelable getItem() {
+		public LabelableItem getItem() {
 			return item;
 		}
 	}
@@ -298,17 +297,17 @@ public class OrderDisplay extends JPanel {
 		f.setVisible(true);
 	}
 	
-	private ArrayList<ArrayList<Integer>> getDisplayArray() {
+	private ArrayList<ArrayList<Float>> getDisplayArray() {
 		gtins = new ArrayList<String>();
 		prodNames = new ArrayList<String>();
-		ArrayList<ArrayList<Integer>> displayArray = new ArrayList<ArrayList<Integer>>();
+		ArrayList<ArrayList<Float>> displayArray = new ArrayList<ArrayList<Float>>();
 		for (int ord = 0; ord < orders.size(); ord++) {
 			Order order = orders.get(ord);
-			ArrayList<Item> items = order.getItems();
+			ArrayList<LabelableItem> items = order.getItems();
 			for (int it = 0; it < items.size(); it++) {
-				Item item = items.get(it);
+				LabelableItem item = items.get(it);
 				int index = gtins.indexOf(item.getGtin());
-				ArrayList<Integer> currArr = new ArrayList<Integer>();
+				ArrayList<Float> currArr = new ArrayList<Float>();
 				if (index < 0) {
 					gtins.add(item.getGtin());
 					prodNames.add(item.getProductName());
@@ -325,7 +324,7 @@ public class OrderDisplay extends JPanel {
 		return displayArray;
 	}
 	
-	private void setCheckBoxes(ArrayList<ArrayList<Integer>> array) {
+	private void setCheckBoxes(ArrayList<ArrayList<Float>> array) {
 		if (array.size() > 0) {
 			int rows = array.size();
 			int cols = array.get(0).size();
@@ -344,17 +343,17 @@ public class OrderDisplay extends JPanel {
 		}
 	}
 	
-	private ArrayList<Integer> createZeroArray(int numZeros) {
-		ArrayList<Integer> arr = new ArrayList<Integer>();
+	private ArrayList<Float> createZeroArray(int numZeros) {
+		ArrayList<Float> arr = new ArrayList<Float>();
 		for (int n = 0; n < numZeros; n++) {
-			arr.add(0);
+			arr.add(0.0f);
 		}
 		return arr;
 	}
 	
-	private void addRows(ArrayList<ArrayList<Integer>> displayArray) {
+	private void addRows(ArrayList<ArrayList<Float>> displayArray) {
 		for (int r = 0; r < displayArray.size(); r++) {
-			ArrayList<Integer> row = displayArray.get(r);
+			ArrayList<Float> row = displayArray.get(r);
 			JPanel rowPanel = new JPanel();
 			rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
 			Label prodName = new Label(prodNames.get(r));
@@ -362,7 +361,7 @@ public class OrderDisplay extends JPanel {
 			rowPanel.add(new ItemCheckBox(r));
 			rowPanel.add(prodName);
 			for (int q = 0; q < row.size(); q++) {
-				Label qty = new Label(Integer.toString(row.get(q)));
+				Label qty = new Label(Float.toString(row.get(q)));
 				Utilities.setMinMax(qty, NUMBER_SIZE);
 				rowPanel.add(checkBoxArray.get(r).get(q));
 				rowPanel.add(qty);
