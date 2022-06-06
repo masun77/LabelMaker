@@ -1,7 +1,6 @@
 package userInterface;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Label;
 import java.awt.TextField;
@@ -67,17 +66,6 @@ public class EntryForm extends JFrame {
 		Utilities.localVPack(mainPanel);
 	}
 	
-	private void addLabelComponentPair(String label, Component tf) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		Label labelComp = new Label(label);
-		Utilities.setMinMax(labelComp, LABEL_SIZE);
-		panel.add(labelComp);
-		panel.add(tf);
-		Utilities.setMinMax(tf, LABEL_SIZE);
-		mainPanel.add(panel);
-	}
-	
 	private void addOrderDate() {
 		addLabelComponentPair("Date: ", date);
 	}
@@ -114,9 +102,7 @@ public class EntryForm extends JFrame {
 		}
 
 		@Override
-		public void focusGained(FocusEvent e) {
-			// do nothing
-		}
+		public void focusGained(FocusEvent e) {	}
 
 		@Override
 		public void focusLost(FocusEvent e) {
@@ -127,12 +113,20 @@ public class EntryForm extends JFrame {
 		}
 	}
 	
-	private class AmountListener implements FocusListener {
-
-		@Override
-		public void focusGained(FocusEvent e) {
-			// do nothing
+	private void updateTotal() {
+		float total = 0;
+		for (int a = 0; a < amounts.size(); a++) {
+			String amt = amounts.get(a).getText();
+			if (amt.length() > 0) {
+				total += Float.parseFloat(amt);	
+			}
 		}
+		totalLabel.setText("$" + Float.toString(total));
+	}
+	
+	private class AmountListener implements FocusListener {
+		@Override
+		public void focusGained(FocusEvent e) {	}
 
 		@Override
 		public void focusLost(FocusEvent e) {
@@ -152,17 +146,15 @@ public class EntryForm extends JFrame {
 		}
 
 		@Override
-		public void focusGained(FocusEvent e) {
-			// do nothing
-		}
+		public void focusGained(FocusEvent e) {	}
 
 		@Override
 		public void focusLost(FocusEvent e) {
 			String priceText = price.getText();
 			String qtyText = quantity.getText();
 			if (priceText.length() > 0 && qtyText.length() > 0) {
-				amount.setText(Integer.toString(
-						Integer.parseInt(qtyText) * Integer.parseInt(priceText)));
+				amount.setText(Float.toString(
+						Float.parseFloat(qtyText) * Float.parseFloat(priceText)));
 			}		
 			else {
 				amount.setText("");
@@ -171,21 +163,7 @@ public class EntryForm extends JFrame {
 		}
 	}
 	
-	private void clearForm() {
-		date.setText("");
-		company.setText("");
-		purchaseOrder.setText("");
-		totalLabel.setText("$0");
-		shipVia.setText("");
-		itemPanel.removeAll();
-		amounts.removeAll(amounts);
-		for (int i = 0; i < NUM_ITEMS; i++) {
-			addItemRow();
-		}
-	}
-	
 	private class SaveOrderListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<LabelableItem> items = new ArrayList<LabelableItem>();
@@ -198,8 +176,6 @@ public class EntryForm extends JFrame {
 				}
 			}
 			Order newOrder = new Order(items, purchaseOrder.getText(), shipVia.getText(), DateImp.parseDate(date.getText()));
-			newOrder.printItems();
-			clearForm();
 			orders.add(newOrder);			
 		}
 		
@@ -207,22 +183,11 @@ public class EntryForm extends JFrame {
 			Component[] rowData = row.getComponents();
 			ArrayList<String> itemData = DataSaver.getItemData(((TextField)rowData[1]).getText(), ITEM_DATA_CSV_PATH);
 			return new RDFItem(company.getText(), itemData.get(1), itemData.get(2), itemData.get(0), 
-					DateImp.parseDate(date.getText()), Integer.parseInt(((TextField)rowData[0]).getText()),
+					DateImp.parseDate(date.getText()), Float.parseFloat(((TextField)rowData[0]).getText()),
 					Float.parseFloat(((TextField)rowData[3]).getText()),
 					((TextField)rowData[1]).getText());
-		}
+		} 
 		
-	}
-	
-	private void updateTotal() {
-		int total = 0;
-		for (int a = 0; a < amounts.size(); a++) {
-			String amt = amounts.get(a).getText();
-			if (amt.length() > 0) {
-				total += Integer.parseInt(amt);	
-			}
-		}
-		totalLabel.setText("$" + Integer.toString(total));
 	}
 	
 	private void addItemRow() {
@@ -270,6 +235,7 @@ public class EntryForm extends JFrame {
 		panel.add(descrip);
 		panel.add(price);
 		panel.add(amt);
+		Utilities.localHPack(panel);
 		mainPanel.add(panel);
 	}
 	
@@ -283,5 +249,16 @@ public class EntryForm extends JFrame {
 		saveButton.addActionListener(new SaveOrderListener());
 		Utilities.setMinMax(saveButton, BUTTON_SIZE);
 		mainPanel.add(saveButton);
+	}
+	
+	private void addLabelComponentPair(String label, Component tf) {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		Label labelComp = new Label(label);
+		Utilities.setMinMax(labelComp, LABEL_SIZE);
+		panel.add(labelComp);
+		panel.add(tf);
+		Utilities.setMinMax(tf, LABEL_SIZE);
+		mainPanel.add(panel);
 	}
 }

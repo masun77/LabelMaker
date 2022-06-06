@@ -15,18 +15,6 @@ having tests for all your code that are easy to run, and running them frequently
 
 TODO: 	
 
-1. Refactoring, esp. the UI
-	why are things so ugly?
-	decouple, simplify, clarify
-	make factories
-	
-2. UI - more than 20 items in an order - 
-	prices, amounts, quantities that are doubles rather than ints - 
-	some glitches with saving orders when you don't put in all the info... 
-	ship date vs pack/pick date in item, order, display, csv
-	price not saving to csv/item
-	another problem with the display of info from the csv - not in the right columns... 
-
 2. Printing: rotate label - 
 	size label correctly - 
 	verify GTINs correct and scannable - 
@@ -39,9 +27,10 @@ TESTS:
 - print with multiple labels
 - bar codes scannable
 		https://www.producetraceability.org/resources/ has a GTIN checker and VPC checker
-
+- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+more than 20 items in an order - 
 orders from multiple days- put all on one screen but in order? or diff screens to click thru? 
 edit existing orders
 autopopulation eg of company, item
@@ -69,6 +58,8 @@ Import to quickbooks -
 better - non glitchy - implementation of scrollbar
 clear printlns
 deal with fractional items
+some glitches with saving orders when you don't put in all the info... 
+ship date vs pack/pick date in item, order, display, csv
 
 DONE:
 Using a nice IDE - DONE
@@ -167,5 +158,11 @@ Run on multiple computers at once -
 	server saves new csv - DONE!
 	auto-update on startup - DONE
 Create actual spreadsheet with code, descrip, GTIN, name, unit - DONE
+Refactoring, esp. the UI - DONE
+	why are things so ugly?
+	decouple, simplify, clarify
+	prices, amounts, quantities that are doubles rather than ints - DONE
+	price not saving to csv/item - DONE
+	
 	
 		

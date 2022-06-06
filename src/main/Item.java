@@ -29,13 +29,14 @@ public abstract class Item implements LabelableItem {
 		price = 0;
 	}
 	
-	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, float qty, float price, String itCd) {
+	public Item(String cust, String prodName, String unt, String gtnum, Date pkdate, float qty, float p, String itCd) {
 		customer = cust;
 		productName = prodName;
 		gtin = gtnum;
 		packDate = pkdate;
 		unit = unt;
 		quantity = qty;
+		price = p;
 		itemCode = itCd;
 	}
 

@@ -48,32 +48,31 @@ public class OrderDisplay extends JPanel {
 		saveFileName = saveFile;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		setOrderArray();
-		add(addButtons());
+		addButtons();
 		add(Box.createRigidArea(new Dimension(1,10)));
-		add(orderPanel);
+		addOrderArray();
 		Utilities.localVPack(this);
 	}
 	
 	public void refresh() {
 		remove(2);
-		setOrderArray();
-		add(orderPanel);
+		addOrderArray();
 		Utilities.localVPack(this);
 		DataSaver.writeOrdersToCSV(orders, saveFileName);
 		new SocketClient().sendOrders(orders);
 	}
 	
-	private void setOrderArray() {
+	private void addOrderArray() {
 		orderPanel = new JPanel();
 		orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
 		orderPanel.add(getColumnNames());
 		ArrayList<ArrayList<Float>> displayArray = getDisplayArray();
 		addRows(displayArray);
 		Utilities.localVPack(orderPanel);
+		add(orderPanel);
 	}
 	
-	private Component addButtons() {
+	private void addButtons() {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		
@@ -95,7 +94,7 @@ public class OrderDisplay extends JPanel {
 		buttonPanel.add(updateButton);
 		
 		Utilities.localHPack(buttonPanel);
-		return buttonPanel;
+		add(buttonPanel);
 	}
 	
 	private class UpdateListener implements ActionListener {

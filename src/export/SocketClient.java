@@ -10,7 +10,7 @@ import labels.LabelableItem;
 import main.Order;
 
 public class SocketClient {
-	private final String SERVER = "127.0.0.1";
+	private final String SERVER = "174.208.164.103";
 	private final int PORT = 9998;
 	private final String PATH = "saveOrders.csv";
 	
