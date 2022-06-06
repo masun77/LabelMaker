@@ -20,7 +20,7 @@ TODO:
 	verify GTINs correct and scannable - 
 	VP code readable - 
 	
-4. Change server to actual computer - 
+4. Change server to actual computer - on local network?! - 
 		
 TESTS:
 - print with 1 label
@@ -36,29 +36,20 @@ edit existing orders
 autopopulation eg of company, item
 error checking of input info
 print from Mac
-save orders in 1 big csv, all orders ever entered? vs writing over them each time - keep with a fixed order num
 change settings within app, eg label size
 possibly I should include a lot # and/or pack date in the bar code
-make hrv align with bar segments
 error check people invalid input - customers, products, invalid dates, gtins
 ck lot code with Jessie - I did YYMMDD. can change to whatever. 
-get own CRC code working
 what do if company name is really long? do they only put in abbreviations? right now I have up to 24 characters, size-wise
-User Interface bugs - ahh, UI testing is a pain
-labelTests - how can I test this without myself visually checking? Just the existence of the label? or research UI tests? 
-make my own HBox and VBox - inherit from JPanel or whatever - so I don't have to keep creating and setting the layout
-print labels without needing an order? 
 make UI prettier/cleaner, remove all bugs - 
-search for all todos - 
+search for all todos, system printlns - 
 add warning popup before deleting order - 
 Import to quickbooks - 
 	select which orders to import - 
 	IIF file - 
 	how get invoice number? user enters? or auto on import? or?  
 better - non glitchy - implementation of scrollbar
-clear printlns
-deal with fractional items
-some glitches with saving orders when you don't put in all the info... 
+fractional items?
 ship date vs pack/pick date in item, order, display, csv
 
 DONE:

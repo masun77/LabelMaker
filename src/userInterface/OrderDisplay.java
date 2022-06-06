@@ -59,7 +59,6 @@ public class OrderDisplay extends JPanel {
 		addOrderArray();
 		Utilities.localVPack(this);
 		DataSaver.writeOrdersToCSV(orders, saveFileName);
-		new SocketClient().sendOrders(orders);
 	}
 	
 	private void addOrderArray() {
@@ -101,6 +100,7 @@ public class OrderDisplay extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			new SocketClient().sendOrders(orders);
 			ArrayList<Order> ords = new SocketClient().getOrders();
 			if (ords.size() > 0) {
 				orders = ords;

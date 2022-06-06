@@ -107,7 +107,7 @@ public class DataSaver {
 		for (String[] row : allData) {
         	Order order = new Order();
         	if (Integer.parseInt(row[0]) < orders.size()) {
-        		order = orders.get(0);
+        		order = orders.get(Integer.parseInt(row[0]));
         	}
         	else {
         		orders.add(order);
