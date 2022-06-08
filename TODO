@@ -15,12 +15,11 @@ having tests for all your code that are easy to run, and running them frequently
 
 TODO: 	
 
-2. Printing: rotate label - 
-	size label correctly - 
-	verify GTINs correct and scannable - 
-	VP code readable - 
-	
-4. Change server to actual computer - on local network?! - 
+Tests:
+Print label correct orientation and sizing. verify GTIN scannable, VP code readable
+Print multiple labels, same
+Test - can I run server on network computer?
+Can I access server on network computer? (change ip address to correct)
 		
 TESTS:
 - print with 1 label

@@ -29,7 +29,7 @@ public class RDFInterface implements UserInterface {
 	}
 	
 	public RDFInterface() {
-		//orders = new SocketClient().getOrders();
+		//orders = new SocketClient().getOrders(); todo
 		if (orders.size() == 0) {
 			orders = DataSaver.readOrdersFromCSV(SAVE_FILE_NAME);
 		}

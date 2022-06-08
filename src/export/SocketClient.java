@@ -1,20 +1,38 @@
 package export;
 
+import java.awt.Dimension;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import labels.LabelableItem;
 import main.Order;
+import userInterface.OrderDisplay;
 
 public class SocketClient {
-	private final String SERVER = "174.208.164.103";
+	private String SERVER = "127.0.0.1";
 	private final int PORT = 9998;
 	private final String PATH = "saveOrders.csv";
+	private ArrayList<Order> orders;
+	
+	public void setServer(String s) {
+		SERVER = s;
+	}
 	
 	public void sendOrders(ArrayList<Order> orders) {
+		System.out.println("sending!!!");
 		try {
 			Socket socket = new Socket(SERVER, PORT);
 			
@@ -41,10 +59,9 @@ public class SocketClient {
             in.close();
             out.close();
             socket.close();
-			
 		} 
 		catch( Exception e ) {
-            System.out.println("Connection refused");
+			System.out.println("Connection refused");
         }
 	}
 	
@@ -73,8 +90,9 @@ public class SocketClient {
 			
 		} 
 		catch( Exception e ) {
-            System.out.println("Connection refused");
+			System.out.println("Connection refused");
         }
+		
 		return DataSaver.getOrdersFromList(allData);
 	}
 	

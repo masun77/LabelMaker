@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Label;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -41,6 +42,7 @@ public class OrderDisplay extends JPanel {
 	private ActionListener entryListener;
 	private String saveFileName;
 	ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();;
+	private SocketClient sock = new SocketClient();
 
 	public OrderDisplay(ArrayList<Order> ords, ActionListener entryList, String saveFile) {
 		orders = ords;
@@ -87,26 +89,72 @@ public class OrderDisplay extends JPanel {
 		buttonPanel.add(printButton);		
 		buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
 		
-		JButton updateButton = new JButton("Update Orders");
+		JButton updateButton = new JButton("Send Orders to Server");
 		updateButton.addActionListener(new UpdateListener());
 		Utilities.setMinMax(updateButton, BTN_SIZE);
 		buttonPanel.add(updateButton);
+		
+		JButton getOrders = new JButton("Get Orders from Server");
+		getOrders.addActionListener(new GetOrdersListener());
+		Utilities.setMinMax(getOrders, BTN_SIZE);
+		buttonPanel.add(getOrders);
+		
+		JButton setServerIP = new JButton("Set Server IP");
+		setServerIP.addActionListener(new SetIPListener());
+		Utilities.setMinMax(setServerIP, BTN_SIZE);
+		buttonPanel.add(setServerIP);
 		
 		Utilities.localHPack(buttonPanel);
 		add(buttonPanel);
 	}
 	
-	private class UpdateListener implements ActionListener {
-
+	private class UpdateListener implements ActionListener {	
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new SocketClient().sendOrders(orders);
-			ArrayList<Order> ords = new SocketClient().getOrders();
-			if (ords.size() > 0) {
-				orders = ords;
+			sock.sendOrders(orders);
+		}	
+	}
+	
+	private class GetOrdersListener implements ActionListener {	
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Order> returned = sock.getOrders();
+			if (returned.size() > 0) {
+				orders = returned;
 			}
 			refresh();
-		}		
+		}	
+	}
+	
+	private class SetIPListener implements ActionListener {	
+		TextField ipAddr = new TextField();
+		Label ipLabel = new Label("Server ip address: ");
+		JFrame frame;
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton button = new JButton("Save ip address");
+			frame = new JFrame();
+			JPanel panel = new JPanel();
+			ipLabel.setPreferredSize(new Dimension(300,20));
+			ipAddr.setPreferredSize(new Dimension(200,20));
+			panel.add(ipLabel);
+			panel.add(ipAddr);
+			button.setSize(new Dimension(100,20));
+			button.addActionListener(new IPListener());
+			panel.add(button);
+			frame.add(panel);
+			frame.setSize(new Dimension(600,200));
+			frame.setVisible(true);
+		}	
+		
+		private class IPListener implements ActionListener {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				sock.setServer(ipAddr.getText());
+				frame.dispose();
+			}
+		}
 	}
 	
 	private class PrintListener implements ActionListener {
