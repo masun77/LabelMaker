@@ -35,6 +35,11 @@ public class RDFInterface implements UserInterface {
 	}
 	
 	@Override
+	public void setOrders(ArrayList<Order> ords) {
+		orders = ords;
+	}
+	
+	@Override
 	public void showInterface() {
 		initializeOrderDisplay();	
 		orderDisplay.setVisible(true);
@@ -42,7 +47,7 @@ public class RDFInterface implements UserInterface {
 	
 	private void initializeOrderDisplay() {
 		orderDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		homePanel = new OrderDisplay(orders, new OrderEntryCreator(), SAVE_FILE_NAME);
+		homePanel = new OrderDisplay(orders, new OrderEntryCreator(), SAVE_FILE_NAME, this);
 		JScrollPane scrollPane = new JScrollPane(homePanel);
 		orderDisplay.add(scrollPane);
 		orderDisplay.setSize(WINDOW_SIZE);
@@ -56,6 +61,7 @@ public class RDFInterface implements UserInterface {
 
 	public void refresh() {
 		orderEntry.dispose();
+		homePanel.setOrders(orders);
 		homePanel.refresh();
 		DataSaver.writeOrdersToCSV(orders, SAVE_FILE_NAME);
 	}
@@ -70,6 +76,8 @@ public class RDFInterface implements UserInterface {
 	private class Refreshor implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			orders = ((EntryForm)orderEntry).getOrders();
+			System.out.println("huh" + orders.size());
 			refresh();
 		}
 	}

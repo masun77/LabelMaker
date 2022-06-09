@@ -32,8 +32,8 @@ public class LabelPrinter implements Printable {
 			Graphics2D g2 = (Graphics2D) graphics;
 			g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 			
-			System.out.println(pageFormat.getImageableWidth() + " " + pageFormat.getImageableHeight() 
-				+ " " + pageFormat.getImageableX() + " " + pageFormat.getImageableY());
+//			System.out.println(pageFormat.getImageableWidth() + " " + pageFormat.getImageableHeight() 
+//				+ " " + pageFormat.getImageableX() + " " + pageFormat.getImageableY());
 			
 			g2.scale(xScale, yScale);
 			currLabel.paint(graphics);

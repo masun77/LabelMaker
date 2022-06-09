@@ -22,13 +22,16 @@ import main.Order;
 import userInterface.OrderDisplay;
 
 public class SocketClient {
-	private String SERVER = "127.0.0.1";
+	private String SERVER = "192.168.254.142";
 	private final int PORT = 9998;
 	private final String PATH = "saveOrders.csv";
-	private ArrayList<Order> orders;
 	
 	public void setServer(String s) {
 		SERVER = s;
+	}
+	
+	public String getServer() {
+		return SERVER;
 	}
 	
 	public void sendOrders(ArrayList<Order> orders) {
@@ -79,12 +82,9 @@ public class SocketClient {
             out.println( "GET " + PATH + " HTTP/1.0\r\n" );
             out.flush();
 
-            System.out.println("before readline");
             String line = in.readLine();
-            System.out.println("after readline");
             while( !line.equals("EOF") )
             {
-            	System.out.println("received " + line);
             	String[] temp = getStrArrFromStr(line);
             	allData.add(temp);
                 line = in.readLine();

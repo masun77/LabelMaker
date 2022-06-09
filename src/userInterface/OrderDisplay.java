@@ -43,11 +43,13 @@ public class OrderDisplay extends JPanel {
 	private String saveFileName;
 	ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();;
 	private SocketClient sock = new SocketClient();
+	private UserInterface userInt;
 
-	public OrderDisplay(ArrayList<Order> ords, ActionListener entryList, String saveFile) {
+	public OrderDisplay(ArrayList<Order> ords, ActionListener entryList, String saveFile, UserInterface uif) {
 		orders = ords;
 		entryListener = entryList;
 		saveFileName = saveFile;
+		userInt = uif;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		addButtons();
@@ -58,12 +60,11 @@ public class OrderDisplay extends JPanel {
 	
 	public void refresh() {
 		remove(2);
-		for(int o =0; o < orders.size(); o++) {
-			orders.get(o).printOrder();
-		}
+		System.out.println("here" + orders.size());
 		addOrderArray();
 		Utilities.localVPack(this);
 		DataSaver.writeOrdersToCSV(orders, saveFileName);
+		userInt.setOrders(orders);
 	}
 	
 	private void addOrderArray() {
@@ -132,7 +133,7 @@ public class OrderDisplay extends JPanel {
 	}
 	
 	private class SetIPListener implements ActionListener {	
-		TextField ipAddr = new TextField();
+		TextField ipAddr = new TextField(sock.getServer());
 		Label ipLabel = new Label("Server ip address: ");
 		JFrame frame;
 		
@@ -347,6 +348,10 @@ public class OrderDisplay extends JPanel {
 		f.setSize(new Dimension(400,400));
 		f.add(p);
 		f.setVisible(true);
+	}
+	
+	public void setOrders(ArrayList<Order> ords) {
+		orders = ords;
 	}
 	
 	private ArrayList<ArrayList<Float>> getDisplayArray() {

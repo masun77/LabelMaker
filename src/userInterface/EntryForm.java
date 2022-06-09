@@ -176,7 +176,8 @@ public class EntryForm extends JFrame {
 				}
 			}
 			Order newOrder = new Order(items, purchaseOrder.getText(), shipVia.getText(), DateImp.parseDate(date.getText()));
-			orders.add(newOrder);			
+			orders.add(newOrder);
+			System.out.println("there" + orders.size());
 		}
 		
 		private Item getItemFromRow(JPanel row) { 
@@ -187,7 +188,10 @@ public class EntryForm extends JFrame {
 					Float.parseFloat(((TextField)rowData[3]).getText()),
 					((TextField)rowData[1]).getText());
 		} 
-		
+	}
+	
+	public ArrayList<Order> getOrders() {
+		return orders;
 	}
 	
 	private void addItemRow() {

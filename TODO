@@ -15,15 +15,11 @@ having tests for all your code that are easy to run, and running them frequently
 
 TODO: 	
 
-Tests:
-Print label correct orientation and sizing. verify GTIN scannable, VP code  - only from a PDF... 
-Print multiple labels, same - 
-Test - can I run server on network computer? - YES!
-Can I send to and get from server on network computer? - YES on my computer with CSA as server
-	On the pack shed computer with CSA as server? 192.168.254.142
-	qbserver as server? 
+print still not working directly... could try other methods, eg godex commands, more setting paper, more attribute stuff, a filewriter instead...
+Tim comments?
+other fixes below
+
 	
-SAve ip address in a config file so don't have to enter every time
 		
 TESTS:
 - print with 1 label
@@ -55,6 +51,8 @@ better - non glitchy - implementation of scrollbar
 fractional items?
 ship date vs pack/pick date in item, order, display, csv
 if you edit the server data so that the order numbers are no longer in order/not sequential, error on reading in dataSaver
+SAve ip address in a config file so don't have to enter every time
+
 
 DONE:
 Using a nice IDE - DONE
@@ -158,6 +156,10 @@ Refactoring, esp. the UI - DONE
 	decouple, simplify, clarify
 	prices, amounts, quantities that are doubles rather than ints - DONE
 	price not saving to csv/item - DONE
-	
+Tests:
+	Print label correct orientation and sizing. verify GTIN scannable, VP code  - only from a PDF :(
+	Test - can I run server on network computer? - YES!
+	Can I send to and get from server on network computer? - YES on my computer with CSA as server
+		On the pack shed computer with CSA as server? 192.168.254.142 - YES	
 	
 		
