@@ -1,4 +1,4 @@
-package export;
+ package export;
 
 import java.awt.Dimension;
 import java.awt.Label;
@@ -54,31 +54,37 @@ public class SocketClient {
             		out.println(data);
         		}
             }
-            out.println("EOF");
+            out.println("EOF\r\n");
+            out.flush();
             
             in.close();
             out.close();
             socket.close();
 		} 
 		catch( Exception e ) {
-			System.out.println("Connection refused");
+			e.printStackTrace();
         }
 	}
 	
 	public ArrayList<Order> getOrders() {
         ArrayList<String[]> allData = new ArrayList<String[]>();
-		
+        System.out.println("getting data");
+        	
 		try {
 			Socket socket = new Socket(SERVER, PORT);
 			
 			PrintStream out = new PrintStream( socket.getOutputStream() );
             BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
 
-            out.println( "GET " + PATH + " HTTP/1.0" );
+            out.println( "GET " + PATH + " HTTP/1.0\r\n" );
+            out.flush();
 
+            System.out.println("before readline");
             String line = in.readLine();
+            System.out.println("after readline");
             while( !line.equals("EOF") )
             {
+            	System.out.println("received " + line);
             	String[] temp = getStrArrFromStr(line);
             	allData.add(temp);
                 line = in.readLine();
@@ -90,8 +96,8 @@ public class SocketClient {
 			
 		} 
 		catch( Exception e ) {
-			System.out.println("Connection refused");
-        }
+			e.printStackTrace();
+		}
 		
 		return DataSaver.getOrdersFromList(allData);
 	}

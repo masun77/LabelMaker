@@ -58,6 +58,9 @@ public class OrderDisplay extends JPanel {
 	
 	public void refresh() {
 		remove(2);
+		for(int o =0; o < orders.size(); o++) {
+			orders.get(o).printOrder();
+		}
 		addOrderArray();
 		Utilities.localVPack(this);
 		DataSaver.writeOrdersToCSV(orders, saveFileName);
@@ -93,11 +96,13 @@ public class OrderDisplay extends JPanel {
 		updateButton.addActionListener(new UpdateListener());
 		Utilities.setMinMax(updateButton, BTN_SIZE);
 		buttonPanel.add(updateButton);
+		buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
 		
 		JButton getOrders = new JButton("Get Orders from Server");
 		getOrders.addActionListener(new GetOrdersListener());
 		Utilities.setMinMax(getOrders, BTN_SIZE);
 		buttonPanel.add(getOrders);
+		buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
 		
 		JButton setServerIP = new JButton("Set Server IP");
 		setServerIP.addActionListener(new SetIPListener());

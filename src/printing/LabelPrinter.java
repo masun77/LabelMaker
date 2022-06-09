@@ -20,8 +20,10 @@ public class LabelPrinter implements Printable {
 			return NO_SUCH_PAGE;
 		} else {
 			Component currLabel = labels.get(pageIndex);
+			
 			double maxHeight = pageFormat.getImageableHeight();
 			double maxWidth = pageFormat.getImageableWidth();
+			
 			Dimension dim = currLabel.getSize();
 
 			double xScale = maxWidth / dim.getWidth();
@@ -29,6 +31,10 @@ public class LabelPrinter implements Printable {
 
 			Graphics2D g2 = (Graphics2D) graphics;
 			g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+			
+			System.out.println(pageFormat.getImageableWidth() + " " + pageFormat.getImageableHeight() 
+				+ " " + pageFormat.getImageableX() + " " + pageFormat.getImageableY());
+			
 			g2.scale(xScale, yScale);
 			currLabel.paint(graphics);
 

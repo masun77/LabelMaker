@@ -31,7 +31,8 @@ public class PrintManager {
 
 		PrintRequestAttributeSet attrSet = new HashPrintRequestAttributeSet();
 		boolean doPrint = job.printDialog(attrSet);
-		attrSet.add(new MediaPrintableArea(5f, 5f, 78f,95f, MediaPrintableArea.MM));
+		//attrSet.add(new MediaPrintableArea(30f, 58f, 150f,95f, MediaPrintableArea.MM));
+		attrSet.add(OrientationRequested.REVERSE_LANDSCAPE);
 				
 		if (doPrint) {
 			try {
