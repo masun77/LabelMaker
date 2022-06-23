@@ -57,7 +57,7 @@ public class RDFItem extends Item {
 		private final RectangleBounds packDateBox = new RectangleBounds(305,113,370,133);
 		private final RectangleBounds voicePickCodeBounds = new RectangleBounds(307,134,360,157);
 		private final RectangleBounds vpcLargeBounds = new RectangleBounds(330,137,380,157);
-		private final RectangleBounds vpcSmallBounds = new RectangleBounds(310,142,340,152);
+		private final RectangleBounds vpcSmallBounds = new RectangleBounds(310,141,340,153);
 		private final String PACK_DATE = "Pack Date";
 		private final String AI_CODE = "(01)";
 		private final int BAR_HEIGHT = 45;
@@ -218,12 +218,15 @@ public class RDFItem extends Item {
 		}
 		
 		public BufferedImage getBufferedImage() {
-			Graphics2D imgG = image.createGraphics();
-			setBackgroundWhite(imgG);
+			BufferedImage img = new BufferedImage(300,410,BufferedImage.TYPE_INT_RGB);
+			Graphics2D imgG = img.createGraphics();
 			g2 = imgG;
+			g2.rotate(Math.PI/2);
+			g2.translate(0, -300);
+			setBackgroundWhite(imgG);
 			createLabel();
 
-			return image;
+			return img;
 		}
 	}
 }

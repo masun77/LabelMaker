@@ -7,6 +7,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -37,36 +38,39 @@ public class PrintManager {
 				labels.add(currItem.getLabel());
 			}
 		}
-		Printable labelPrinter = new LabelPrinter(labels);
 		
+		PrintService[] pservices = PrintServiceLookup.lookupPrintServices(null, null);
+		PrintService ps = pservices[0];
+		for (int p = 0; p < pservices.length; p++) {
+			if (pservices[p].getName().contains("Godex")) {
+				ps = pservices[p];
+			}
+		}
+				
+		DocPrintJob job = ps.createPrintJob();	
+		DocFlavor flavor = DocFlavor.INPUT_STREAM.JPEG;
+		PrintRequestAttributeSet ds = new HashPrintRequestAttributeSet();
+		ds.add(new MediaPrintableArea(0f,.5f,3f,4f,MediaPrintableArea.INCH));
+		ds.add(OrientationRequested.LANDSCAPE);
+		
+		// todo: do for each label
 		RDFLabel label = (RDFLabel) labels.get(0);
 		BufferedImage img = label.getBufferedImage();
 		try {
-			ImageIO.write(img, "JPEG", new File("resources/foo2.jpg")); }
+			ImageIO.write(img, "JPEG", new File("resources/img.jpg")); }
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-//		PrintService[] pservices = PrintServiceLookup.lookupPrintServices(null, null);
-//		PrintService ps = pservices[0];
-//		for (int p = 0; p < pservices.length; p++) {
-//			if (pservices[p].getName().contains("Godex")) {
-//				ps = pservices[p];
-//			}
-//		}
-//				
-//		DocPrintJob job = ps.createPrintJob();	
-//		DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PRINTABLE;
-//
-//        DocAttributeSet aset = new HashDocAttributeSet();
-//        //aset.add(new MediaPrintableArea(1f,.5f,2f,2.5f,MediaPrintableArea.INCH));
-//		Doc doc = new SimpleDoc(labelPrinter, flavor, aset);
-//		
-//		try {
-//			job.print(doc, null);
-//		}
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			FileInputStream fin = new FileInputStream("resources/img.jpg");
+			Doc doc = new SimpleDoc(fin, flavor, null);
+			job.print(doc, ds);
+			fin.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
