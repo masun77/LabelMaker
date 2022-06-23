@@ -25,7 +25,6 @@ import labels.LabelView;
 import labels.LabelViewerImp;
 import labels.LabelableItem;
 import main.Order;
-import main.Utilities;
 
 public class OrderDisplay extends JPanel {
 	private ArrayList<Order> orders = null;
@@ -60,7 +59,6 @@ public class OrderDisplay extends JPanel {
 	
 	public void refresh() {
 		remove(2);
-		System.out.println("here" + orders.size());
 		addOrderArray();
 		Utilities.localVPack(this);
 		DataSaver.writeOrdersToCSV(orders, saveFileName);

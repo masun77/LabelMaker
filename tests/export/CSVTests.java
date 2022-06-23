@@ -10,7 +10,7 @@ import labels.DateImp;
 import main.Item;
 import main.Order;
 import main.RDFItem;
-import main.Utilities;
+import userInterface.Utilities;
 
 public class CSVTests {
 	private static ArrayList<Order> orders = new ArrayList<Order>();

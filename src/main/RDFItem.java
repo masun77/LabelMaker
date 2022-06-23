@@ -9,7 +9,11 @@ import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import labels.Alignment;
 import labels.BarCodeGenerator;
@@ -39,7 +43,7 @@ public class RDFItem extends Item {
 	 * @author mayaj
 	 *
 	 */
-	private class RDFLabel extends Component {
+	public class RDFLabel extends Component {
 		private Graphics2D g2 = null;
 		private final Dimension viewSize = new Dimension(410,300);  // label size: 400 x 175; 400x300 for whole label
 		private final RectangleBounds customerBounds = new RectangleBounds(300,5,380,25);
@@ -58,6 +62,7 @@ public class RDFItem extends Item {
 		private final String AI_CODE = "(01)";
 		private final int BAR_HEIGHT = 45;
 		private final int BAR_WIDTH = 2;
+		private BufferedImage image = new BufferedImage(400,300,BufferedImage.TYPE_INT_RGB);
 		
 		public RDFLabel() {
 			super();
@@ -67,10 +72,13 @@ public class RDFItem extends Item {
 		}
 		
 		@Override
-		public void paint(Graphics g) {
-			setBackgroundWhite(g);
-			g2 = (Graphics2D) g;
+		public void paint(Graphics g) {			
+			Graphics2D imgG = image.createGraphics();
+			setBackgroundWhite(imgG);
+			g2 = imgG;
 			createLabel();
+			
+			g.drawImage(image, 0, 0, null);
 		}
 		
 		/**
@@ -207,6 +215,15 @@ public class RDFItem extends Item {
 	    	
 	    	addText(smallNums, Font.BOLD, Alignment.LEFT_ALIGN, Color.white, vpcSmallBounds);
 	    	addText(bigNums, Font.BOLD, Alignment.LEFT_ALIGN, Color.white, vpcLargeBounds);
+		}
+		
+		public BufferedImage getBufferedImage() {
+			Graphics2D imgG = image.createGraphics();
+			setBackgroundWhite(imgG);
+			g2 = imgG;
+			createLabel();
+
+			return image;
 		}
 	}
 }

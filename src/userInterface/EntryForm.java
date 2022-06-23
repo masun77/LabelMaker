@@ -22,7 +22,6 @@ import labels.LabelableItem;
 import main.Item;
 import main.Order;
 import main.RDFItem;
-import main.Utilities;
 
 public class EntryForm extends JFrame {
 	private final JPanel mainPanel = new JPanel();
@@ -177,7 +176,6 @@ public class EntryForm extends JFrame {
 			}
 			Order newOrder = new Order(items, purchaseOrder.getText(), shipVia.getText(), DateImp.parseDate(date.getText()));
 			orders.add(newOrder);
-			System.out.println("there" + orders.size());
 		}
 		
 		private Item getItemFromRow(JPanel row) { 

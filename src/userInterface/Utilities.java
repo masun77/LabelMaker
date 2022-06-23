@@ -1,4 +1,4 @@
-package main;
+package userInterface;
 
 import java.awt.Component;
 import java.awt.Container;

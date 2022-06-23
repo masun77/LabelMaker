@@ -77,7 +77,6 @@ public class RDFInterface implements UserInterface {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			orders = ((EntryForm)orderEntry).getOrders();
-			System.out.println("huh" + orders.size());
 			refresh();
 		}
 	}

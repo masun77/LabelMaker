@@ -13,8 +13,8 @@ import javax.swing.JScrollPane;
 
 import main.Item;
 import main.Order;
-import main.Utilities;
 import printing.PrintManager;
+import userInterface.Utilities;
 
 public class LabelViewerImp implements LabelView {
 	ArrayList<LabelableItem> items;
