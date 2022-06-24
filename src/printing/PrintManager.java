@@ -42,31 +42,33 @@ public class PrintManager {
 		PrintService[] pservices = PrintServiceLookup.lookupPrintServices(null, null);
 		PrintService ps = pservices[0];
 		for (int p = 0; p < pservices.length; p++) {
-			if (pservices[p].getName().contains("Godex")) {
+			if (pservices[p].getName().contains("PDF")) {   // todo Godex
 				ps = pservices[p];
 			}
 		}
+		LabelPrinter lp = new LabelPrinter(labels);
 				
 		DocPrintJob job = ps.createPrintJob();	
-		DocFlavor flavor = DocFlavor.INPUT_STREAM.JPEG;
+		DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PRINTABLE;
+//		DocFlavor flavor = DocFlavor.INPUT_STREAM.JPEG;
 		PrintRequestAttributeSet ds = new HashPrintRequestAttributeSet();
-		ds.add(new MediaPrintableArea(0f,.5f,3f,4f,MediaPrintableArea.INCH));
-		ds.add(OrientationRequested.LANDSCAPE);
+		ds.add(new MediaPrintableArea(.1f,.1f,3.8f,3.3f,MediaPrintableArea.INCH));
+//		ds.add(OrientationRequested.LANDSCAPE);
 		
 		// todo: do for each label
-		RDFLabel label = (RDFLabel) labels.get(0);
-		BufferedImage img = label.getBufferedImage();
-		try {
-			ImageIO.write(img, "JPEG", new File("resources/img.jpg")); }
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+//		RDFLabel label = (RDFLabel) labels.get(0);
+//		BufferedImage img = label.getBufferedImage();
+//		try {
+//			ImageIO.write(img, "JPEG", new File("resources/img.jpg")); }
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 		try {
-			FileInputStream fin = new FileInputStream("resources/img.jpg");
-			Doc doc = new SimpleDoc(fin, flavor, null);
+//			FileInputStream fin = new FileInputStream("resources/img.jpg");
+			Doc doc = new SimpleDoc(lp, flavor, null);
 			job.print(doc, ds);
-			fin.close();
+//			fin.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

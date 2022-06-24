@@ -21,6 +21,11 @@ public class LabelPrinter implements Printable {
 		} else {
 			Component currLabel = labels.get(pageIndex);
 			
+			Paper paper = pageFormat.getPaper();
+			paper.setSize(4 * 72, 3.5 * 72);
+			paper.setImageableArea(7, 7, 3.8 * 72, 3.3 * 72);
+			pageFormat.setPaper(paper);
+			
 			double maxHeight = pageFormat.getImageableHeight();
 			double maxWidth = pageFormat.getImageableWidth();
 			
@@ -32,7 +37,7 @@ public class LabelPrinter implements Printable {
 			Graphics2D g2 = (Graphics2D) graphics;
 			g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 			
-			//System.out.println(maxWidth + " height: " + maxHeight + "\n" + dim.getWidth() + " lbl height:" + dim.getHeight());
+			System.out.println(maxWidth + " height: " + maxHeight + "\n" + dim.getWidth() + " lbl height:" + dim.getHeight());
 			
 			g2.scale(xScale, yScale);
 			currLabel.paint(graphics);

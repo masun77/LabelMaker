@@ -1,7 +1,12 @@
 Hours:
-2 + 6/22: 
+2 + 6/22: 6.5; 
 
 TODO: 	
+
+Working on printing: 
+	tried writing to JPEG and sending - problem is not the file format but some info I'm sending. pageformat?
+	if pageformat setting works, remove jPG and buffered image stuff
+
 - Questions for Nick:
 	CRUD system - consists of a 
 		database - recommends using an SQL library/database vs reading/writing to a file. 
@@ -9,12 +14,14 @@ TODO:
 				SQL queries already built and implemented, so I don't have to write accessing the file and looping through it with conditions in Java myself
 				it's faster than reading the file and looping through it in JAva? or it's optimized, whereas my code might not be?
 			my concerns are: 
-				people need to edit the data on a large scale - eg, delete many entries at once, import many entries at once.
-				is there still a file you can open and do that? or would I do that in a GUI and then send the info to the database?
+				is there still a file you can open and do that? 
+				because people need to edit the data on a large scale - eg, delete many entries at once, import many entries at once.
+				would I do that in a GUI and then send the info to the database?
 				but it's sort of like reimplementing Excel/notepad at that point, vs having them edit the file directly? 
 			the database would reside on the server computer. the computer would also have a program that is a:
 		server - this is where you would write a REST API? 
-		(here graphical) user interface - suggests website - he suggests html with javascript and css, and I can make it into a desktop app with electron 
+		(here graphical) user interface - suggests website - he suggests html with javascript and css, and I can make it into a desktop app with electron
+			why? because graphics have been made really easy in that format? I have trouble debugging javascript and keeping it clean.  
 
 1. Separate all logic from display and test
 2. Static application state
@@ -22,7 +29,6 @@ TODO:
 	Item info easy to edit - how open on excel? 
 3. Other GUI libraries research, or make GUI beautiful and easy, and fix bugs
 	indication - checks or colors or something - of picked, packed, labeled
-4. Printing - Write to PDF and send? or how does bartender talk to godex?
 5. Multiple computers - 
 6. Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
