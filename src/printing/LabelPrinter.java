@@ -15,19 +15,16 @@ public class LabelPrinter implements Printable {
 	}
 
 	@Override
-	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+	public int print(Graphics graphics, PageFormat pf, int pageIndex) throws PrinterException {
 		if (pageIndex >= labels.size()) { // Print one page for each label
 			return NO_SUCH_PAGE;
 		} else {
 			Component currLabel = labels.get(pageIndex);
 			
-			Paper paper = pageFormat.getPaper();
-			paper.setSize(4 * 72, 3.5 * 72);
-			paper.setImageableArea(7, 7, 3.8 * 72, 3.3 * 72);
-			pageFormat.setPaper(paper);
-			
-			double maxHeight = pageFormat.getImageableHeight();
-			double maxWidth = pageFormat.getImageableWidth();
+			System.out.println(pf.getWidth() + " " + pf.getHeight() + " " + pf.getImageableWidth() + " " + pf.getImageableHeight());
+						
+			double maxHeight = pf.getImageableHeight();
+			double maxWidth = pf.getImageableWidth();
 			
 			Dimension dim = currLabel.getSize();
 
@@ -35,10 +32,8 @@ public class LabelPrinter implements Printable {
 			double yScale = maxHeight / dim.getHeight();
 
 			Graphics2D g2 = (Graphics2D) graphics;
-			g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-			
-			System.out.println(maxWidth + " height: " + maxHeight + "\n" + dim.getWidth() + " lbl height:" + dim.getHeight());
-			
+			g2.translate(pf.getImageableX(), pf.getImageableY());
+						
 			g2.scale(xScale, yScale);
 			currLabel.paint(graphics);
 

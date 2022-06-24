@@ -2,7 +2,10 @@ package printing;
 
 import java.awt.Component;
 import java.awt.Graphics2D;
+import java.awt.PrintJob;
 import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -17,11 +20,18 @@ import javax.print.DocPrintJob;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+import javax.print.attribute.Attribute;
 import javax.print.attribute.DocAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttribute;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.Size2DSyntax;
+import javax.print.attribute.standard.Media;
 import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.MediaSize;
+import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 
 import labels.LabelableItem;
@@ -42,33 +52,29 @@ public class PrintManager {
 		PrintService[] pservices = PrintServiceLookup.lookupPrintServices(null, null);
 		PrintService ps = pservices[0];
 		for (int p = 0; p < pservices.length; p++) {
-			if (pservices[p].getName().contains("PDF")) {   // todo Godex
+			System.out.println(pservices[p].getName());
+			if (pservices[p].getName().contains("Godex")) {   // todo Godex
 				ps = pservices[p];
 			}
 		}
 		LabelPrinter lp = new LabelPrinter(labels);
+		System.out.println("service: " + ps.getName());
+		
+		PrinterJob pj = PrinterJob.getPrinterJob();
+		pj.setPrintable(lp);
+		PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+		pras.add(new MediaPrintableArea(.2f,2.8f,3.6f,3.3f,MediaPrintableArea.INCH));
+		pras.add(MediaSizeName.ISO_A6);
 				
-		DocPrintJob job = ps.createPrintJob();	
-		DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PRINTABLE;
-//		DocFlavor flavor = DocFlavor.INPUT_STREAM.JPEG;
-		PrintRequestAttributeSet ds = new HashPrintRequestAttributeSet();
-		ds.add(new MediaPrintableArea(.1f,.1f,3.8f,3.3f,MediaPrintableArea.INCH));
-//		ds.add(OrientationRequested.LANDSCAPE);
-		
-		// todo: do for each label
-//		RDFLabel label = (RDFLabel) labels.get(0);
-//		BufferedImage img = label.getBufferedImage();
-//		try {
-//			ImageIO.write(img, "JPEG", new File("resources/img.jpg")); }
-//		catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		
 		try {
-//			FileInputStream fin = new FileInputStream("resources/img.jpg");
-			Doc doc = new SimpleDoc(lp, flavor, null);
-			job.print(doc, ds);
-//			fin.close();
+			pj.setPrintService(ps);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		try {
+			pj.print(pras);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

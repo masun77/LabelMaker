@@ -14,20 +14,6 @@ public class LabelMakerMain {
 
 	public static void main(String[] args) {	
 		UserInterface ui = new RDFInterface();
-		ui.showInterface();
-		
-//		PrintService[] ps = PrintServiceLookup.lookupPrintServices(null, null);
-//		
-//		for (int p = 0; p < ps.length; p++) {
-//			PrintService currP = ps[p];
-//			System.out.println("\n" + currP.getName());
-//			DocFlavor[] supportedFlavors = currP.getSupportedDocFlavors();
-//
-//			for (int i = 0; i < supportedFlavors.length; i++) {
-//				DocFlavor f = supportedFlavors[i];
-//				System.out.println(f.getMimeType());
-//			}
-//		}
-		
+		ui.showInterface();		
 	}
 }
