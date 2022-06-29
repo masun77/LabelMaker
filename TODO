@@ -1,31 +1,15 @@
 Hours:
-2 + 6/22: 6.5; 
+2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 
 
 TODO: 	
+	
+- ideas/abstractions from Nick
 
-Working on printing: 
-	tried writing to JPEG and sending - problem is not the file format but some info I'm sending. pageformat?
-	if pageformat setting works, remove jPG and buffered image stuff
+- test printing multiple. encapsulate variability of printer and label size - config file? 
+- clear up and make one verson of this client-server, backup stuff
 
-- Questions for Nick:
-	CRUD system - consists of a 
-		database - recommends using an SQL library/database vs reading/writing to a file. 
-			advantages:
-				SQL queries already built and implemented, so I don't have to write accessing the file and looping through it with conditions in Java myself
-				it's faster than reading the file and looping through it in JAva? or it's optimized, whereas my code might not be?
-			my concerns are: 
-				is there still a file you can open and do that? 
-				because people need to edit the data on a large scale - eg, delete many entries at once, import many entries at once.
-				would I do that in a GUI and then send the info to the database?
-				but it's sort of like reimplementing Excel/notepad at that point, vs having them edit the file directly? 
-			the database would reside on the server computer. the computer would also have a program that is a:
-		server - this is where you would write a REST API? 
-		(here graphical) user interface - suggests website - he suggests html with javascript and css, and I can make it into a desktop app with electron
-			why? because graphics have been made really easy in that format? I have trouble debugging javascript and keeping it clean.  
-
-1. Separate all logic from display and test
+1. Separate all logic from display and test. Encapsulate all variability. 
 2. Static application state
-2a. Encapsulate all variability
 	Item info easy to edit - how open on excel? 
 3. Other GUI libraries research, or make GUI beautiful and easy, and fix bugs
 	indication - checks or colors or something - of picked, packed, labeled
@@ -70,4 +54,6 @@ SAve ip address in a config file so don't have to enter every time
 Get a new computer - solid state, Dell
 
 
-		
+DONE:
+Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 
+	and set it and print onto that

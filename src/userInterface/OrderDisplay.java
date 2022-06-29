@@ -19,7 +19,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import export.DataClient;
 import export.DataSaver;
+import export.FileBackup;
 import export.SocketClient;
 import labels.LabelView;
 import labels.LabelViewerImp;
@@ -39,15 +41,14 @@ public class OrderDisplay extends JPanel {
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 	private ActionListener entryListener;
-	private String saveFileName;
 	ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();;
-	private SocketClient sock = new SocketClient();
+	private DataClient sock = new SocketClient();
 	private UserInterface userInt;
+	private FileBackup fb = new DataSaver();
 
-	public OrderDisplay(ArrayList<Order> ords, ActionListener entryList, String saveFile, UserInterface uif) {
+	public OrderDisplay(ArrayList<Order> ords, ActionListener entryList, UserInterface uif) {
 		orders = ords;
 		entryListener = entryList;
-		saveFileName = saveFile;
 		userInt = uif;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -61,7 +62,7 @@ public class OrderDisplay extends JPanel {
 		remove(2);
 		addOrderArray();
 		Utilities.localVPack(this);
-		DataSaver.writeOrdersToCSV(orders, saveFileName);
+		fb.saveOrders(orders);
 		userInt.setOrders(orders);
 	}
 	
@@ -131,7 +132,7 @@ public class OrderDisplay extends JPanel {
 	}
 	
 	private class SetIPListener implements ActionListener {	
-		TextField ipAddr = new TextField(sock.getServer());
+		TextField ipAddr = new TextField(sock.getIPAddress());
 		Label ipLabel = new Label("Server ip address: ");
 		JFrame frame;
 		
@@ -155,7 +156,7 @@ public class OrderDisplay extends JPanel {
 		private class IPListener implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				sock.setServer(ipAddr.getText());
+				sock.setIPAddress(ipAddr.getText());
 				frame.dispose();
 			}
 		}

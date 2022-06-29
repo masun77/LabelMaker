@@ -38,8 +38,11 @@ import labels.LabelableItem;
 import main.Item;
 import main.RDFItem.RDFLabel;
 
-public class PrintManager {
+public class PrintManager implements LabelPrinter {
+	@Override
 	public void printLabels(ArrayList<LabelableItem> items) { 
+		PrinterJob pj = PrinterJob.getPrinterJob();
+		
 		ArrayList<Component> labels = new ArrayList<Component>();
 		for (int i = 0; i < items.size(); i++) {
 			LabelableItem currItem = items.get(i);
@@ -48,30 +51,27 @@ public class PrintManager {
 				labels.add(currItem.getLabel());
 			}
 		}
+		LabelPrintable lp = new LabelPrintable(labels);
+		pj.setPrintable(lp);
 		
 		PrintService[] pservices = PrintServiceLookup.lookupPrintServices(null, null);
 		PrintService ps = pservices[0];
 		for (int p = 0; p < pservices.length; p++) {
-			System.out.println(pservices[p].getName());
-			if (pservices[p].getName().contains("Godex")) {   // todo Godex
+			if (pservices[p].getName().contains("Godex")) {   
 				ps = pservices[p];
 			}
 		}
-		LabelPrinter lp = new LabelPrinter(labels);
-		System.out.println("service: " + ps.getName());
 		
-		PrinterJob pj = PrinterJob.getPrinterJob();
-		pj.setPrintable(lp);
-		PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-		pras.add(new MediaPrintableArea(.2f,2.8f,3.6f,3.3f,MediaPrintableArea.INCH));
-		pras.add(MediaSizeName.ISO_A6);
-				
 		try {
 			pj.setPrintService(ps);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+		pras.add(new MediaPrintableArea(.2f,2.5f,3.6f,3.5f,MediaPrintableArea.INCH));
+		pras.add(MediaSizeName.ISO_A6);
 				
 		try {
 			pj.print(pras);

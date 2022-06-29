@@ -21,7 +21,8 @@ public class Server extends Thread {
 	private ServerSocket servSocket;
 	private boolean running = true;
 	private ArrayList<RequestHandler> runningSockets = new ArrayList<RequestHandler>();
-	private final String FILE_NAME = "resources/saveOrders.csv";
+	private FileBackup fb = new DataSaver();
+	private String fileName = "orders.csv";
 	
 	public void startServer( ) {
 		try {
@@ -115,7 +116,7 @@ public class Server extends Thread {
 					}
 				}
 				if (data.size() > 0) {
-					DataSaver.writeOrdersToCSV(data, FILE_NAME);
+					fb.saveData(data);
 				}
 				closeAll();
 			}

@@ -13,7 +13,7 @@ import userInterface.UserInterface;
 public class LabelMakerMain {
 
 	public static void main(String[] args) {	
-		UserInterface ui = new RDFInterface();
-		ui.showInterface();		
+		Application app = new Application();
+		app.run();
 	}
 }

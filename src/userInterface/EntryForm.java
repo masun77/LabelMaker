@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import export.DataSaver;
+import export.FileBackup;
 import labels.DateImp;
 import labels.LabelableItem;
 import main.Item;
@@ -42,7 +43,7 @@ public class EntryForm extends JFrame {
 	private final Dimension PRICE_SIZE = new Dimension(40,15);
 	private final Dimension AMOUNT_SIZE = new Dimension(60,15);
 	private final Dimension BUTTON_SIZE = new Dimension(150,50);
-	private final String ITEM_DATA_CSV_PATH = "resources/itemData.csv";
+	private FileBackup fb = new DataSaver();
 
 	public EntryForm(ActionListener saveLstn, ArrayList<Order> ords) {
 		orders = ords;
@@ -106,7 +107,7 @@ public class EntryForm extends JFrame {
 		@Override
 		public void focusLost(FocusEvent e) {
 			if (itemCode.getText().length() > 0) {
-				String descrip = DataSaver.getDescriptionFromCSV(itemCode.getText(), ITEM_DATA_CSV_PATH);
+				String descrip = fb.getItemDescription(itemCode.getText());
 				description.setText(descrip);					
 			}		
 		}
@@ -180,7 +181,7 @@ public class EntryForm extends JFrame {
 		
 		private Item getItemFromRow(JPanel row) { 
 			Component[] rowData = row.getComponents();
-			ArrayList<String> itemData = DataSaver.getItemData(((TextField)rowData[1]).getText(), ITEM_DATA_CSV_PATH);
+			ArrayList<String> itemData = fb.getItemData(((TextField)rowData[1]).getText());
 			return new RDFItem(company.getText(), itemData.get(1), itemData.get(2), itemData.get(0), 
 					DateImp.parseDate(date.getText()), Float.parseFloat(((TextField)rowData[0]).getText()),
 					Float.parseFloat(((TextField)rowData[3]).getText()),

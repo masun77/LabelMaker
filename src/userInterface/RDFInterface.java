@@ -9,34 +9,28 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import export.DataSaver;
-import export.SocketClient;
+import export.FileBackup;
+import main.ApplicationState;
 import main.Order;
 
 public class RDFInterface implements UserInterface {
+	// Application variables
 	private ArrayList<Order> orders = new ArrayList<Order>();
+	private ApplicationState state;
+	
+	// Display variables
 	private JFrame orderDisplay = new JFrame("Label Program");
 	private JFrame orderEntry;
 	private OrderDisplay homePanel;
-	private final String SAVE_FILE_NAME = "resources/Orders1.csv";
 	private final Dimension WINDOW_SIZE = new Dimension(1000,700);
+	private final FileBackup fb;
 	
-	public RDFInterface(ArrayList<Order> ords) {
-		orders.addAll(ords); 
-	}
-	
-	public RDFInterface(String csvname) {
-		orders = DataSaver.readOrdersFromCSV(csvname);
-	}
-	
-	public RDFInterface() {
+	public RDFInterface(ApplicationState s) {
+		state = s;
+		fb = s.getFileBackup();
 		if (orders.size() == 0) {
-			orders = DataSaver.readOrdersFromCSV(SAVE_FILE_NAME);
+			orders = fb.readSavedOrders();
 		}
-	}
-	
-	@Override
-	public void setOrders(ArrayList<Order> ords) {
-		orders = ords;
 	}
 	
 	@Override
@@ -47,7 +41,7 @@ public class RDFInterface implements UserInterface {
 	
 	private void initializeOrderDisplay() {
 		orderDisplay.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		homePanel = new OrderDisplay(orders, new OrderEntryCreator(), SAVE_FILE_NAME, this);
+		homePanel = new OrderDisplay(orders, new OrderEntryCreator(), this);
 		JScrollPane scrollPane = new JScrollPane(homePanel);
 		orderDisplay.add(scrollPane);
 		orderDisplay.setSize(WINDOW_SIZE);
@@ -63,7 +57,7 @@ public class RDFInterface implements UserInterface {
 		orderEntry.dispose();
 		homePanel.setOrders(orders);
 		homePanel.refresh();
-		DataSaver.writeOrdersToCSV(orders, SAVE_FILE_NAME);
+		fb.saveOrders(orders);
 	}
 	
 	private class OrderEntryCreator implements ActionListener {
