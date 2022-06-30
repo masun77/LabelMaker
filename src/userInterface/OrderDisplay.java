@@ -7,14 +7,11 @@ import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -36,7 +33,6 @@ public class OrderDisplay implements AppFunction {
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension TRASH_BTN_SIZE = new Dimension(20,15);
 	private final Dimension NUMBER_SIZE = new Dimension(110,15);
-	private final Dimension CHECK_SIZE = new Dimension(15,15);
 	private final Dimension ITEM_NAME_SIZE = new Dimension(100,15);
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
@@ -191,24 +187,6 @@ public class OrderDisplay implements AppFunction {
 			Utilities.localHPack(rowPanel);
 			mainPanel.add(rowPanel);
 		}
-	}
-	
-	private ArrayList<LabelableItem> getCheckedItems() {
-		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = state.getCheckBoxArray();
-		ArrayList<LabelableItem> items = new ArrayList<LabelableItem>();
-
-		if (checkBoxArray.size() > 0) {
-			int cols = checkBoxArray.get(0).size();
-			for (int row = 0; row < checkBoxArray.size(); row++) {
-				for (int col = 0; col < cols; col++) {
-					PrintCheckBox check = checkBoxArray.get(row).get(col);
-					if (check.isSelected()) {
-						items.add(check.getItem());
-					}
-				}
-			}		
-		}
-		return items;
 	}
 
 	private class TrashButton extends JButton {

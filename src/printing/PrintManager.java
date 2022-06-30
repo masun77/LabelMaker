@@ -57,7 +57,7 @@ public class PrintManager implements LabelPrinter {
 		PrintService[] pservices = PrintServiceLookup.lookupPrintServices(null, null);
 		PrintService ps = pservices[0];
 		for (int p = 0; p < pservices.length; p++) {
-			if (pservices[p].getName().contains("Godex")) {   
+			if (pservices[p].getName().contains("PDF")) {    // todo
 				ps = pservices[p];
 			}
 		}

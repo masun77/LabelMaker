@@ -1,38 +1,56 @@
 package labels;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import main.ApplicationState;
 import main.Item;
-import main.Order;
 import printing.LabelPrinter;
 import printing.PrintManager;
+import userInterface.AppFunction;
+import userInterface.PrintCheckBox;
 import userInterface.Utilities;
 import userInterface.VPanel;
 
-public class LabelViewerImp implements LabelView {
-	ArrayList<LabelableItem> items;
-	LabelPrinter pm;
+public class LabelViewerImp implements AppFunction {
+	private ApplicationState state;
+	private ArrayList<LabelableItem> items;
+	private LabelPrinter pm;
 	
-	public LabelViewerImp() {
-		pm = new PrintManager();
+	private JFrame f = new JFrame("View Labels");
+	private JPanel mainPanel = new VPanel();
+	
+	public LabelViewerImp(ApplicationState s) {
+		state = s;
+		pm = state.getPrinter();
+	}
+	
+	@Override
+	public void setApplicationState(ApplicationState s) {
+		state = s;
 	}
 
 	@Override
-	public void showLabels(ArrayList<LabelableItem> its) {
-		items = its;
-		
-		JFrame f = new JFrame("View Labels");
+	public Container getMainContent() {
+		return mainPanel;
+	}
 
-		JPanel mainPanel = new VPanel();
+	@Override
+	public void refresh() {
+		// do nothing
+	}
+
+	@Override
+	public void showFunction() {
+		items = getCheckedItems();
 		
 		JButton printButton = new JButton("Print Labels");
 		printButton.addActionListener(new PrintListener());
@@ -53,6 +71,24 @@ public class LabelViewerImp implements LabelView {
 		f.add(mainPanel);
 		f.setSize(new Dimension(500,700));
 		f.setVisible(true);
+	}
+	
+	private ArrayList<LabelableItem> getCheckedItems() {
+		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = state.getCheckBoxArray();
+		ArrayList<LabelableItem> items = new ArrayList<LabelableItem>();
+
+		if (checkBoxArray.size() > 0) {
+			int cols = checkBoxArray.get(0).size();
+			for (int row = 0; row < checkBoxArray.size(); row++) {
+				for (int col = 0; col < cols; col++) {
+					PrintCheckBox check = checkBoxArray.get(row).get(col);
+					if (check.isSelected()) {
+						items.add(check.getItem());
+					}
+				}
+			}		
+		}
+		return items;
 	}
 	
 	private class PrintListener implements ActionListener {

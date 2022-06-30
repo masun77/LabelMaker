@@ -8,12 +8,16 @@ import export.FileBackup;
 import export.SocketClient;
 import printing.LabelPrinter;
 import printing.PrintManager;
+import userInterface.AppFunction;
+import userInterface.PrintCheckBox;
 
 public class AppState implements ApplicationState {
+	private ArrayList<AppFunction> functions = new ArrayList<AppFunction>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private DataClient client;
 	private FileBackup fb;
 	private LabelPrinter lp;
+	private ArrayList<ArrayList<PrintCheckBox>> checkBoxes = new ArrayList<ArrayList<PrintCheckBox>>();
 	
 	public AppState(ArrayList<Order> ords, DataClient c, FileBackup f, LabelPrinter printer) {
 		orders = ords;
@@ -43,7 +47,7 @@ public class AppState implements ApplicationState {
 	}
 
 	@Override
-	public void setOrders(ArrayList<Order> orders) {
+	public void setOrders(ArrayList<Order> ords) {
 		orders = ords;
 	}
 
@@ -60,6 +64,33 @@ public class AppState implements ApplicationState {
 	@Override
 	public void setFileBackup(FileBackup f) {
 		fb = f;
+	}
+
+	@Override
+	public void addListener(AppFunction listener) {
+		functions.add(listener);
+	}
+
+	@Override
+	public void removeListener(AppFunction listener) {
+		functions.remove(listener);
+	}
+
+	@Override
+	public void notifyListeners() {
+		for (int f = 0; f < functions.size(); f++) {
+			functions.get(f).refresh();
+		}
+	}
+
+	@Override
+	public ArrayList<ArrayList<PrintCheckBox>> getCheckBoxArray() {
+		return checkBoxes;
+	}
+
+	@Override
+	public void setCheckBoxArray(ArrayList<ArrayList<PrintCheckBox>> pcb) {
+		checkBoxes = pcb;
 	}
 
 }

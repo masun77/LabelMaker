@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -68,6 +69,7 @@ public class RDFInterface implements UserInterface {
 		funcBtn.addActionListener(new FunctionListener(af));
 		
 		functionPanel.add(funcBtn);
+		functionPanel.add(Box.createRigidArea(new Dimension(1,10)));
 		Utilities.localVPack(functionPanel);
 	}
 	
