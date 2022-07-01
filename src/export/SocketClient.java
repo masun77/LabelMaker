@@ -7,24 +7,17 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import labels.LabelableItem;
-import main.ApplicationState;
+import main.AppState;
 import main.Order;
 
 public class SocketClient implements DataClient {
-	private String server;
-	private int port;
+	private String server = "";
+	private int port = 0;
 	private final String PATH = "saveOrders.csv";
-	private ApplicationState state;
-	
-	public SocketClient(ApplicationState s) {
-		state = s;
-		server = state.getFileBackup().getServerIPAddress();
-		port = state.getFileBackup().getServerPort();
-	}
 	
 	@Override
 	public void setIPAddress(String s) {
-		server = s; // todo: write to file
+		server = s; // todo: save to config file
 	}
 	
 	@Override
@@ -33,6 +26,10 @@ public class SocketClient implements DataClient {
 	}
 	
 	public void sendOrders(ArrayList<Order> orders) {
+		if (port == 0) {
+			server = AppState.getFileBackup().getServerIPAddress();
+			port = AppState.getFileBackup().getServerPort();
+		}
 		System.out.println("sending!!!");
 		try {
 			Socket socket = new Socket(server, port);
@@ -97,7 +94,7 @@ public class SocketClient implements DataClient {
 			e.printStackTrace();
 		}
 		
-		return ((DataSaver)state.getFileBackup()).getOrdersFromList(allData);
+		return ((DataSaver)AppState.getFileBackup()).getOrdersFromList(allData);
 	}
 	
 	private String[] getStrArrFromStr(String line) {

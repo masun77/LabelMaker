@@ -5,29 +5,23 @@ import export.DataSaver;
 import export.SocketClient;
 import labels.LabelViewerImp;
 import printing.PrintManager;
+import userInterface.EntryForm;
 import userInterface.OrderDisplay;
 import userInterface.RDFInterface;
 import userInterface.UserInterface;
 
 public class Application {
 	private UserInterface ui;
-	private ApplicationState appState;
 	
 	public Application() {
-		appState = new AppState(new ArrayList<Order>(), new DataSaver());
-		appState.setPrinter(new PrintManager(appState));
-		appState.setDataClient(new SocketClient(appState));
+		AppState.initializeAppState(new ArrayList<Order>(), new DataSaver(), new PrintManager(),
+				new SocketClient());
 		
-		ui = new RDFInterface(appState);
-		ui.addHomeFunction(new OrderDisplay(appState));
-		ui.addFunction(new LabelViewerImp(appState), "View/Print Labels");
-		ui.addFunction(null, null);
-		
-//			JButton enterOrderButton = new JButton("Add new order");
-//			enterOrderButton.addActionListener(entryListener);
-//			Utilities.setMinMax(enterOrderButton, BTN_SIZE);
-//			buttonPanel.add(enterOrderButton);		
-//			buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
+		ui = new RDFInterface();
+		AppState.addListener(ui);
+		ui.addHomeFunction(new OrderDisplay());
+		ui.addFunction(new LabelViewerImp(), "View/Print Labels");
+		ui.addFunction(new EntryForm(), "New Order");
 		
 //			JButton updateButton = new JButton("Send Orders to Server");
 //			updateButton.addActionListener(new UpdateListener());
@@ -63,14 +57,4 @@ public class Application {
 //		}
 //		refresh();
 //	}	
-//}
-//
-//private class PrintListener implements ActionListener {
-//
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		ArrayList<LabelableItem> items = getCheckedItems();
-//		LabelView lv = new LabelViewerImp();
-//		lv.showLabels(items);
-//	}
 //}

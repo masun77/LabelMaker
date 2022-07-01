@@ -9,86 +9,84 @@ import export.SocketClient;
 import printing.LabelPrinter;
 import printing.PrintManager;
 import userInterface.AppFunction;
-import userInterface.PrintCheckBox;
+import userInterface.UserInterface;
+import userInterface.graphicComponents.PrintCheckBox;
 
-public class AppState implements ApplicationState {
-	private ArrayList<AppFunction> functions = new ArrayList<AppFunction>();
-	private ArrayList<Order> orders = new ArrayList<Order>();
-	private DataClient client = null;
-	private FileBackup fb;
-	private LabelPrinter lp = null;
-	private ArrayList<ArrayList<PrintCheckBox>> checkBoxes = new ArrayList<ArrayList<PrintCheckBox>>();
+public class AppState {
+	private static SingletonState singleton;
 	
-	public AppState(ArrayList<Order> ords, FileBackup f) {
-		orders = ords;
-		fb = f; 
+	public static void initializeAppState(ArrayList<Order> orders, DataSaver ds, LabelPrinter lp, DataClient dc) {
+		singleton = new SingletonState(orders, ds, lp, dc);
+	}
+	
+	private AppState() {	}
+
+	public static ArrayList<Order> getOrders() {
+		return singleton.getOrders();
 	}
 
-	@Override
-	public ArrayList<Order> getOrders() {
-		return orders;
+	public static DataClient getDataClient() {
+		return singleton.getDataClient();
 	}
 
-	@Override
-	public DataClient getDataClient() {
-		return client;
+	public static LabelPrinter getPrinter() {
+		return singleton.getPrinter();
 	}
 
-	@Override
-	public LabelPrinter getPrinter() {
-		return lp;
+	public static FileBackup getFileBackup() {
+		return singleton.getFileBackup();
 	}
 
-	@Override
-	public FileBackup getFileBackup() {
-		return fb;
+	public static void setOrders(ArrayList<Order> ords) {
+		singleton.setOrders(ords);
 	}
 
-	@Override
-	public void setOrders(ArrayList<Order> ords) {
-		orders = ords;
+	public static void setDataClient(DataClient dc) {
+		singleton.setDataClient(dc);
 	}
 
-	@Override
-	public void setDataClient(DataClient dc) {
-		client = dc;
+	public static void setPrinter(LabelPrinter printer) {
+		singleton.setPrinter(printer);
 	}
 
-	@Override
-	public void setPrinter(LabelPrinter printer) {
-		lp = printer;
+	public static void setFileBackup(FileBackup f) {
+		singleton.setFileBackup(f);
 	}
 
-	@Override
-	public void setFileBackup(FileBackup f) {
-		fb = f;
+	public static void addListener(AppFunction listener) {
+		singleton.addListener(listener);
 	}
 
-	@Override
-	public void addListener(AppFunction listener) {
-		functions.add(listener);
+	public static void removeListener(AppFunction listener) {
+		singleton.removeListener(listener);
+	}
+	
+	public static void addListener(UserInterface listener) {
+		singleton.addListener(listener);
 	}
 
-	@Override
-	public void removeListener(AppFunction listener) {
-		functions.remove(listener);
+	public static void removeListener(UserInterface listener) {
+		singleton.removeListener(listener);
 	}
 
-	@Override
-	public void notifyListeners() {
-		for (int f = 0; f < functions.size(); f++) {
-			functions.get(f).refresh();
-		}
+	public static ArrayList<AppFunction> getFunctions() {
+		return singleton.getFunctions();
 	}
 
-	@Override
-	public ArrayList<ArrayList<PrintCheckBox>> getCheckBoxArray() {
-		return checkBoxes;
+	public static void setFunctions(ArrayList<AppFunction> functions) {
+		singleton.setFunctions(functions);
 	}
 
-	@Override
-	public void setCheckBoxArray(ArrayList<ArrayList<PrintCheckBox>> pcb) {
-		checkBoxes = pcb;
+	public static void notifyListeners() {
+		singleton.notifyListeners();
+	}
+
+	public static ArrayList<ArrayList<PrintCheckBox>> getCheckBoxArray() {
+		return singleton.getCheckBoxArray();
+	}
+
+	public static void setCheckBoxArray(ArrayList<ArrayList<PrintCheckBox>> pcb) {
+		singleton.setCheckBoxArray(pcb);
 	}
 
 }

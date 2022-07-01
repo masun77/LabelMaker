@@ -11,30 +11,23 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import main.ApplicationState;
+import main.AppState;
 import main.Item;
 import printing.LabelPrinter;
 import userInterface.AppFunction;
-import userInterface.PrintCheckBox;
 import userInterface.Utilities;
-import userInterface.VPanel;
+import userInterface.graphicComponents.PrintCheckBox;
+import userInterface.graphicComponents.VPanel;
 
 public class LabelViewerImp implements AppFunction {
-	private ApplicationState state;
 	private ArrayList<LabelableItem> items;
 	private LabelPrinter pm;
 	
 	private JFrame f = new JFrame("View Labels");
 	private JPanel mainPanel = new VPanel();
 	
-	public LabelViewerImp(ApplicationState s) {
-		state = s;
-		pm = state.getPrinter();
-	}
-	
-	@Override
-	public void setApplicationState(ApplicationState s) {
-		state = s;
+	public LabelViewerImp() {
+		pm = AppState.getPrinter();
 	}
 
 	@Override
@@ -73,7 +66,7 @@ public class LabelViewerImp implements AppFunction {
 	}
 	
 	private ArrayList<LabelableItem> getCheckedItems() {
-		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = state.getCheckBoxArray();
+		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getCheckBoxArray();
 		ArrayList<LabelableItem> items = new ArrayList<LabelableItem>();
 
 		if (checkBoxArray.size() > 0) {

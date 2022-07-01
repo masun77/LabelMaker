@@ -17,12 +17,16 @@ import javax.swing.JPanel;
 
 import export.FileBackup;
 import labels.LabelableItem;
-import main.ApplicationState;
+import main.AppState;
 import main.Order;
+import userInterface.graphicComponents.CompanyCheckBox;
+import userInterface.graphicComponents.HPanel;
+import userInterface.graphicComponents.ItemCheckBox;
+import userInterface.graphicComponents.PrintCheckBox;
+import userInterface.graphicComponents.VPanel;
 
 public class OrderDisplay implements AppFunction {
 	// Application variables from Application state
-	private ApplicationState state;
 	private ArrayList<Order> orders;
 	private FileBackup fb;
 	
@@ -37,25 +41,19 @@ public class OrderDisplay implements AppFunction {
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 
-	public OrderDisplay(ApplicationState s) {
-		state = s;
-		orders = state.getOrders();
-		fb = state.getFileBackup();
+	public OrderDisplay() {
+		orders = AppState.getOrders();
+		fb = AppState.getFileBackup();
 		
 		addOrderArray();
 	}
 	
 	@Override
 	public void refresh() {
-		mainPanel.removeAll();
-		orders = state.getOrders();
+		mainPanel = new VPanel();
+		orders = AppState.getOrders();
 		addOrderArray();
-		fb.saveOrders(orders);
-	}
-
-	@Override
-	public void setApplicationState(ApplicationState s) {
-		state = s;
+		System.out.println("order disp refreshed");
 	}
 
 	@Override
@@ -89,7 +87,7 @@ public class OrderDisplay implements AppFunction {
 		for(int n = 0; n < colNames.size(); n++) {
 			Label nameLabel = new Label(colNames.get(n));
 			Utilities.setMinMax(nameLabel, NAME_SIZE);
-			headerRow.add(new CompanyCheckBox(state, n));
+			headerRow.add(new CompanyCheckBox(n));
 			headerRow.add(nameLabel);
 			headerRow.add(new TrashButton(n));
 			Label spacer = new Label();
@@ -157,7 +155,7 @@ public class OrderDisplay implements AppFunction {
 				checkBoxArray.add(row);
 			}						
 		}
-		state.setCheckBoxArray(checkBoxArray);  
+		AppState.setCheckBoxArray(checkBoxArray);  
 	}
 	
 	private ArrayList<Float> createZeroArray(int numZeros) {
@@ -169,14 +167,14 @@ public class OrderDisplay implements AppFunction {
 	}
 	
 	private void addRows(ArrayList<ArrayList<Float>> displayArray) {
-		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = state.getCheckBoxArray();
+		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getCheckBoxArray();
 		for (int r = 0; r < displayArray.size(); r++) {
 			ArrayList<Float> row = displayArray.get(r);
 			JPanel rowPanel = new JPanel();
 			rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
 			Label prodName = new Label(prodNames.get(r));
 			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
-			rowPanel.add(new ItemCheckBox(state, r));
+			rowPanel.add(new ItemCheckBox(r));
 			rowPanel.add(prodName);
 			for (int q = 0; q < row.size(); q++) {
 				Label qty = new Label(Float.toString(row.get(q)));

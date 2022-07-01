@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.graphicComponents;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;

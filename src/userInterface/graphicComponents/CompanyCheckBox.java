@@ -1,4 +1,4 @@
-package userInterface;
+package userInterface.graphicComponents;
 
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
@@ -7,15 +7,14 @@ import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
 
-import main.ApplicationState;
+import main.AppState;
+import userInterface.Utilities;
 
 public class CompanyCheckBox extends JCheckBox {
 	private int orderNum;
 	private final Dimension CHECK_SIZE = new Dimension(15,15);
-	private ApplicationState state;
 	
-	public CompanyCheckBox(ApplicationState s, int o) {
-		state = s;
+	public CompanyCheckBox(int o) {
 		orderNum = o;
 		addItemListener(new CompanyCheckListener(orderNum, this));
 		Utilities.setMinMax(this, CHECK_SIZE);
@@ -33,7 +32,7 @@ public class CompanyCheckBox extends JCheckBox {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			boolean currSelection = button.isSelected();
-			ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = state.getCheckBoxArray();
+			ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getCheckBoxArray();
 			for (int r = 0; r < checkBoxArray.size(); r++) {
 				PrintCheckBox box = checkBoxArray.get(r).get(orderIndex);
 				if (box.isEnabled()) {
