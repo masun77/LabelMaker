@@ -50,10 +50,9 @@ public class OrderDisplay implements AppFunction {
 	
 	@Override
 	public void refresh() {
-		mainPanel = new VPanel();
+		mainPanel.removeAll();
 		orders = AppState.getOrders();
 		addOrderArray();
-		System.out.println("order disp refreshed");
 	}
 
 	@Override
@@ -74,6 +73,7 @@ public class OrderDisplay implements AppFunction {
 		ArrayList<ArrayList<Float>> displayArray = getDisplayArray();
 		addRows(displayArray);
 		Utilities.localVPack(mainPanel);
+		mainPanel.validate();
 	}
 	
 	private Component getColumnPanel() {

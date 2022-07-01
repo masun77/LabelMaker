@@ -60,14 +60,6 @@ public class AppState {
 	public static void removeListener(AppFunction listener) {
 		singleton.removeListener(listener);
 	}
-	
-	public static void addListener(UserInterface listener) {
-		singleton.addListener(listener);
-	}
-
-	public static void removeListener(UserInterface listener) {
-		singleton.removeListener(listener);
-	}
 
 	public static ArrayList<AppFunction> getFunctions() {
 		return singleton.getFunctions();

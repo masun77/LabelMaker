@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import export.FileBackup;
 import labels.DateImp;
@@ -71,10 +72,14 @@ public class EntryForm implements AppFunction {
 
 	@Override
 	public void refresh() {
-		orders = AppState.getOrders();
-		fb = AppState.getFileBackup();
-		mainPanel.removeAll();
-		initialize();
+		SwingUtilities.invokeLater(new Runnable() {
+	         public void run() {
+	     		orders = AppState.getOrders();
+	    		fb = AppState.getFileBackup();
+	    		mainPanel.removeAll();
+	    		initialize();
+		     }
+		});
 	}
 	
 	private void initialize() {
@@ -204,7 +209,6 @@ public class EntryForm implements AppFunction {
 		orders.add(newOrder);
 		AppState.setOrders(orders);
 		AppState.notifyListeners();
-		refresh();
 	}
 	
 	private Item getItemFromRow(JPanel row) { 

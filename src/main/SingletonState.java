@@ -11,7 +11,6 @@ import userInterface.graphicComponents.PrintCheckBox;
 
 public class SingletonState {
 	private ArrayList<AppFunction> functions = new ArrayList<AppFunction>();
-	private ArrayList<UserInterface> uiListeners = new ArrayList<UserInterface>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private DataClient dataClient;
 	private FileBackup fileBackup;
@@ -39,6 +38,7 @@ public class SingletonState {
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
+		fileBackup.saveOrders(orders);
 	}
 
 	public DataClient getDataClient() {
@@ -73,14 +73,6 @@ public class SingletonState {
 		this.checkBoxArray = checkBoxArray;
 	}
 
-	public void addListener(UserInterface listener) {
-		uiListeners.add(listener);
-	}
-	
-	public void removeListener(UserInterface listener) {
-		uiListeners.remove(listener);
-	}
-
 	public void addListener(AppFunction listener) {
 		functions.add(listener);
 	}
@@ -92,9 +84,6 @@ public class SingletonState {
 	public void notifyListeners() {
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).refresh();
-		}
-		for (int f = 0; f < uiListeners.size(); f++) {
-			uiListeners.get(f).refresh();
 		}
 	}
 }

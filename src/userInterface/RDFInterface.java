@@ -85,12 +85,4 @@ public class RDFInterface implements UserInterface {
 			func.showFunction();
 		}
 	}
-
-	@Override
-	public void refresh() {
-		homePanel.remove(0);
-		homeFunction.refresh();
-		homePanel.add(homeFunction.getMainContent(),0);
-		Utilities.localHPack(homePanel);
-	}
  }

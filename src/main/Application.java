@@ -18,7 +18,6 @@ public class Application {
 				new SocketClient());
 		
 		ui = new RDFInterface();
-		AppState.addListener(ui);
 		ui.addHomeFunction(new OrderDisplay());
 		ui.addFunction(new LabelViewerImp(), "View/Print Labels");
 		ui.addFunction(new EntryForm(), "New Order");
