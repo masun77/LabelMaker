@@ -16,14 +16,13 @@ public class AppState implements ApplicationState {
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private DataClient client;
 	private FileBackup fb;
-	private LabelPrinter lp;
+	private LabelPrinter lp = null;
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxes = new ArrayList<ArrayList<PrintCheckBox>>();
 	
-	public AppState(ArrayList<Order> ords, DataClient c, FileBackup f, LabelPrinter printer) {
+	public AppState(ArrayList<Order> ords, DataClient c, FileBackup f) {
 		orders = ords;
 		client = c; 
 		fb = f; 
-		lp = printer;
 	}
 
 	@Override

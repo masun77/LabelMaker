@@ -35,13 +35,21 @@ import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 
 import labels.LabelableItem;
+import main.ApplicationState;
 import main.Item;
 import main.RDFItem.RDFLabel;
 
 public class PrintManager implements LabelPrinter {
+	private ApplicationState state;
+	
+	public PrintManager(ApplicationState s) {
+		state = s;
+	}
+	
 	@Override
 	public void printLabels(ArrayList<LabelableItem> items) { 
 		PrinterJob pj = PrinterJob.getPrinterJob();
+		PrinterDescription printerDesc = state.getFileBackup().getPrinterDescription();
 		
 		ArrayList<Component> labels = new ArrayList<Component>();
 		for (int i = 0; i < items.size(); i++) {
@@ -57,7 +65,7 @@ public class PrintManager implements LabelPrinter {
 		PrintService[] pservices = PrintServiceLookup.lookupPrintServices(null, null);
 		PrintService ps = pservices[0];
 		for (int p = 0; p < pservices.length; p++) {
-			if (pservices[p].getName().contains("Godex")) {    // todo make sure is godex if testing
+			if (pservices[p].getName().contains(printerDesc.getPrinterName())) {    // todo make sure is godex if testing
 				ps = pservices[p];
 			}
 		}
@@ -70,8 +78,8 @@ public class PrintManager implements LabelPrinter {
 		}
 		
 		PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-		pras.add(new MediaPrintableArea(.2f,2.5f,3.6f,3.5f,MediaPrintableArea.INCH));
-		pras.add(MediaSizeName.ISO_A6);
+		pras.add(printerDesc.getPrintableArea());
+		pras.add(printerDesc.getMediaName());
 				
 		try {
 			pj.print(pras);

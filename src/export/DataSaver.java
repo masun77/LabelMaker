@@ -18,6 +18,7 @@ import labels.DateImp;
 import labels.LabelableItem;
 import main.Order;
 import main.RDFItem;
+import printing.PrinterDescription;
 
 public class DataSaver implements FileBackup {
 	// Item data constants
@@ -41,6 +42,10 @@ public class DataSaver implements FileBackup {
 	private final int UNIT_INDEX = 8;
 	private final int QTY_INDEX = 9;
 	private final int PRICE_INDEX = 10;
+	
+	// Print constants
+	private final String PRINT_CONFIG_FILE_NAME = "resources/printerConfig.txt";
+	
 	
 	/**
 	 * Write orders to a csv with the given file path
@@ -232,5 +237,24 @@ public class DataSaver implements FileBackup {
 			data.add("");
 		}
 		return data;
+	}
+
+	@Override
+	public PrinterDescription getPrinterDescription() {
+		try {
+	        FileReader filereader = new FileReader(PRINT_CONFIG_FILE_NAME);
+	        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
+	        CSVReader csvReader = new CSVReaderBuilder(filereader)
+	                                  .withCSVParser(parser)
+	                                  .build();
+	 
+	        List<String[]> allData = csvReader.readAll();
+	 
+	        return new PrinterDescription(allData);
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return null;
 	}
 }

@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import main.ApplicationState;
 import main.Item;
 import printing.LabelPrinter;
-import printing.PrintManager;
 import userInterface.AppFunction;
 import userInterface.PrintCheckBox;
 import userInterface.Utilities;

@@ -14,7 +14,9 @@ public class Application {
 	private ApplicationState appState;
 	
 	public Application() {
-		appState = new AppState(new ArrayList<Order>(), new SocketClient(), new DataSaver(), new PrintManager());
+		appState = new AppState(new ArrayList<Order>(), new SocketClient(), new DataSaver());
+		PrintManager pm = new PrintManager(appState);
+		appState.setPrinter(pm);
 		ui = new RDFInterface(appState);
 		ui.addHomeFunction(new OrderDisplay(appState));
 		ui.addFunction(new LabelViewerImp(appState), "View/Print Labels");
