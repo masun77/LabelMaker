@@ -14,14 +14,13 @@ import userInterface.PrintCheckBox;
 public class AppState implements ApplicationState {
 	private ArrayList<AppFunction> functions = new ArrayList<AppFunction>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
-	private DataClient client;
+	private DataClient client = null;
 	private FileBackup fb;
 	private LabelPrinter lp = null;
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxes = new ArrayList<ArrayList<PrintCheckBox>>();
 	
-	public AppState(ArrayList<Order> ords, DataClient c, FileBackup f) {
+	public AppState(ArrayList<Order> ords, FileBackup f) {
 		orders = ords;
-		client = c; 
 		fb = f; 
 	}
 

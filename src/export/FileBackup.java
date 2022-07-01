@@ -11,4 +11,6 @@ public interface FileBackup {
 	public String getItemDescription(String itemCode);
 	public ArrayList<String> getItemData(String itemCode);
 	public PrinterDescription getPrinterDescription();
+	public String getServerIPAddress();
+	public int getServerPort();
 }

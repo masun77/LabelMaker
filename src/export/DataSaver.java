@@ -46,6 +46,10 @@ public class DataSaver implements FileBackup {
 	// Print constants
 	private final String PRINT_CONFIG_FILE_NAME = "resources/printerConfig.txt";
 	
+	// Server constants
+	private final String SERVER_CONFIG_FILE_NAME = "resources/serverConfig.txt";
+	private final int SERVER_IP = 0;
+	private final int SERVER_PORT = 1;
 	
 	/**
 	 * Write orders to a csv with the given file path
@@ -256,5 +260,43 @@ public class DataSaver implements FileBackup {
 	        e.printStackTrace();
 	    }
 		return null;
+	}
+
+	@Override
+	public String getServerIPAddress() {
+		try {
+	        FileReader filereader = new FileReader(SERVER_CONFIG_FILE_NAME);
+	        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
+	        CSVReader csvReader = new CSVReaderBuilder(filereader)
+	                                  .withCSVParser(parser)
+	                                  .build();
+	 
+	        List<String[]> allData = csvReader.readAll();
+	 
+	        return allData.get(0)[SERVER_IP];
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return null;
+	}
+
+	@Override
+	public int getServerPort() {
+		try {
+	        FileReader filereader = new FileReader(SERVER_CONFIG_FILE_NAME);
+	        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
+	        CSVReader csvReader = new CSVReaderBuilder(filereader)
+	                                  .withCSVParser(parser)
+	                                  .build();
+	 
+	        List<String[]> allData = csvReader.readAll();
+	 
+	        return Integer.parseInt(allData.get(0)[SERVER_PORT]);
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return 0;
 	}
 }

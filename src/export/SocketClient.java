@@ -7,27 +7,35 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import labels.LabelableItem;
+import main.ApplicationState;
 import main.Order;
 
 public class SocketClient implements DataClient {
-	private String SERVER = "192.168.254.142";
-	private final int PORT = 9998;
+	private String server;
+	private int port;
 	private final String PATH = "saveOrders.csv";
+	private ApplicationState state;
+	
+	public SocketClient(ApplicationState s) {
+		state = s;
+		server = state.getFileBackup().getServerIPAddress();
+		port = state.getFileBackup().getServerPort();
+	}
 	
 	@Override
 	public void setIPAddress(String s) {
-		SERVER = s;
+		server = s; // todo: write to file
 	}
 	
 	@Override
 	public String getIPAddress() {
-		return SERVER;
+		return server;
 	}
 	
 	public void sendOrders(ArrayList<Order> orders) {
 		System.out.println("sending!!!");
 		try {
-			Socket socket = new Socket(SERVER, PORT);
+			Socket socket = new Socket(server, port);
 			
 			PrintStream out = new PrintStream( socket.getOutputStream() );
             BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
@@ -64,7 +72,7 @@ public class SocketClient implements DataClient {
         System.out.println("getting data");
         	
 		try {
-			Socket socket = new Socket(SERVER, PORT);
+			Socket socket = new Socket(server, port);
 			
 			PrintStream out = new PrintStream( socket.getOutputStream() );
             BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
@@ -89,7 +97,7 @@ public class SocketClient implements DataClient {
 			e.printStackTrace();
 		}
 		
-		return DataSaver.getOrdersFromList(allData);
+		return ((DataSaver)state.getFileBackup()).getOrdersFromList(allData);
 	}
 	
 	private String[] getStrArrFromStr(String line) {
@@ -111,4 +119,6 @@ public class SocketClient implements DataClient {
 		
 		return arr;
 	}
+	
+	
 }

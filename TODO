@@ -1,18 +1,19 @@
 Hours:
-2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs
+2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 
 
 TODO: 	
 
 Working on: encapsulating all variability: adding UI functions.
 	
-- ideas/abstractions from Nick, esp database and client/server
-- encapsulate variability of printer and label size - config file? 
-- clear up and make one verson of this client-server, backup stuff
-- Item info easy to edit - how open on excel? 
+- abstract client/server and clarify file backup vs server stuff vs data parsing -
+	 some files you should be able to update from server,
+	but some, esp print config, should be computer specific
+	- then implement sending and fetching data from the server
 - Make GUI beautiful and easy and clean - a gift to use
 - indication - checks or colors or something - of picked, packed, labeled; and ability to set
 - Save orders from last week - clear visually when want to
-
+	
+- write instructions for opeing |-separated file in excel, or make simpler somehow... 
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
@@ -26,6 +27,8 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+implement http server idea from Nick 
+implement database idea from Nick
 more than 20 items in an order - 
 edit existing orders
 autopopulation eg of company, item
@@ -45,6 +48,7 @@ ship date vs pack/pick date in item, order, display, csv
 if you edit the server data so that the order numbers are no longer in order/not sequential, error on reading in dataSaver
 SAve ip address in a config file so don't have to enter every time
 Get a new computer - solid state, Dell
+reset settings from config files while running? vs just closing and reopening the app?
 
 
 DONE:
