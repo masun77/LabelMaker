@@ -3,9 +3,9 @@ import java.util.ArrayList;
 
 import export.DataSaver;
 import export.SocketClient;
-import labels.LabelViewerImp;
 import printing.PrintManager;
 import userInterface.EntryForm;
+import userInterface.LabelViewerImp;
 import userInterface.OrderDisplay;
 import userInterface.RDFInterface;
 import userInterface.UserInterface;

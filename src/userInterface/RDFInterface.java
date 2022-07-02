@@ -25,8 +25,11 @@ public class RDFInterface implements UserInterface {
 	// Display variables
 	private JFrame homeFrame = new JFrame("Label Program");
 	private final Dimension WINDOW_SIZE = new Dimension(1000,700);
-	JPanel homePanel;
+	private final Dimension HOME_SIZE = new Dimension(700,700);
+	private final Dimension FUNCTION_SIZE = new Dimension(300,700);
+	JPanel mainPanel;
 	JPanel functionPanel;
+	JPanel homePanel;
 	AppFunction homeFunction;
 	
 	public RDFInterface() {
@@ -39,13 +42,16 @@ public class RDFInterface implements UserInterface {
 
 		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		homePanel = new VPanel();
 		functionPanel = new VPanel();
-		homePanel = new HPanel();
-		homePanel.add(functionPanel);
-		Utilities.localHPack(homePanel);
+		Utilities.setMinMax(functionPanel, FUNCTION_SIZE);
+		mainPanel = new HPanel();
 		
 		JScrollPane scrollPane = new JScrollPane(homePanel);
-		homeFrame.add(scrollPane);
+		mainPanel.add(scrollPane);
+		mainPanel.add(functionPanel);
+		
+		homeFrame.add(mainPanel);
 		homeFrame.setSize(WINDOW_SIZE);
 	}
 	

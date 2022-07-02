@@ -59,5 +59,7 @@ public class Utilities {
 	public static void setMinMax(Component comp, Dimension dim) {
 		comp.setMaximumSize(dim);
 		comp.setMinimumSize(dim);
+		comp.setPreferredSize(dim);
+		comp.setSize(dim);
 	}
 }

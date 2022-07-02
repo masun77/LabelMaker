@@ -1,4 +1,4 @@
-package labels;
+package userInterface;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -10,12 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
+import labels.LabelableItem;
 import main.AppState;
 import main.Item;
 import printing.LabelPrinter;
-import userInterface.AppFunction;
-import userInterface.Utilities;
 import userInterface.graphicComponents.PrintCheckBox;
 import userInterface.graphicComponents.VPanel;
 
@@ -25,9 +25,18 @@ public class LabelViewerImp implements AppFunction {
 	
 	private JFrame f = new JFrame("View Labels");
 	private JPanel mainPanel = new VPanel();
+	private JPanel contentPanel = new VPanel();
 	
 	public LabelViewerImp() {
 		pm = AppState.getPrinter();
+		
+		SwingUtilities.invokeLater(new Runnable() {
+	         public void run() {
+	        	JButton printButton = new JButton("Print Labels");
+	     		printButton.addActionListener(new PrintListener());
+	     		mainPanel.add(printButton);
+		     }
+		});
 	}
 
 	@Override
@@ -42,13 +51,13 @@ public class LabelViewerImp implements AppFunction {
 
 	@Override
 	public void showFunction() {
+		if (mainPanel.getComponentCount() > 1) {
+		   	mainPanel.remove(1);
+		}
+		
 		items = getCheckedItems();
 		
-		JButton printButton = new JButton("Print Labels");
-		printButton.addActionListener(new PrintListener());
-		mainPanel.add(printButton);
-		
-		JPanel contentPanel = new VPanel();
+		contentPanel = new VPanel();
 		for (int i = 0; i < items.size(); i++) {
 			LabelableItem currItem = items.get(i);
 			for (int j = 0; j < ((Item) currItem).getQuantityRoundedUp(); j++) {
