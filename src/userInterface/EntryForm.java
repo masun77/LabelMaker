@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import export.FileBackup;
 import labels.DateImp;
 import labels.LabelableItem;
+import localBackup.LocalFileBackup;
 import main.AppState;
 import main.Item;
 import main.Order;
@@ -31,7 +31,7 @@ import userInterface.graphicComponents.VPanel;
 
 public class EntryForm implements SideFunction {
 	private ArrayList<Order> orders;
-	private FileBackup fb;
+	private LocalFileBackup fb;
 	
 	// Display variables
 	private JFrame frame = new JFrame();
@@ -214,6 +214,8 @@ public class EntryForm implements SideFunction {
 		Order newOrder = new Order(company.getText(), items, purchaseOrder.getText(), 
 				shipVia.getText(), DateImp.parseDate(date.getText()));
 		AppState.addOrder(newOrder);
+		orders = AppState.getOrders();
+		AppState.getDataClient().saveOrders(orders);
 		resetFields();
 	}
 	

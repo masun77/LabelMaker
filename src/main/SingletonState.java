@@ -2,8 +2,8 @@ package main;
 
 import java.util.ArrayList;
 
-import export.DataClient;
-import export.FileBackup;
+import database.DataClient;
+import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
 import userInterface.AppListener;
 import userInterface.UserInterface;
@@ -14,11 +14,11 @@ public class SingletonState {
 	private ArrayList<AppListener> functions = new ArrayList<AppListener>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private DataClient dataClient;
-	private FileBackup fileBackup;
+	private LocalFileBackup fileBackup;
 	private LabelPrinter printer;
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 
-	public SingletonState(ArrayList<Order> ords, FileBackup f, LabelPrinter lp, DataClient dc) {
+	public SingletonState(ArrayList<Order> ords, LocalFileBackup f, LabelPrinter lp, DataClient dc) {
 		orders = ords;
 		fileBackup = f; 
 		printer = lp;
@@ -70,11 +70,11 @@ public class SingletonState {
 		this.dataClient = dataClient;
 	}
 
-	public FileBackup getFileBackup() {
+	public LocalFileBackup getFileBackup() {
 		return fileBackup;
 	}
 
-	public void setFileBackup(FileBackup fileBackup) {
+	public void setFileBackup(LocalFileBackup fileBackup) {
 		this.fileBackup = fileBackup;
 	}
 

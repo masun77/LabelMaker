@@ -7,14 +7,14 @@ import javax.print.attribute.standard.MediaSizeName;
 
 import org.junit.jupiter.api.Test;
 
-import export.DataSaver;
-import export.FileBackup;
+import localBackup.DataSaver;
+import localBackup.LocalFileBackup;
 
 class PrinterDescripTests {
 
 	@Test
 	void test() {
-		FileBackup fb = new DataSaver();
+		LocalFileBackup fb = new DataSaver();
 		PrinterDescription pd = fb.getPrinterDescription();
 		assertEquals(pd.getPrinterName(), "Godex");
 		assertEquals(pd.getMediaName(), MediaSizeName.ISO_A6);

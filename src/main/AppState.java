@@ -2,14 +2,11 @@ package main;
 
 import java.util.ArrayList;
 
-import export.DataClient;
-import export.DataSaver;
-import export.FileBackup;
-import export.SocketClient;
+import database.DataClient;
+import localBackup.DataSaver;
+import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
-import printing.PrintManager;
 import userInterface.AppListener;
-import userInterface.UserInterface;
 import userInterface.graphicComponents.PrintCheckBox;
 
 public class AppState {
@@ -33,7 +30,7 @@ public class AppState {
 		return singleton.getPrinter();
 	}
 
-	public static FileBackup getFileBackup() {
+	public static LocalFileBackup getFileBackup() {
 		return singleton.getFileBackup();
 	}
 
@@ -57,7 +54,7 @@ public class AppState {
 		singleton.setPrinter(printer);
 	}
 
-	public static void setFileBackup(FileBackup f) {
+	public static void setFileBackup(LocalFileBackup f) {
 		singleton.setFileBackup(f);
 	}
 

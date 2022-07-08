@@ -213,6 +213,7 @@ public class OrderDisplay implements HomeFunction {
 			orders.remove(index);
 			AppState.setOrders(orders);
 			AppState.notifyListeners();
+			AppState.getDataClient().saveOrders(orders);
 		}
 	}
 	

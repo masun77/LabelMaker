@@ -1,4 +1,4 @@
-package export;
+package localBackup;
 
 import java.io.File;
 import java.io.FileReader;
@@ -13,6 +13,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 
+import database.DataClient;
 import labels.Date;
 import labels.DateImp;
 import labels.LabelableItem;
@@ -20,7 +21,7 @@ import main.Order;
 import main.RDFItem;
 import printing.PrinterDescription;
 
-public class DataSaver implements FileBackup {
+public class DataSaver implements LocalFileBackup, DataClient {
 	// Item data constants
 	private final String ITEM_FILE_NAME = "resources/itemData.csv";
 	private final int DATA_ITEM_CODE_INDEX = 0;
@@ -120,7 +121,7 @@ public class DataSaver implements FileBackup {
 	 * @return an array list of the orders listed in the csv
 	 */
 	@Override
-	public ArrayList<Order> readSavedOrders() {
+	public ArrayList<Order> getOrders() {
 		 try {
 		        FileReader filereader = new FileReader(ORDER_FILE_NAME);
 		        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
@@ -298,5 +299,26 @@ public class DataSaver implements FileBackup {
 	        e.printStackTrace();
 	    }
 		return 0;
+	}
+
+	@Override
+	public void setIPAddress(String ipAddr) {
+		File file = new File(SERVER_CONFIG_FILE_NAME);
+		  
+	    try {
+	        FileWriter outputfile = new FileWriter(file, false);
+	        CSVWriter writer = new CSVWriter(outputfile, '|',
+	        		CSVWriter.NO_QUOTE_CHARACTER,
+	        		CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+	        		CSVWriter.DEFAULT_LINE_END);
+	        
+	        String[] line = {ipAddr};
+	        writer.writeNext(line);
+
+	        writer.close();
+	    }
+	    catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 }

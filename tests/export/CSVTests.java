@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import labels.DateImp;
 import labels.LabelableItem;
+import localBackup.DataSaver;
+import localBackup.LocalFileBackup;
 import main.Item;
 import main.Order;
 import main.RDFItem;
@@ -15,7 +17,7 @@ import userInterface.Utilities;
 
 public class CSVTests {
 	private static ArrayList<Order> orders = new ArrayList<Order>();
-	private static FileBackup fb = new DataSaver();
+	private static LocalFileBackup fb = new DataSaver();
 	
 	@BeforeAll
 	private static void setup() {

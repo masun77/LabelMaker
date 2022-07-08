@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import export.FileBackup;
+import localBackup.LocalFileBackup;
 import main.AppState;
 import main.Order;
 import userInterface.graphicComponents.HPanel;
@@ -20,7 +20,7 @@ import userInterface.graphicComponents.VPanel;
 public class RDFInterface implements UserInterface, AppListener {
 	// Application variables
 	private ArrayList<Order> orders = new ArrayList<Order>();
-	private final FileBackup fb;
+	private final LocalFileBackup fb;
 	
 	// Display variables
 	private JFrame homeFrame = new JFrame("Label Program");
@@ -36,7 +36,7 @@ public class RDFInterface implements UserInterface, AppListener {
 		AppState.addLastListener(this);
 		fb = AppState.getFileBackup();
 		if (orders.size() == 0) {
-			orders = fb.readSavedOrders();
+			orders = fb.getOrders();
 			AppState.setOrders(orders);
 			AppState.notifyListeners();
 		}

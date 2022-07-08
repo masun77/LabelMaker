@@ -1,8 +1,8 @@
 package main;
 import java.util.ArrayList;
 
-import export.DataSaver;
-import export.SocketClient;
+import database.SocketClient;
+import localBackup.DataSaver;
 import printing.PrintManager;
 import userInterface.EntryForm;
 import userInterface.LabelViewerImp;
@@ -15,7 +15,7 @@ public class Application {
 	
 	public Application() {
 		AppState.initializeAppState(new ArrayList<Order>(), new DataSaver(), new PrintManager(),
-				new SocketClient());
+				new DataSaver());
 		
 		ui = new RDFInterface();
 		ui.addHomeFunction(new OrderDisplay());
