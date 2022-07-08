@@ -91,8 +91,9 @@ public class OrderDisplay implements HomeFunction {
 		int length = 7;
 		String name = ord.getCompany();
 		if (name.length() > length) {
-			name = name.substring(length - 1) + "...";
+			name = name.substring(0, length - 1) + "..";
 		}
+		name += ", ";
 		return name + ord.getShipDate().getMMDD();
 	}
 	
@@ -120,10 +121,10 @@ public class OrderDisplay implements HomeFunction {
 	
 	private void addItemToRow(HPanel rowPanel, int rowNum, int orderNum) {
 		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getCheckBoxArray();
-		Label qty = new Label(Float.toString(displayArray.get(rowNum).get(orderNum)));
-		Utilities.setMinMax(qty, NUMBER_SIZE);
+		Label qtyLabel = new Label(Float.toString(displayArray.get(rowNum).get(orderNum)));
+		Utilities.setMinMax(qtyLabel, NUMBER_SIZE);
 		rowPanel.add(checkBoxArray.get(rowNum).get(orderNum));
-		rowPanel.add(qty);
+		rowPanel.add(qtyLabel);
 	}
 		
 	private void getDisplayArray() {
@@ -215,15 +216,15 @@ public class OrderDisplay implements HomeFunction {
 		}
 	}
 	
-	private void addColumnValuesToDisplay(Order o) {
-		for (int i = 1; i  < mainPanel.getComponentCount(); i++) {
+	private void addColumnValuesToDisplay(Order o, int end) {
+		for (int i = 1; i  < end + 1; i++) {
 			HPanel row = (HPanel) mainPanel.getComponent(i);
 			addItemToRow(row, i - 1, orders.size() -1);
 		}
 	}
 
-	private void addEndValuesForOrderItems() {
-		for (int r = 0; r < displayArray.size(); r++) {
+	private void addEndValuesForOrderItems(int end) {
+		for (int r = 0; r < end; r++) {
 			displayArray.get(r).add(0f);
 			checkBoxArray.get(r).add(new PrintCheckBox());
 		}
@@ -245,12 +246,12 @@ public class OrderDisplay implements HomeFunction {
 		Utilities.localHPack(headerRow);
 		
 		addEmptyArraysForOrderItems(o);
-		addEndValuesForOrderItems();
+		addEndValuesForOrderItems(oldNumRows);
 		setDisplayArrayForOrder(o, orders.size()-1);
 		AppState.setCheckBoxArray(checkBoxArray);
 		
 		addRowsToDisplay(oldNumRows);
-		addColumnValuesToDisplay(o);
+		addColumnValuesToDisplay(o, oldNumRows);
 		mainPanel.validate();
 	}
 
