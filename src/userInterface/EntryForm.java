@@ -7,6 +7,8 @@ import java.awt.Label;
 import java.awt.TextField;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,7 +29,7 @@ import userInterface.graphicComponents.PriceListener;
 import userInterface.graphicComponents.SaveOrderListener;
 import userInterface.graphicComponents.VPanel;
 
-public class EntryForm implements AppFunction {
+public class EntryForm implements SideFunction {
 	private ArrayList<Order> orders;
 	private FileBackup fb;
 	
@@ -64,25 +66,8 @@ public class EntryForm implements AppFunction {
 	public void showFunction() {
 		frame.setVisible(true);
 	}
-
-	@Override
-	public Container getMainContent() {
-		return mainPanel;
-	}
-
-	@Override
-	public void refresh() {
-		SwingUtilities.invokeLater(new Runnable() {
-	         public void run() {
-	     		orders = AppState.getOrders();
-	    		fb = AppState.getFileBackup();
-	    		mainPanel.removeAll();
-	    		initialize();
-		     }
-		});
-	}
 	
-	private void initialize() {
+	private void initialize() {		
 		addOrderDate();
 		addOrderCompany();
 		addPurchaseOrder();
@@ -206,9 +191,7 @@ public class EntryForm implements AppFunction {
 			}
 		}
 		Order newOrder = new Order(items, purchaseOrder.getText(), shipVia.getText(), DateImp.parseDate(date.getText()));
-		orders.add(newOrder);
-		AppState.setOrders(orders);
-		AppState.notifyListeners();
+		AppState.addOrder(newOrder);
 	}
 	
 	private Item getItemFromRow(JPanel row) { 
@@ -218,5 +201,29 @@ public class EntryForm implements AppFunction {
 				DateImp.parseDate(date.getText()), Float.parseFloat(((TextField)rowData[0]).getText()),
 				Float.parseFloat(((TextField)rowData[3]).getText()),
 				((TextField)rowData[1]).getText());
+	}
+
+	@Override
+	public void resetOrders(ArrayList<Order> ords) {
+		orders = ords;
+		SwingUtilities.invokeLater(new Runnable() {
+	         public void run() {
+	     		orders = AppState.getOrders();
+	    		fb = AppState.getFileBackup();
+	    		initialize();
+		     }
+		});
+	}
+
+	@Override
+	public void addOrder(Order o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeOrder(Order o) {
+		// TODO Auto-generated method stub
+		
 	} 
 }

@@ -27,10 +27,10 @@ public class RDFInterface implements UserInterface {
 	private final Dimension WINDOW_SIZE = new Dimension(1000,700);
 	private final Dimension HOME_SIZE = new Dimension(700,700);
 	private final Dimension FUNCTION_SIZE = new Dimension(300,700);
-	JPanel mainPanel;
-	JPanel functionPanel;
-	JPanel homePanel;
-	AppFunction homeFunction;
+	private JPanel mainPanel;
+	private JPanel functionPanel;
+	private JPanel homePanel;
+	private AppFunction homeFunction;
 	
 	public RDFInterface() {
 		fb = AppState.getFileBackup();
@@ -42,14 +42,15 @@ public class RDFInterface implements UserInterface {
 
 		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		mainPanel = new HPanel();
 		homePanel = new VPanel();
 		functionPanel = new VPanel();
 		Utilities.setMinMax(functionPanel, FUNCTION_SIZE);
-		mainPanel = new HPanel();
 		
 		JScrollPane scrollPane = new JScrollPane(homePanel);
+		JScrollPane funcScrollPane = new JScrollPane(functionPanel);
 		mainPanel.add(scrollPane);
-		mainPanel.add(functionPanel);
+		mainPanel.add(funcScrollPane);
 		
 		homeFrame.add(mainPanel);
 		homeFrame.setSize(WINDOW_SIZE);
@@ -61,28 +62,28 @@ public class RDFInterface implements UserInterface {
 	}
 	
 	@Override
-	public void addHomeFunction(AppFunction hf) {
+	public void addHomeFunction(HomeFunction hf) {
 		homeFunction = hf;
 		AppState.addListener(hf);
-		homePanel.add(hf.getMainContent(),0);
+		homePanel.add(hf.getMainContent());
 		Utilities.localHPack(homePanel);
 	}
 	
 	@Override
-	public void addFunction(AppFunction af, String btnName) {
+	public void addFunction(SideFunction af, String btnName) {
 		AppState.addListener(af);
 		JButton funcBtn = new JButton(btnName);
 		funcBtn.addActionListener(new FunctionListener(af));
 		
 		functionPanel.add(funcBtn);
 		functionPanel.add(Box.createRigidArea(new Dimension(1,10)));
-		Utilities.localVPack(functionPanel);   // todo this is not currently in a scrollpane...
+		Utilities.localVPack(functionPanel);  
 	}
 	
 	private class FunctionListener implements ActionListener {
-		AppFunction func;
+		SideFunction func;
 		
-		public FunctionListener(AppFunction af) {
+		public FunctionListener(SideFunction af) {
 			func = af;
 		}
 		

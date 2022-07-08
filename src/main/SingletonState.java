@@ -35,6 +35,20 @@ public class SingletonState {
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
+	
+	public void addOrder(Order o) {
+		orders.add(o);//		
+		for (int f = 0; f < functions.size(); f++) {
+			functions.get(f).addOrder(o);
+		}
+	}
+	
+	public void removeOrder(Order o) {
+		orders.remove(o);
+		for (int f = 0; f < functions.size(); f++) {
+			functions.get(f).removeOrder(o);
+		}
+	}
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
@@ -83,7 +97,7 @@ public class SingletonState {
 
 	public void notifyListeners() {
 		for (int f = 0; f < functions.size(); f++) {
-			functions.get(f).refresh();
+			functions.get(f).resetOrders(orders);
 		}
 	}
 }

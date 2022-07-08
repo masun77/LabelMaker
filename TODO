@@ -1,17 +1,17 @@
 Hours:
-2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 
+2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 
 
 TODO: 	
 
-Working on: 
-	encapsulating all variability: 
-		adding order entry
+- Make GUI beautiful and easy and clean - a gift to use
+	also, there are some weird glitches that happen when you try to do something more than once - order entry for example
+	I wonder if it's any faster to reset values than to create and remove things? or is the painting time the same?
+	make (some) sizes in relation to window
 	
 - abstract client/server and clarify file backup vs server stuff vs data parsing -
 	 some files you should be able to update from server,
 	but some, esp print config, should be computer specific
 	- then implement sending and fetching data from the server
-- Make GUI beautiful and easy and clean - a gift to use
 - indication - checks or colors or something - of picked, packed, labeled; and ability to set
 - Save orders from last week - clear visually when want to
 	

@@ -21,24 +21,25 @@ public class Application {
 		ui.addHomeFunction(new OrderDisplay());
 		ui.addFunction(new LabelViewerImp(), "View/Print Labels");
 		ui.addFunction(new EntryForm(), "New Order");
-		
-//			JButton updateButton = new JButton("Send Orders to Server");
-//			updateButton.addActionListener(new UpdateListener());
-//			Utilities.setMinMax(updateButton, BTN_SIZE);
-//			buttonPanel.add(updateButton);
-//			buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
-//			
-//			JButton getOrders = new JButton("Get Orders from Server");
-//			getOrders.addActionListener(new GetOrdersListener());
-//			Utilities.setMinMax(getOrders, BTN_SIZE);
-//			buttonPanel.add(getOrders);
-//			buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
 	}
 	
 	public void run() {		
 		ui.showInterface();		
 	}
 }
+
+
+//JButton updateButton = new JButton("Send Orders to Server");
+//updateButton.addActionListener(new UpdateListener());
+//Utilities.setMinMax(updateButton, BTN_SIZE);
+//buttonPanel.add(updateButton);
+//buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
+//
+//JButton getOrders = new JButton("Get Orders from Server");
+//getOrders.addActionListener(new GetOrdersListener());
+//Utilities.setMinMax(getOrders, BTN_SIZE);
+//buttonPanel.add(getOrders);
+//buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
 
 //private class UpdateListener implements ActionListener {	
 //	@Override

@@ -40,6 +40,14 @@ public class AppState {
 	public static void setOrders(ArrayList<Order> ords) {
 		singleton.setOrders(ords);
 	}
+	
+	public static void addOrder(Order o) {
+		singleton.addOrder(o);
+	}
+	
+	public static void removeOrder(Order o) {
+		singleton.removeOrder(o);
+	}
 
 	public static void setDataClient(DataClient dc) {
 		singleton.setDataClient(dc);

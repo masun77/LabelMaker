@@ -1,10 +1,10 @@
 package userInterface;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,11 +15,12 @@ import javax.swing.SwingUtilities;
 import labels.LabelableItem;
 import main.AppState;
 import main.Item;
+import main.Order;
 import printing.LabelPrinter;
 import userInterface.graphicComponents.PrintCheckBox;
 import userInterface.graphicComponents.VPanel;
 
-public class LabelViewerImp implements AppFunction {
+public class LabelViewerImp implements SideFunction {
 	private ArrayList<LabelableItem> items;
 	private LabelPrinter pm;
 	
@@ -37,16 +38,6 @@ public class LabelViewerImp implements AppFunction {
 	     		mainPanel.add(printButton);
 		     }
 		});
-	}
-
-	@Override
-	public Container getMainContent() {
-		return mainPanel;
-	}
-
-	@Override
-	public void refresh() {
-		// do nothing
 	}
 
 	@Override
@@ -99,5 +90,20 @@ public class LabelViewerImp implements AppFunction {
 			pm.printLabels(items);
 		}
 		
+	}
+
+	@Override
+	public void resetOrders(ArrayList<Order> ords) {
+		pm = AppState.getPrinter();
+	}
+
+	@Override
+	public void addOrder(Order o) {
+		// do nothing
+	}
+
+	@Override
+	public void removeOrder(Order o) {
+		// do nothing
 	}
 }
