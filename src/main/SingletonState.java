@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import export.DataClient;
 import export.FileBackup;
 import printing.LabelPrinter;
-import userInterface.AppFunction;
+import userInterface.AppListener;
 import userInterface.UserInterface;
 import userInterface.graphicComponents.PrintCheckBox;
 
 public class SingletonState {
-	private ArrayList<AppFunction> functions = new ArrayList<AppFunction>();
+	private AppListener lastListener;
+	private ArrayList<AppListener> functions = new ArrayList<AppListener>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private DataClient dataClient;
 	private FileBackup fileBackup;
@@ -24,11 +25,15 @@ public class SingletonState {
 		dataClient = dc;
 	}
 
-	public ArrayList<AppFunction> getFunctions() {
+	public ArrayList<AppListener> getFunctions() {
 		return functions;
 	}
+	
+	public void addLastListener(AppListener list) {
+		lastListener = list;
+	}
 
-	public void setFunctions(ArrayList<AppFunction> functions) {
+	public void setFunctions(ArrayList<AppListener> functions) {
 		this.functions = functions;
 	}
 
@@ -41,6 +46,7 @@ public class SingletonState {
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).addOrder(o);
 		}
+		lastListener.addOrder(o);
 	}
 	
 	public void removeOrder(Order o) {
@@ -48,6 +54,7 @@ public class SingletonState {
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).removeOrder(o);
 		}
+		lastListener.removeOrder(o);
 	}
 
 	public void setOrders(ArrayList<Order> orders) {
@@ -87,11 +94,11 @@ public class SingletonState {
 		this.checkBoxArray = checkBoxArray;
 	}
 
-	public void addListener(AppFunction listener) {
+	public void addListener(AppListener listener) {
 		functions.add(listener);
 	}
 	
-	public void removeListener(AppFunction listener) {
+	public void removeListener(AppListener listener) {
 		functions.remove(listener);
 	}
 
@@ -99,5 +106,6 @@ public class SingletonState {
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).resetOrders(orders);
 		}
+		lastListener.resetOrders(orders);
 	}
 }

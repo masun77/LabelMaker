@@ -179,6 +179,27 @@ public class EntryForm implements SideFunction {
 		totalLabel.setText("$" + Float.toString(total));
 	}
 	
+	private void resetFields() {
+		SwingUtilities.invokeLater(new Runnable() {
+	         public void run() {
+	        	 company.setText("");
+	        	 shipVia.setText("");
+	        	 purchaseOrder.setText("");
+	        	 date.setText("");
+	        	 resetItemPanel();
+		     }
+		});
+	}
+	
+	private void resetItemPanel() {
+		for (int i = 0; i < itemPanel.getComponentCount(); i++) {
+			JPanel panel = (JPanel) itemPanel.getComponent(i);
+			for (int j = 0; j < panel.getComponentCount(); j++) {
+				((TextField) panel.getComponent(j)).setText("");
+			}
+		}
+	}
+	
 	public void onSave() {
 		frame.setVisible(false);
 		ArrayList<LabelableItem> items = new ArrayList<LabelableItem>();
@@ -190,8 +211,10 @@ public class EntryForm implements SideFunction {
 				items.add(getItemFromRow(row));
 			}
 		}
-		Order newOrder = new Order(items, purchaseOrder.getText(), shipVia.getText(), DateImp.parseDate(date.getText()));
+		Order newOrder = new Order(company.getText(), items, purchaseOrder.getText(), 
+				shipVia.getText(), DateImp.parseDate(date.getText()));
 		AppState.addOrder(newOrder);
+		resetFields();
 	}
 	
 	private Item getItemFromRow(JPanel row) { 
@@ -217,13 +240,11 @@ public class EntryForm implements SideFunction {
 
 	@Override
 	public void addOrder(Order o) {
-		// TODO Auto-generated method stub
-		
+		// do nothing
 	}
 
 	@Override
 	public void removeOrder(Order o) {
-		// TODO Auto-generated method stub
-		
+		// do nothing
 	} 
 }

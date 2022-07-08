@@ -17,7 +17,7 @@ import main.Order;
 import userInterface.graphicComponents.HPanel;
 import userInterface.graphicComponents.VPanel;
 
-public class RDFInterface implements UserInterface {
+public class RDFInterface implements UserInterface, AppListener {
 	// Application variables
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private final FileBackup fb;
@@ -30,9 +30,10 @@ public class RDFInterface implements UserInterface {
 	private JPanel mainPanel;
 	private JPanel functionPanel;
 	private JPanel homePanel;
-	private AppFunction homeFunction;
+	private AppListener homeFunction;
 	
 	public RDFInterface() {
+		AppState.addLastListener(this);
 		fb = AppState.getFileBackup();
 		if (orders.size() == 0) {
 			orders = fb.readSavedOrders();
@@ -91,5 +92,20 @@ public class RDFInterface implements UserInterface {
 		public void actionPerformed(ActionEvent e) {
 			func.showFunction();
 		}
+	}
+
+	@Override
+	public void resetOrders(ArrayList<Order> ords) {
+		homeFrame.validate();
+	}
+
+	@Override
+	public void addOrder(Order o) {
+		homeFrame.validate();
+	}
+
+	@Override
+	public void removeOrder(Order o) {
+		homeFrame.validate();
 	}
  }

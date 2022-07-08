@@ -4,9 +4,8 @@ Hours:
 TODO: 	
 
 - Make GUI beautiful and easy and clean - a gift to use
-	also, there are some weird glitches that happen when you try to do something more than once - order entry for example
-	I wonder if it's any faster to reset values than to create and remove things? or is the painting time the same?
 	make (some) sizes in relation to window
+	test all things you could do x many times in a row
 	
 - abstract client/server and clarify file backup vs server stuff vs data parsing -
 	 some files you should be able to update from server,
@@ -15,7 +14,8 @@ TODO:
 - indication - checks or colors or something - of picked, packed, labeled; and ability to set
 - Save orders from last week - clear visually when want to
 	
-- write instructions for opeing |-separated file in excel, or make simpler somehow... 
+- write instructions for opening |-separated file in excel, or make simpler somehow...
+	and saving it in the same format 
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
@@ -34,22 +34,15 @@ implement http server idea from Nick
 implement database idea from Nick
 more than 20 items in an order - 
 edit existing orders
-autopopulation eg of company, item
-print from Mac
 ?include a lot # and/or pack date in the bar code
-error check invalid input - customers, products, invalid dates, gtins
 ck lot code with Jesse - I did YYMMDD. can change to whatever. 
-what do if company name is really long? do they only put in abbreviations? right now I have up to 24 characters, size-wise
 search for all todos, system printlns - 
-add warning popup before deleting order - 
 Import to quickbooks - 
 	select which orders to import - 
 	IIF file - 
 	how get invoice number? user enters? or auto on import? or?  
-better - non glitchy - implementation of scrollbar?
 ship date vs pack/pick date in item, order, display, csv
 if you edit the server data so that the order numbers are no longer in order/not sequential, error on reading in dataSaver
-SAve ip address in a config file so don't have to enter every time
 Get a new computer - solid state, Dell
 reset settings from config files while running? vs just closing and reopening the app?
 

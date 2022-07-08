@@ -1,5 +1,5 @@
 package userInterface;
 
-public interface SideFunction extends AppFunction {
+public interface SideFunction extends AppListener {
 	public void showFunction();
 }

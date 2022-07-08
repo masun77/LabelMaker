@@ -11,14 +11,6 @@ public class Order {
 	private String company = "";
 	private String PONum = "";
 	private String shipVia = "";
-	
-	public void setCompany(String company) {
-		this.company = company;
-	}
-
-	public void setShipDate(Date shipDate) {
-		this.shipDate = shipDate;
-	}
 
 	private Date shipDate = new DateImp();
 	
@@ -30,11 +22,20 @@ public class Order {
 		items = new ArrayList<LabelableItem>();
 	}
 	
-	public Order(ArrayList<LabelableItem> its, String po, String sv, Date d) {
+	public Order(String c, ArrayList<LabelableItem> its, String po, String sv, Date d) {
 		items = its;
 		PONum = po;
 		shipVia = sv;
 		shipDate = d;
+		company = c;
+	}
+	
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public void setShipDate(Date shipDate) {
+		this.shipDate = shipDate;
 	}
 	
 	public ArrayList<LabelableItem> getItems() {

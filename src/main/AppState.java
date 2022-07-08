@@ -8,7 +8,7 @@ import export.FileBackup;
 import export.SocketClient;
 import printing.LabelPrinter;
 import printing.PrintManager;
-import userInterface.AppFunction;
+import userInterface.AppListener;
 import userInterface.UserInterface;
 import userInterface.graphicComponents.PrintCheckBox;
 
@@ -61,19 +61,23 @@ public class AppState {
 		singleton.setFileBackup(f);
 	}
 
-	public static void addListener(AppFunction listener) {
+	public static void addListener(AppListener listener) {
 		singleton.addListener(listener);
 	}
+	
+	public static void addLastListener(AppListener listener) {
+		singleton.addLastListener(listener);
+	}
 
-	public static void removeListener(AppFunction listener) {
+	public static void removeListener(AppListener listener) {
 		singleton.removeListener(listener);
 	}
 
-	public static ArrayList<AppFunction> getFunctions() {
+	public static ArrayList<AppListener> getFunctions() {
 		return singleton.getFunctions();
 	}
 
-	public static void setFunctions(ArrayList<AppFunction> functions) {
+	public static void setFunctions(ArrayList<AppListener> functions) {
 		singleton.setFunctions(functions);
 	}
 

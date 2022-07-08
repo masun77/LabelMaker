@@ -220,6 +220,7 @@ public class OrderDisplay implements HomeFunction {
 		for (int i = 1; i  < end + 1; i++) {
 			HPanel row = (HPanel) mainPanel.getComponent(i);
 			addItemToRow(row, i - 1, orders.size() -1);
+			Utilities.localHPack(row);
 		}
 	}
 
@@ -252,13 +253,12 @@ public class OrderDisplay implements HomeFunction {
 		
 		addRowsToDisplay(oldNumRows);
 		addColumnValuesToDisplay(o, oldNumRows);
-		mainPanel.validate();
+		Utilities.localVPack(mainPanel);
 	}
 
 	@Override
 	public void removeOrder(Order o) {
-		// TODO Auto-generated method stub
-		
+		// do nothing - currently done only by the display itself...
 	}
 
 	@Override
