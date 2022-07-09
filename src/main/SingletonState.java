@@ -42,11 +42,12 @@ public class SingletonState {
 	}
 	
 	public void addOrder(Order o) {
-		orders.add(o);//		
+		orders.add(o);	
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).addOrder(o);
 		}
 		lastListener.addOrder(o);
+		fileBackup.saveOrders(orders);
 	}
 	
 	public void removeOrder(Order o) {
@@ -55,11 +56,13 @@ public class SingletonState {
 			functions.get(f).removeOrder(o);
 		}
 		lastListener.removeOrder(o);
+		fileBackup.saveOrders(orders);
 	}
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 		fileBackup.saveOrders(orders);
+		notifyListeners();
 	}
 
 	public DataClient getDataClient() {

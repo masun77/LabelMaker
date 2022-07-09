@@ -216,6 +216,7 @@ public class EntryForm implements SideFunction {
 		AppState.addOrder(newOrder);
 		orders = AppState.getOrders();
 		AppState.getDataClient().saveOrders(orders);
+		AppState.getFileBackup().saveOrders(orders);
 		resetFields();
 	}
 	
@@ -230,14 +231,7 @@ public class EntryForm implements SideFunction {
 
 	@Override
 	public void resetOrders(ArrayList<Order> ords) {
-		orders = ords;
-		SwingUtilities.invokeLater(new Runnable() {
-	         public void run() {
-	     		orders = AppState.getOrders();
-	    		fb = AppState.getFileBackup();
-	    		initialize();
-		     }
-		});
+		// do nothing
 	}
 
 	@Override

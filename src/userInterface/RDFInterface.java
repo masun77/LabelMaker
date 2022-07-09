@@ -38,7 +38,6 @@ public class RDFInterface implements UserInterface, AppListener {
 		if (orders.size() == 0) {
 			orders = fb.getOrders();
 			AppState.setOrders(orders);
-			AppState.notifyListeners();
 		}
 
 		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -2,10 +2,11 @@ Hours:
 2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 
 
 TODO: 	
+
+- yikes - someone needs to clean up that item data
+
+- add push from server on update
 	
-- implement local backup of data
-	implement sending and fetching data from server
-	implement server observable/updating listeners when updated
 - indication - checks or colors or something - of picked, packed, labeled; and ability to set
 - Save orders from last week - clear visually when want to
 	
@@ -29,8 +30,8 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
-implement http server idea from Nick 
-implement database idea from Nick
+implement better http server idea from Nick 
+implement better database idea from Nick
 more than 20 items in an order - 
 edit existing orders
 ?include a lot # and/or pack date in the bar code

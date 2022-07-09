@@ -1,2 +1,10 @@
-0|Alex|RDF 2|turst|05/01/2022|ARU3|00818181022175|Arugula| 3 lbs/cs|1.0|12.0
-0|Alex|RDF 2|turst|05/01/2022|GRG10|00818181022021|Green Garlic| 10 lbs/cs|2.0|90.0
+0|12345678|RDF 1|Veritable Vegetable|06/01/2022|WHSO10|00818181024520|White Spring Onions| 10 lbs/cs|2.0|45.0
+0|12345678|RDF 1|Veritable Vegetable|06/01/2022|LG10|00818181023585|Little Gem Lettuce| 10 lbs/cs|3.0|63.0
+0|12345678|RDF 1|Veritable Vegetable|06/01/2022|PTT25|00818181027514|Purple Top Turnips| 25 lbs/cs|2.0|25.0
+0|12345678|RDF 1|Veritable Vegetable|06/01/2022|CAR24|00818181020706|Carrots| 24 bu/cs|4.0|75.0
+1||RDF 2|TEsting|01/01/2022|GRG10|00818181022021|Green Garlic| 10 lbs/cs|3.0|90.0
+2|Alice|RDF 1|Chez Panisse|06/01/2022|GRG10|00818181022021|Green Garlic| 10 lbs/cs|3.0|90.0
+2|Alice|RDF 1|Chez Panisse|06/01/2022|LG10|00818181023585|Little Gem Lettuce| 10 lbs/cs|5.0|63.0
+2|Alice|RDF 1|Chez Panisse|06/01/2022|ARU3|00818181022175|Arugula| 3 lbs/cs|5.0|15.5
+3|||laptop|01/01/2022|LG10|00818181023585|Little Gem Lettuce| 10 lbs/cs|3.0|13.0
+4||RDF 2|Produce express|01/01/2022|AEFF||||10.0|10.0

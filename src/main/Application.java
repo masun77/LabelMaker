@@ -1,6 +1,7 @@
 package main;
 import java.util.ArrayList;
 
+import database.RefreshFunction;
 import database.SocketClient;
 import localBackup.DataSaver;
 import printing.PrintManager;
@@ -15,12 +16,13 @@ public class Application {
 	
 	public Application() {
 		AppState.initializeAppState(new ArrayList<Order>(), new DataSaver(), new PrintManager(),
-				new DataSaver());
+				new SocketClient());
 		
 		ui = new RDFInterface();
 		ui.addHomeFunction(new OrderDisplay());
 		ui.addFunction(new LabelViewerImp(), "View/Print Labels");
 		ui.addFunction(new EntryForm(), "New Order");
+		ui.addFunction(new RefreshFunction(), "Pull orders from server");
 	}
 	
 	public void run() {		
@@ -29,12 +31,6 @@ public class Application {
 }
 
 
-//JButton updateButton = new JButton("Send Orders to Server");
-//updateButton.addActionListener(new UpdateListener());
-//Utilities.setMinMax(updateButton, BTN_SIZE);
-//buttonPanel.add(updateButton);
-//buttonPanel.add(Box.createRigidArea(new Dimension(10,1)));
-//
 //JButton getOrders = new JButton("Get Orders from Server");
 //getOrders.addActionListener(new GetOrdersListener());
 //Utilities.setMinMax(getOrders, BTN_SIZE);
