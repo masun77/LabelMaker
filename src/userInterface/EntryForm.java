@@ -7,10 +7,10 @@ import java.awt.Label;
 import java.awt.TextField;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -37,7 +37,7 @@ public class EntryForm implements SideFunction {
 	private JFrame frame = new JFrame();
 	private JPanel mainPanel = new VPanel();
 	private JPanel itemPanel = new VPanel();
-	private Label totalLabel = new Label("$0");
+	private JLabel totalLabel = new JLabel("$0");
 	private TextField date = new TextField(10);
 	private TextField company = new TextField(30);
 	private TextField purchaseOrder = new TextField(15);
@@ -123,7 +123,7 @@ public class EntryForm implements SideFunction {
 		
 	private void addLabelComponentPair(String label, Component tf) {
 		JPanel panel = new HPanel();
-		Label labelComp = new Label(label);
+		JLabel labelComp = new JLabel(label);
 		Utilities.setMinMax(labelComp, LABEL_SIZE);
 		Utilities.setMinMax(tf, LABEL_SIZE);
 		panel.add(labelComp);
@@ -152,7 +152,7 @@ public class EntryForm implements SideFunction {
 	}
 	
 	private void addLabelOfSizeToPanel(String text, Dimension size, Container panel) {
-		Label l = new Label(text);
+		JLabel l = new JLabel(text);
 		Utilities.setMinMax(l, size);
 		panel.add(l);
 	}

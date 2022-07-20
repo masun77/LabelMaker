@@ -2,16 +2,9 @@ package userInterface;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import labels.LabelableItem;
@@ -30,7 +23,7 @@ public class OrderDisplay implements HomeFunction {
 	// Display variables
 	private JPanel mainPanel = new VPanel();
 	private JPanel headerRow = new HPanel();
-	private final Dimension NAME_SIZE = new Dimension(80,15);
+	private final Dimension NAME_SIZE = new Dimension(80,30);
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension TRASH_BTN_SIZE = new Dimension(20,15);
 	private final Dimension NUMBER_SIZE = new Dimension(110,15);
@@ -61,7 +54,7 @@ public class OrderDisplay implements HomeFunction {
 		headerRow = new HPanel();
 		ArrayList<String> companyNames = getCompanyNames();
 		if (companyNames.size() > 0) {
-			Label compLabel = new Label("Company:");
+			JLabel compLabel = new JLabel("Company:");
 			Utilities.setMinMax(compLabel, NAME_SIZE);
 			headerRow.add(compLabel);			
 		}
@@ -74,13 +67,13 @@ public class OrderDisplay implements HomeFunction {
 	}
 	
 	private void addCompanyToHeaderRow(String name, int n) {
-		Label nameLabel = new Label(name);
+		JLabel nameLabel = new JLabel(name); 
 		Utilities.setMinMax(nameLabel, NAME_SIZE);
 		CompanyCheckBox currCompany = new CompanyCheckBox(n);
 		headerRow.add(currCompany);
 		companyBoxes.add(currCompany);
 		headerRow.add(nameLabel);
-		Label spacer = new Label();
+		JLabel spacer = new JLabel();
 		Utilities.setMinMax(spacer, SPACE);
 		headerRow.add(spacer);
 	}
@@ -94,13 +87,12 @@ public class OrderDisplay implements HomeFunction {
 	}
 	
 	private String getCompanyNameDate(Order ord) {
-		int length = 7;
+		int length = 12;
 		String name = ord.getCompany();
 		if (name.length() > length) {
 			name = name.substring(0, length - 1) + "..";
 		}
-		name += ", ";
-		return name + ord.getShipDate().getMMDD();
+		return "<html>" +  name + "<br>" + ord.getShipDate().getMMDD() + "</html>";
 	}
 	
 	private void addRows() {
@@ -113,7 +105,7 @@ public class OrderDisplay implements HomeFunction {
 		for (int r = start; r < displayArray.size(); r++) {
 			ArrayList<Float> row = displayArray.get(r);
 			HPanel rowPanel = new HPanel();
-			Label prodName = new Label(prodNames.get(r));
+			JLabel prodName = new JLabel(prodNames.get(r));
 			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
 			ItemCheckBox itemBox = new ItemCheckBox(r);
 			rowPanel.add(itemBox);
@@ -130,7 +122,7 @@ public class OrderDisplay implements HomeFunction {
 	
 	private void addItemToRow(HPanel rowPanel, int rowNum, int orderNum) {
 		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getCheckBoxArray();
-		Label qtyLabel = new Label(Float.toString(displayArray.get(rowNum).get(orderNum)));
+		JLabel qtyLabel = new JLabel(Float.toString(displayArray.get(rowNum).get(orderNum)));
 		Utilities.setMinMax(qtyLabel, NUMBER_SIZE);
 		rowPanel.add(checkBoxArray.get(rowNum).get(orderNum));
 		rowPanel.add(qtyLabel);

@@ -22,6 +22,10 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+archive orders - put in separate file, save file backup, client/server, etc.... 
+	home button to archive, to view archived; there to unarchive selected, to delete archived orders etc
+	auto-archive when? maybe if today is a monday? archive last weeks and delete older? 
+don't close order entry on order save... - but not too slow... 
 better method for changing items - maybe do need to add/switch to an excel reader so can update from the excel spreadsheet?
 implement better http server idea from Nick 
 push from server to clients on update - does that mean client has to be running a 'server' program too? or does http take care of that?
