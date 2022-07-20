@@ -23,13 +23,14 @@ public class OrderDisplay implements HomeFunction {
 	// Display variables
 	private JPanel mainPanel = new VPanel();
 	private JPanel headerRow = new HPanel();
-	private final Dimension NAME_SIZE = new Dimension(80,30);
+	private final Dimension NAME_SIZE = new Dimension(140,30);
 	private final Dimension SPACE = new Dimension(10,15);
-	private final Dimension TRASH_BTN_SIZE = new Dimension(20,15);
-	private final Dimension NUMBER_SIZE = new Dimension(110,15);
-	private final Dimension ITEM_NAME_SIZE = new Dimension(100,15);
+	private final Dimension NUMBER_SIZE = new Dimension(150,30);
+	private final Dimension ITEM_NAME_SIZE = new Dimension(150,30);
+	private final Dimension HEADER_SIZE = new Dimension(165,15);
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
+	private ArrayList<String> itemCodes = new ArrayList<String>();
 	private ArrayList<ArrayList<Float>> displayArray = new ArrayList<ArrayList<Float>>();
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 	private ArrayList<CompanyCheckBox> companyBoxes;
@@ -53,11 +54,11 @@ public class OrderDisplay implements HomeFunction {
 	private void addCompanyNameRow() {
 		headerRow = new HPanel();
 		ArrayList<String> companyNames = getCompanyNames();
-		if (companyNames.size() > 0) {
-			JLabel compLabel = new JLabel("Company:");
-			Utilities.setMinMax(compLabel, NAME_SIZE);
-			headerRow.add(compLabel);			
-		}
+		
+		JLabel compLabel = new JLabel("          ORDERS");
+		Utilities.setMinMax(compLabel, HEADER_SIZE);
+		headerRow.add(compLabel);			
+		
 		for(int n = 0; n < companyNames.size(); n++) {
 			addCompanyToHeaderRow(companyNames.get(n), n);
 		}
@@ -105,7 +106,7 @@ public class OrderDisplay implements HomeFunction {
 		for (int r = start; r < displayArray.size(); r++) {
 			ArrayList<Float> row = displayArray.get(r);
 			HPanel rowPanel = new HPanel();
-			JLabel prodName = new JLabel(prodNames.get(r));
+			JLabel prodName = new JLabel("<html>" + prodNames.get(r) + "<br>" + itemCodes.get(r) +  "</html>");
 			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
 			ItemCheckBox itemBox = new ItemCheckBox(r);
 			rowPanel.add(itemBox);
@@ -131,6 +132,7 @@ public class OrderDisplay implements HomeFunction {
 	private void getDisplayArray() {
 		gtins = new ArrayList<String>();
 		prodNames = new ArrayList<String>();
+		itemCodes = new ArrayList<>();
 		displayArray = new ArrayList<ArrayList<Float>>();
 		checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 		
@@ -151,6 +153,7 @@ public class OrderDisplay implements HomeFunction {
 			if (index < 0) {
 				gtins.add(item.getGtin());
 				prodNames.add(item.getProductName());
+				itemCodes.add(item.getItemCode());
 				displayArray.add(createZeroArray(orders.size()));
 				checkBoxArray.add(createPrintCheckBoxes(orders.size()));
 			}

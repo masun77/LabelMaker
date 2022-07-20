@@ -9,18 +9,18 @@ import userInterface.SideFunction;
 public class RefreshFunction implements SideFunction {
 
 	@Override
-	public void resetOrders(ArrayList<Order> ords) {
-		AppState.getDataClient().saveOrders(ords);
+	public void resetOrders() {
+		// do nothing
 	}
 
 	@Override
 	public void addOrder(Order o) {
-		AppState.getDataClient().addOrder(o);
+		// do nothing
 	}
 
 	@Override
 	public void removeOrder(Order o) {
-		AppState.getDataClient().removeOrder(o);
+		// do nothing
 	}
 
 	@Override
