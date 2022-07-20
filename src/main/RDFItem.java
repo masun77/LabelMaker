@@ -69,6 +69,20 @@ public class RDFItem extends Item {
 			this.setMinimumSize(viewSize);
 			this.setPreferredSize(viewSize);
 			this.setSize(viewSize);
+			
+			checkItemData();
+		}
+		
+		private void checkItemData() {
+			if (productName.equals("")) {
+				productName = " ";
+			}
+			if (gtin.equals("")) {
+				gtin = "818181020000";
+			}
+			if (unit.equals("")) {
+				unit = " ";
+			}
 		}
 		
 		@Override

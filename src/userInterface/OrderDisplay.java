@@ -78,7 +78,6 @@ public class OrderDisplay implements HomeFunction {
 		headerRow.add(currCompany);
 		companyBoxes.add(currCompany);
 		headerRow.add(nameLabel);
-		headerRow.add(new TrashButton(n));
 		Label spacer = new Label();
 		Utilities.setMinMax(spacer, SPACE);
 		headerRow.add(spacer);
@@ -189,36 +188,6 @@ public class OrderDisplay implements HomeFunction {
 			arr.add(new PrintCheckBox());
 		}
 		return arr;
-	}
-
-	private class TrashButton extends JButton {
-		private int index = 0;
-		
-		public TrashButton(int indx) {
-			index = indx;
-			ImageIcon imic = new ImageIcon("resources/trashBin.png");
-			Image img = imic.getImage() ;  
-			Image newimg = img.getScaledInstance( (int) TRASH_BTN_SIZE.getWidth(), (int) TRASH_BTN_SIZE.getHeight(),  java.awt.Image.SCALE_SMOOTH ) ;  
-			imic = new ImageIcon( newimg );
-			setIcon(imic);
-			Utilities.setMinMax(this, TRASH_BTN_SIZE);
-			addActionListener(new TrashButtonListener(index));
-		}
-	}
-	
-	private class TrashButtonListener implements ActionListener {
-		private int index = 0;
-		
-		public TrashButtonListener(int i) {
-			index = i;
-		}		
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			orders.remove(index);
-			AppState.setOrders(orders);
-			AppState.getDataClient().saveOrders(orders);
-		}
 	}
 	
 	private void addColumnValuesToDisplay(Order o, int end) {
