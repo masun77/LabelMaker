@@ -25,12 +25,10 @@ public class RDFInterface implements UserInterface, AppListener {
 	// Display variables
 	private JFrame homeFrame = new JFrame("Label Program");
 	private final Dimension WINDOW_SIZE = new Dimension(1000,700);
-	private final Dimension HOME_SIZE = new Dimension(700,700);
 	private final Dimension FUNCTION_SIZE = new Dimension(300,700);
 	private JPanel mainPanel;
 	private JPanel functionPanel;
 	private JPanel homePanel;
-	private AppListener homeFunction;
 	
 	public RDFInterface() {
 		AppState.addLastListener(this);
@@ -63,7 +61,6 @@ public class RDFInterface implements UserInterface, AppListener {
 	
 	@Override
 	public void addHomeFunction(HomeFunction hf) {
-		homeFunction = hf;
 		AppState.addListener(hf);
 		homePanel.add(hf.getMainContent());
 		Utilities.localHPack(homePanel);

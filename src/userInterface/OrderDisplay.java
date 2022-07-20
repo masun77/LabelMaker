@@ -38,7 +38,8 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 	private ArrayList<ArrayList<Float>> displayArray = new ArrayList<ArrayList<Float>>();
-	ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
+	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
+	private ArrayList<CompanyCheckBox> companyBoxes;
 
 	public OrderDisplay() {
 		orders = AppState.getOrders();
@@ -47,6 +48,7 @@ public class OrderDisplay implements HomeFunction {
 	}
 	
 	private void addOrderArray() {
+		companyBoxes = new ArrayList<>();
 		addCompanyNameRow();
 		addRows();
 		Utilities.localVPack(mainPanel);
@@ -64,6 +66,7 @@ public class OrderDisplay implements HomeFunction {
 		for(int n = 0; n < companyNames.size(); n++) {
 			addCompanyToHeaderRow(companyNames.get(n), n);
 		}
+		AppState.setCompanyBoxArray(companyBoxes);
 		Utilities.localHPack(headerRow);
 		mainPanel.add(headerRow);
 	}
@@ -71,7 +74,9 @@ public class OrderDisplay implements HomeFunction {
 	private void addCompanyToHeaderRow(String name, int n) {
 		Label nameLabel = new Label(name);
 		Utilities.setMinMax(nameLabel, NAME_SIZE);
-		headerRow.add(new CompanyCheckBox(n));
+		CompanyCheckBox currCompany = new CompanyCheckBox(n);
+		headerRow.add(currCompany);
+		companyBoxes.add(currCompany);
 		headerRow.add(nameLabel);
 		headerRow.add(new TrashButton(n));
 		Label spacer = new Label();

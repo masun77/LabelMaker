@@ -3,19 +3,12 @@ Hours:
 
 TODO: 	
 
-- yikes - someone needs to clean up that item data
-
-- add push from server on update
 	
-- indication - checks or colors or something - of picked, packed, labeled; and ability to set
-- Save orders from last week - clear visually when want to
-	
-- write instructions for opening |-separated file in excel, or make simpler somehow...
-	and saving it in the same format 
-
 - Make GUI beautiful and easy and clean - a gift to use
 	make (some) sizes in relation to window
 	test all things you could do x many times in a row
+	company name, date on next row
+	item name larger space
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
@@ -30,7 +23,10 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+better method for changing items - maybe do need to add/switch to an excel reader so can update from the excel spreadsheet?
 implement better http server idea from Nick 
+push from server to clients on update - does that mean client has to be running a 'server' program too? or does http take care of that?
+- indication - checks or colors or something - of picked, packed, labeled; and ability to set
 implement better database idea from Nick
 more than 20 items in an order - 
 edit existing orders
@@ -45,7 +41,7 @@ ship date vs pack/pick date in item, order, display, csv
 if you edit the server data so that the order numbers are no longer in order/not sequential, error on reading in dataSaver
 Get a new computer - solid state, Dell
 reset settings from config files while running? vs just closing and reopening the app?
-
+add missing items? eg meats
 
 DONE:
 Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 

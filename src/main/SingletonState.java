@@ -7,6 +7,7 @@ import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
 import userInterface.AppListener;
 import userInterface.UserInterface;
+import userInterface.graphicComponents.CompanyCheckBox;
 import userInterface.graphicComponents.PrintCheckBox;
 
 public class SingletonState {
@@ -17,6 +18,7 @@ public class SingletonState {
 	private LocalFileBackup fileBackup;
 	private LabelPrinter printer;
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
+	private ArrayList<CompanyCheckBox> companyBoxes = new ArrayList<>();
 
 	public SingletonState(ArrayList<Order> ords, LocalFileBackup f, LabelPrinter lp, DataClient dc) {
 		orders = ords;
@@ -96,7 +98,15 @@ public class SingletonState {
 	public void setCheckBoxArray(ArrayList<ArrayList<PrintCheckBox>> checkBoxArray) {
 		this.checkBoxArray = checkBoxArray;
 	}
+	
+	public void setCompanyBoxArray(ArrayList<CompanyCheckBox> boxes) {
+		companyBoxes = boxes;
+	}
 
+	public ArrayList<CompanyCheckBox> getCompanyArray() {
+		return companyBoxes;
+	}
+	
 	public void addListener(AppListener listener) {
 		functions.add(listener);
 	}

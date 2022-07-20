@@ -7,6 +7,7 @@ import localBackup.DataSaver;
 import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
 import userInterface.AppListener;
+import userInterface.graphicComponents.CompanyCheckBox;
 import userInterface.graphicComponents.PrintCheckBox;
 
 public class AppState {
@@ -88,6 +89,14 @@ public class AppState {
 
 	public static void setCheckBoxArray(ArrayList<ArrayList<PrintCheckBox>> pcb) {
 		singleton.setCheckBoxArray(pcb);
+	}
+	
+	public static void setCompanyBoxArray(ArrayList<CompanyCheckBox> boxes) {
+		singleton.setCompanyBoxArray(boxes);
+	}
+	
+	public static ArrayList<CompanyCheckBox> getCompanyArray() {
+		return singleton.getCompanyArray();
 	}
 
 }
