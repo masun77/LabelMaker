@@ -11,7 +11,7 @@ import userInterface.graphicComponents.PrintCheckBox;
 public class DeselectAllFunction implements SideFunction {
 
 	@Override
-	public void resetOrders(ArrayList<Order> ords) {
+	public void resetOrders() {
 		// do nothing
 	}
 

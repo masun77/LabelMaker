@@ -93,7 +93,7 @@ public class LabelViewerImp implements SideFunction {
 	}
 
 	@Override
-	public void resetOrders(ArrayList<Order> ords) {
+	public void resetOrders() {
 		pm = AppState.getPrinter();
 	}
 

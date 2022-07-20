@@ -91,7 +91,7 @@ public class RDFInterface implements UserInterface, AppListener {
 	}
 
 	@Override
-	public void resetOrders(ArrayList<Order> ords) {
+	public void resetOrders() {
 		homeFrame.validate();
 	}
 

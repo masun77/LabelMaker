@@ -127,8 +127,8 @@ public class SingletonState {
 
 	public void notifyListeners() {
 		for (int f = 0; f < functions.size(); f++) {
-			functions.get(f).resetOrders(orders);
+			functions.get(f).resetOrders();
 		}
-		lastListener.resetOrders(orders);
+		lastListener.resetOrders();
 	}
 }

@@ -9,7 +9,7 @@ import userInterface.graphicComponents.CompanyCheckBox;
 public class DeleteOrderFunction implements SideFunction {
 
 	@Override
-	public void resetOrders(ArrayList<Order> ords) {
+	public void resetOrders() {
 		// do nothing
 	}
 

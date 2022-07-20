@@ -43,6 +43,8 @@ public class EntryForm implements SideFunction {
 	private TextField purchaseOrder = new TextField(15);
 	private TextField shipVia = new TextField(15);
 	private ArrayList<TextField> amounts = new ArrayList<TextField>();
+	private boolean editingOrder = false;
+	private Order editOrder = null;
 	
 	// Constants
 	private final int NUM_ITEMS = 20;
@@ -60,6 +62,28 @@ public class EntryForm implements SideFunction {
 		frame.setSize(new Dimension(700,700));
 
 		initialize();
+	}
+	
+	public void setEditingOrder(boolean b, Order order) {
+		editingOrder = b;
+		editOrder = order;
+		date.setText(order.getShipDate().getDateMMDDYYYY());
+		company.setText(order.getCompany());
+		purchaseOrder.setText(order.getPONum());
+		shipVia.setText(order.getShipVia());
+		ArrayList<LabelableItem> items = order.getItems();
+		for (int i = 0; i < items.size(); i++) {
+			LabelableItem currItem = items.get(i);
+			HPanel row =(HPanel) itemPanel.getComponent(i);
+			float qty = currItem.getQuantity();
+			float price = currItem.getPrice();
+			((TextField) row.getComponent(0)).setText(Float.toString(qty));
+			((TextField) row.getComponent(1)).setText(currItem.getItemCode());
+			((TextField) row.getComponent(2)).setText(fb.getItemDescription(currItem.getItemCode()));
+			((TextField) row.getComponent(3)).setText(Float.toString(price));
+			amounts.get(i).setText(Float.toString(price * qty));
+		}
+		updateTotal();			
 	}
 
 	@Override
@@ -213,6 +237,9 @@ public class EntryForm implements SideFunction {
 		}
 		Order newOrder = new Order(company.getText(), items, purchaseOrder.getText(), 
 				shipVia.getText(), DateImp.parseDate(date.getText()));
+		if (editingOrder) {
+			AppState.removeOrder(editOrder);
+		}
 		AppState.addOrder(newOrder);
 		orders = AppState.getOrders();
 		AppState.getDataClient().saveOrders(orders);
@@ -230,7 +257,7 @@ public class EntryForm implements SideFunction {
 	}
 
 	@Override
-	public void resetOrders(ArrayList<Order> ords) {
+	public void resetOrders() {
 		// do nothing
 	}
 

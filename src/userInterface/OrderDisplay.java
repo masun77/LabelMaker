@@ -211,7 +211,7 @@ public class OrderDisplay implements HomeFunction {
 	}
 	
 	@Override
-	public void resetOrders(ArrayList<Order> ords) {
+	public void resetOrders() {
 		mainPanel.removeAll();
 		orders = AppState.getOrders();
 		addOrderArray();
@@ -237,7 +237,7 @@ public class OrderDisplay implements HomeFunction {
 
 	@Override
 	public void removeOrder(Order o) {
-		// do nothing - currently done only by the display itself...
+		resetOrders();
 	}
 
 	@Override
