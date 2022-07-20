@@ -40,6 +40,7 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<ArrayList<Float>> displayArray = new ArrayList<ArrayList<Float>>();
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 	private ArrayList<CompanyCheckBox> companyBoxes;
+	private ArrayList<ItemCheckBox> itemBoxes;
 
 	public OrderDisplay() {
 		orders = AppState.getOrders();
@@ -49,6 +50,7 @@ public class OrderDisplay implements HomeFunction {
 	
 	private void addOrderArray() {
 		companyBoxes = new ArrayList<>();
+		itemBoxes = new ArrayList<>();
 		addCompanyNameRow();
 		addRows();
 		Utilities.localVPack(mainPanel);
@@ -113,7 +115,9 @@ public class OrderDisplay implements HomeFunction {
 			HPanel rowPanel = new HPanel();
 			Label prodName = new Label(prodNames.get(r));
 			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
-			rowPanel.add(new ItemCheckBox(r));
+			ItemCheckBox itemBox = new ItemCheckBox(r);
+			rowPanel.add(itemBox);
+			itemBoxes.add(itemBox);
 			rowPanel.add(prodName);
 			for (int orderNum = 0; orderNum < row.size(); orderNum++) {
 				addItemToRow(rowPanel, r, orderNum);
@@ -121,6 +125,7 @@ public class OrderDisplay implements HomeFunction {
 			Utilities.localHPack(rowPanel);
 			mainPanel.add(rowPanel);
 		}
+		AppState.setItemArray(itemBoxes);
 	}
 	
 	private void addItemToRow(HPanel rowPanel, int rowNum, int orderNum) {

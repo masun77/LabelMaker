@@ -8,6 +8,7 @@ import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
 import userInterface.AppListener;
 import userInterface.graphicComponents.CompanyCheckBox;
+import userInterface.graphicComponents.ItemCheckBox;
 import userInterface.graphicComponents.PrintCheckBox;
 
 public class AppState {
@@ -97,6 +98,14 @@ public class AppState {
 	
 	public static ArrayList<CompanyCheckBox> getCompanyArray() {
 		return singleton.getCompanyArray();
+	}
+	
+	public static void setItemArray(ArrayList<ItemCheckBox> boxes) {
+		singleton.setItemArray(boxes);
+	}
+	
+	public static ArrayList<ItemCheckBox> getItemArray() {
+		return singleton.getItemArray();
 	}
 
 }
