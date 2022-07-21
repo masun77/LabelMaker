@@ -1,5 +1,4 @@
 Item Code|Description|GTIN|Display Name|Unit
-TEST||||
 ASP11|Asparagus 11 lbs/cs|818181020003|Asparagus| 11 lbs/cs
 ASP28|Asparagus 28 bu/cs|818181020010|Asparagus| 28 bu/cs
 ASPT|Asparagus Tips 15 lbs|818181020027|Asparagus Tips| 15 lbs
@@ -806,3 +805,4 @@ SPP40|Sugar Pie Pumpkins 40 lbs/cs|818181028603|Sugar Pie Pumpkins| 40 lbs/cs
 SPP550|Sugar Pie Pumpkins 550 lbs/bin|818181028610|Sugar Pie Pumpkins| 550 lbs/bin
 SPP650|Sugar Pie Pumpkins 650 lbs/bin|818181028627|Sugar Pie Pumpkins| 650 lbs/bin
 SPPUNIT|Sugar Pie Pumpkins by the piece|818181028634|Sugar Pie Pumpkins| by the piece
+AEGG|Eggs, assorted sizes||Eggs|dozen

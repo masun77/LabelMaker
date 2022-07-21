@@ -3,9 +3,7 @@ Hours:
 
 TODO: 	
 
-- Make GUI beautiful and easy and clean - a gift to use
-	make (some) sizes in relation to window
-	test all things you could do x many times in a row
+
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
@@ -20,6 +18,8 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+Make GUI beautiful and easy and clean - a gift to use
+	make (some) sizes in relation to window
 archive orders - put in separate file, save file backup, client/server, etc.... 
 	home button to archive, to view archived; there to unarchive selected, to delete archived orders etc
 	auto-archive when? maybe if today is a monday? archive last weeks and delete older? 
@@ -43,6 +43,8 @@ if you edit the server data so that the order numbers are no longer in order/not
 Get a new computer - solid state, Dell
 reset settings from config files while running? vs just closing and reopening the app?
 add missing items? eg meats
+alphabetize items on insertion
+alphabetize orders on insertion
 
 DONE:
 Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 

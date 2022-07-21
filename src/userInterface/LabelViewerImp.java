@@ -71,8 +71,8 @@ public class LabelViewerImp implements SideFunction {
 
 		if (checkBoxArray.size() > 0) {
 			int cols = checkBoxArray.get(0).size();
-			for (int row = 0; row < checkBoxArray.size(); row++) {
-				for (int col = 0; col < cols; col++) {
+			for (int col = 0; col < checkBoxArray.get(0).size(); col++) {
+				for (int row = 0; row < checkBoxArray.size(); row++) {
 					PrintCheckBox check = checkBoxArray.get(row).get(col);
 					if (check.isSelected()) {
 						items.add(check.getItem());

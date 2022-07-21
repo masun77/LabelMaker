@@ -228,6 +228,8 @@ public class OrderDisplay implements HomeFunction {
 		addRowsToDisplay(oldNumRows);
 		addColumnValuesToDisplay(o, oldNumRows);
 		Utilities.localVPack(mainPanel);
+
+		
 	}
 
 	@Override

@@ -50,7 +50,9 @@ public class SingletonState {
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).addOrder(o);
 		}
-		lastListener.addOrder(o);
+		if (lastListener != null) {
+			lastListener.addOrder(o);
+		}
 		fileBackup.saveOrders(orders);
 	}
 	
@@ -59,7 +61,9 @@ public class SingletonState {
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).removeOrder(o);
 		}
-		lastListener.removeOrder(o);
+		if (lastListener != null) {
+			lastListener.removeOrder(o);
+		}
 		fileBackup.saveOrders(orders);
 	}
 
@@ -129,6 +133,8 @@ public class SingletonState {
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).resetOrders();
 		}
-		lastListener.resetOrders();
+		if (lastListener != null) {
+			lastListener.resetOrders();
+		}
 	}
 }

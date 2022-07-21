@@ -24,13 +24,16 @@ public class Application {
 		
 		ui = new RDFInterface();
 		ui.addHomeFunction(new OrderDisplay());
-		ui.addFunction(new EntryForm(), "New Order");
-		ui.addFunction(new LabelViewerImp(), "View/Print Labels for selected");
-		ui.addFunction(new RefreshFunction(), "Pull orders from server");
-		ui.addFunction(new EditOrderFunction(), "Edit Selected Order");
-		ui.addFunction(new DeleteOrderFunction(), "Delete selected orders");
 		ui.addFunction(new SelectAllFunction(), "Select All Orders");
 		ui.addFunction(new DeselectAllFunction(), "Deselect All Orders");
+		ui.addBreakBetweenFunctions();
+		ui.addFunction(new LabelViewerImp(), "View/Print Labels for selected");
+		ui.addBreakBetweenFunctions();
+		ui.addFunction(new EntryForm(), "New Order");
+		ui.addFunction(new EditOrderFunction(), "Edit Selected Order");
+		ui.addFunction(new DeleteOrderFunction(), "Delete selected orders");
+		ui.addBreakBetweenFunctions();
+		ui.addFunction(new RefreshFunction(), "Update orders from server");
 	}
 	
 	public void run() {		

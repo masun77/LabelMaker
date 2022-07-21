@@ -25,13 +25,14 @@ public class RDFInterface implements UserInterface, AppListener {
 	// Display variables
 	private JFrame homeFrame = new JFrame("Label Program");
 	private final Dimension WINDOW_SIZE = new Dimension(1000,700);
-	private final Dimension FUNCTION_SIZE = new Dimension(300,700);
+	private final Dimension FUNCTION_SIZE = new Dimension(220,700);
 	private JPanel mainPanel;
 	private JPanel functionPanel;
 	private JPanel homePanel;
+	private JScrollPane homeScrollPane;
+	private HomeFunction homeFunction;
 	
 	public RDFInterface() {
-		AppState.addLastListener(this);
 		fb = AppState.getFileBackup();
 		if (orders.size() == 0) {
 			orders = fb.getOrders();
@@ -43,15 +44,24 @@ public class RDFInterface implements UserInterface, AppListener {
 		mainPanel = new HPanel();
 		homePanel = new VPanel();
 		functionPanel = new VPanel();
-		Utilities.setMinMax(functionPanel, FUNCTION_SIZE);
 		
-		JScrollPane scrollPane = new JScrollPane(homePanel);
+		homeScrollPane = new JScrollPane(homePanel);
 		JScrollPane funcScrollPane = new JScrollPane(functionPanel);
-		mainPanel.add(scrollPane);
+		Utilities.setMinMax(funcScrollPane, FUNCTION_SIZE);
+		mainPanel.add(homeScrollPane);
 		mainPanel.add(funcScrollPane);
 		
 		homeFrame.add(mainPanel);
 		homeFrame.setSize(WINDOW_SIZE);
+		
+		AppState.addLastListener(this);
+	}
+	
+	private void updateHomePanel() {
+		
+		mainPanel.remove(0);
+		homeScrollPane = new JScrollPane(homeFunction.getMainContent());
+		mainPanel.add(homeScrollPane, 0);
 	}
 	
 	@Override
@@ -61,9 +71,15 @@ public class RDFInterface implements UserInterface, AppListener {
 	
 	@Override
 	public void addHomeFunction(HomeFunction hf) {
+		homeFunction = hf;
 		AppState.addListener(hf);
 		homePanel.add(hf.getMainContent());
 		Utilities.localHPack(homePanel);
+	}
+	
+	@Override
+	public void addBreakBetweenFunctions() {
+		functionPanel.add(Box.createRigidArea(new Dimension(1,30)));
 	}
 	
 	@Override
@@ -92,11 +108,13 @@ public class RDFInterface implements UserInterface, AppListener {
 
 	@Override
 	public void resetOrders() {
+		updateHomePanel();
 		homeFrame.validate();
 	}
 
 	@Override
 	public void addOrder(Order o) {
+		updateHomePanel();
 		homeFrame.validate();
 	}
 
