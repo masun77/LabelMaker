@@ -18,6 +18,7 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+why does PTT25 scan wrong?
 Make GUI beautiful and easy and clean - a gift to use
 	make (some) sizes in relation to window
 archive orders - put in separate file, save file backup, client/server, etc.... 
@@ -45,6 +46,8 @@ reset settings from config files while running? vs just closing and reopening th
 add missing items? eg meats
 alphabetize items on insertion
 alphabetize orders on insertion
+freeze header row and column
+larger VP code
 
 DONE:
 Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 

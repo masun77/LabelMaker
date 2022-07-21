@@ -47,14 +47,15 @@ public class EntryForm implements SideFunction {
 	private Order editOrder = null;
 	
 	// Constants
-	private final int NUM_ITEMS = 20;
-	private final Dimension LABEL_SIZE = new Dimension(100,15);
-	private final Dimension QTY_SIZE = new Dimension(30,15);
-	private final Dimension CODE_SIZE = new Dimension(80,15);
-	private final Dimension DESCRIP_SIZE = new Dimension(200,15);
-	private final Dimension PRICE_SIZE = new Dimension(40,15);
-	private final Dimension AMOUNT_SIZE = new Dimension(60,15);
-	private final Dimension BUTTON_SIZE = new Dimension(150,50);
+	private final int NUM_ITEMS = 25;
+	private final int ROW_HEIGHT = 20;
+	private final Dimension LABEL_SIZE = new Dimension(100,ROW_HEIGHT);
+	private final Dimension QTY_SIZE = new Dimension(30,ROW_HEIGHT);
+	private final Dimension CODE_SIZE = new Dimension(80,ROW_HEIGHT);
+	private final Dimension DESCRIP_SIZE = new Dimension(200,ROW_HEIGHT);
+	private final Dimension PRICE_SIZE = new Dimension(40,ROW_HEIGHT);
+	private final Dimension AMOUNT_SIZE = new Dimension(60,ROW_HEIGHT);
+	private final Dimension BUTTON_SIZE = new Dimension(150,30);
 
 	public EntryForm() {
 		orders = AppState.getOrders();
@@ -242,7 +243,6 @@ public class EntryForm implements SideFunction {
 		}
 		AppState.addOrder(newOrder);
 		orders = AppState.getOrders();
-		AppState.getDataClient().saveOrders(orders);
 		AppState.getFileBackup().saveOrders(orders);
 		resetFields();
 	}

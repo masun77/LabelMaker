@@ -54,6 +54,7 @@ public class SingletonState {
 			lastListener.addOrder(o);
 		}
 		fileBackup.saveOrders(orders);
+		dataClient.saveOrders(orders);
 	}
 	
 	public void removeOrder(Order o) {
@@ -65,12 +66,14 @@ public class SingletonState {
 			lastListener.removeOrder(o);
 		}
 		fileBackup.saveOrders(orders);
+		dataClient.saveOrders(orders);
 	}
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
 		fileBackup.saveOrders(orders);
 		notifyListeners();
+		dataClient.saveOrders(orders);
 	}
 
 	public DataClient getDataClient() {

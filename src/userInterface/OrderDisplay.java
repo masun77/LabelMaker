@@ -27,7 +27,7 @@ public class OrderDisplay implements HomeFunction {
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension NUMBER_SIZE = new Dimension(150,30);
 	private final Dimension ITEM_NAME_SIZE = new Dimension(150,30);
-	private final Dimension HEADER_SIZE = new Dimension(165,15);
+	private final Dimension HEADER_SIZE = new Dimension(165,30);
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 	private ArrayList<String> itemCodes = new ArrayList<String>();

@@ -11,7 +11,7 @@ import main.AppState;
 import userInterface.Utilities;
 
 public class ItemCheckBox extends JCheckBox {
-	private final Dimension CHECK_SIZE = new Dimension(15,15);
+	private final Dimension CHECK_SIZE = new Dimension(25,25);
 	
 	public ItemCheckBox(int row) {
 		addItemListener(new ItemCheckListener(row, this));

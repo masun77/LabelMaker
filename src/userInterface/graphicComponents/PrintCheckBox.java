@@ -9,7 +9,7 @@ import userInterface.Utilities;
 
 public class PrintCheckBox extends JCheckBox {
 	LabelableItem item;
-	private final Dimension CHECK_SIZE = new Dimension(15,15);
+	private final Dimension CHECK_SIZE = new Dimension(25,25);
 	
 	public PrintCheckBox() {
 		item = null;

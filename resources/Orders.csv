@@ -1,13 +1,8 @@
-0|||Maya|01/01/2022|GRG10|818181022021|Green Garlic| 10 lbs/cs|3.0|100.0
-1|123456|RDF 2|Veritable Vegetable|07/22/2022|GRG10|818181022021|Green Garlic| 10 lbs/cs|10.0|90.0
-1|123456|RDF 2|Veritable Vegetable|07/22/2022|WHSO10|818181024520|White Spring Onions| 10 lbs/cs|3.0|10.0
-1|123456|RDF 2|Veritable Vegetable|07/22/2022|ARU3|818181022175|Arugula| 3 lbs/cs|3.0|15.5
-2|John|RDF 2|Produce Express|07/23/2022|CAR25|818181020713|Loose Carrots| 25 lbs/bag|10.0|75.0
-2|John|RDF 2|Produce Express|07/23/2022|B10|818181020096|Blue Lake Green Beans| 10 lbs/cs|3.0|13.0
-3|||AHa!|07/22/2022|GRG10|818181022021|Green Garlic| 10 lbs/cs|10.0|90.0
-3|||AHa!|07/22/2022|LG10|818181023585|Little Gem Lettuce| 10 lbs/cs|3.0|13.0
-3|||AHa!|07/22/2022|B20|818181020102|Blue Lake Green Beans| 20 lbs/cs|3.0|13.0
-4|||Chez Panisse|07/22/2022|AEGG|818181020000|Eggs|dozen|1.0|12.0
-5|1234|RDF 1|Good Egg|07/22/2022|ARU3|818181022175|Arugula| 3 lbs/cs|2.0|15.0
-5|1234|RDF 1|Good Egg|07/22/2022|PTT25|818181027514|Purple Top Turnips| 25 lbs/cs|3.0|70.0
-5|1234|RDF 1|Good Egg|07/22/2022|GRG10|818181022021|Green Garlic| 10 lbs/cs|5.0|90.0
+0|||Chez Panisse|07/22/2022|AEGG|818181020000|Eggs|dozen|1.0|12.0
+1|||Tester|01/01/2022|LG10|818181023585|Little Gem Lettuce| 10 lbs/cs|3.0|12.0
+2||RDF 2|Maya|07/22/2022|LG10|818181023585|Little Gem Lettuce| 10 lbs/cs|2.0|22.0
+2||RDF 2|Maya|07/22/2022|B10|818181020096|Blue Lake Green Beans| 10 lbs/cs|3.0|3.0
+2||RDF 2|Maya|07/22/2022|WHSO10|818181024520|White Spring Onions| 10 lbs/cs|4.0|45.0
+3|||Marshall|04/20/2022|WHSO10|818181024520|White Spring Onions| 10 lbs/cs|1.0|33.0
+4|||Martin|01/01/2022|CAR24|818181020706|Carrots| 24 bu/cs|1.0|70.0
+5|||Ha!|01/01/2022|AEGG||Eggs|dozen|2.0|12.0

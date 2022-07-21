@@ -12,7 +12,7 @@ import userInterface.Utilities;
 
 public class CompanyCheckBox extends JCheckBox {
 	private int orderNum;
-	private final Dimension CHECK_SIZE = new Dimension(15,15);
+	private final Dimension CHECK_SIZE = new Dimension(25,25);
 	
 	public CompanyCheckBox(int o) {
 		orderNum = o;

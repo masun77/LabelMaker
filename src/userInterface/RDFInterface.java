@@ -77,7 +77,6 @@ public class RDFInterface implements UserInterface, AppListener {
 		Utilities.localHPack(homePanel);
 	}
 	
-	@Override
 	public void addBreakBetweenFunctions() {
 		functionPanel.add(Box.createRigidArea(new Dimension(1,30)));
 	}
