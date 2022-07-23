@@ -3,6 +3,13 @@ Hours:
 
 TODO: 	
 
+- export from QB -> read into label program!
+- label updates from Tim, Christina
+- show PO in top company label
+- is scanning affected by that missing line?
+- ability to add note to label, eg ATTN
+- select date range for order display
+- show product, unit/code in next column, total num of units on left with that, then each order
 
 
 Maintainability - 
