@@ -74,6 +74,9 @@ public class RDFItem extends Item {
 		}
 		
 		private void checkItemData() {
+			if (customer.equals("")) {
+				customer = " ";
+			}
 			if (productName.equals("")) {
 				productName = " ";
 			}

@@ -4,8 +4,11 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 import labels.LabelableItem;
 import main.AppState;
@@ -21,8 +24,10 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<Order> orders;
 	
 	// Display variables
-	private JPanel mainPanel = new VPanel();
+	private JPanel mainPanel = new HPanel();
+	private JPanel infoPanel = new VPanel();
 	private JPanel headerRow = new HPanel();
+	private JPanel itemColumn = new VPanel();
 	private final Dimension NAME_SIZE = new Dimension(140,30);
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension NUMBER_SIZE = new Dimension(150,30);
@@ -47,7 +52,14 @@ public class OrderDisplay implements HomeFunction {
 		itemBoxes = new ArrayList<>();
 		addCompanyNameRow();
 		addRows();
-		Utilities.localVPack(mainPanel);
+
+		itemColumn.add(Box.createVerticalGlue());
+		Utilities.localVPack(itemColumn);
+		Utilities.localVPack(infoPanel);
+		mainPanel.add(itemColumn);
+		JScrollPane scrollbar = new JScrollPane(infoPanel);
+		mainPanel.add(scrollbar);		
+		Utilities.localHPack(mainPanel);
 		mainPanel.validate();
 	}
 	
@@ -55,16 +67,12 @@ public class OrderDisplay implements HomeFunction {
 		headerRow = new HPanel();
 		ArrayList<String> companyNames = getCompanyNames();
 		
-		JLabel compLabel = new JLabel("          ORDERS");
-		Utilities.setMinMax(compLabel, HEADER_SIZE);
-		headerRow.add(compLabel);			
-		
 		for(int n = 0; n < companyNames.size(); n++) {
 			addCompanyToHeaderRow(companyNames.get(n), n);
 		}
 		AppState.setCompanyBoxArray(companyBoxes);
 		Utilities.localHPack(headerRow);
-		mainPanel.add(headerRow);
+		infoPanel.add(headerRow);
 	}
 	
 	private void addCompanyToHeaderRow(String name, int n) {
@@ -97,6 +105,9 @@ public class OrderDisplay implements HomeFunction {
 	}
 	
 	private void addRows() {
+		JLabel orderLabel = new JLabel("ORDERS");
+		Utilities.setMinMax(orderLabel, HEADER_SIZE);
+		itemColumn.add(orderLabel);
 		getDisplayArray();
 		AppState.setCheckBoxArray(checkBoxArray);
 		addRowsToDisplay(0);
@@ -106,17 +117,21 @@ public class OrderDisplay implements HomeFunction {
 		for (int r = start; r < displayArray.size(); r++) {
 			ArrayList<Float> row = displayArray.get(r);
 			HPanel rowPanel = new HPanel();
+			HPanel itemNamePanel = new HPanel();
 			JLabel prodName = new JLabel("<html>" + prodNames.get(r) + "<br>" + itemCodes.get(r) +  "</html>");
 			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
 			ItemCheckBox itemBox = new ItemCheckBox(r);
-			rowPanel.add(itemBox);
+			itemNamePanel.add(itemBox);
 			itemBoxes.add(itemBox);
-			rowPanel.add(prodName);
+			itemNamePanel.add(prodName);
+			Utilities.setMinMax(itemNamePanel, HEADER_SIZE);
 			for (int orderNum = 0; orderNum < row.size(); orderNum++) {
 				addItemToRow(rowPanel, r, orderNum);
 			}
+			Utilities.localHPack(itemNamePanel);
 			Utilities.localHPack(rowPanel);
-			mainPanel.add(rowPanel);
+			itemColumn.add(itemNamePanel);
+			infoPanel.add(rowPanel);
 		}
 		AppState.setItemArray(itemBoxes);
 	}
@@ -190,46 +205,18 @@ public class OrderDisplay implements HomeFunction {
 		return arr;
 	}
 	
-	private void addColumnValuesToDisplay(Order o, int end) {
-		for (int i = 1; i  < end + 1; i++) {
-			HPanel row = (HPanel) mainPanel.getComponent(i);
-			addItemToRow(row, i - 1, orders.size() -1);
-			Utilities.localHPack(row);
-		}
-	}
-
-	private void addEndValuesForOrderItems(int end) {
-		for (int r = 0; r < end; r++) {
-			displayArray.get(r).add(0f);
-			checkBoxArray.get(r).add(new PrintCheckBox());
-		}
-	}
-	
 	@Override
 	public void resetOrders() {
 		mainPanel.removeAll();
+		itemColumn = new VPanel();
+		infoPanel = new VPanel();
 		orders = AppState.getOrders();
 		addOrderArray();
 	}
 
 	@Override
 	public void addOrder(Order o) {
-		int oldNumRows = displayArray.size();
-		orders = AppState.getOrders();
-		
-		addCompanyToHeaderRow(getCompanyNameDate(o), orders.size()-1);
-		Utilities.localHPack(headerRow);
-		
-		addEmptyArraysForOrderItems(o);
-		addEndValuesForOrderItems(oldNumRows);
-		setDisplayArrayForOrder(o, orders.size()-1);
-		AppState.setCheckBoxArray(checkBoxArray);
-		
-		addRowsToDisplay(oldNumRows);
-		addColumnValuesToDisplay(o, oldNumRows);
-		Utilities.localVPack(mainPanel);
-
-		
+		resetOrders();
 	}
 
 	@Override

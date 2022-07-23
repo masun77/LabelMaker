@@ -1,5 +1,5 @@
 Hours:
-2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 
+2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 7/22: 2:40pm-
 
 TODO: 	
 
@@ -18,6 +18,7 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+Jeezzzz - need to fix alignment and spacing of display, esp with cleanliness/understanding of code
 why does PTT25 scan wrong?
 Make GUI beautiful and easy and clean - a gift to use
 	make (some) sizes in relation to window
@@ -48,6 +49,7 @@ alphabetize items on insertion
 alphabetize orders on insertion
 freeze header row and column
 larger VP code
+add total num labels to label display
 
 DONE:
 Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 

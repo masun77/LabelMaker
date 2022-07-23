@@ -49,7 +49,7 @@ public class EntryForm implements SideFunction {
 	// Constants
 	private final int NUM_ITEMS = 25;
 	private final int ROW_HEIGHT = 20;
-	private final Dimension LABEL_SIZE = new Dimension(100,ROW_HEIGHT);
+	private final Dimension LABEL_SIZE = new Dimension(120,ROW_HEIGHT);
 	private final Dimension QTY_SIZE = new Dimension(30,ROW_HEIGHT);
 	private final Dimension CODE_SIZE = new Dimension(80,ROW_HEIGHT);
 	private final Dimension DESCRIP_SIZE = new Dimension(200,ROW_HEIGHT);
@@ -107,7 +107,7 @@ public class EntryForm implements SideFunction {
 	}
 	
 	private void addOrderDate() {
-		addLabelComponentPair("Date: ", date);
+		addLabelComponentPair("Date (mm/dd/yy): ", date);
 	}
 	
 	private void addOrderCompany() {

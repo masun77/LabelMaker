@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import database.DataClient;
 import localBackup.LocalFileBackup;
 import main.AppState;
 import main.Order;
@@ -25,7 +26,7 @@ public class RDFInterface implements UserInterface, AppListener {
 	// Display variables
 	private JFrame homeFrame = new JFrame("Label Program");
 	private final Dimension WINDOW_SIZE = new Dimension(1000,700);
-	private final Dimension FUNCTION_SIZE = new Dimension(220,700);
+	private final Dimension FUNCTION_SIZE = new Dimension(240,700);
 	private JPanel mainPanel;
 	private JPanel functionPanel;
 	private JPanel homePanel;
@@ -34,6 +35,11 @@ public class RDFInterface implements UserInterface, AppListener {
 	
 	public RDFInterface() {
 		fb = AppState.getFileBackup();
+		DataClient dc = AppState.getDataClient();
+		if (orders.size() == 0) {
+			orders = dc.getOrders();
+			AppState.setOrders(orders);
+		}
 		if (orders.size() == 0) {
 			orders = fb.getOrders();
 			AppState.setOrders(orders);
@@ -58,7 +64,6 @@ public class RDFInterface implements UserInterface, AppListener {
 	}
 	
 	private void updateHomePanel() {
-		
 		mainPanel.remove(0);
 		homeScrollPane = new JScrollPane(homeFunction.getMainContent());
 		mainPanel.add(homeScrollPane, 0);
