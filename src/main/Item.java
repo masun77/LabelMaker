@@ -9,20 +9,37 @@ import labels.LabelableItem;
  * with a name, GTIN, pack date, unit, and voice pick code.
  */
 public abstract class Item implements LabelableItem {
-	protected String gtin;
+	protected String gtin = "00818181020000";
 	protected String customer;
 	protected String productName;
+	protected Date pickDate;
 	protected Date packDate;
+	protected Date shipDate;
+	protected String lotNum;
 	protected String unit;
 	protected String voicePickCode = "";
 	protected float quantity;
 	protected float price;
 	protected String itemCode = "";
 	
+	public Item(String cust, String itCd, String prodName, String gt, String ut,
+			float qty, float pr,
+			Date pickDt, Date packDt, Date shipDt) {
+		customer = cust;
+		itemCode = itCd;
+		productName = prodName;
+		gtin = gt;
+		unit = ut;
+		quantity = qty;
+		price = pr;
+		pickDate = pickDt;
+		packDate = packDt;
+		shipDate = shipDt;
+	}
+	
 	public Item() {
 		customer = "None";
 		productName = "Nothing";
-		gtin = "00818181020000";
 		packDate = new DateImp();
 		unit = "Empty";
 		quantity = 1;
@@ -38,6 +55,30 @@ public abstract class Item implements LabelableItem {
 		quantity = qty;
 		price = p;
 		itemCode = itCd;
+	}
+
+	public Date getPickDate() {
+		return pickDate;
+	}
+
+	public void setPickDate(Date pickDate) {
+		this.pickDate = pickDate;
+	}
+
+	public Date getShipDate() {
+		return shipDate;
+	}
+
+	public void setShipDate(Date shipDate) {
+		this.shipDate = shipDate;
+	}
+
+	public String getLotNum() {
+		return lotNum;
+	}
+
+	public void setLotNum(String lotNum) {
+		this.lotNum = lotNum;
 	}
 
 	public String getItemCode() {
@@ -83,7 +124,9 @@ public abstract class Item implements LabelableItem {
 	
 	@Override
 	public String stringRep() {
-		return customer + " " + packDate.getDateMMDDYYYY() + " " + quantity + " " + productName + " " + unit + " " + gtin + " " + price;
+		return customer + " " + packDate.getDateMMDDYYYY() + " " + shipDate.getDateMMDDYYYY()
+				+ " " + quantity + " " + productName +
+				" " + unit + " " + gtin + " " + price;
 	}
 
 	public void setItemCode(String itemCode) {

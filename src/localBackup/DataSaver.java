@@ -158,7 +158,6 @@ public class DataSaver implements LocalFileBackup, DataClient {
             order.setShipVia(row[SHIP_VIA_INDEX]);
             order.setCompany(row[CUSTOMER_INDEX]);
             Date date = DateImp.parseDate(row[DATE_INDEX]);
-            order.setShipDate(date);
         	
             LabelableItem item = new RDFItem();
             item.setCustomer(row[CUSTOMER_INDEX]);
@@ -174,36 +173,6 @@ public class DataSaver implements LocalFileBackup, DataClient {
             order.addItem(item);
         }
 		return orders;
-	}
-	
-	/**
-	 * Get the description for an item from the csv containing item information,
-	 * given the item code, e.g. GRG10
-	 * @param itemCode the code of the item to get the description for
-	 * @param filePath the path to the csv containing the descriptions
-	 * @return
-	 */
-	@Override
-	public String getItemDescription(String itemCode) {
-		 try {
-		        FileReader filereader = new FileReader(ITEM_FILE_NAME);
-		        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
-		        CSVReader csvReader = new CSVReaderBuilder(filereader)
-		                                  .withCSVParser(parser)
-		                                  .build();
-		 
-		        List<String[]> allData = csvReader.readAll();
-		 
-		        for (String[] row : allData) {
-		        	if (row[DATA_ITEM_CODE_INDEX].equals(itemCode)) {
-		        		return row[DATA_DESCRIPTION_INDEX];
-		        	}
-		        }
-		    }
-		    catch (Exception e) {
-		        e.printStackTrace();
-		    }
-		return "Code not found";
 	}
 	
 	/**
@@ -243,7 +212,77 @@ public class DataSaver implements LocalFileBackup, DataClient {
 		}
 		return data;
 	}
+	
+	/**
+	 * Get the description for an item from the csv containing item information,
+	 * given the item code, e.g. GRG10
+	 * @param itemCode the code of the item to get the description for
+	 * @param filePath the path to the csv containing the descriptions
+	 * @return
+	 */
+	private String getterHelper(String itemCode, int index, String defaultReturn) {
+		 try {
+		        FileReader filereader = new FileReader(ITEM_FILE_NAME);
+		        CSVParser parser = new CSVParserBuilder().withSeparator('|').build();
+		        CSVReader csvReader = new CSVReaderBuilder(filereader)
+		                                  .withCSVParser(parser)
+		                                  .build();
+		 
+		        List<String[]> allData = csvReader.readAll();
+		 
+		        for (String[] row : allData) {
+		        	if (row[DATA_ITEM_CODE_INDEX].equals(itemCode)) {
+		        		return row[index];
+		        	}
+		        }
+		    }
+		    catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		return defaultReturn;
+	}
+	
+	/**
+	 * Get the description for an item from the csv containing item information,
+	 * given the item code, e.g. GRG10
+	 * @param itemCode the code of the item to get the description for
+	 * @return the item's description, or "Code not found"
+	 */
+	@Override
+	public String getItemDescription(String itemCode) {
+		 return getterHelper(itemCode, DATA_DESCRIPTION_INDEX, "Code not found");
+	}
+	
+	/**
+	 * Get the GTIN of an item from a csv given its item code, e.g. GRG10
+	 * @param itemCode the code of the item to get the information for
+	 * @return the items GTIN or a default GTIN if not found
+	 */
+	@Override
+	public String getGTIN(String itemCode) {
+		return getterHelper(itemCode, DATA_GTIN_INDEX, "00818181020000");
+	}
+	
+	/**
+	 * Get the name of an item from a csv given its item code, e.g. GRG10
+	 * @param itemCode the code of the item to get the information for
+	 * @return the name of the item
+	 */
+	@Override
+	public String getProdName(String itemCode) {
+		return getterHelper(itemCode, DATA_DISPLAY_NAME_INDEX, "Name not found");
+	}
 
+	/**
+	 * Get the unit of an item from a csv given its item code, e.g. GRG10
+	 * @param itemCode the code of the item to get the information for
+	 * @return the unit of the item
+	 */
+	@Override
+	public String getUnit(String itemCode) {
+		return getterHelper(itemCode, DATA_UNIT_INDEX, "Unit not found");
+	}
+	
 	@Override
 	public PrinterDescription getPrinterDescription() {
 		try {

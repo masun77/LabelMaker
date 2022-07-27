@@ -17,4 +17,7 @@ public interface LocalFileBackup {
 	
 	public String getItemDescription(String itemCode);
 	public ArrayList<String> getItemData(String itemCode);
+	public String getGTIN(String itemCode);
+	public String getProdName(String itemCode);
+	public String getUnit(String itemCode);
 }

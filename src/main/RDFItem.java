@@ -32,6 +32,12 @@ public class RDFItem extends Item {
 	public RDFItem(String cust, String prodName, String unit, String gtin, Date packDate, float qty, float price, String itemCode) {
 		super(cust, prodName, unit, gtin, packDate, qty, price, itemCode);
 	}
+	
+	public RDFItem(String cust, String itemCode, String prodName, String gtin, String unit,
+			float qty, float price,
+			Date pickDate, Date packDate, Date shipDate) {
+		super(cust, itemCode, prodName, gtin, unit, qty, price, pickDate, packDate, shipDate);
+	}
 
 	@Override
 	public Component getLabel() {

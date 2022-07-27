@@ -11,8 +11,15 @@ public class Order {
 	private String company = "";
 	private String PONum = "";
 	private String shipVia = "";
+	private int invoiceNumber = 0;
 
-	private Date shipDate = new DateImp();
+	public int getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(int invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
 	
 	public Order(ArrayList<LabelableItem> its) {
 		items = its;
@@ -22,20 +29,15 @@ public class Order {
 		items = new ArrayList<LabelableItem>();
 	}
 	
-	public Order(String c, ArrayList<LabelableItem> its, String po, String sv, Date d) {
+	public Order(String c, ArrayList<LabelableItem> its, String po, String sv) {
 		items = its;
 		PONum = po;
 		shipVia = sv;
-		shipDate = d;
 		company = c;
 	}
 	
 	public void setCompany(String company) {
 		this.company = company;
-	}
-
-	public void setShipDate(Date shipDate) {
-		this.shipDate = shipDate;
 	}
 	
 	public ArrayList<LabelableItem> getItems() {
@@ -61,10 +63,6 @@ public class Order {
 		PONum = po;
 	}
 	
-	public Date getShipDate() {
-		return shipDate;
-	}
-	
 	public void setShipVia(String sv) {
 		shipVia = sv;
 	}
@@ -84,6 +82,8 @@ public class Order {
 	}
 	
 	public void printOrder() {
+		System.out.println("Invoice num: " + invoiceNumber + "\n\tCompany:" + 
+					company + "\n\tPO: " + PONum + "\n\tShip via: " + shipVia);
 		printItems();
 	}
 	
