@@ -96,12 +96,10 @@ public class ExcelInvoiceReader implements DataImporter {
 		
 		RDFItem newIt = new RDFItem(getCustFromRow(row), getItemCodeFromRow(row), 
 				getProdNameFromRow(row), getGTINFromRow(row),
-				getUnitFromRow(row), getPriceFromRow(row), getQtyFromRow(row),
+				getUnitFromRow(row), getQtyFromRow(row), getPriceFromRow(row), 
 				new DateImp(), getPackDateFromRow(row), getShipDateFromRow(row)
 				);
 		currOrder.addItem(newIt);
-		
-		// todo pick date and lot code from where? 
 	}
 	
 	private String getCustFromRow(Row row) {

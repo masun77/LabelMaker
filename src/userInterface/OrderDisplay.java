@@ -101,7 +101,7 @@ public class OrderDisplay implements HomeFunction {
 		if (name.length() > length) {
 			name = name.substring(0, length - 1) + "..";
 		}
-		return "<html>" +  name + "<br>" + ord.getShipDate().getMMDD() + "</html>";
+		return "<html>" +  name + "<br>" + ord.getItems().get(0).getPackDate().getMMDD() + "</html>";
 	}
 	
 	private void addRows() {

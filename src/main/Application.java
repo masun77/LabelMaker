@@ -9,6 +9,7 @@ import userInterface.DeleteOrderFunction;
 import userInterface.DeselectAllFunction;
 import userInterface.EditOrderFunction;
 import userInterface.EntryForm;
+import userInterface.ExcelImportFunction;
 import userInterface.LabelViewerImp;
 import userInterface.OrderDisplay;
 import userInterface.RDFInterface;
@@ -34,6 +35,7 @@ public class Application {
 		ui.addFunction(new DeleteOrderFunction(), "Delete selected orders");
 		ui.addBreakBetweenFunctions();
 		ui.addFunction(new RefreshFunction(), "Update orders from server");
+		ui.addFunction(new ExcelImportFunction(), "Import invoices from Excel file");
 	}
 	
 	public void run() {		
