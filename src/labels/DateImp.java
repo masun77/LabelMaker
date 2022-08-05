@@ -19,7 +19,17 @@ public class DateImp implements Date {
 		dayOfMonth = d;
 		monthOfYear = m;
 		year = y;
-		
+		initMonths();
+	}
+	
+	public DateImp() {
+		dayOfMonth = 1;
+		monthOfYear = 1;
+		year = 1900;
+		initMonths();
+	}
+	
+	private void initMonths() {
 		if (monthToMonthName.get(1) == null) {
 			monthToMonthName.put(1, "January");
 			monthToMonthName.put(2, "February");
@@ -34,12 +44,6 @@ public class DateImp implements Date {
 			monthToMonthName.put(11, "November");
 			monthToMonthName.put(12, "December");
 		}
-	}
-	
-	public DateImp() {
-		dayOfMonth = 1;
-		monthOfYear = 1;
-		year = 1900;
 	}
 	
 	@Override
@@ -86,6 +90,7 @@ public class DateImp implements Date {
 	
 	@Override
 	public String getAsPackDate() {
+		System.out.println(monthOfYear);
 		String mon = monthToMonthName.get(monthOfYear).substring(0,3);
 		mon += " ";
 		mon += zerosHelper(dayOfMonth);

@@ -37,10 +37,6 @@ public class RDFInterface implements UserInterface, AppListener {
 		fb = AppState.getFileBackup();
 		DataClient dc = AppState.getDataClient();
 		if (orders.size() == 0) {
-			orders = dc.getOrders();
-			AppState.setOrders(orders);
-		}
-		if (orders.size() == 0) {
 			orders = fb.getOrders();
 			AppState.setOrders(orders);
 		}

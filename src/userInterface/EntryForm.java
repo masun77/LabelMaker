@@ -237,7 +237,7 @@ public class EntryForm implements SideFunction {
 			}
 		}
 		Order newOrder = new Order(company.getText(), items, purchaseOrder.getText(), 
-				shipVia.getText(), DateImp.parseDate(date.getText()));
+				shipVia.getText());
 		if (editingOrder) {
 			AppState.removeOrder(editOrder);
 		}

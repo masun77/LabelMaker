@@ -1,6 +1,7 @@
 package main;
 import java.util.ArrayList;
 
+import database.DataClient;
 import database.RefreshFunction;
 import database.SocketClient;
 import localBackup.DataSaver;
@@ -39,6 +40,27 @@ public class Application {
 	}
 	
 	public void run() {		
-		ui.showInterface();		
+		ui.showInterface();	
+		ServerUpdater updater = new ServerUpdater();
+		updater.start();
+	}
+	
+	private class ServerUpdater extends Thread {
+
+		@Override
+	    public void run(){
+			while (true) {
+				System.out.println("updating");
+				DataClient dc = AppState.getDataClient();
+				ArrayList<Order> orders =  dc.getOrders();
+				if (orders.size() > 0) {
+					AppState.setOrders(orders);				}
+				try {
+				    Thread.sleep(300L * 1000L);
+				} catch (InterruptedException e) {
+				    e.printStackTrace();
+				}
+			}
+	    }
 	}
 }

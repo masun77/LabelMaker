@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
@@ -55,15 +56,15 @@ public class RDFItem extends Item {
 		private final RectangleBounds customerBounds = new RectangleBounds(300,5,380,25);
 		private final RectangleBounds borderBounds = new RectangleBounds(3,27,390,160);
 		private final RectangleBounds barCodeBounds = new RectangleBounds(5,30,300,80);
-		private final RectangleBounds humanReadableBounds = new RectangleBounds(90,80,300,95);
+		private final RectangleBounds humanReadableBounds = new RectangleBounds(100,80,350,95);
 		private final RectangleBounds prodNameBounds = new RectangleBounds(5,105,300,125);
 		private final RectangleBounds unitBounds = new RectangleBounds(5,130,300,150);
-		private final RectangleBounds dateLabelBounds = new RectangleBounds(305,100,380,113);
-		private final RectangleBounds packDateBounds = new RectangleBounds(315,118,380,132);
-		private final RectangleBounds packDateBox = new RectangleBounds(305,113,370,133);
-		private final RectangleBounds voicePickCodeBounds = new RectangleBounds(307,134,360,157);
-		private final RectangleBounds vpcLargeBounds = new RectangleBounds(330,137,380,157);
-		private final RectangleBounds vpcSmallBounds = new RectangleBounds(310,141,340,153);
+		private final RectangleBounds dateLabelBounds = new RectangleBounds(305,80,380,93);
+		private final RectangleBounds packDateBounds = new RectangleBounds(315,98,380,112);
+		private final RectangleBounds packDateBox = new RectangleBounds(305,93,370,113);
+		private final RectangleBounds voicePickCodeBounds = new RectangleBounds(307,114,380,157);
+		private final RectangleBounds vpcSmallBounds = new RectangleBounds(310,131,340,153);
+		private final RectangleBounds vpcLargeBounds = new RectangleBounds(335,117,380,157);
 		private final String PACK_DATE = "Pack Date";
 		private final String AI_CODE = "(01)";
 		private final int BAR_HEIGHT = 45;
@@ -99,6 +100,9 @@ public class RDFItem extends Item {
 			Graphics2D imgG = image.createGraphics();
 			setBackgroundWhite(imgG);
 			g2 = imgG;
+			g2.setRenderingHint(
+			        RenderingHints.KEY_TEXT_ANTIALIASING,
+			        RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
 			createLabel();
 			
 			g.drawImage(image, 0, 0, null);
@@ -214,7 +218,7 @@ public class RDFItem extends Item {
 		 * @param fontSize the size of the font to use
 		 */
 		private void appendHumanReadableVersion() {
-	        addText(AI_CODE + gtin, Font.PLAIN, Alignment.LEFT_ALIGN, Color.black, humanReadableBounds);
+	        addText(AI_CODE + gtin, Font.BOLD, Alignment.LEFT_ALIGN, Color.black, humanReadableBounds);
 		}
 		
 		/**

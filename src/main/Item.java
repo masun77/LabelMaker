@@ -15,7 +15,7 @@ public abstract class Item implements LabelableItem {
 	protected Date pickDate;
 	protected Date packDate;
 	protected Date shipDate;
-	protected String lotNum;
+	protected String lotNum = "";
 	protected String unit;
 	protected String voicePickCode = "";
 	protected float quantity;
@@ -41,6 +41,8 @@ public abstract class Item implements LabelableItem {
 		customer = "None";
 		productName = "Nothing";
 		packDate = new DateImp();
+		pickDate = new DateImp();
+		shipDate = new DateImp();
 		unit = "Empty";
 		quantity = 1;
 		price = 0;

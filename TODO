@@ -1,18 +1,16 @@
 Hours:
-2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 7/22: 3.5 hrs; 7/27: 11am-
+2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 7/22: 3.5 hrs; 7/27: 5hrs;
 
 TODO: 	
 
-- how get pick date and lot code/ field num? 
-
-- export from QB -> read into label program!
 - label updates from Tim, Christina
 - show PO in top company label
 - is scanning affected by that missing line?
 - ability to add note to label, eg ATTN
 - select date range for order display
 - show product, unit/code in next column, total num of units on left with that, then each order
-
+- fix display stuff, esp scroll bars and sizing
+- what do if item name or unit name is too long, or company name
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
@@ -59,6 +57,8 @@ alphabetize orders on insertion
 freeze header row and column
 larger VP code
 add total num labels to label display
+- check out React.js and Node
+- consider web-app
 
 DONE:
 Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 
