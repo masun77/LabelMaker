@@ -90,7 +90,6 @@ public class DateImp implements Date {
 	
 	@Override
 	public String getAsPackDate() {
-		System.out.println(monthOfYear);
 		String mon = monthToMonthName.get(monthOfYear).substring(0,3);
 		mon += " ";
 		mon += zerosHelper(dayOfMonth);

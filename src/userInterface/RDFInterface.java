@@ -1,11 +1,13 @@
 package userInterface;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -83,9 +85,18 @@ public class RDFInterface implements UserInterface, AppListener {
 	}
 	
 	@Override
-	public void addFunction(SideFunction af, String btnName) {
+	public void addFunction(SideFunction af, String btnName, String iconPath) {
 		AppState.addListener(af);
 		JButton funcBtn = new JButton(btnName);
+		
+		if (!iconPath.equals("")) {
+			ImageIcon imic = new ImageIcon(iconPath);
+			Image img = imic.getImage() ;  
+			Image newimg = img.getScaledInstance( 20,20,  java.awt.Image.SCALE_SMOOTH ) ;  
+			imic = new ImageIcon( newimg );
+			funcBtn.setIcon(imic);
+		}
+		
 		funcBtn.addActionListener(new FunctionListener(af));
 		
 		functionPanel.add(funcBtn);

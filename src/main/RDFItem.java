@@ -134,7 +134,7 @@ public class RDFItem extends Item {
 		}
 		
 		private void addCustomer() {
-			addText(customer.toUpperCase(), Font.BOLD, Alignment.RIGHT_ALIGN, Color.black,  customerBounds);
+			addText(customer.toUpperCase(), Font.BOLD, Alignment.RIGHT_ALIGN, Color.black,  customerBounds,34);
 		}
 		
 		private void addOuterBorder() {
@@ -142,19 +142,19 @@ public class RDFItem extends Item {
 		}
 		
 		private void addProductName() {
-			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  prodNameBounds);
+			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  prodNameBounds,25);
 		}
 		
 		private void addUnit() {
-			addText(unit, Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  unitBounds);
+			addText(unit, Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  unitBounds,25);
 		}
 		
 		private void addDateLabel() {
-			addText(PACK_DATE, Font.PLAIN, Alignment.LEFT_ALIGN, Color.black,  dateLabelBounds);
+			addText(PACK_DATE, Font.PLAIN, Alignment.LEFT_ALIGN, Color.black,  dateLabelBounds,10);
 		}
 		
 		private void addPackDate() {
-			addText(packDate.getAsPackDate(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black, packDateBounds);
+			addText(packDate.getAsPackDate(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black, packDateBounds,10);
 			g2.drawRect(packDateBox.getStartX(), packDateBox.getStartY(), packDateBox.getWidth(), packDateBox.getHeight());
 		}
 		
@@ -166,8 +166,15 @@ public class RDFItem extends Item {
 		 * @param fontSize the font size for the text
 		 * @param fontStyle the font style for the text
 		 */
-		private void addText(String text, int fontStyle, Alignment align, Color color, RectangleBounds bounds) {
-			Font font = new Font("SansSerif", fontStyle, bounds.getEndY()-bounds.getStartY());
+		private void addText(String text, int fontStyle, Alignment align, Color color, RectangleBounds bounds, int maxLength) {
+			int fontSize = bounds.getEndY()-bounds.getStartY();
+			if (text.length() > maxLength) {
+				double ml = maxLength;
+				double fraction = ml / text.length();
+				fontSize = (int)Math.round(fontSize * fraction);
+			}
+			System.out.println("fs:" + fontSize);
+			Font font = new Font("SansSerif", fontStyle, fontSize);
 	        g2.setFont(font);
 	        g2.setColor(color);
 	        FontRenderContext frc = g2.getFontRenderContext();
@@ -218,7 +225,7 @@ public class RDFItem extends Item {
 		 * @param fontSize the size of the font to use
 		 */
 		private void appendHumanReadableVersion() {
-	        addText(AI_CODE + gtin, Font.BOLD, Alignment.LEFT_ALIGN, Color.black, humanReadableBounds);
+	        addText(AI_CODE + gtin, Font.BOLD, Alignment.LEFT_ALIGN, Color.black, humanReadableBounds, 40);
 		}
 		
 		/**
@@ -240,8 +247,8 @@ public class RDFItem extends Item {
 						 
 	    	g2.fillRect(voicePickCodeBounds.getStartX(), voicePickCodeBounds.getStartY(), voicePickCodeBounds.getWidth(), voicePickCodeBounds.getHeight());
 	    	
-	    	addText(smallNums, Font.BOLD, Alignment.LEFT_ALIGN, Color.white, vpcSmallBounds);
-	    	addText(bigNums, Font.BOLD, Alignment.LEFT_ALIGN, Color.white, vpcLargeBounds);
+	    	addText(smallNums, Font.BOLD, Alignment.LEFT_ALIGN, Color.white, vpcSmallBounds,2);
+	    	addText(bigNums, Font.BOLD, Alignment.LEFT_ALIGN, Color.white, vpcLargeBounds,2);
 		}
 		
 		public BufferedImage getBufferedImage() {

@@ -68,7 +68,7 @@ public class EntryForm implements SideFunction {
 	public void setEditingOrder(boolean b, Order order) {
 		editingOrder = b;
 		editOrder = order;
-		date.setText(order.getShipDate().getDateMMDDYYYY());
+		date.setText(order.getItems().get(0).getPackDate().getDateMMDDYYYY());
 		company.setText(order.getCompany());
 		purchaseOrder.setText(order.getPONum());
 		shipVia.setText(order.getShipVia());

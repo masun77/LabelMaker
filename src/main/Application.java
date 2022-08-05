@@ -26,17 +26,17 @@ public class Application {
 		
 		ui = new RDFInterface();
 		ui.addHomeFunction(new OrderDisplay());
-		ui.addFunction(new SelectAllFunction(), "Select All Orders");
-		ui.addFunction(new DeselectAllFunction(), "Deselect All Orders");
+		ui.addFunction(new SelectAllFunction(), "Select All Orders", "");
+		ui.addFunction(new DeselectAllFunction(), "Deselect All Orders", "");
 		ui.addBreakBetweenFunctions();
-		ui.addFunction(new LabelViewerImp(), "View/Print Labels for selected");
+		ui.addFunction(new LabelViewerImp(), "View/Print Labels for selected", "resources/printer.png");
 		ui.addBreakBetweenFunctions();
-		ui.addFunction(new EntryForm(), "New Order");
-		ui.addFunction(new EditOrderFunction(), "Edit Selected Order");
-		ui.addFunction(new DeleteOrderFunction(), "Delete selected orders");
+		ui.addFunction(new EntryForm(), "+ New Order", "");
+		ui.addFunction(new EditOrderFunction(), "Edit Selected Order", "resources/edit.png");
+		ui.addFunction(new DeleteOrderFunction(), "- Delete selected orders", "");
 		ui.addBreakBetweenFunctions();
-		ui.addFunction(new RefreshFunction(), "Update orders from server");
-		ui.addFunction(new ExcelImportFunction(), "Import invoices from Excel file");
+		ui.addFunction(new RefreshFunction(), "Update orders from server", "resources/reload.png");
+		ui.addFunction(new ExcelImportFunction(), "Import invoices from Excel file", "resources/import.png");
 	}
 	
 	public void run() {		

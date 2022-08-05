@@ -28,14 +28,14 @@ public class OrderDisplay implements HomeFunction {
 	private JPanel infoPanel = new VPanel();
 	private JPanel headerRow = new HPanel();
 	private JPanel itemColumn = new VPanel();
-	private final Dimension NAME_SIZE = new Dimension(140,30);
+	private final Dimension NAME_SIZE = new Dimension(140,50);
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension NUMBER_SIZE = new Dimension(150,30);
 	private final Dimension ITEM_NAME_SIZE = new Dimension(150,30);
-	private final Dimension HEADER_SIZE = new Dimension(165,30);
+	private final Dimension HEADER_SIZE = new Dimension(165,50);
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
-	private ArrayList<String> itemCodes = new ArrayList<String>();
+	private ArrayList<String> unitCodes = new ArrayList<String>();
 	private ArrayList<ArrayList<Float>> displayArray = new ArrayList<ArrayList<Float>>();
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 	private ArrayList<CompanyCheckBox> companyBoxes;
@@ -90,18 +90,18 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<String> getCompanyNames() {
 		ArrayList<String> colNames = new ArrayList<String>();
 		for (int ord = 0; ord < orders.size(); ord++) {
-			colNames.add(getCompanyNameDate(orders.get(ord)));
+			colNames.add(getCompanyNameDatePO(orders.get(ord)));
 		}
 		return colNames;
 	}
 	
-	private String getCompanyNameDate(Order ord) {
+	private String getCompanyNameDatePO(Order ord) {
 		int length = 12;
 		String name = ord.getCompany();
 		if (name.length() > length) {
 			name = name.substring(0, length - 1) + "..";
 		}
-		return "<html>" +  name + "<br>" + ord.getItems().get(0).getPackDate().getMMDD() + "</html>";
+		return "<html>" +  name + "<br>" + ord.getPONum() + "<br>" + ord.getItems().get(0).getPackDate().getMMDD() + "</html>";
 	}
 	
 	private void addRows() {
@@ -118,7 +118,7 @@ public class OrderDisplay implements HomeFunction {
 			ArrayList<Float> row = displayArray.get(r);
 			HPanel rowPanel = new HPanel();
 			HPanel itemNamePanel = new HPanel();
-			JLabel prodName = new JLabel("<html>" + prodNames.get(r) + "<br>" + itemCodes.get(r) +  "</html>");
+			JLabel prodName = new JLabel("<html>" + prodNames.get(r) + "<br>" + unitCodes.get(r) +  "</html>");
 			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
 			ItemCheckBox itemBox = new ItemCheckBox(r);
 			itemNamePanel.add(itemBox);
@@ -147,7 +147,7 @@ public class OrderDisplay implements HomeFunction {
 	private void getDisplayArray() {
 		gtins = new ArrayList<String>();
 		prodNames = new ArrayList<String>();
-		itemCodes = new ArrayList<>();
+		unitCodes = new ArrayList<>();
 		displayArray = new ArrayList<ArrayList<Float>>();
 		checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 		
@@ -168,7 +168,7 @@ public class OrderDisplay implements HomeFunction {
 			if (index < 0) {
 				gtins.add(item.getGtin());
 				prodNames.add(item.getProductName());
-				itemCodes.add(item.getItemCode());
+				unitCodes.add(item.getUnit());
 				displayArray.add(createZeroArray(orders.size()));
 				checkBoxArray.add(createPrintCheckBoxes(orders.size()));
 			}

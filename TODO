@@ -3,13 +3,10 @@ Hours:
 
 TODO: 	
 
-- label updates from Tim, Christina
-- show PO in top company label
-- is scanning affected by that missing line?
-- ability to add note to label, eg ATTN
+- ability to add note to label, eg ATTN 
 - select date range for order display
-- show product, unit/code in next column, total num of units on left with that, then each order
-- fix display stuff, esp scroll bars and sizing
+- show product, total num of units on left with that, then each order
+- make display stuff abstract, esp scroll bars and sizing
 - what do if item name or unit name is too long, or company name
 
 Maintainability - 
@@ -25,8 +22,9 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+make label editable function
 Jeezzzz - need to fix alignment and spacing of display, esp with cleanliness/understanding of code
-why does PTT25 scan wrong?
+why does PTT25 scan wrong/not scan?
 Make GUI beautiful and easy and clean - a gift to use
 	make (some) sizes in relation to window
 archive orders - put in separate file, save file backup, client/server, etc.... 
