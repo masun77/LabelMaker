@@ -4,9 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import labels.Date;
-import labels.DateImp;
-
 class DateImpTest {
 	private static Date d;
 	private static Date d2;
@@ -45,6 +42,30 @@ class DateImpTest {
 	void testParseDate() {
 		assertEquals(DateImp.parseDate("").getDateMMDDYYYY(), "01/01/2022");
 		assertEquals(DateImp.parseDate("5/1/22").getDateMMDDYYYY(), "05/01/2022");
+	}
+	
+	@Test
+	void testDateEqual() {
+		assertEquals(true, new DateImp(5,1,22).dateEquals(new DateImp(5,1,22)));
+		assertEquals(false, new DateImp(5,2,22).dateEquals(new DateImp(5,1,22)));
+		assertEquals(false, new DateImp(5,1,21).dateEquals(new DateImp(5,1,22)));
+		assertEquals(false, new DateImp(4,1,22).dateEquals(new DateImp(5,1,22)));
+	}
+	
+	@Test
+	void testDateEarlier() {
+		assertEquals(true, new DateImp(4,1,22).dateEarlierThan(new DateImp(5,1,22)));
+		assertEquals(false, new DateImp(5,2,22).dateEarlierThan(new DateImp(5,1,22)));
+		assertEquals(true, new DateImp(5,1,21).dateEarlierThan(new DateImp(5,1,22)));
+		assertEquals(false, new DateImp(6,1,22).dateEarlierThan(new DateImp(5,1,22)));
+	}
+	
+	@Test
+	void testDateLater() {
+		assertEquals(false, new DateImp(4,1,22).dateLaterThan(new DateImp(5,1,22)));
+		assertEquals(true, new DateImp(5,2,22).dateLaterThan(new DateImp(5,1,22)));
+		assertEquals(false, new DateImp(8,10,21).dateLaterThan(new DateImp(5,1,22)));
+		assertEquals(true, new DateImp(6,1,22).dateLaterThan(new DateImp(5,1,22)));
 	}
 
 }

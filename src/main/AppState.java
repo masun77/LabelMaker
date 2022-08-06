@@ -107,5 +107,9 @@ public class AppState {
 	public static ArrayList<ItemCheckBox> getItemArray() {
 		return singleton.getItemArray();
 	}
+	
+	public static void notifyLastListener() {
+		singleton.notifyLastListener();
+	}
 
 }

@@ -7,7 +7,6 @@ TODO:
 - ability to add note to label, eg ATTN 
 - select date range for order display
 - make display stuff abstract, esp scroll bars and sizing
-- what do if item name or unit name is too long, or company name
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
@@ -22,7 +21,7 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
-make label editable function
+make label format editing function
 Jeezzzz - need to fix alignment and spacing of display, esp with cleanliness/understanding of code
 why does PTT25 scan wrong/not scan?
 Make GUI beautiful and easy and clean - a gift to use

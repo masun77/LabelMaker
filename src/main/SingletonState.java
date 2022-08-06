@@ -75,6 +75,10 @@ public class SingletonState {
 		notifyListeners();
 		dataClient.saveOrders(orders);
 	}
+	
+	public void notifyLastListener() {
+		lastListener.resetOrders();
+	}
 
 	public DataClient getDataClient() {
 		return dataClient;

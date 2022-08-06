@@ -28,6 +28,7 @@ import userInterface.graphicComponents.VPanel;
 public class OrderDisplay implements HomeFunction {
 	// Application variables from Application state
 	private ArrayList<Order> orders;
+	private ArrayList<Order> filteredOrders = new ArrayList<>();
 	
 	// Display variables
 	private JPanel wholePanel = new VPanel();
@@ -37,9 +38,9 @@ public class OrderDisplay implements HomeFunction {
 	private JPanel itemColumn = new VPanel();
 	private JTextField startField = new JTextField();
 	private JTextField endField = new JTextField();
-	private final Dimension NAME_SIZE = new Dimension(140,50);
+	private final Dimension NAME_SIZE = new Dimension(80,50);
 	private final Dimension SPACE = new Dimension(10,15);
-	private final Dimension NUMBER_SIZE = new Dimension(150,30);
+	private final Dimension NUMBER_SIZE = new Dimension(90,30);
 	private final Dimension ITEM_NAME_SIZE = new Dimension(150,30);
 	private final Dimension HEADER_SIZE = new Dimension(165,50);
 	private final Dimension FILTER_SIZE = new Dimension(390,30);
@@ -61,7 +62,7 @@ public class OrderDisplay implements HomeFunction {
 		
 		Calendar cal = Calendar.getInstance();
 		
-		startDate = DateImp.parseDate(cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
+		startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
 		endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
 		
 		addOrderArray();
@@ -69,6 +70,7 @@ public class OrderDisplay implements HomeFunction {
 	
 	private void addOrderArray() {
 		addDateFilter();
+		filterOrders();
 		
 		companyBoxes = new ArrayList<>();
 		itemBoxes = new ArrayList<>();
@@ -103,9 +105,15 @@ public class OrderDisplay implements HomeFunction {
 		filterRow.add(endField);
 		
 		wholePanel.add(filterRow);
-
-		// filter orders 
-		// show only filtered orders on all updates
+	}
+	
+	private void filterOrders() {
+		for (Order o: orders) {
+			Date packDate = o.getItems().get(0).getPackDate();
+			if (!packDate.dateEarlierThan(startDate) && !packDate.dateLaterThan(endDate)) {
+				filteredOrders.add(o);
+			}
+		}
 	}
 	
 	private class DateFilter implements FocusListener {			
@@ -119,7 +127,9 @@ public class OrderDisplay implements HomeFunction {
 			Date newStart = DateImp.parseDate(startField.getText());
 			Date newEnd = DateImp.parseDate(endField.getText());
 			if (!newStart.dateEquals(startDate) || !newEnd.dateEquals(endDate)) {
-				System.out.println("date changed");
+				startDate = newStart;
+				endDate = newEnd;
+				resetOrders();
 			}
 		}
 	}
@@ -150,8 +160,8 @@ public class OrderDisplay implements HomeFunction {
 		
 	private ArrayList<String> getCompanyNames() {
 		ArrayList<String> colNames = new ArrayList<String>();
-		for (int ord = 0; ord < orders.size(); ord++) {
-			colNames.add(getCompanyNameDatePO(orders.get(ord)));
+		for (int ord = 0; ord < filteredOrders.size(); ord++) {
+			colNames.add(getCompanyNameDatePO(filteredOrders.get(ord)));
 		}
 		return colNames;
 	}
@@ -212,12 +222,12 @@ public class OrderDisplay implements HomeFunction {
 		displayArray = new ArrayList<ArrayList<Float>>();
 		checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 		
-		for (int ord = 0; ord < orders.size(); ord++) {
-			addEmptyArraysForOrderItems(orders.get(ord));
+		for (int ord = 0; ord < filteredOrders.size(); ord++) {
+			addEmptyArraysForOrderItems(filteredOrders.get(ord));
 		}
 		
-		for (int orderIndex = 0; orderIndex < orders.size(); orderIndex++) {
-			setDisplayArrayForOrder(orders.get(orderIndex), orderIndex);
+		for (int orderIndex = 0; orderIndex < filteredOrders.size(); orderIndex++) {
+			setDisplayArrayForOrder(filteredOrders.get(orderIndex), orderIndex);
 		}
 	}
 		
@@ -230,8 +240,8 @@ public class OrderDisplay implements HomeFunction {
 				gtins.add(item.getGtin());
 				prodNames.add(item.getProductName());
 				unitCodes.add(item.getUnit());
-				displayArray.add(createZeroArray(orders.size()));
-				checkBoxArray.add(createPrintCheckBoxes(orders.size()));
+				displayArray.add(createZeroArray(filteredOrders.size()));
+				checkBoxArray.add(createPrintCheckBoxes(filteredOrders.size()));
 			}
 		}
 	}
@@ -273,7 +283,9 @@ public class OrderDisplay implements HomeFunction {
 		itemColumn = new VPanel();
 		infoPanel = new VPanel();
 		orders = AppState.getOrders();
+		filteredOrders = new ArrayList<>();
 		addOrderArray();
+		AppState.notifyLastListener();
 	}
 
 	@Override
