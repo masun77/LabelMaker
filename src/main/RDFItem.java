@@ -58,13 +58,14 @@ public class RDFItem extends Item {
 		private final RectangleBounds barCodeBounds = new RectangleBounds(5,30,300,80);
 		private final RectangleBounds humanReadableBounds = new RectangleBounds(100,80,350,95);
 		private final RectangleBounds prodNameBounds = new RectangleBounds(5,105,300,125);
-		private final RectangleBounds unitBounds = new RectangleBounds(5,130,300,150);
+		private final RectangleBounds unitBounds = new RectangleBounds(5,130,200,150);
 		private final RectangleBounds dateLabelBounds = new RectangleBounds(305,80,380,93);
 		private final RectangleBounds packDateBounds = new RectangleBounds(315,98,380,112);
 		private final RectangleBounds packDateBox = new RectangleBounds(305,93,370,113);
 		private final RectangleBounds voicePickCodeBounds = new RectangleBounds(307,114,380,157);
 		private final RectangleBounds vpcSmallBounds = new RectangleBounds(310,131,340,153);
 		private final RectangleBounds vpcLargeBounds = new RectangleBounds(335,117,380,157);
+		private final RectangleBounds attnBounds = new RectangleBounds(210,130,300,150);   // todo: add to order? or indiv item? or indiv labels?
 		private final String PACK_DATE = "Pack Date";
 		private final String AI_CODE = "(01)";
 		private final int BAR_HEIGHT = 45;
@@ -173,7 +174,6 @@ public class RDFItem extends Item {
 				double fraction = ml / text.length();
 				fontSize = (int)Math.round(fontSize * fraction);
 			}
-			System.out.println("fs:" + fontSize);
 			Font font = new Font("SansSerif", fontStyle, fontSize);
 	        g2.setFont(font);
 	        g2.setColor(color);

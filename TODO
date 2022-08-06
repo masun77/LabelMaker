@@ -1,11 +1,11 @@
 Hours:
-2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 7/22: 3.5 hrs; 7/27: 5hrs;
+2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 
+7/22: 3.5 hrs; 7/27: 5hrs; 8/5: 3pm-
 
 TODO: 	
 
 - ability to add note to label, eg ATTN 
 - select date range for order display
-- show product, total num of units on left with that, then each order
 - make display stuff abstract, esp scroll bars and sizing
 - what do if item name or unit name is too long, or company name
 

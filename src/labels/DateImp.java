@@ -130,4 +130,37 @@ public class DateImp implements Date {
 		
 		return new DateImp(Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(year));
 	}
+
+	@Override
+	public boolean dateEarlierThan(Date d) {
+		if (year < d.getYear()) {
+			return true;
+		}
+		if (monthOfYear < d.getMonthofYear()) {
+			return true;
+		}
+		if (dayOfMonth < d.getDayOfMonth()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean dateLaterThan(Date d) {
+		if (year > d.getYear()) {
+			return true;
+		}
+		if (monthOfYear > d.getMonthofYear()) {
+			return true;
+		}
+		if (dayOfMonth > d.getDayOfMonth()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean dateEquals(Date d) {
+		return year == d.getYear() && monthOfYear == d.getMonthofYear() && dayOfMonth == d.getDayOfMonth();
+	}
 }

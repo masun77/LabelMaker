@@ -46,4 +46,23 @@ public interface Date {
 	 * @return the day as a number, 1-31
 	 */
 	public int getDayOfMonth();
+	
+	/**
+	 * @param d the Date to compare to
+	 * @return true if this date is earlier than the input date, false otherwise
+	 */
+	public boolean dateEarlierThan(Date d);
+	
+	/**
+	 * @param d the Date to compare to
+	 * @return true if this date is later than the input date, false otherwise
+	 */
+	public boolean dateLaterThan(Date d);
+	
+	/**
+	 * @param d the Date to compare to
+	 * @return true if the two dates have the same year, month, and day, false otherwise
+	 */
+	public boolean dateEquals(Date d);
+	
 }

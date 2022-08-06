@@ -2,14 +2,20 @@ package userInterface;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
+import labels.Date;
+import labels.DateImp;
 import labels.LabelableItem;
 import main.AppState;
 import main.Order;
@@ -24,15 +30,22 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<Order> orders;
 	
 	// Display variables
-	private JPanel mainPanel = new HPanel();
+	private JPanel wholePanel = new VPanel();
+	private JPanel displayPanel = new HPanel();
 	private JPanel infoPanel = new VPanel();
 	private JPanel headerRow = new HPanel();
 	private JPanel itemColumn = new VPanel();
+	private JTextField startField = new JTextField();
+	private JTextField endField = new JTextField();
 	private final Dimension NAME_SIZE = new Dimension(140,50);
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension NUMBER_SIZE = new Dimension(150,30);
 	private final Dimension ITEM_NAME_SIZE = new Dimension(150,30);
 	private final Dimension HEADER_SIZE = new Dimension(165,50);
+	private final Dimension FILTER_SIZE = new Dimension(390,30);
+	private final Dimension DATE_SIZE = new Dimension(50,20);
+	
+	// Helper variables
 	private ArrayList<String> gtins = new ArrayList<String>();
 	private ArrayList<String> prodNames = new ArrayList<String>();
 	private ArrayList<String> unitCodes = new ArrayList<String>();
@@ -40,14 +53,23 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 	private ArrayList<CompanyCheckBox> companyBoxes;
 	private ArrayList<ItemCheckBox> itemBoxes;
+	private Date startDate;
+	private Date endDate;
 
 	public OrderDisplay() {
 		orders = AppState.getOrders();
+		
+		Calendar cal = Calendar.getInstance();
+		
+		startDate = DateImp.parseDate(cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
+		endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
 		
 		addOrderArray();
 	}
 	
 	private void addOrderArray() {
+		addDateFilter();
+		
 		companyBoxes = new ArrayList<>();
 		itemBoxes = new ArrayList<>();
 		addCompanyNameRow();
@@ -56,11 +78,50 @@ public class OrderDisplay implements HomeFunction {
 		itemColumn.add(Box.createVerticalGlue());
 		Utilities.localVPack(itemColumn);
 		Utilities.localVPack(infoPanel);
-		mainPanel.add(itemColumn);
+		displayPanel.add(itemColumn);
 		JScrollPane scrollbar = new JScrollPane(infoPanel);
-		mainPanel.add(scrollbar);		
-		Utilities.localHPack(mainPanel);
-		mainPanel.validate();
+		displayPanel.add(scrollbar);		
+		Utilities.localHPack(displayPanel);
+		wholePanel.add(displayPanel);
+		Utilities.localVPack(wholePanel);
+		wholePanel.validate();
+	}
+	
+	private void addDateFilter() {
+		HPanel filterRow = new HPanel();
+		Utilities.setMinMax(filterRow, FILTER_SIZE);
+		startField.setSize(DATE_SIZE);
+		startField.setText(startDate.getDateMMDDYYYY());
+		startField.addFocusListener(new DateFilter());
+		endField.setSize(DATE_SIZE);
+		endField.setText(endDate.getDateMMDDYYYY());
+		endField.addFocusListener(new DateFilter());
+		
+		filterRow.add(new JLabel("From: "));
+		filterRow.add(startField);
+		filterRow.add(new JLabel("To: "));
+		filterRow.add(endField);
+		
+		wholePanel.add(filterRow);
+
+		// filter orders 
+		// show only filtered orders on all updates
+	}
+	
+	private class DateFilter implements FocusListener {			
+		@Override
+		public void focusGained(FocusEvent e) {
+			// do nothing
+		}
+
+		@Override
+		public void focusLost(FocusEvent e) {
+			Date newStart = DateImp.parseDate(startField.getText());
+			Date newEnd = DateImp.parseDate(endField.getText());
+			if (!newStart.dateEquals(startDate) || !newEnd.dateEquals(endDate)) {
+				System.out.println("date changed");
+			}
+		}
 	}
 	
 	private void addCompanyNameRow() {
@@ -207,7 +268,8 @@ public class OrderDisplay implements HomeFunction {
 	
 	@Override
 	public void resetOrders() {
-		mainPanel.removeAll();
+		wholePanel.removeAll();
+		displayPanel.removeAll();
 		itemColumn = new VPanel();
 		infoPanel = new VPanel();
 		orders = AppState.getOrders();
@@ -226,6 +288,6 @@ public class OrderDisplay implements HomeFunction {
 
 	@Override
 	public Container getMainContent() {
-		return mainPanel;
+		return wholePanel;
 	}
 }
