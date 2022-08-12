@@ -108,4 +108,8 @@ public class AppState {
 	public static void setItemArray(ArrayList<ArrayList<LabelableItem>> items) {
 		singleton.setItemArray(items);
 	}
+	
+	public static void setLastListener(AppListener l) {
+		singleton.setLastListener(l);
+	}
 }

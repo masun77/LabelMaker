@@ -37,6 +37,7 @@ public class Application {
 		ui.addBreakBetweenFunctions();
 		ui.addFunction(new RefreshFunction(), "Update orders from server", "resources/reload.png");
 		ui.addFunction(new ExcelImportFunction(), "Import invoices from Excel file", "resources/import.png");
+		AppState.setLastListener((RDFInterface)ui);
 	}
 	
 	public void run() {		

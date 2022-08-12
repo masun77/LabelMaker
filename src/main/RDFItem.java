@@ -143,11 +143,11 @@ public class RDFItem extends Item {
 		}
 		
 		private void addProductName() {
-			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  prodNameBounds,25);
+			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  prodNameBounds,23);
 		}
 		
 		private void addUnit() {
-			addText(unit, Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  unitBounds,25);
+			addText(unit, Font.PLAIN, Alignment.LEFT_ALIGN, Color.black,  unitBounds,25);
 		}
 		
 		private void addDateLabel() {

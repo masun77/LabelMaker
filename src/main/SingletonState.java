@@ -19,7 +19,8 @@ public class SingletonState {
 	private ArrayList<Boolean> companySelectedBooleanArray = new ArrayList<>();
 	private ArrayList<Boolean> itemSelectedBooleanArray = new ArrayList<>();
 	private ArrayList<ArrayList<LabelableItem>> itemArray = new ArrayList<>();
-
+	private AppListener lastListener;
+	
 	public SingletonState(ArrayList<Order> ords, LocalFileBackup f, LabelPrinter lp, DataClient dc) {
 		orders = ords;
 		fileBackup = f; 
@@ -30,6 +31,9 @@ public class SingletonState {
 	public void sendMessage(AppListenerMessage m) {
 		for (int f = 0; f < functions.size(); f++) {
 			functions.get(f).sendMessage(m);
+		}
+		if (lastListener != null) {
+			lastListener.sendMessage(m);
 		}
 	}
 
@@ -130,5 +134,9 @@ public class SingletonState {
 	
 	public void removeListener(AppListener listener) {
 		functions.remove(listener);
+	}
+	
+	public void setLastListener(AppListener l) {
+		lastListener = l;
 	}
 }

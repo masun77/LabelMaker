@@ -62,8 +62,6 @@ public class RDFInterface implements UserInterface, AppListener {
 		
 		homeFrame.add(mainPanel);
 		homeFrame.setSize(WINDOW_SIZE);
-		
-		AppState.addListener(this);
 	}
 	
 	private void updateHomePanel() {
@@ -126,16 +124,26 @@ public class RDFInterface implements UserInterface, AppListener {
 		switch (m) {
 			case SET_ORDERS:
 				updateHomePanel();
-				homeFrame.revalidate();
+				mainPanel.validate();
+				homePanel.validate();
+				homePanel.getComponent(0).validate();
+				homeScrollPane.validate();
 				break;
 			case ADD_ORDER:
 				updateHomePanel();
-				homeFrame.validate();
+				mainPanel.validate();
+				homePanel.validate();
+				homePanel.getComponent(0).validate();
+				homeScrollPane.validate();
 				break;
 			case REMOVE_ORDER:
-				homeFrame.validate();
+				mainPanel.validate();
+				homePanel.validate();
+				homePanel.getComponent(0).validate();
+				homeScrollPane.validate();
 				break;
 			default:
+				homeFrame.validate();
 				break;
 		}
 	}

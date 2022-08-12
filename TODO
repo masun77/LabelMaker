@@ -16,6 +16,8 @@ Maintainability -
 	who/what skills would they need to maintain this down the line?
 	clean up code - comment, test, broken down clearly
 	
+TEST - every function, multiple times, in diff orders
+	
 TESTS:
 - print with 1 label
 - print with multiple labels
