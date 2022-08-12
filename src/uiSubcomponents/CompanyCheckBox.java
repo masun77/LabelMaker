@@ -1,4 +1,4 @@
-package userInterface.graphicComponents;
+package uiSubcomponents;
 
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JCheckBox;
 
 import main.AppState;
-import userInterface.Utilities;
+import uiDisplay.Utilities;
 
 public class CompanyCheckBox extends JCheckBox {
 	private int orderNum;
@@ -32,7 +32,7 @@ public class CompanyCheckBox extends JCheckBox {
 		@Override
 		public void itemStateChanged(ItemEvent e) {
 			boolean currSelection = button.isSelected();
-			ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getCheckBoxArray();
+			ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getIndivItemSelectedArray();
 			for (int r = 0; r < checkBoxArray.size(); r++) {
 				PrintCheckBox box = checkBoxArray.get(r).get(orderIndex);
 				if (box.isEnabled()) {

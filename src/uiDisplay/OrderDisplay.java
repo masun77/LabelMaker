@@ -1,4 +1,4 @@
-package userInterface;
+package uiDisplay;
 
 import java.awt.Container;
 import java.awt.Dimension;
@@ -19,11 +19,12 @@ import labels.DateImp;
 import labels.LabelableItem;
 import main.AppState;
 import main.Order;
-import userInterface.graphicComponents.CompanyCheckBox;
-import userInterface.graphicComponents.HPanel;
-import userInterface.graphicComponents.ItemCheckBox;
-import userInterface.graphicComponents.PrintCheckBox;
-import userInterface.graphicComponents.VPanel;
+import uiLogic.HomeFunction;
+import uiSubcomponents.CompanyCheckBox;
+import uiSubcomponents.HPanel;
+import uiSubcomponents.ItemCheckBox;
+import uiSubcomponents.PrintCheckBox;
+import uiSubcomponents.VPanel;
 
 public class OrderDisplay implements HomeFunction {
 	// Application variables from Application state
@@ -64,6 +65,7 @@ public class OrderDisplay implements HomeFunction {
 		
 		startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
 		endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
+		endDate.addDays(2);
 		
 		addOrderArray();
 	}
@@ -141,7 +143,7 @@ public class OrderDisplay implements HomeFunction {
 		for(int n = 0; n < companyNames.size(); n++) {
 			addCompanyToHeaderRow(companyNames.get(n), n);
 		}
-		AppState.setCompanyBoxArray(companyBoxes);
+		AppState.setCompanySelectedArray(companyBoxes);
 		Utilities.localHPack(headerRow);
 		infoPanel.add(headerRow);
 	}
@@ -180,7 +182,7 @@ public class OrderDisplay implements HomeFunction {
 		Utilities.setMinMax(orderLabel, HEADER_SIZE);
 		itemColumn.add(orderLabel);
 		getDisplayArray();
-		AppState.setCheckBoxArray(checkBoxArray);
+		AppState.setIndivItemSelectedArray(checkBoxArray);
 		addRowsToDisplay(0);
 	}
 	
@@ -204,11 +206,11 @@ public class OrderDisplay implements HomeFunction {
 			itemColumn.add(itemNamePanel);
 			infoPanel.add(rowPanel);
 		}
-		AppState.setItemArray(itemBoxes);
+		AppState.setItemSelectedArray(itemBoxes);
 	}
 	
 	private void addItemToRow(HPanel rowPanel, int rowNum, int orderNum) {
-		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getCheckBoxArray();
+		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getIndivItemSelectedArray();
 		JLabel qtyLabel = new JLabel(Float.toString(displayArray.get(rowNum).get(orderNum)));
 		Utilities.setMinMax(qtyLabel, NUMBER_SIZE);
 		rowPanel.add(checkBoxArray.get(rowNum).get(orderNum));

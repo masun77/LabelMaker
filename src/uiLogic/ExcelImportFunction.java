@@ -1,4 +1,4 @@
-package userInterface;
+package uiLogic;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class ExcelImportFunction implements SideFunction {
 	}
 
 	@Override
-	public void showFunction() {
+	public void executeFunction() {
 		DataImporter di = new ExcelInvoiceReader();
 		
 		try {
@@ -50,9 +50,6 @@ public class ExcelImportFunction implements SideFunction {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-		}
-		// TODO Auto-generated method stub
-		
+		}		
 	}
-
 }

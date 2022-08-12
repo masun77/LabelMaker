@@ -1,5 +1,5 @@
-package userInterface;
+package uiLogic;
 
 public interface SideFunction extends AppListener {
-	public void showFunction();
+	public void executeFunction();
 }

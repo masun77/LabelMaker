@@ -3,13 +3,14 @@ package main;
 import java.util.ArrayList;
 
 import database.DataClient;
+import labels.LabelableItem;
 import localBackup.DataSaver;
 import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
-import userInterface.AppListener;
-import userInterface.graphicComponents.CompanyCheckBox;
-import userInterface.graphicComponents.ItemCheckBox;
-import userInterface.graphicComponents.PrintCheckBox;
+import uiLogic.AppListener;
+import uiSubcomponents.CompanyCheckBox;
+import uiSubcomponents.ItemCheckBox;
+import uiSubcomponents.PrintCheckBox;
 
 public class AppState {
 	private static SingletonState singleton;
@@ -84,28 +85,36 @@ public class AppState {
 		singleton.notifyListeners();
 	}
 
-	public static ArrayList<ArrayList<PrintCheckBox>> getCheckBoxArray() {
-		return singleton.getCheckBoxArray();
+	public static ArrayList<ArrayList<Boolean>> getIndivItemSelectedArray() {
+		return singleton.getIndivItemSelectedArray();
 	}
 
-	public static void setCheckBoxArray(ArrayList<ArrayList<PrintCheckBox>> pcb) {
-		singleton.setCheckBoxArray(pcb);
+	public static void setIndivItemSelectedArray(ArrayList<ArrayList<Boolean>> pcb) {
+		singleton.setIndivItemSelectedArray(pcb);
 	}
 	
-	public static void setCompanyBoxArray(ArrayList<CompanyCheckBox> boxes) {
-		singleton.setCompanyBoxArray(boxes);
+	public static void setCompanySelectedArray(ArrayList<Boolean> boxes) {
+		singleton.setCompanySelectedArray(boxes);
 	}
 	
-	public static ArrayList<CompanyCheckBox> getCompanyArray() {
-		return singleton.getCompanyArray();
+	public static ArrayList<Boolean> getCompanySelectedArray() {
+		return singleton.getCompanySelectedArray();
 	}
 	
-	public static void setItemArray(ArrayList<ItemCheckBox> boxes) {
-		singleton.setItemArray(boxes);
+	public static void setItemSelectedArray(ArrayList<Boolean> boxes) {
+		singleton.setItemSelectedArray(boxes);
 	}
 	
-	public static ArrayList<ItemCheckBox> getItemArray() {
+	public static ArrayList<Boolean> getItemSelectedArray() {
+		return singleton.getItemSelectedArray();
+	}
+	
+	public static ArrayList<ArrayList<LabelableItem>> getItemArray() {
 		return singleton.getItemArray();
+	}
+	
+	public void setItemArray(ArrayList<ArrayList<LabelableItem>> items) {
+		singleton.setItemArray(items);
 	}
 	
 	public static void notifyLastListener() {

@@ -1,4 +1,4 @@
-package userInterface;
+package uiLogic;
 
 import java.awt.Container;
 

@@ -6,16 +6,16 @@ import database.RefreshFunction;
 import database.SocketClient;
 import localBackup.DataSaver;
 import printing.PrintManager;
-import userInterface.DeleteOrderFunction;
-import userInterface.DeselectAllFunction;
-import userInterface.EditOrderFunction;
-import userInterface.EntryForm;
-import userInterface.ExcelImportFunction;
-import userInterface.LabelViewerImp;
-import userInterface.OrderDisplay;
-import userInterface.RDFInterface;
-import userInterface.SelectAllFunction;
-import userInterface.UserInterface;
+import uiDisplay.EditOrderFunction;
+import uiDisplay.EntryForm;
+import uiDisplay.OrderDisplay;
+import uiDisplay.RDFInterface;
+import uiLogic.DeleteOrderFunction;
+import uiLogic.DeselectAllFunction;
+import uiLogic.ExcelImportFunction;
+import uiLogic.LabelViewLogic;
+import uiLogic.SelectAllFunction;
+import uiLogic.UserInterface;
 
 public class Application {
 	private UserInterface ui;
@@ -29,7 +29,7 @@ public class Application {
 		ui.addFunction(new SelectAllFunction(), "Select All Orders", "");
 		ui.addFunction(new DeselectAllFunction(), "Deselect All Orders", "");
 		ui.addBreakBetweenFunctions();
-		ui.addFunction(new LabelViewerImp(), "View/Print Labels for selected", "resources/printer.png");
+		ui.addFunction(new LabelViewLogic(), "View/Print Labels for selected", "resources/printer.png");
 		ui.addBreakBetweenFunctions();
 		ui.addFunction(new EntryForm(), "+ New Order", "");
 		ui.addFunction(new EditOrderFunction(), "Edit Selected Order", "resources/edit.png");
@@ -42,11 +42,11 @@ public class Application {
 	public void run() {		
 		ui.showInterface();	
 		ServerUpdater updater = new ServerUpdater();
+		updater.setDaemon(true);
 		updater.start();
 	}
 	
 	private class ServerUpdater extends Thread {
-
 		@Override
 	    public void run(){
 			while (true) {

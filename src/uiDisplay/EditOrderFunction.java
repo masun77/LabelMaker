@@ -1,10 +1,11 @@
-package userInterface;
+package uiDisplay;
 
 import java.util.ArrayList;
 
 import main.AppState;
 import main.Order;
-import userInterface.graphicComponents.CompanyCheckBox;
+import uiLogic.SideFunction;
+import uiSubcomponents.CompanyCheckBox;
 
 public class EditOrderFunction implements SideFunction {
 
@@ -24,11 +25,11 @@ public class EditOrderFunction implements SideFunction {
 	}
 
 	@Override
-	public void showFunction() {
-		ArrayList<CompanyCheckBox> companyBoxes = AppState.getCompanyArray();
+	public void executeFunction() {
+		ArrayList<Boolean> companyBoxes = AppState.getCompanySelectedArray();
 		Order currOrder = null;
 		for (int c = 0; c < companyBoxes.size(); c++) {
-			if (companyBoxes.get(c).isSelected()) {
+			if (companyBoxes.get(c)) {
 				currOrder = AppState.getOrders().get(c);
 				c = companyBoxes.size() + 1;
 			}
@@ -36,7 +37,7 @@ public class EditOrderFunction implements SideFunction {
 		if (currOrder != null) {
 			EntryForm ef = new EntryForm();
 			ef.setEditingOrder(true, currOrder);
-			ef.showFunction();
+			ef.executeFunction();
 		}
 	}
 

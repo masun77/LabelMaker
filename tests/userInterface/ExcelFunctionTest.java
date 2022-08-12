@@ -11,6 +11,7 @@ import localBackup.DataSaver;
 import main.AppState;
 import main.Order;
 import printing.PrintManager;
+import uiLogic.ExcelImportFunction;
 
 class ExcelFunctionTest {
 
@@ -19,7 +20,7 @@ class ExcelFunctionTest {
 		AppState.initializeAppState(new ArrayList<Order>(), new DataSaver(), new PrintManager(),
 				new SocketClient());
 		ExcelImportFunction eif = new ExcelImportFunction();
-		eif.showFunction();
+		eif.executeFunction();
 	}
 
 }

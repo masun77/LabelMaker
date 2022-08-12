@@ -67,5 +67,17 @@ class DateImpTest {
 		assertEquals(false, new DateImp(8,10,21).dateLaterThan(new DateImp(5,1,22)));
 		assertEquals(true, new DateImp(6,1,22).dateLaterThan(new DateImp(5,1,22)));
 	}
-
+	
+	@Test
+	void testAddDays() {
+		Date d = new DateImp(4,1,22);
+		d.addDays(16);
+		assertEquals(d.getDateMMDDYYYY(), "04/17/2022");
+		d.addDays(30);
+		assertEquals(d.getDateMMDDYYYY(), "05/17/2022");
+		d.addDays(90);
+		assertEquals(d.getDateMMDDYYYY(), "08/15/2022");
+		d.addDays(365);
+		assertEquals(d.getDateMMDDYYYY(), "08/15/2023");
+	}
 }

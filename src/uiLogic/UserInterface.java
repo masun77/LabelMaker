@@ -1,4 +1,4 @@
-package userInterface;
+package uiLogic;
 
 public interface UserInterface {
 	public void showInterface();

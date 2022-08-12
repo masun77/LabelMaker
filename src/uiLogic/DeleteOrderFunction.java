@@ -1,10 +1,10 @@
-package userInterface;
+package uiLogic;
 
 import java.util.ArrayList;
 
 import main.AppState;
 import main.Order;
-import userInterface.graphicComponents.CompanyCheckBox;
+import uiSubcomponents.CompanyCheckBox;
 
 public class DeleteOrderFunction implements SideFunction {
 
@@ -24,8 +24,8 @@ public class DeleteOrderFunction implements SideFunction {
 	}
 
 	@Override
-	public void showFunction() {
-		ArrayList<CompanyCheckBox> companyArray = AppState.getCompanyArray();
+	public void executeFunction() {
+		ArrayList<CompanyCheckBox> companyArray = AppState.getCompanySelectedArray();
 		ArrayList<Order> orders = AppState.getOrders();
 		for (int c = companyArray.size() - 1; c >= 0; c--) {
 			if (companyArray.get(c).isSelected()) {

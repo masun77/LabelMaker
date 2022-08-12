@@ -1,9 +1,9 @@
-package userInterface.graphicComponents;
+package uiSubcomponents;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import userInterface.EntryForm;
+import uiDisplay.EntryForm;
 
 public class AmountListener implements FocusListener {
 	private EntryForm parent;

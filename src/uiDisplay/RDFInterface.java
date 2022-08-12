@@ -1,4 +1,4 @@
-package userInterface;
+package uiDisplay;
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -17,8 +17,12 @@ import database.DataClient;
 import localBackup.LocalFileBackup;
 import main.AppState;
 import main.Order;
-import userInterface.graphicComponents.HPanel;
-import userInterface.graphicComponents.VPanel;
+import uiLogic.AppListener;
+import uiLogic.HomeFunction;
+import uiLogic.SideFunction;
+import uiLogic.UserInterface;
+import uiSubcomponents.HPanel;
+import uiSubcomponents.VPanel;
 
 public class RDFInterface implements UserInterface, AppListener {
 	// Application variables
@@ -113,7 +117,7 @@ public class RDFInterface implements UserInterface, AppListener {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			func.showFunction();
+			func.executeFunction();
 		}
 	}
 

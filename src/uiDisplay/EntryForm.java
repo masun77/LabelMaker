@@ -1,4 +1,4 @@
-package userInterface;
+package uiDisplay;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -22,12 +22,13 @@ import main.AppState;
 import main.Item;
 import main.Order;
 import main.RDFItem;
-import userInterface.graphicComponents.AmountListener;
-import userInterface.graphicComponents.CodeListener;
-import userInterface.graphicComponents.HPanel;
-import userInterface.graphicComponents.PriceListener;
-import userInterface.graphicComponents.SaveOrderListener;
-import userInterface.graphicComponents.VPanel;
+import uiLogic.SideFunction;
+import uiSubcomponents.AmountListener;
+import uiSubcomponents.CodeListener;
+import uiSubcomponents.HPanel;
+import uiSubcomponents.PriceListener;
+import uiSubcomponents.SaveOrderListener;
+import uiSubcomponents.VPanel;
 
 public class EntryForm implements SideFunction {
 	private ArrayList<Order> orders;
@@ -88,7 +89,7 @@ public class EntryForm implements SideFunction {
 	}
 
 	@Override
-	public void showFunction() {
+	public void executeFunction() {
 		frame.setVisible(true);
 	}
 	

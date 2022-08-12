@@ -14,11 +14,15 @@ public class DateImp implements Date {
 	private int dayOfMonth;
 	private int monthOfYear;
 	private int year;
+	private static HashMap<Integer, Integer> daysInMonths = new HashMap<>();
 	
 	public DateImp(int m, int d, int y) {
 		dayOfMonth = d;
 		monthOfYear = m;
 		year = y;
+		if (year < 100) {
+			year += 2000;
+		}
 		initMonths();
 	}
 	
@@ -43,6 +47,20 @@ public class DateImp implements Date {
 			monthToMonthName.put(10, "October");
 			monthToMonthName.put(11, "November");
 			monthToMonthName.put(12, "December");
+		}
+		if (daysInMonths.get(1) == null) {
+			daysInMonths.put(1, 31);
+			daysInMonths.put(2, 28);
+			daysInMonths.put(3, 31);
+			daysInMonths.put(4, 30);
+			daysInMonths.put(5, 31);
+			daysInMonths.put(6, 30);
+			daysInMonths.put(7, 31);
+			daysInMonths.put(8, 31);
+			daysInMonths.put(9, 30);
+			daysInMonths.put(10, 31);
+			daysInMonths.put(11, 30);
+			daysInMonths.put(12, 31);
 		}
 	}
 	
@@ -168,5 +186,18 @@ public class DateImp implements Date {
 	@Override
 	public boolean dateEquals(Date d) {
 		return year == d.getYear() && monthOfYear == d.getMonthofYear() && dayOfMonth == d.getDayOfMonth();
+	}
+
+	@Override
+	public void addDays(int numDays) {
+		dayOfMonth += numDays;
+		while (dayOfMonth > daysInMonths.get(monthOfYear)) {
+			dayOfMonth -= daysInMonths.get(monthOfYear);
+			monthOfYear += 1;
+			if (monthOfYear > 12) {
+				monthOfYear = 1;
+				year += 1;
+			}
+		}
 	}
 }

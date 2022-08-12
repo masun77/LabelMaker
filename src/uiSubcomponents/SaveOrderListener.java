@@ -1,9 +1,9 @@
-package userInterface.graphicComponents;
+package uiSubcomponents;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import userInterface.EntryForm;
+import uiDisplay.EntryForm;
 
 public class SaveOrderListener implements ActionListener {
 	private EntryForm parent;

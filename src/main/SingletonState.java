@@ -3,13 +3,14 @@ package main;
 import java.util.ArrayList;
 
 import database.DataClient;
+import labels.LabelableItem;
 import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
-import userInterface.AppListener;
-import userInterface.UserInterface;
-import userInterface.graphicComponents.CompanyCheckBox;
-import userInterface.graphicComponents.ItemCheckBox;
-import userInterface.graphicComponents.PrintCheckBox;
+import uiLogic.AppListener;
+import uiLogic.UserInterface;
+import uiSubcomponents.CompanyCheckBox;
+import uiSubcomponents.ItemCheckBox;
+import uiSubcomponents.PrintCheckBox;
 
 public class SingletonState {
 	private AppListener lastListener;
@@ -18,9 +19,10 @@ public class SingletonState {
 	private DataClient dataClient;
 	private LocalFileBackup fileBackup;
 	private LabelPrinter printer;
-	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
-	private ArrayList<CompanyCheckBox> companyBoxes = new ArrayList<>();
-	private ArrayList<ItemCheckBox> itemBoxes = new ArrayList<>();
+	private ArrayList<ArrayList<Boolean>> indivItemSelectedBooleanArray = new ArrayList<>();
+	private ArrayList<Boolean> companySelectedBooleanArray = new ArrayList<>();
+	private ArrayList<Boolean> itemSelectedBooleanArray = new ArrayList<>();
+	private ArrayList<ArrayList<LabelableItem>> itemArray = new ArrayList<>();
 
 	public SingletonState(ArrayList<Order> ords, LocalFileBackup f, LabelPrinter lp, DataClient dc) {
 		orders = ords;
@@ -104,28 +106,36 @@ public class SingletonState {
 		this.printer = printer;
 	}
 
-	public ArrayList<ArrayList<PrintCheckBox>> getCheckBoxArray() {
-		return checkBoxArray;
+	public ArrayList<ArrayList<Boolean>> getIndivItemSelectedArray() {
+		return indivItemSelectedBooleanArray;
+	}
+	
+	public void setItemArray(ArrayList<ArrayList<LabelableItem>> itemArray) {
+		this.itemArray = itemArray;
 	}
 
-	public void setCheckBoxArray(ArrayList<ArrayList<PrintCheckBox>> checkBoxArray) {
-		this.checkBoxArray = checkBoxArray;
-	}
-	
-	public void setCompanyBoxArray(ArrayList<CompanyCheckBox> boxes) {
-		companyBoxes = boxes;
+	public ArrayList<ArrayList<LabelableItem>> getItemArray() {
+		return itemArray;
 	}
 
-	public ArrayList<CompanyCheckBox> getCompanyArray() {
-		return companyBoxes;
+	public void setIndivItemSelectedArray(ArrayList<ArrayList<Boolean>> checkBoxArray) {
+		this.indivItemSelectedBooleanArray = checkBoxArray;
 	}
 	
-	public void setItemArray(ArrayList<ItemCheckBox> boxes) {
-		itemBoxes = boxes;
+	public void setCompanySelectedArray(ArrayList<Boolean> boxes) {
+		companySelectedBooleanArray = boxes;
+	}
+
+	public ArrayList<Boolean> getCompanySelectedArray() {
+		return companySelectedBooleanArray;
 	}
 	
-	public ArrayList<ItemCheckBox> getItemArray() {
-		return itemBoxes;
+	public void setItemSelectedArray(ArrayList<Boolean> boxes) {
+		itemSelectedBooleanArray = boxes;
+	}
+	
+	public ArrayList<Boolean> getItemSelectedArray() {
+		return itemSelectedBooleanArray;
 	}
 	
 	public void addListener(AppListener listener) {

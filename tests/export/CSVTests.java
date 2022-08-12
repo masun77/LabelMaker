@@ -13,7 +13,7 @@ import localBackup.LocalFileBackup;
 import main.Item;
 import main.Order;
 import main.RDFItem;
-import userInterface.Utilities;
+import uiDisplay.Utilities;
 
 public class CSVTests {
 	private static ArrayList<Order> orders = new ArrayList<Order>();

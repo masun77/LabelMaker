@@ -1,4 +1,4 @@
-package userInterface;
+package uiDisplay;
 
 import java.awt.Component;
 import java.awt.Container;

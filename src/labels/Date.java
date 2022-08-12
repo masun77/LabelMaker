@@ -65,4 +65,10 @@ public interface Date {
 	 */
 	public boolean dateEquals(Date d);
 	
+	/**
+	 * Add the given number of days to this date
+	 * @param numDays the number of days to add
+	 */
+	public void addDays(int numDays);
+	
 }

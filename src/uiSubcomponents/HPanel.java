@@ -1,4 +1,4 @@
-package userInterface.graphicComponents;
+package uiSubcomponents;
 
 import java.awt.Color;
 

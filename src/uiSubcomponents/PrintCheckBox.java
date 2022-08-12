@@ -1,11 +1,11 @@
-package userInterface.graphicComponents;
+package uiSubcomponents;
 
 import java.awt.Dimension;
 
 import javax.swing.JCheckBox;
 
 import labels.LabelableItem;
-import userInterface.Utilities;
+import uiDisplay.Utilities;
 
 public class PrintCheckBox extends JCheckBox {
 	LabelableItem item;
