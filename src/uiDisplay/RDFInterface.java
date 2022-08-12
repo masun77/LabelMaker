@@ -15,9 +15,10 @@ import javax.swing.JScrollPane;
 
 import database.DataClient;
 import localBackup.LocalFileBackup;
+import main.AppListener;
+import main.AppListenerMessage;
 import main.AppState;
 import main.Order;
-import uiLogic.AppListener;
 import uiLogic.HomeFunction;
 import uiLogic.SideFunction;
 import uiLogic.UserInterface;
@@ -62,7 +63,7 @@ public class RDFInterface implements UserInterface, AppListener {
 		homeFrame.add(mainPanel);
 		homeFrame.setSize(WINDOW_SIZE);
 		
-		AppState.addLastListener(this);
+		AppState.addListener(this);
 	}
 	
 	private void updateHomePanel() {
@@ -90,7 +91,6 @@ public class RDFInterface implements UserInterface, AppListener {
 	
 	@Override
 	public void addFunction(SideFunction af, String btnName, String iconPath) {
-		AppState.addListener(af);
 		JButton funcBtn = new JButton(btnName);
 		
 		if (!iconPath.equals("")) {
@@ -122,19 +122,21 @@ public class RDFInterface implements UserInterface, AppListener {
 	}
 
 	@Override
-	public void resetOrders() {
-		updateHomePanel();
-		homeFrame.validate();
-	}
-
-	@Override
-	public void addOrder(Order o) {
-		updateHomePanel();
-		homeFrame.validate();
-	}
-
-	@Override
-	public void removeOrder(Order o) {
-		homeFrame.validate();
+	public void sendMessage(AppListenerMessage m) {
+		switch (m) {
+			case SET_ORDERS:
+				updateHomePanel();
+				homeFrame.revalidate();
+				break;
+			case ADD_ORDER:
+				updateHomePanel();
+				homeFrame.validate();
+				break;
+			case REMOVE_ORDER:
+				homeFrame.validate();
+				break;
+			default:
+				break;
+		}
 	}
  }

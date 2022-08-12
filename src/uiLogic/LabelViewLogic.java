@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import labels.LabelableItem;
 import main.AppState;
-import main.Order;
 import uiDisplay.LabelDisplayInterface;
 import uiDisplay.LabelViewDisplay;
 
@@ -39,21 +38,5 @@ public class LabelViewLogic implements SideFunction {
 			}		
 		}
 		return items;
-	}
-
-
-	@Override
-	public void resetOrders() {
-		lvd.setPrinter(AppState.getPrinter());
-	}
-	
-	@Override
-	public void addOrder(Order o) {
-		// do nothing
-	}
-	
-	@Override
-	public void removeOrder(Order o) {
-		// do nothing
 	}
 }

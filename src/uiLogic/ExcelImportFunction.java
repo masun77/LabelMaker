@@ -12,22 +12,6 @@ import main.AppState;
 import main.Order;
 
 public class ExcelImportFunction implements SideFunction {
-
-	@Override
-	public void resetOrders() {
-		// do nothing
-	}
-
-	@Override
-	public void addOrder(Order o) {
-		// do nothing
-	}
-
-	@Override
-	public void removeOrder(Order o) {
-		// do nothing
-	}
-
 	@Override
 	public void executeFunction() {
 		DataImporter di = new ExcelInvoiceReader();

@@ -7,10 +7,6 @@ import labels.LabelableItem;
 import localBackup.DataSaver;
 import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
-import uiLogic.AppListener;
-import uiSubcomponents.CompanyCheckBox;
-import uiSubcomponents.ItemCheckBox;
-import uiSubcomponents.PrintCheckBox;
 
 public class AppState {
 	private static SingletonState singleton;
@@ -60,13 +56,9 @@ public class AppState {
 	public static void setFileBackup(LocalFileBackup f) {
 		singleton.setFileBackup(f);
 	}
-
+	
 	public static void addListener(AppListener listener) {
 		singleton.addListener(listener);
-	}
-	
-	public static void addLastListener(AppListener listener) {
-		singleton.addLastListener(listener);
 	}
 
 	public static void removeListener(AppListener listener) {
@@ -81,8 +73,8 @@ public class AppState {
 		singleton.setFunctions(functions);
 	}
 
-	public static void notifyListeners() {
-		singleton.notifyListeners();
+	public static void sendMessage(AppListenerMessage m) {
+		singleton.sendMessage(m);
 	}
 
 	public static ArrayList<ArrayList<Boolean>> getIndivItemSelectedArray() {
@@ -116,9 +108,4 @@ public class AppState {
 	public void setItemArray(ArrayList<ArrayList<LabelableItem>> items) {
 		singleton.setItemArray(items);
 	}
-	
-	public static void notifyLastListener() {
-		singleton.notifyLastListener();
-	}
-
 }

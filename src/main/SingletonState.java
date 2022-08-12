@@ -6,14 +6,10 @@ import database.DataClient;
 import labels.LabelableItem;
 import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
-import uiLogic.AppListener;
-import uiLogic.UserInterface;
-import uiSubcomponents.CompanyCheckBox;
-import uiSubcomponents.ItemCheckBox;
-import uiSubcomponents.PrintCheckBox;
+
+import static main.AppListenerMessage.*;
 
 public class SingletonState {
-	private AppListener lastListener;
 	private ArrayList<AppListener> functions = new ArrayList<AppListener>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
 	private DataClient dataClient;
@@ -30,13 +26,15 @@ public class SingletonState {
 		printer = lp;
 		dataClient = dc;
 	}
+	
+	public void sendMessage(AppListenerMessage m) {
+		for (int f = 0; f < functions.size(); f++) {
+			functions.get(f).sendMessage(m);
+		}
+	}
 
 	public ArrayList<AppListener> getFunctions() {
 		return functions;
-	}
-	
-	public void addLastListener(AppListener list) {
-		lastListener = list;
 	}
 
 	public void setFunctions(ArrayList<AppListener> functions) {
@@ -49,37 +47,25 @@ public class SingletonState {
 	
 	public void addOrder(Order o) {
 		orders.add(o);	
-		for (int f = 0; f < functions.size(); f++) {
-			functions.get(f).addOrder(o);
-		}
-		if (lastListener != null) {
-			lastListener.addOrder(o);
-		}
-		fileBackup.saveOrders(orders);
-		dataClient.saveOrders(orders);
+		sendMessage(ADD_ORDER);
+		saveToFileAndServer(orders);
 	}
 	
 	public void removeOrder(Order o) {
 		orders.remove(o);
-		for (int f = 0; f < functions.size(); f++) {
-			functions.get(f).removeOrder(o);
-		}
-		if (lastListener != null) {
-			lastListener.removeOrder(o);
-		}
-		fileBackup.saveOrders(orders);
-		dataClient.saveOrders(orders);
+		sendMessage(REMOVE_ORDER);
+		saveToFileAndServer(orders);
 	}
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
-		fileBackup.saveOrders(orders);
-		notifyListeners();
-		dataClient.saveOrders(orders);
+		saveToFileAndServer(orders);
+		sendMessage(SET_ORDERS);
 	}
 	
-	public void notifyLastListener() {
-		lastListener.resetOrders();
+	private void saveToFileAndServer(ArrayList<Order> orders) {
+		fileBackup.saveOrders(orders);
+		dataClient.saveOrders(orders);
 	}
 
 	public DataClient getDataClient() {
@@ -110,16 +96,16 @@ public class SingletonState {
 		return indivItemSelectedBooleanArray;
 	}
 	
+	public void setIndivItemSelectedArray(ArrayList<ArrayList<Boolean>> checkBoxArray) {
+		this.indivItemSelectedBooleanArray = checkBoxArray;
+	}
+	
 	public void setItemArray(ArrayList<ArrayList<LabelableItem>> itemArray) {
 		this.itemArray = itemArray;
 	}
 
 	public ArrayList<ArrayList<LabelableItem>> getItemArray() {
 		return itemArray;
-	}
-
-	public void setIndivItemSelectedArray(ArrayList<ArrayList<Boolean>> checkBoxArray) {
-		this.indivItemSelectedBooleanArray = checkBoxArray;
 	}
 	
 	public void setCompanySelectedArray(ArrayList<Boolean> boxes) {
@@ -144,14 +130,5 @@ public class SingletonState {
 	
 	public void removeListener(AppListener listener) {
 		functions.remove(listener);
-	}
-
-	public void notifyListeners() {
-		for (int f = 0; f < functions.size(); f++) {
-			functions.get(f).resetOrders();
-		}
-		if (lastListener != null) {
-			lastListener.resetOrders();
-		}
 	}
 }

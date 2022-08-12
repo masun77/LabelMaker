@@ -256,19 +256,4 @@ public class EntryForm implements SideFunction {
 				Float.parseFloat(((TextField)rowData[3]).getText()),
 				((TextField)rowData[1]).getText());
 	}
-
-	@Override
-	public void resetOrders() {
-		// do nothing
-	}
-
-	@Override
-	public void addOrder(Order o) {
-		// do nothing
-	}
-
-	@Override
-	public void removeOrder(Order o) {
-		// do nothing
-	} 
 }

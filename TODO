@@ -5,7 +5,9 @@ Hours:
 TODO: 	
 
 - ability to add note to label, eg ATTN 
+
 - make display stuff abstract, esp scroll bars and sizing
+	may need to revalidate whole thing - maybe do need a last listener, or to add the interface last or something
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation

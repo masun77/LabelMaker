@@ -1,29 +1,12 @@
-package uiDisplay;
+package uiLogic;
 
 import java.util.ArrayList;
 
 import main.AppState;
 import main.Order;
-import uiLogic.SideFunction;
-import uiSubcomponents.CompanyCheckBox;
+import uiDisplay.EntryForm;
 
 public class EditOrderFunction implements SideFunction {
-
-	@Override
-	public void resetOrders() {
-		// do nothing
-	}
-
-	@Override
-	public void addOrder(Order o) {
-		// do nothing
-	}
-
-	@Override
-	public void removeOrder(Order o) {
-		// do nothing
-	}
-
 	@Override
 	public void executeFunction() {
 		ArrayList<Boolean> companyBoxes = AppState.getCompanySelectedArray();

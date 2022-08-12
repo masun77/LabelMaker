@@ -3,27 +3,9 @@ package uiLogic;
 import java.util.ArrayList;
 
 import main.AppState;
-import main.Order;
-import uiSubcomponents.CompanyCheckBox;
-import uiSubcomponents.PrintCheckBox;
+import static main.AppListenerMessage.*;
 
 public class SelectAllFunction implements SideFunction {
-
-	@Override
-	public void resetOrders() {
-		// do nothing
-	}
-
-	@Override
-	public void addOrder(Order o) {
-		// do nothing
-	}
-
-	@Override
-	public void removeOrder(Order o) {
-		// do nothing
-	}
-
 	@Override
 	public void executeFunction() {
 		ArrayList<Boolean> companyBoxes = AppState.getCompanySelectedArray();
@@ -41,6 +23,6 @@ public class SelectAllFunction implements SideFunction {
 				row.set(c, true);
 			}
 		}
-		AppState.notifyListeners();
+		AppState.sendMessage(UPDATE_CHECKBOXES);
 	}
 }

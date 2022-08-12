@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import labels.Date;
 import labels.DateImp;
 import labels.LabelableItem;
+import main.AppListenerMessage;
 import main.AppState;
 import main.Order;
 import uiLogic.HomeFunction;
@@ -278,8 +279,8 @@ public class OrderDisplay implements HomeFunction {
 		return arr;
 	}
 	
-	@Override
-	public void resetOrders() {
+	
+	private void resetOrders() {
 		wholePanel.removeAll();
 		displayPanel.removeAll();
 		itemColumn = new VPanel();
@@ -287,21 +288,22 @@ public class OrderDisplay implements HomeFunction {
 		orders = AppState.getOrders();
 		filteredOrders = new ArrayList<>();
 		addOrderArray();
-		AppState.notifyLastListener();
-	}
-
-	@Override
-	public void addOrder(Order o) {
-		resetOrders();
-	}
-
-	@Override
-	public void removeOrder(Order o) {
-		resetOrders();
 	}
 
 	@Override
 	public Container getMainContent() {
 		return wholePanel;
+	}
+
+	@Override
+	public void sendMessage(AppListenerMessage m) {
+		switch (m) {
+			case UPDATE_CHECKBOXES:
+				// todo: update checkboxes only
+				break;
+			default:
+				resetOrders();
+				break;
+		}
 	}
 }
