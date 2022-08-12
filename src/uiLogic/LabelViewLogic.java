@@ -32,7 +32,10 @@ public class LabelViewLogic implements SideFunction {
 			for (int col = 0; col < checkBoxArray.get(0).size(); col++) {
 				for (int row = 0; row < checkBoxArray.size(); row++) {
 					if (checkBoxArray.get(row).get(col)) {
-						items.add(appItemArray.get(row).get(col));
+						LabelableItem item = appItemArray.get(row).get(col);
+						if (item != null) {
+							items.add(item);
+						}
 					}
 				}
 			}		

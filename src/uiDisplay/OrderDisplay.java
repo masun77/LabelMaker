@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.Box;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -56,6 +57,7 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 	private ArrayList<CompanyCheckBox> companyBoxes;
 	private ArrayList<ItemCheckBox> itemBoxes;
+	private ArrayList<ArrayList<LabelableItem>> itemArray = new ArrayList<>();
 	private Date startDate;
 	private Date endDate;
 
@@ -64,9 +66,11 @@ public class OrderDisplay implements HomeFunction {
 		
 		Calendar cal = Calendar.getInstance();
 		
-		startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
-		endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
-		endDate.addDays(2);
+		// todo startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
+		//endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
+		//endDate.addDays(2);
+		startDate = new DateImp(1,1,2022);
+		endDate = new DateImp(12,1,2022);
 		
 		addOrderArray();
 	}
@@ -79,7 +83,8 @@ public class OrderDisplay implements HomeFunction {
 		itemBoxes = new ArrayList<>();
 		addCompanyNameRow();
 		addRows();
-
+		AppState.setItemArray(itemArray);
+		
 		itemColumn.add(Box.createVerticalGlue());
 		Utilities.localVPack(itemColumn);
 		Utilities.localVPack(infoPanel);
@@ -144,9 +149,26 @@ public class OrderDisplay implements HomeFunction {
 		for(int n = 0; n < companyNames.size(); n++) {
 			addCompanyToHeaderRow(companyNames.get(n), n);
 		}
-		AppState.setCompanySelectedArray(companyBoxes);
+		AppState.setCompanySelectedArray(checksToBooleanArray(companyBoxes));
 		Utilities.localHPack(headerRow);
 		infoPanel.add(headerRow);
+	}
+	
+	private ArrayList<Boolean> checksToBooleanArray(ArrayList<? extends JCheckBox> boxes) {
+		ArrayList<Boolean> booleanArr = new ArrayList<>();
+		for (int b = 0; b < boxes.size(); b++) {
+			booleanArr.add(boxes.get(b).isSelected());
+		}
+		return booleanArr;		
+	}
+	
+	private ArrayList<ArrayList<Boolean>> checksToDoubleBooleanArray() {
+		ArrayList<ArrayList<Boolean>> booleanArr = new ArrayList<>();
+		for (int b = 0; b < checkBoxArray.size(); b++) {
+			ArrayList<? extends JCheckBox> row = checkBoxArray.get(b);
+			booleanArr.add(checksToBooleanArray(row));
+		}
+		return booleanArr;		
 	}
 	
 	private void addCompanyToHeaderRow(String name, int n) {
@@ -183,7 +205,7 @@ public class OrderDisplay implements HomeFunction {
 		Utilities.setMinMax(orderLabel, HEADER_SIZE);
 		itemColumn.add(orderLabel);
 		getDisplayArray();
-		AppState.setIndivItemSelectedArray(checkBoxArray);
+		AppState.setIndivItemSelectedArray(checksToDoubleBooleanArray());
 		addRowsToDisplay(0);
 	}
 	
@@ -207,11 +229,10 @@ public class OrderDisplay implements HomeFunction {
 			itemColumn.add(itemNamePanel);
 			infoPanel.add(rowPanel);
 		}
-		AppState.setItemSelectedArray(itemBoxes);
+		AppState.setItemSelectedArray(checksToBooleanArray(itemBoxes));
 	}
 	
 	private void addItemToRow(HPanel rowPanel, int rowNum, int orderNum) {
-		ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getIndivItemSelectedArray();
 		JLabel qtyLabel = new JLabel(Float.toString(displayArray.get(rowNum).get(orderNum)));
 		Utilities.setMinMax(qtyLabel, NUMBER_SIZE);
 		rowPanel.add(checkBoxArray.get(rowNum).get(orderNum));
@@ -224,6 +245,7 @@ public class OrderDisplay implements HomeFunction {
 		unitCodes = new ArrayList<>();
 		displayArray = new ArrayList<ArrayList<Float>>();
 		checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
+		itemArray = new ArrayList<ArrayList<LabelableItem>>();
 		
 		for (int ord = 0; ord < filteredOrders.size(); ord++) {
 			addEmptyArraysForOrderItems(filteredOrders.get(ord));
@@ -245,8 +267,17 @@ public class OrderDisplay implements HomeFunction {
 				unitCodes.add(item.getUnit());
 				displayArray.add(createZeroArray(filteredOrders.size()));
 				checkBoxArray.add(createPrintCheckBoxes(filteredOrders.size()));
+				itemArray.add(createLabelableItemList(filteredOrders.size()));
 			}
 		}
+	}
+	
+	private ArrayList<LabelableItem> createLabelableItemList(int length) {
+		ArrayList<LabelableItem> list = new ArrayList<LabelableItem>();
+		for (int i = 0; i < length; i++) {
+			list.add(null);
+		}
+		return list;
 	}
 	
 	private void setDisplayArrayForOrder(Order order, int orderIndex) {
@@ -257,8 +288,9 @@ public class OrderDisplay implements HomeFunction {
 			displayArray.get(index).set(orderIndex, item.getQuantity());
 			
 			if (item.getQuantity() > 0) {
-				PrintCheckBox box = new PrintCheckBox(item);
+				PrintCheckBox box = new PrintCheckBox(item, orderIndex, index);
 				checkBoxArray.get(index).set(orderIndex, box);
+				itemArray.get(index).set(orderIndex, item);
 			}
 		}
 	}
@@ -279,6 +311,26 @@ public class OrderDisplay implements HomeFunction {
 		return arr;
 	}
 	
+	private void updateCheckBoxes() {
+		ArrayList<Boolean> companiesSelected = AppState.getCompanySelectedArray();
+		ArrayList<Boolean> itemsSelected = AppState.getItemSelectedArray();
+		ArrayList<ArrayList<Boolean>> indivItemSelections = AppState.getIndivItemSelectedArray();
+		for (int c = 0; c < companiesSelected.size(); c++) {
+			companyBoxes.get(c).setSelected(companiesSelected.get(c));
+		}
+		for (int c = 0; c < itemsSelected.size(); c++) {
+			itemBoxes.get(c).setSelected(itemsSelected.get(c));
+		}
+		for (int r = 0; r < checkBoxArray.size(); r++) {
+			ArrayList<PrintCheckBox> row = checkBoxArray.get(r);
+			ArrayList<Boolean> indivSelectionRow = indivItemSelections.get(r);
+			for (int c = 0; c < row.size(); c++) {
+				if (row.get(c).isEnabled()) {
+					row.get(c).setSelected(indivSelectionRow.get(c));
+				}
+			}			
+		}		
+	}
 	
 	private void resetOrders() {
 		wholePanel.removeAll();
@@ -299,7 +351,7 @@ public class OrderDisplay implements HomeFunction {
 	public void sendMessage(AppListenerMessage m) {
 		switch (m) {
 			case UPDATE_CHECKBOXES:
-				// todo: update checkboxes only
+				updateCheckBoxes();
 				break;
 			default:
 				resetOrders();

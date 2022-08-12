@@ -105,7 +105,7 @@ public class AppState {
 		return singleton.getItemArray();
 	}
 	
-	public void setItemArray(ArrayList<ArrayList<LabelableItem>> items) {
+	public static void setItemArray(ArrayList<ArrayList<LabelableItem>> items) {
 		singleton.setItemArray(items);
 	}
 }

@@ -9,6 +9,7 @@ import javax.swing.JCheckBox;
 
 import main.AppState;
 import uiDisplay.Utilities;
+import static main.AppListenerMessage.*;
 
 public class CompanyCheckBox extends JCheckBox {
 	private int orderNum;
@@ -22,23 +23,23 @@ public class CompanyCheckBox extends JCheckBox {
 	
 	private class CompanyCheckListener implements ItemListener {
 		private int orderIndex;
-		private JCheckBox button;
+		private JCheckBox box;
 		
 		public CompanyCheckListener(int ind, JCheckBox btn) {
 			orderIndex = ind;
-			button = btn;
+			box = btn;
 		}
 		
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			boolean currSelection = button.isSelected();
-			ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = AppState.getIndivItemSelectedArray();
+			boolean currSelection = box.isSelected();
+			ArrayList<Boolean> companySelected = AppState.getCompanySelectedArray();
+			companySelected.set(orderNum, currSelection);
+			ArrayList<ArrayList<Boolean>> checkBoxArray = AppState.getIndivItemSelectedArray();
 			for (int r = 0; r < checkBoxArray.size(); r++) {
-				PrintCheckBox box = checkBoxArray.get(r).get(orderIndex);
-				if (box.isEnabled()) {
-					box.setSelected(currSelection);
-				}
+				checkBoxArray.get(r).set(orderIndex, currSelection);
 			}
+			AppState.sendMessage(UPDATE_CHECKBOXES);
 		}
 	}
 }
