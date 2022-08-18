@@ -4,7 +4,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -12,7 +11,7 @@ import javax.swing.Box;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 import labels.Date;
@@ -23,8 +22,10 @@ import main.AppState;
 import main.Order;
 import uiLogic.HomeFunction;
 import uiSubcomponents.CompanyCheckBox;
+import uiSubcomponents.DetailScrollListener;
 import uiSubcomponents.HPanel;
 import uiSubcomponents.ItemCheckBox;
+import uiSubcomponents.ItemScrollListener;
 import uiSubcomponents.PrintCheckBox;
 import uiSubcomponents.VPanel;
 
@@ -35,12 +36,12 @@ public class OrderDisplay implements HomeFunction {
 	
 	// Display variables
 	private JPanel wholePanel = new VPanel();
-	private JPanel displayPanel = new HPanel();
-	private JPanel infoPanel = new VPanel();
-	private JPanel headerRow = new HPanel();
+	private JTextField startDateField = new JTextField();
+	private JTextField endDateField = new JTextField();
+	private JPanel ordersPanel = new HPanel();
 	private JPanel itemColumn = new VPanel();
-	private JTextField startField = new JTextField();
-	private JTextField endField = new JTextField();
+	private JPanel detailsPanel = new VPanel();
+	private JPanel companyNameRow = new HPanel();
 	private final Dimension NAME_SIZE = new Dimension(80,50);
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension NUMBER_SIZE = new Dimension(90,30);
@@ -48,6 +49,10 @@ public class OrderDisplay implements HomeFunction {
 	private final Dimension HEADER_SIZE = new Dimension(165,50);
 	private final Dimension FILTER_SIZE = new Dimension(390,30);
 	private final Dimension DATE_SIZE = new Dimension(50,20);
+	private final int DATE_FILTER_HEIGHT = (int) DATE_SIZE.getHeight();
+	private final int ROW_HEIGHT = 30;
+	private final int COMPANY_WIDTH = 90;
+	private final int FUNCTION_WIDTH = 240;
 	
 	// Helper variables
 	private ArrayList<String> gtins = new ArrayList<String>();
@@ -60,19 +65,33 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<ArrayList<LabelableItem>> itemArray = new ArrayList<>();
 	private Date startDate;
 	private Date endDate;
+	private int currentWholeWidth = 700 - FUNCTION_WIDTH;
+	private int currentWholeHeight = 700;
 
 	public OrderDisplay() {
 		orders = AppState.getOrders();
 		
 		Calendar cal = Calendar.getInstance();
 		
-		// todo startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
+		// todo uncomment and delete next lines
+		//startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
 		//endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
 		//endDate.addDays(2);
 		startDate = new DateImp(1,1,2022);
 		endDate = new DateImp(12,1,2022);
 		
+		wholePanel.setSize(new Dimension(currentWholeWidth, currentWholeHeight));
+		
 		addOrderArray();
+		
+		itemColumn.add(Box.createVerticalGlue());
+		ordersPanel.add(itemColumn);	
+		ordersPanel.add(detailsPanel);
+		wholePanel.add(ordersPanel);
+			
+		//setPanelSizes();
+		
+		wholePanel.validate();
 	}
 	
 	private void addOrderArray() {
@@ -84,33 +103,43 @@ public class OrderDisplay implements HomeFunction {
 		addCompanyNameRow();
 		addRows();
 		AppState.setItemArray(itemArray);
+	}
+	
+	private void setPanelSizes() {		
+		currentWholeWidth = wholePanel.getWidth();
+		currentWholeHeight = wholePanel.getHeight();
+		ordersPanel.setMaximumSize(new Dimension(currentWholeWidth, currentWholeHeight - DATE_FILTER_HEIGHT));
+		itemColumn.setMinimumSize(ITEM_NAME_SIZE);
+		detailsPanel.setSize(new Dimension(currentWholeWidth - itemColumn.getWidth(), 
+				currentWholeHeight - DATE_FILTER_HEIGHT));
 		
-		itemColumn.add(Box.createVerticalGlue());
-		Utilities.localVPack(itemColumn);
-		Utilities.localVPack(infoPanel);
-		displayPanel.add(itemColumn);
-		JScrollPane scrollbar = new JScrollPane(infoPanel);
-		displayPanel.add(scrollbar);		
-		Utilities.localHPack(displayPanel);
-		wholePanel.add(displayPanel);
-		Utilities.localVPack(wholePanel);
-		wholePanel.validate();
+		JScrollBar detailBar = new JScrollBar(JScrollBar.HORIZONTAL);
+		detailBar.addAdjustmentListener(new DetailScrollListener(companyNameRow,detailsPanel, detailBar, filteredOrders.size()));
+		detailBar.setMaximumSize(new Dimension(currentWholeWidth, 10));
+		System.out.println(currentWholeWidth + "\n" + detailBar.getSize() + "\n"
+				+ detailBar.getVisibleAmount() + "\n" + detailBar.getUnitIncrement());
+		detailsPanel.add(detailBar,0);
+		
+		JScrollBar verticalBar = new JScrollBar(JScrollBar.VERTICAL);
+		//verticalBar.addAdjustmentListener(new ItemScrollListener(allItemsColumn, allDetailsPanel));
+		verticalBar.setSize(new Dimension(10, ordersPanel.getHeight()));
+		ordersPanel.add(verticalBar,0);
 	}
 	
 	private void addDateFilter() {
 		HPanel filterRow = new HPanel();
 		Utilities.setMinMax(filterRow, FILTER_SIZE);
-		startField.setSize(DATE_SIZE);
-		startField.setText(startDate.getDateMMDDYYYY());
-		startField.addFocusListener(new DateFilter());
-		endField.setSize(DATE_SIZE);
-		endField.setText(endDate.getDateMMDDYYYY());
-		endField.addFocusListener(new DateFilter());
+		startDateField.setSize(DATE_SIZE);
+		startDateField.setText(startDate.getDateMMDDYYYY());
+		startDateField.addFocusListener(new DateFilter());
+		endDateField.setSize(DATE_SIZE);
+		endDateField.setText(endDate.getDateMMDDYYYY());
+		endDateField.addFocusListener(new DateFilter());
 		
 		filterRow.add(new JLabel("From: "));
-		filterRow.add(startField);
+		filterRow.add(startDateField);
 		filterRow.add(new JLabel("To: "));
-		filterRow.add(endField);
+		filterRow.add(endDateField);
 		
 		wholePanel.add(filterRow);
 	}
@@ -132,8 +161,8 @@ public class OrderDisplay implements HomeFunction {
 
 		@Override
 		public void focusLost(FocusEvent e) {
-			Date newStart = DateImp.parseDate(startField.getText());
-			Date newEnd = DateImp.parseDate(endField.getText());
+			Date newStart = DateImp.parseDate(startDateField.getText());
+			Date newEnd = DateImp.parseDate(endDateField.getText());
 			if (!newStart.dateEquals(startDate) || !newEnd.dateEquals(endDate)) {
 				startDate = newStart;
 				endDate = newEnd;
@@ -143,15 +172,15 @@ public class OrderDisplay implements HomeFunction {
 	}
 	
 	private void addCompanyNameRow() {
-		headerRow = new HPanel();
+		companyNameRow = new HPanel();
 		ArrayList<String> companyNames = getCompanyNames();
 		
 		for(int n = 0; n < companyNames.size(); n++) {
 			addCompanyToHeaderRow(companyNames.get(n), n);
 		}
 		AppState.setCompanySelectedArray(checksToBooleanArray(companyBoxes));
-		Utilities.localHPack(headerRow);
-		infoPanel.add(headerRow);
+		Utilities.localHPack(companyNameRow);
+		detailsPanel.add(companyNameRow);
 	}
 	
 	private ArrayList<Boolean> checksToBooleanArray(ArrayList<? extends JCheckBox> boxes) {
@@ -175,12 +204,12 @@ public class OrderDisplay implements HomeFunction {
 		JLabel nameLabel = new JLabel(name); 
 		Utilities.setMinMax(nameLabel, NAME_SIZE);
 		CompanyCheckBox currCompany = new CompanyCheckBox(n);
-		headerRow.add(currCompany);
+		companyNameRow.add(currCompany);
 		companyBoxes.add(currCompany);
-		headerRow.add(nameLabel);
+		companyNameRow.add(nameLabel);
 		JLabel spacer = new JLabel();
 		Utilities.setMinMax(spacer, SPACE);
-		headerRow.add(spacer);
+		companyNameRow.add(spacer);
 	}
 		
 	private ArrayList<String> getCompanyNames() {
@@ -227,7 +256,7 @@ public class OrderDisplay implements HomeFunction {
 			Utilities.localHPack(itemNamePanel);
 			Utilities.localHPack(rowPanel);
 			itemColumn.add(itemNamePanel);
-			infoPanel.add(rowPanel);
+			detailsPanel.add(rowPanel);
 		}
 		AppState.setItemSelectedArray(checksToBooleanArray(itemBoxes));
 	}
@@ -334,9 +363,9 @@ public class OrderDisplay implements HomeFunction {
 	
 	private void resetOrders() {
 		wholePanel.removeAll();
-		displayPanel.removeAll();
+		ordersPanel.removeAll();
 		itemColumn = new VPanel();
-		infoPanel = new VPanel();
+		detailsPanel = new VPanel();
 		orders = AppState.getOrders();
 		filteredOrders = new ArrayList<>();
 		addOrderArray();

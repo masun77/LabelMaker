@@ -1,7 +1,9 @@
 package uiDisplay;
 
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import uiLogic.HomeFunction;
 import uiLogic.SideFunction;
 import uiLogic.UserInterface;
 import uiSubcomponents.HPanel;
+import uiSubcomponents.HomePanel;
 import uiSubcomponents.VPanel;
 
 public class RDFInterface implements UserInterface, AppListener {
@@ -32,12 +35,12 @@ public class RDFInterface implements UserInterface, AppListener {
 	
 	// Display variables
 	private JFrame homeFrame = new JFrame("Label Program");
-	private final Dimension WINDOW_SIZE = new Dimension(1000,700);
-	private final Dimension FUNCTION_SIZE = new Dimension(240,700);
-	private JPanel mainPanel;
+	private Dimension windowSize = new Dimension(1000,700);
+	private final Dimension FUNCTION_SIZE = new Dimension(240,500);
+	private Dimension homeSize = new Dimension(760, 700);
+	private HomePanel mainPanel;
 	private JPanel functionPanel;
-	private JPanel homePanel;
-	private JScrollPane homeScrollPane;
+	private Container homePanel;
 	private HomeFunction homeFunction;
 	
 	public RDFInterface() {
@@ -50,24 +53,29 @@ public class RDFInterface implements UserInterface, AppListener {
 
 		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		mainPanel = new HPanel();
-		homePanel = new VPanel();
-		functionPanel = new VPanel();
+		mainPanel = new HomePanel(homeFrame);
+		mainPanel.setMinimumSize(windowSize);
 		
-		homeScrollPane = new JScrollPane(homePanel);
-		JScrollPane funcScrollPane = new JScrollPane(functionPanel);
-		Utilities.setMinMax(funcScrollPane, FUNCTION_SIZE);
-		mainPanel.add(homeScrollPane);
-		mainPanel.add(funcScrollPane);
+		mainPanel.add(new Label("what?"));
+		
+//		homePanel = new VPanel();
+//		homePanel.setPreferredSize(homeSize);
+//		homePanel.setMinimumSize(homeSize);
+//		homePanel.setMaximumSize(homeSize);
+		//Utilities.setMinMax(homePanel, homeSize);
+		functionPanel = new VPanel();
+//		Utilities.setMinMax(functionPanel, FUNCTION_SIZE);
+		
+//		mainPanel.add(homePanel);
+//		mainPanel.add(functionPanel);
 		
 		homeFrame.add(mainPanel);
-		homeFrame.setSize(WINDOW_SIZE);
 	}
 	
 	private void updateHomePanel() {
-		mainPanel.remove(0);
-		homeScrollPane = new JScrollPane(homeFunction.getMainContent());
-		mainPanel.add(homeScrollPane, 0);
+//		mainPanel.remove(0);
+//		homePanel = homeFunction.getMainContent();
+//		mainPanel.add(homePanel, 0);
 	}
 	
 	@Override
@@ -77,10 +85,10 @@ public class RDFInterface implements UserInterface, AppListener {
 	
 	@Override
 	public void addHomeFunction(HomeFunction hf) {
-		homeFunction = hf;
-		AppState.addListener(hf);
-		homePanel.add(hf.getMainContent());
-		Utilities.localHPack(homePanel);
+//		homeFunction = hf;
+//		AppState.addListener(hf);
+//		homePanel.add(hf.getMainContent());
+//		Utilities.localHPack(homePanel);
 	}
 	
 	public void addBreakBetweenFunctions() {
@@ -124,23 +132,20 @@ public class RDFInterface implements UserInterface, AppListener {
 		switch (m) {
 			case SET_ORDERS:
 				updateHomePanel();
-				mainPanel.validate();
+				mainPanel.validate(); // todo
 				homePanel.validate();
 				homePanel.getComponent(0).validate();
-				homeScrollPane.validate();
 				break;
 			case ADD_ORDER:
 				updateHomePanel();
 				mainPanel.validate();
 				homePanel.validate();
 				homePanel.getComponent(0).validate();
-				homeScrollPane.validate();
 				break;
 			case REMOVE_ORDER:
 				mainPanel.validate();
 				homePanel.validate();
 				homePanel.getComponent(0).validate();
-				homeScrollPane.validate();
 				break;
 			default:
 				homeFrame.validate();
