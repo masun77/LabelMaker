@@ -62,9 +62,9 @@ public class RDFItem extends Item {
 		private final RectangleBounds dateLabelBounds = new RectangleBounds(305,80,380,93);
 		private final RectangleBounds packDateBounds = new RectangleBounds(315,98,380,112);
 		private final RectangleBounds packDateBox = new RectangleBounds(305,93,370,113);
-		private final RectangleBounds voicePickCodeBounds = new RectangleBounds(307,114,380,157);
+		private final RectangleBounds voicePickCodeBounds = new RectangleBounds(307,114,390,157);
 		private final RectangleBounds vpcSmallBounds = new RectangleBounds(310,131,340,153);
-		private final RectangleBounds vpcLargeBounds = new RectangleBounds(335,117,380,157);
+		private final RectangleBounds vpcLargeBounds = new RectangleBounds(342,117,380,157);
 		private final RectangleBounds attnBounds = new RectangleBounds(210,130,300,150);   // todo: add to order? or indiv item? or indiv labels?
 		private final String PACK_DATE = "Pack Date";
 		private final String AI_CODE = "(01)";
@@ -143,7 +143,7 @@ public class RDFItem extends Item {
 		}
 		
 		private void addProductName() {
-			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  prodNameBounds,23);
+			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  prodNameBounds,22);
 		}
 		
 		private void addUnit() {

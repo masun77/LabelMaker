@@ -24,26 +24,36 @@ public class ExcelInvoiceReader implements DataImporter {
 	
 	// Constants
 	private final int START_ROW = 5;  // XSSFSheet is 0-based according to the documentation
-	private final int TYPE_COL = 3;
-	private final int PACK_DATE_COL = 4;
-	private final int INV_NUM_COL = 5;
-	private final int PO_COL = 6;
-	private final int COMPANY_COL = 7;
-	private final int SHIP_DATE_COL = 8;
-	private final int SHIP_VIA_COL = 9;
-	private final int GTIN_COL = 10;
-	private final int ITEM_CODE_COL = 11;
-	private final int ITEM_DESCRIPTION_COL = 12; 
-	private final int QTY_COL = 13;
-	private final int PRICE_COL = 14;
+	private final int HEADER_ROW = 3;
+	private int typeColumn = 0;
+	private int packDateColumn = 0;
+	private int invoiceNumColumn = 0;
+	private int poColumn = 0;
+	private int companyColumn = 0;
+	private int shipDateColumn = 0;
+	private int shipViaColumn = 0;
+	private int GTINColumn = 0;
+	private int itemCodeColumn = 0;
+	private int itemDescriptionColumn = 0; 
+	private int quantityColumn = 0;
+	private int priceColumn = 0;
+	private final String typeName = "Type";
+	private final String packDateName = "Date";
+	private final String invNumName = "Num";
+	private final String POName = "P. O. #";
+	private final String companyName = "Name";
+	private final String shipDateName = "Ship Date";
+	private final String shipViaName = "Via";
+	private final String GTINName = "GTIN NUMBER";
+	private final String itemCodeName = "Item";
+	private final String itemDescripName = "Item Description";
+	private final String qtyName = "Qty";
+	private final String priceName = "Sales Price";
 	private final String INV_TYPE = "Invoice";
 	private final String[] marketNames = {"Market", "TBFM", "ThBFM"};
 
 	@Override
-	public ArrayList<Order> readInvoices() {	
-		// todo - open file explorer to select file? or what? or do that in another button, then click read? 
-		// preview imported orders before importing? 
-		
+	public ArrayList<Order> readInvoices() {			
 		orders = new ArrayList<>();
 		orderNums = new ArrayList<>();
 		
@@ -52,9 +62,11 @@ public class ExcelInvoiceReader implements DataImporter {
 			Workbook workbook = new XSSFWorkbook(fis);
 			Sheet sheet = workbook.getSheetAt(0);
 			
+			setColumnNums(sheet);
+			
 			for (int r = START_ROW; r < sheet.getLastRowNum(); r++) {
 				Row row = sheet.getRow(r);
-				Cell invCell = row.getCell(TYPE_COL);				
+				Cell invCell = row.getCell(typeColumn);				
 				if (invCell != null && checkRowValid(row)) {
 					addItemToOrders(row);
 				}
@@ -70,26 +82,73 @@ public class ExcelInvoiceReader implements DataImporter {
 		return orders;
 	}
 	
+	private void setColumnNums(Sheet sheet) {
+		Row headerRow = sheet.getRow(HEADER_ROW);
+		for (int i = 0; i < headerRow.getLastCellNum(); i++) {
+			String cellValue = headerRow.getCell(i) == null? "": headerRow.getCell(i).getStringCellValue();
+			switch (cellValue) {
+			case typeName:
+				typeColumn = i;
+				break;
+			case packDateName:
+				packDateColumn = i;
+				break;
+			case invNumName:
+				invoiceNumColumn = i;
+				break;
+			case POName:
+				poColumn = i;
+				break;
+			case companyName:
+				companyColumn = i;
+				break;
+			case shipDateName:
+				shipDateColumn = i;
+				break;
+			case shipViaName:
+				shipViaColumn = i;
+				break;
+			case GTINName:
+				GTINColumn = i;
+				break;
+			case itemCodeName:
+				itemCodeColumn = i;
+				break;
+			case itemDescripName:
+				itemDescriptionColumn = i;
+				break;
+			case qtyName:
+				quantityColumn = i;
+				break;
+			case priceName:
+				priceColumn = i;
+				break;
+			default: 
+				break;
+			}			
+		}
+	}
+	
 	private boolean checkRowValid(Row row) {
-		boolean check = row.getCell(TYPE_COL).getStringCellValue().equals(INV_TYPE);
+		boolean check = row.getCell(typeColumn).getStringCellValue().equals(INV_TYPE);
 		for (String s: marketNames) {
-			check = check && !row.getCell(COMPANY_COL).getStringCellValue().contains(s);
+			check = check && !row.getCell(companyColumn).getStringCellValue().contains(s);
 		}
 		return check;
 	}
 	
 	private void addItemToOrders(Row row) {
-		int invNum = (int) row.getCell(INV_NUM_COL).getNumericCellValue();
+		int invNum = (int) row.getCell(invoiceNumColumn).getNumericCellValue();
 		Order currOrder;
 		
 		if (!orderNums.contains(invNum)) {
 			orderNums.add(invNum);
 			currOrder = new Order();
 			orders.add(currOrder);
-			currOrder.setShipVia(row.getCell(SHIP_VIA_COL).getStringCellValue());
+			currOrder.setShipVia(row.getCell(shipViaColumn).getStringCellValue());
 			currOrder.setInvoiceNumber(invNum);
 			currOrder.setPONum(getPONumFromRow(row));
-			currOrder.setCompany(row.getCell(COMPANY_COL).getStringCellValue());
+			currOrder.setCompany(row.getCell(companyColumn).getStringCellValue());
 		}
 		
 		currOrder = orders.get(orderNums.indexOf(invNum));
@@ -103,11 +162,11 @@ public class ExcelInvoiceReader implements DataImporter {
 	}
 	
 	private String getCustFromRow(Row row) {
-		return row.getCell(COMPANY_COL).getStringCellValue();
+		return row.getCell(companyColumn).getStringCellValue();
 	}
 	
 	private String getItemCodeFromRow(Row row) {
-		String itCode = row.getCell(ITEM_CODE_COL).getStringCellValue();
+		String itCode = row.getCell(itemCodeColumn).getStringCellValue();
 		while (itCode.contains(":")) {
 			itCode = itCode.substring(itCode.indexOf(":") + 1);
 		}
@@ -117,7 +176,7 @@ public class ExcelInvoiceReader implements DataImporter {
 	private String getProdNameFromRow(Row row) {
 		String descrip = AppState.getFileBackup().getProdName(getItemCodeFromRow(row));
 		if (descrip.equals("Name not found")) {
-			Cell c = row.getCell(ITEM_DESCRIPTION_COL);
+			Cell c = row.getCell(itemDescriptionColumn);
 			if (c != null) {
 				String s = c.getStringCellValue();
 				if (s.contains(",")) {
@@ -132,7 +191,7 @@ public class ExcelInvoiceReader implements DataImporter {
 	}
 	
 	private String getGTINFromRow(Row row) {
-		Cell c = row.getCell(GTIN_COL);
+		Cell c = row.getCell(GTINColumn);
 		if (c != null) {
 			return Integer.toString((int)c.getNumericCellValue());
 		}
@@ -146,26 +205,26 @@ public class ExcelInvoiceReader implements DataImporter {
 	}
 	
 	private float getQtyFromRow(Row row) {
-		return (float) row.getCell(QTY_COL).getNumericCellValue();
+		return (float) row.getCell(quantityColumn).getNumericCellValue();
 	}
 	
 	private float getPriceFromRow(Row row) {
-		return (float) row.getCell(PRICE_COL).getNumericCellValue();
+		return (float) row.getCell(priceColumn).getNumericCellValue();
 	}
 	
 	private Date getPackDateFromRow(Row row) {
-		String pd = row.getCell(PACK_DATE_COL).getStringCellValue();
+		String pd = row.getCell(packDateColumn).getStringCellValue();
 		return DateImp.parseDate(pd);
 		
 	}
 	
 	private Date getShipDateFromRow(Row row) {
-		String sd = row.getCell(SHIP_DATE_COL).getStringCellValue();
+		String sd = row.getCell(shipDateColumn).getStringCellValue();
 		return DateImp.parseDate(sd);
 	}
 	
 	private String getPONumFromRow(Row row) {
-		Cell c = row.getCell(PO_COL);
+		Cell c = row.getCell(poColumn);
 		if (c.getCellType().equals(CellType.NUMERIC)) {
 			return Integer.toString((int)c.getNumericCellValue());
 		}
