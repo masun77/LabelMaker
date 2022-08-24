@@ -12,6 +12,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import labels.Date;
@@ -22,26 +23,30 @@ import main.AppState;
 import main.Order;
 import uiLogic.HomeFunction;
 import uiSubcomponents.CompanyCheckBox;
+import uiSubcomponents.CompanyHeader;
 import uiSubcomponents.DetailScrollListener;
 import uiSubcomponents.HPanel;
 import uiSubcomponents.ItemCheckBox;
 import uiSubcomponents.ItemScrollListener;
 import uiSubcomponents.PrintCheckBox;
+import uiSubcomponents.ProductInfo;
 import uiSubcomponents.VPanel;
 
 public class OrderDisplay implements HomeFunction {
-	// Application variables from Application state
+	// Orders
 	private ArrayList<Order> orders;
 	private ArrayList<Order> filteredOrders = new ArrayList<>();
 	
 	// Display variables
 	private JPanel wholePanel = new VPanel();
+	private JPanel datePanel = new HPanel();
+	private JPanel headerRow = new HPanel();
+	private JPanel itemColumn = new VPanel();
+	private JPanel qtysPanel = new VPanel(); 
 	private JTextField startDateField = new JTextField();
 	private JTextField endDateField = new JTextField();
-	private JPanel ordersPanel = new HPanel();
-	private JPanel itemColumn = new VPanel();
-	private JPanel detailsPanel = new VPanel();
-	private JPanel companyNameRow = new HPanel();
+	
+	// Sizes
 	private final Dimension NAME_SIZE = new Dimension(80,50);
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension NUMBER_SIZE = new Dimension(90,30);
@@ -55,80 +60,52 @@ public class OrderDisplay implements HomeFunction {
 	private final int FUNCTION_WIDTH = 240;
 	
 	// Helper variables
-	private ArrayList<String> gtins = new ArrayList<String>();
-	private ArrayList<String> prodNames = new ArrayList<String>();
-	private ArrayList<String> unitCodes = new ArrayList<String>();
-	private ArrayList<ArrayList<Float>> displayArray = new ArrayList<ArrayList<Float>>();
+	private Date startDate;
+	private Date endDate;	
+	private ArrayList<ProductInfo> products = new ArrayList<>();
+	private ArrayList<CompanyHeader> companyHeaders = new ArrayList<>();
+	private ArrayList<ArrayList<Float>> quantities = new ArrayList<ArrayList<Float>>();
+	private ArrayList<ArrayList<LabelableItem>> itemArray = new ArrayList<>();
+
+	// UI variables	
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 	private ArrayList<CompanyCheckBox> companyBoxes;
 	private ArrayList<ItemCheckBox> itemBoxes;
-	private ArrayList<ArrayList<LabelableItem>> itemArray = new ArrayList<>();
-	private Date startDate;
-	private Date endDate;
-	private int currentWholeWidth = 700 - FUNCTION_WIDTH;
-	private int currentWholeHeight = 700;
 
 	public OrderDisplay() {
 		orders = AppState.getOrders();
 		
-		Calendar cal = Calendar.getInstance();
+		setDates();	
+		setupPanels();
+
+		filterOrders();
+		createArrayValues();
 		
+		System.out.println(quantities);
+		//addOrderArray();   // todo - put logical array into visual display
+	}
+	
+	private void setDates() {		
+		Calendar cal = Calendar.getInstance();
+
 		// todo uncomment and delete next lines
 		//startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
 		//endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
 		//endDate.addDays(2);
 		startDate = new DateImp(1,1,2022);
 		endDate = new DateImp(12,1,2022);
-		
-		wholePanel.setSize(new Dimension(currentWholeWidth, currentWholeHeight));
-		
-		addOrderArray();
-		
-		itemColumn.add(Box.createVerticalGlue());
-		ordersPanel.add(itemColumn);	
-		ordersPanel.add(detailsPanel);
-		wholePanel.add(ordersPanel);
-			
-		//setPanelSizes();
-		
-		wholePanel.validate();
 	}
 	
-	private void addOrderArray() {
+	private void setupPanels() {
 		addDateFilter();
-		filterOrders();
-		
-		companyBoxes = new ArrayList<>();
-		itemBoxes = new ArrayList<>();
-		addCompanyNameRow();
-		addRows();
-		AppState.setItemArray(itemArray);
-	}
-	
-	private void setPanelSizes() {		
-		currentWholeWidth = wholePanel.getWidth();
-		currentWholeHeight = wholePanel.getHeight();
-		ordersPanel.setMaximumSize(new Dimension(currentWholeWidth, currentWholeHeight - DATE_FILTER_HEIGHT));
-		itemColumn.setMinimumSize(ITEM_NAME_SIZE);
-		detailsPanel.setSize(new Dimension(currentWholeWidth - itemColumn.getWidth(), 
-				currentWholeHeight - DATE_FILTER_HEIGHT));
-		
-		JScrollBar detailBar = new JScrollBar(JScrollBar.HORIZONTAL);
-		detailBar.addAdjustmentListener(new DetailScrollListener(companyNameRow,detailsPanel, detailBar, filteredOrders.size()));
-		detailBar.setMaximumSize(new Dimension(currentWholeWidth, 10));
-		System.out.println(currentWholeWidth + "\n" + detailBar.getSize() + "\n"
-				+ detailBar.getVisibleAmount() + "\n" + detailBar.getUnitIncrement());
-		detailsPanel.add(detailBar,0);
-		
-		JScrollBar verticalBar = new JScrollBar(JScrollBar.VERTICAL);
-		//verticalBar.addAdjustmentListener(new ItemScrollListener(allItemsColumn, allDetailsPanel));
-		verticalBar.setSize(new Dimension(10, ordersPanel.getHeight()));
-		ordersPanel.add(verticalBar,0);
+		JScrollPane scrollPane = new JScrollPane(qtysPanel);
+		scrollPane.setColumnHeaderView(headerRow);
+		scrollPane.setRowHeaderView(itemColumn);
 	}
 	
 	private void addDateFilter() {
-		HPanel filterRow = new HPanel();
-		Utilities.setMinMax(filterRow, FILTER_SIZE);
+		datePanel = new HPanel();
+		Utilities.setMinMax(datePanel, FILTER_SIZE);
 		startDateField.setSize(DATE_SIZE);
 		startDateField.setText(startDate.getDateMMDDYYYY());
 		startDateField.addFocusListener(new DateFilter());
@@ -136,12 +113,12 @@ public class OrderDisplay implements HomeFunction {
 		endDateField.setText(endDate.getDateMMDDYYYY());
 		endDateField.addFocusListener(new DateFilter());
 		
-		filterRow.add(new JLabel("From: "));
-		filterRow.add(startDateField);
-		filterRow.add(new JLabel("To: "));
-		filterRow.add(endDateField);
+		datePanel.add(new JLabel("From: "));
+		datePanel.add(startDateField);
+		datePanel.add(new JLabel("To: "));
+		datePanel.add(endDateField);
 		
-		wholePanel.add(filterRow);
+		wholePanel.add(datePanel);
 	}
 	
 	private void filterOrders() {
@@ -152,6 +129,53 @@ public class OrderDisplay implements HomeFunction {
 			}
 		}
 	}
+	
+	private void createArrayValues() {
+		for (int ord = 0; ord < orders.size(); ord++) {
+			Order currOrder = orders.get(ord);
+			ArrayList<LabelableItem> items = currOrder.getItems();
+			CompanyHeader ch = new CompanyHeader(currOrder.getCompany(), currOrder.getPONum(), currOrder.getPackDate().getMMDD());
+			companyHeaders.add(ch);
+			for (int it = 0; it < items.size(); it++) {
+				LabelableItem item = items.get(it);
+				ProductInfo pi = new ProductInfo(item.getProductName(), item.getUnit(), item.getItemCode());
+				if (!products.contains(pi)) {
+					products.add(pi);
+					ArrayList<Float> newQtyRow = createZeroArray(filteredOrders.size());
+					newQtyRow.set(ord, item.getQuantity());
+					quantities.add(newQtyRow);
+				}
+				else {
+					int row = products.indexOf(pi);
+					quantities.get(row).set(ord, item.getQuantity());
+				}
+			}
+		}
+	}
+	
+	private ArrayList<Float> createZeroArray(int numZeros) {
+		ArrayList<Float> arr = new ArrayList<Float>();
+		for (int n = 0; n < numZeros; n++) {
+			arr.add(0.0f);
+		}
+		return arr;
+	}
+	
+	
+	//--------------------
+	
+	private void addOrderArray() {
+		
+		
+		companyBoxes = new ArrayList<>();
+		itemBoxes = new ArrayList<>();
+		addCompanyNameRow();
+		addRows();
+		AppState.setItemArray(itemArray);
+	}
+	
+	
+	
 	
 	private class DateFilter implements FocusListener {			
 		@Override
@@ -172,15 +196,15 @@ public class OrderDisplay implements HomeFunction {
 	}
 	
 	private void addCompanyNameRow() {
-		companyNameRow = new HPanel();
+		headerRow = new HPanel();
 		ArrayList<String> companyNames = getCompanyNames();
 		
 		for(int n = 0; n < companyNames.size(); n++) {
 			addCompanyToHeaderRow(companyNames.get(n), n);
 		}
 		AppState.setCompanySelectedArray(checksToBooleanArray(companyBoxes));
-		Utilities.localHPack(companyNameRow);
-		detailsPanel.add(companyNameRow);
+		Utilities.localHPack(headerRow);
+		qtysPanel.add(headerRow);
 	}
 	
 	private ArrayList<Boolean> checksToBooleanArray(ArrayList<? extends JCheckBox> boxes) {
@@ -204,12 +228,12 @@ public class OrderDisplay implements HomeFunction {
 		JLabel nameLabel = new JLabel(name); 
 		Utilities.setMinMax(nameLabel, NAME_SIZE);
 		CompanyCheckBox currCompany = new CompanyCheckBox(n);
-		companyNameRow.add(currCompany);
+		headerRow.add(currCompany);
 		companyBoxes.add(currCompany);
-		companyNameRow.add(nameLabel);
+		headerRow.add(nameLabel);
 		JLabel spacer = new JLabel();
 		Utilities.setMinMax(spacer, SPACE);
-		companyNameRow.add(spacer);
+		headerRow.add(spacer);
 	}
 		
 	private ArrayList<String> getCompanyNames() {
@@ -239,8 +263,8 @@ public class OrderDisplay implements HomeFunction {
 	}
 	
 	private void addRowsToDisplay(int start) {
-		for (int r = start; r < displayArray.size(); r++) {
-			ArrayList<Float> row = displayArray.get(r);
+		for (int r = start; r < quantities.size(); r++) {
+			ArrayList<Float> row = quantities.get(r);
 			HPanel rowPanel = new HPanel();
 			HPanel itemNamePanel = new HPanel();
 			JLabel prodName = new JLabel("<html>" + prodNames.get(r) + "<br>" + unitCodes.get(r) +  "</html>");
@@ -256,13 +280,13 @@ public class OrderDisplay implements HomeFunction {
 			Utilities.localHPack(itemNamePanel);
 			Utilities.localHPack(rowPanel);
 			itemColumn.add(itemNamePanel);
-			detailsPanel.add(rowPanel);
+			qtysPanel.add(rowPanel);
 		}
 		AppState.setItemSelectedArray(checksToBooleanArray(itemBoxes));
 	}
 	
 	private void addItemToRow(HPanel rowPanel, int rowNum, int orderNum) {
-		JLabel qtyLabel = new JLabel(Float.toString(displayArray.get(rowNum).get(orderNum)));
+		JLabel qtyLabel = new JLabel(Float.toString(quantities.get(rowNum).get(orderNum)));
 		Utilities.setMinMax(qtyLabel, NUMBER_SIZE);
 		rowPanel.add(checkBoxArray.get(rowNum).get(orderNum));
 		rowPanel.add(qtyLabel);
@@ -272,7 +296,7 @@ public class OrderDisplay implements HomeFunction {
 		gtins = new ArrayList<String>();
 		prodNames = new ArrayList<String>();
 		unitCodes = new ArrayList<>();
-		displayArray = new ArrayList<ArrayList<Float>>();
+		quantities = new ArrayList<ArrayList<Float>>();
 		checkBoxArray = new ArrayList<ArrayList<PrintCheckBox>>();
 		itemArray = new ArrayList<ArrayList<LabelableItem>>();
 		
@@ -294,7 +318,7 @@ public class OrderDisplay implements HomeFunction {
 				gtins.add(item.getGtin());
 				prodNames.add(item.getProductName());
 				unitCodes.add(item.getUnit());
-				displayArray.add(createZeroArray(filteredOrders.size()));
+				quantities.add(createZeroArray(filteredOrders.size()));
 				checkBoxArray.add(createPrintCheckBoxes(filteredOrders.size()));
 				itemArray.add(createLabelableItemList(filteredOrders.size()));
 			}
@@ -314,7 +338,7 @@ public class OrderDisplay implements HomeFunction {
 		for (int it = 0; it < items.size(); it++) {
 			LabelableItem item = items.get(it);
 			int index = gtins.indexOf(item.getGtin());
-			displayArray.get(index).set(orderIndex, item.getQuantity());
+			quantities.get(index).set(orderIndex, item.getQuantity());
 			
 			if (item.getQuantity() > 0) {
 				PrintCheckBox box = new PrintCheckBox(item, orderIndex, index);
@@ -324,13 +348,7 @@ public class OrderDisplay implements HomeFunction {
 		}
 	}
 	
-	private ArrayList<Float> createZeroArray(int numZeros) {
-		ArrayList<Float> arr = new ArrayList<Float>();
-		for (int n = 0; n < numZeros; n++) {
-			arr.add(0.0f);
-		}
-		return arr;
-	}
+	
 	
 	private ArrayList<PrintCheckBox> createPrintCheckBoxes(int numZeros) {
 		ArrayList<PrintCheckBox> arr = new ArrayList<>();
@@ -363,9 +381,8 @@ public class OrderDisplay implements HomeFunction {
 	
 	private void resetOrders() {
 		wholePanel.removeAll();
-		ordersPanel.removeAll();
 		itemColumn = new VPanel();
-		detailsPanel = new VPanel();
+		qtysPanel = new VPanel();
 		orders = AppState.getOrders();
 		filteredOrders = new ArrayList<>();
 		addOrderArray();

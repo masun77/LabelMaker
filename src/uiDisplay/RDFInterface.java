@@ -25,7 +25,6 @@ import uiLogic.HomeFunction;
 import uiLogic.SideFunction;
 import uiLogic.UserInterface;
 import uiSubcomponents.HPanel;
-import uiSubcomponents.HomePanel;
 import uiSubcomponents.VPanel;
 
 public class RDFInterface implements UserInterface, AppListener {

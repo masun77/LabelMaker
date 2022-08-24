@@ -12,6 +12,7 @@ public class Order {
 	private String PONum = "";
 	private String shipVia = "";
 	private int invoiceNumber = 0;
+	private Date packDate = null;
 
 	public int getInvoiceNumber() {
 		return invoiceNumber;
@@ -23,6 +24,9 @@ public class Order {
 	
 	public Order(ArrayList<LabelableItem> its) {
 		items = its;
+		if (packDate == null) {
+			packDate = items.get(0).getPackDate();
+		}
 	}
 	
 	public Order() {
@@ -34,6 +38,7 @@ public class Order {
 		PONum = po;
 		shipVia = sv;
 		company = c;
+		packDate = items.get(0).getPackDate();
 	}
 	
 	public void setCompany(String company) {
@@ -69,12 +74,26 @@ public class Order {
 	
 	public void setItems(ArrayList<LabelableItem> newIts) {
 		items = newIts;
+		if (packDate == null) {
+			packDate = items.get(0).getPackDate();
+		}
 	}
 	
 	public void addItem(LabelableItem it) {
 		items.add(it);
+		if (packDate == null) {
+			packDate = it.getPackDate();
+		}
 	}
 	
+	public Date getPackDate() {
+		return packDate;
+	}
+
+	public void setPackDate(Date packDate) {
+		this.packDate = packDate;
+	}
+
 	public void printItems() {
 		for (int i = 0; i < items.size(); i++) {
 			System.out.println(items.get(i).stringRep());
@@ -83,7 +102,8 @@ public class Order {
 	
 	public void printOrder() {
 		System.out.println("Invoice num: " + invoiceNumber + "\n\tCompany:" + 
-					company + "\n\tPO: " + PONum + "\n\tShip via: " + shipVia);
+					company + "\n\tPO: " + PONum + "\n\tShip via: " + shipVia
+					+ "\n\tPack date: " + packDate.getDateMMDDYYYY());
 		printItems();
 	}
 	

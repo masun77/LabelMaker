@@ -25,7 +25,7 @@ public class Application {
 				new SocketClient());
 		
 		ui = new RDFInterface();
-//		ui.addHomeFunction(new OrderDisplay());
+		ui.addHomeFunction(new OrderDisplay());
 		ui.addFunction(new SelectAllFunction(), "Select All Orders", "");
 		ui.addFunction(new DeselectAllFunction(), "Deselect All Orders", "");
 		ui.addBreakBetweenFunctions();
