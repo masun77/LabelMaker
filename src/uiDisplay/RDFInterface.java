@@ -31,64 +31,64 @@ import uiSubcomponents.VPanel;
 public class RDFInterface implements UserInterface, AppListener {
 	// Application variables
 	private ArrayList<Order> orders = new ArrayList<Order>();
-	private final LocalFileBackup fb;
+	private LocalFileBackup fb = null;
 	
 	// Display variables
-	private JFrame homeFrame = new JFrame("Label Program");
-	private Dimension windowSize = new Dimension(1000,700);
-	private final Dimension FUNCTION_SIZE = new Dimension(240,500);
+	private JFrame appFrame = new JFrame("Label Program");
+	private Dimension appSize = new Dimension(1000,700);
+	private final Dimension FUNCTION_SIZE = new Dimension(250,500);
 	private Dimension homeSize = new Dimension(760, 700);
-	private HomePanel mainPanel;
+	private JPanel mainPanel;
 	private JPanel functionPanel;
 	private Container homePanel;
 	private HomeFunction homeFunction;
 	
 	public RDFInterface() {
+		getOrders();
+		setupPanels();
+	}
+	
+	private void getOrders() {
 		fb = AppState.getFileBackup();
-		DataClient dc = AppState.getDataClient();
 		if (orders.size() == 0) {
 			orders = fb.getOrders();
 			AppState.setOrders(orders);
 		}
+	}
+	
+	private void setupPanels() {
+		appFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		appFrame.setSize(appSize);
 
-		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		mainPanel = new HomePanel(homeFrame);
-		mainPanel.setMinimumSize(windowSize);
-		
-		mainPanel.add(new Label("what?"));
-		
-//		homePanel = new VPanel();
-//		homePanel.setPreferredSize(homeSize);
-//		homePanel.setMinimumSize(homeSize);
-//		homePanel.setMaximumSize(homeSize);
-		//Utilities.setMinMax(homePanel, homeSize);
+		mainPanel = new HPanel();
+		homePanel = new JPanel();
 		functionPanel = new VPanel();
-//		Utilities.setMinMax(functionPanel, FUNCTION_SIZE);
-		
-//		mainPanel.add(homePanel);
-//		mainPanel.add(functionPanel);
-		
-		homeFrame.add(mainPanel);
+		homePanel.setPreferredSize(homeSize);
+		Utilities.setMinMax(functionPanel, FUNCTION_SIZE);
+
+		functionPanel.setAlignmentY(0f);
+		mainPanel.add(homePanel);
+		mainPanel.add(functionPanel);
+			
+		appFrame.add(mainPanel);
 	}
 	
 	private void updateHomePanel() {
-//		mainPanel.remove(0);
-//		homePanel = homeFunction.getMainContent();
-//		mainPanel.add(homePanel, 0);
+		mainPanel.remove(0);
+		homePanel = homeFunction.getMainContent();
+		mainPanel.add(homePanel, 0);
 	}
 	
 	@Override
 	public void showInterface() {
-		homeFrame.setVisible(true);
+		appFrame.setVisible(true);
 	}
 	
 	@Override
 	public void addHomeFunction(HomeFunction hf) {
-//		homeFunction = hf;
-//		AppState.addListener(hf);
-//		homePanel.add(hf.getMainContent());
-//		Utilities.localHPack(homePanel);
+		homeFunction = hf;
+		AppState.addListener(hf);
+		homePanel.add(hf.getMainContent());
 	}
 	
 	public void addBreakBetweenFunctions() {
@@ -111,7 +111,6 @@ public class RDFInterface implements UserInterface, AppListener {
 		
 		functionPanel.add(funcBtn);
 		functionPanel.add(Box.createRigidArea(new Dimension(1,10)));
-		Utilities.localVPack(functionPanel);  
 	}
 	
 	private class FunctionListener implements ActionListener {
@@ -132,23 +131,17 @@ public class RDFInterface implements UserInterface, AppListener {
 		switch (m) {
 			case SET_ORDERS:
 				updateHomePanel();
-				mainPanel.validate(); // todo
-				homePanel.validate();
-				homePanel.getComponent(0).validate();
+				appFrame.validate(); // todo
 				break;
 			case ADD_ORDER:
 				updateHomePanel();
-				mainPanel.validate();
-				homePanel.validate();
-				homePanel.getComponent(0).validate();
+				appFrame.validate(); 
 				break;
 			case REMOVE_ORDER:
-				mainPanel.validate();
-				homePanel.validate();
-				homePanel.getComponent(0).validate();
+				appFrame.validate(); 
 				break;
 			default:
-				homeFrame.validate();
+				appFrame.validate();
 				break;
 		}
 	}

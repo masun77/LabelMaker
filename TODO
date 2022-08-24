@@ -1,15 +1,13 @@
 Hours:
 2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 
-7/22: 3.5 hrs; 7/27: 5hrs; 8/5: 3 hrs; 8/12: 3.5 hrs; 8/18: 2:15pm - 
+7/22: 3.5 hrs; 7/27: 5hrs; 8/5: 3 hrs; 8/12: 3.5 hrs; 8/18: 3 hrs; 8/24: 7:30-
 
 TODO: 	
 
-- on orderdisplay wholepanel resizes, reset view
-
-- ability to add note to label, eg ATTN 
-
-- make display stuff abstract, esp scroll bars and sizing
-	may need to revalidate whole thing - maybe do need a last listener, or to add the interface last or something
+Make GUI a gift to use: beautiful and clean
+- minimum and maximum sizes
+- things resize with window
+- correct scrollbars - one horiz, one vertical - jscrollpane
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
@@ -17,6 +15,9 @@ Maintainability -
 	what factors affect the stability of the application? 
 	who/what skills would they need to maintain this down the line?
 	clean up code - comment, test, broken down clearly
+	
+- ability to add note to label, eg ATTN 
+	
 	
 TEST - every function, multiple times, in diff orders
 	
@@ -27,29 +28,16 @@ TESTS:
 
 LATER:
 make label format editing function
-Jeezzzz - need to fix alignment and spacing of display, esp with cleanliness/understanding of code
 why does PTT25 scan wrong/not scan?
-Make GUI beautiful and easy and clean - a gift to use
-	make (some) sizes in relation to window
 archive orders - put in separate file, save file backup, client/server, etc.... 
 	home button to archive, to view archived; there to unarchive selected, to delete archived orders etc
 	auto-archive when? maybe if today is a monday? archive last weeks and delete older? 
-don't close order entry on order save... - but not too slow... 
 better method for changing items - maybe do need to add/switch to an excel reader so can update from the excel spreadsheet?
 implement better http server idea from Nick 
-push from server to clients on update - does that mean client has to be running a 'server' program too? or does http take care of that?
 - indication - checks or colors or something - of picked, packed, labeled; and ability to set
 implement better database idea from Nick
 more than 20 items in an order - 
-edit existing orders
-?include a lot # and/or pack date in the bar code
-ck lot code with Jesse - I did YYMMDD. can change to whatever. 
 search for all todos, system printlns - 
-Import to quickbooks - 
-	select which orders to import - 
-	IIF file - 
-	how get invoice number? user enters? or auto on import? or?  
-ship date vs pack/pick date in item, order, display, csv
 if you edit the server data so that the order numbers are no longer in order/not sequential, error on reading in dataSaver
 Get a new computer - solid state, Dell
 reset settings from config files while running? vs just closing and reopening the app?
@@ -57,10 +45,8 @@ add missing items? eg meats
 alphabetize items on insertion
 alphabetize orders on insertion
 freeze header row and column
-larger VP code
-add total num labels to label display
-- check out React.js and Node
-- consider web-app
+check out React.js and Node
+consider web-app
 
 DONE:
 Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 
