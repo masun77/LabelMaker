@@ -1,5 +1,6 @@
 package uiDisplay;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.FocusEvent;
@@ -51,6 +52,7 @@ public class OrderDisplay implements HomeFunction {
 	private JPanel headerRow = new HPanel();
 	private JPanel itemColumn = new VPanel();
 	private JPanel qtysPanel = new VPanel(); 
+	private JScrollPane scrollPane = new JScrollPane();
 	private JTextField startDateField = new JTextField();
 	private JTextField endDateField = new JTextField();
 	private ArrayList<ArrayList<PrintCheckBox>> checkBoxArray;
@@ -65,16 +67,14 @@ public class OrderDisplay implements HomeFunction {
 	private final Dimension HEADER_SIZE = new Dimension(165,50);
 	private final Dimension FILTER_SIZE = new Dimension(390,30);
 	private final Dimension DATE_SIZE = new Dimension(50,20);
-	private final int DATE_FILTER_HEIGHT = (int) DATE_SIZE.getHeight();
-	private final int ROW_HEIGHT = 30;
-	private final int COMPANY_WIDTH = 90;
-	private final int FUNCTION_WIDTH = 240;
 
 
 	public OrderDisplay() {
 		orders = AppState.getOrders();
 		
-		setDates();	
+		//setDates();	 todo
+		setPracticeDates();
+		addDateFilter();
 		setupPanels();
 
 		filterOrders();
@@ -85,20 +85,22 @@ public class OrderDisplay implements HomeFunction {
 	
 	private void setDates() {		
 		Calendar cal = Calendar.getInstance();
-
-		// todo uncomment and delete next lines
-		//startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
-		//endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
-		//endDate.addDays(2);
+		startDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
+		endDate = DateImp.parseDate(startDate.getDateMMDDYYYY());
+		endDate.addDays(2);
+	}
+	
+	private void setPracticeDates() {
 		startDate = new DateImp(1,1,2022);
 		endDate = new DateImp(12,1,2022);
 	}
 	
 	private void setupPanels() {
-		addDateFilter();
-		JScrollPane scrollPane = new JScrollPane(qtysPanel);
+		scrollPane = new JScrollPane(qtysPanel);
+		qtysPanel.setAlignmentX(0);
 		scrollPane.setColumnHeaderView(headerRow);
 		scrollPane.setRowHeaderView(itemColumn);
+		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER, new JLabel("     ORDERS"));
 		wholePanel.add(scrollPane);
 	}
 	
@@ -133,7 +135,7 @@ public class OrderDisplay implements HomeFunction {
 		for (int ord = 0; ord < orders.size(); ord++) {
 			Order currOrder = orders.get(ord);
 			ArrayList<LabelableItem> items = currOrder.getItems();
-			CompanyHeader ch = new CompanyHeader(getShortName(currOrder.getCompany()), currOrder.getPONum(), currOrder.getPackDate().getMMDD());
+			CompanyHeader ch = new CompanyHeader(getShortName(currOrder.getCompany(),12), currOrder.getPONum(), currOrder.getPackDate().getMMDD());
 			companyHeaders.add(ch);
 			for (int it = 0; it < items.size(); it++) {
 				LabelableItem item = items.get(it);
@@ -157,9 +159,9 @@ public class OrderDisplay implements HomeFunction {
 		AppState.setItemArray(itemArray);
 	}
 	
-	private String getShortName(String name) {
-		if (name.length() > 12) {
-			return name.substring(12) + "..";
+	private String getShortName(String name, int maxLength) {
+		if (name.length() > maxLength) {
+			return name.substring(0,maxLength -1) + "..";
 		}
 		return name;
 	}
@@ -187,7 +189,8 @@ public class OrderDisplay implements HomeFunction {
 		
 		addHeaderRow();
 		addItemColumn();
-//		addQuantities();
+		addQuantities();
+		Utilities.localVPack(qtysPanel);
 	}
 	
 	private void addHeaderRow() {
@@ -208,24 +211,21 @@ public class OrderDisplay implements HomeFunction {
 		AppState.setCompanySelectedArray(checksToBooleanArray(companyBoxes));
 	}
 	
-	private void addItemColumn() {
-		JLabel orderLabel = new JLabel("ORDERS");
-		Utilities.setMinMax(orderLabel, HEADER_SIZE);
-		itemColumn.add(orderLabel);
-		
+	private void addItemColumn() {		
 		for (int it = 0; it < products.size(); it++) {
 			ProductInfo pi = products.get(it);
 			HPanel itemNamePanel = new HPanel();
-			JLabel prodName = new JLabel("<html>" + pi.getDisplayName() + "<br>" + pi.getUnit() +  "</html>");
+			JLabel prodName = new JLabel("<html>" + getShortName(pi.getDisplayName(),19) + "<br>" + pi.getUnit() +  "</html>");
 			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
 			ItemCheckBox itemBox = new ItemCheckBox(it);
 			itemBoxes.add(itemBox);
 			itemNamePanel.add(itemBox);
 			itemNamePanel.add(prodName);
-			Utilities.setMinMax(itemNamePanel, HEADER_SIZE);
+			Utilities.setMinMax(itemNamePanel, ITEM_NAME_SIZE);
 			itemColumn.add(itemNamePanel);
 		}
-		Utilities.localVPack(itemColumn);
+		Utilities.localVPack(itemColumn);		
+		AppState.setItemSelectedArray(checksToBooleanArray(itemBoxes));
 	}
 	
 	private ArrayList<Boolean> checksToBooleanArray(ArrayList<? extends JCheckBox> boxes) {
@@ -245,64 +245,28 @@ public class OrderDisplay implements HomeFunction {
 		return booleanArr;		
 	}
 	
-
-	
-	//*************
-	
-	private void addRows() {
-		
-		getDisplayArray();
-		addRowsToDisplay(0);
-		AppState.setIndivItemSelectedArray(checksToDoubleBooleanArray());
-	}
-	
-	private void addRowsToDisplay(int start) {
-		for (int r = start; r < quantities.size(); r++) {
-			
-			for (int orderNum = 0; orderNum < row.size(); orderNum++) {
-				addItemToRow(rowPanel, r, orderNum);
+	private void addQuantities() {
+		for (int row = 0; row < products.size(); row++) {
+			HPanel rowPanel = new HPanel();
+			ArrayList<PrintCheckBox> checkBoxRow = new ArrayList<>();
+			checkBoxArray.add(checkBoxRow);
+			for (int ord = 0; ord < filteredOrders.size(); ord++) {
+				float qty = quantities.get(row).get(ord);
+				JLabel qtyLabel = new JLabel(Float.toString(qty));
+				Utilities.setMinMax(qtyLabel, NUMBER_SIZE);
+				PrintCheckBox pcb = new PrintCheckBox(itemArray.get(row).get(ord), ord, row);
+				if (qty == 0) {
+					pcb.setEnabled(false);
+					pcb.setBackground(Color.white);
+				}
+				checkBoxRow.add(pcb);
+				rowPanel.add(pcb);
+				rowPanel.add(qtyLabel);
 			}
+			Utilities.localHPack(rowPanel);
 			qtysPanel.add(rowPanel);
 		}
-		AppState.setItemSelectedArray(checksToBooleanArray(itemBoxes));
-	}
-	
-	private void addItemToRow(HPanel rowPanel, int rowNum, int orderNum) {
-		JLabel qtyLabel = new JLabel(Float.toString(quantities.get(rowNum).get(orderNum)));
-		Utilities.setMinMax(qtyLabel, NUMBER_SIZE);
-		rowPanel.add(checkBoxArray.get(rowNum).get(orderNum));
-		rowPanel.add(qtyLabel);
-	}
-			
-	private ArrayList<LabelableItem> createLabelableItemList(int length) {
-		ArrayList<LabelableItem> list = new ArrayList<LabelableItem>();
-		for (int i = 0; i < length; i++) {
-			list.add(null);
-		}
-		return list;
-	}
-	
-	private void setDisplayArrayForOrder(Order order, int orderIndex) {
-		ArrayList<LabelableItem> items = order.getItems();
-		for (int it = 0; it < items.size(); it++) {
-			LabelableItem item = items.get(it);
-			int index = gtins.indexOf(item.getGtin());
-			quantities.get(index).set(orderIndex, item.getQuantity());
-			
-			if (item.getQuantity() > 0) {
-				PrintCheckBox box = new PrintCheckBox(item, orderIndex, index);
-				checkBoxArray.get(index).set(orderIndex, box);
-				itemArray.get(index).set(orderIndex, item);
-			}
-		}
-	}
-	
-	private ArrayList<PrintCheckBox> createPrintCheckBoxes(int numZeros) {
-		ArrayList<PrintCheckBox> arr = new ArrayList<>();
-		for (int n = 0; n < numZeros; n++) {
-			arr.add(new PrintCheckBox());
-		}
-		return arr;
+		AppState.setIndivItemSelectedArray(checksToDoubleBooleanArray());
 	}
 	
 	private void updateCheckBoxes() {
@@ -326,11 +290,7 @@ public class OrderDisplay implements HomeFunction {
 		}		
 	}
 	
-	
-	
-	//*****
-	
-	private void resetOrders() {
+	private void resetOrders() {	
 		wholePanel.removeAll();
 		headerRow = new HPanel();
 		itemColumn = new VPanel();
@@ -343,6 +303,7 @@ public class OrderDisplay implements HomeFunction {
 		quantities = new ArrayList<>();
 		itemArray = new ArrayList<>();
 
+		setupPanels();
 		filterOrders();
 		createArrayValues();
 		displayOrders(); 
@@ -381,5 +342,11 @@ public class OrderDisplay implements HomeFunction {
 				resetOrders();
 			}
 		}
+	}
+
+	@Override
+	public void setScrollPaneSize(int width, int height) {
+		scrollPane.setPreferredSize(new Dimension(width, height - (int) FILTER_SIZE.getHeight()));
+		scrollPane.setSize(new Dimension(width, height - (int) FILTER_SIZE.getHeight()));
 	}
 }

@@ -26,10 +26,7 @@ public class ExcelImportFunction implements SideFunction {
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			    di.setResourcePath(chooser.getSelectedFile().getAbsolutePath());
 			    ArrayList<Order> orders = di.readInvoices();
-			    
-			    ArrayList<Order> currOrders = AppState.getOrders();
-			    currOrders.addAll(orders);
-			    AppState.setOrders(currOrders);
+			    AppState.addOrders(orders);
 		    }
 		}
 		catch (Exception e) {

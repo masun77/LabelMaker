@@ -6,6 +6,8 @@ import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -70,6 +72,18 @@ public class RDFInterface implements UserInterface, AppListener {
 		mainPanel.add(functionPanel);
 			
 		appFrame.add(mainPanel);
+		
+		appFrame.addComponentListener(new ComponentAdapter() 
+		{  
+		        public void componentResized(ComponentEvent evt) {
+		        	homeFunction.setScrollPaneSize(appFrame.getWidth() - (int) FUNCTION_SIZE.getWidth() - 10,
+		    				appFrame.getHeight() - 50);
+		        }
+		        public void componentMoved(ComponentEvent evt) {
+		        	homeFunction.setScrollPaneSize(appFrame.getWidth() - (int) FUNCTION_SIZE.getWidth() - 10,
+		    				appFrame.getHeight() - 50);
+		        }
+		});
 	}
 	
 	private void updateHomePanel() {
@@ -88,6 +102,8 @@ public class RDFInterface implements UserInterface, AppListener {
 		homeFunction = hf;
 		AppState.addListener(hf);
 		homePanel.add(hf.getMainContent());
+		homeFunction.setScrollPaneSize(appFrame.getWidth() - (int) FUNCTION_SIZE.getWidth() - 10,
+				appFrame.getHeight() - 10);
 	}
 	
 	public void addBreakBetweenFunctions() {
@@ -127,21 +143,7 @@ public class RDFInterface implements UserInterface, AppListener {
 
 	@Override
 	public void sendMessage(AppListenerMessage m) {
-		switch (m) {
-			case SET_ORDERS:
-				updateHomePanel();
-				appFrame.validate(); // todo
-				break;
-			case ADD_ORDER:
-				updateHomePanel();
-				appFrame.validate(); 
-				break;
-			case REMOVE_ORDER:
-				appFrame.validate(); 
-				break;
-			default:
-				appFrame.validate();
-				break;
-		}
+		updateHomePanel();
+		appFrame.validate();
 	}
  }

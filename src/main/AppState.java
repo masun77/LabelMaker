@@ -112,4 +112,8 @@ public class AppState {
 	public static void setLastListener(AppListener l) {
 		singleton.setLastListener(l);
 	}
+	
+	public static void addOrders(ArrayList<Order> ords) {
+		singleton.addOrders(ords);
+	}
 }

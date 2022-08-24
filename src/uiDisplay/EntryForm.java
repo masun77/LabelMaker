@@ -239,6 +239,7 @@ public class EntryForm implements SideFunction {
 		}
 		Order newOrder = new Order(company.getText(), items, purchaseOrder.getText(), 
 				shipVia.getText());
+		newOrder.setInvoiceNumber(company.getText().hashCode() + date.getText().hashCode());
 		if (editingOrder) {
 			AppState.removeOrder(editOrder);
 		}

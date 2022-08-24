@@ -12,6 +12,7 @@ import static main.AppListenerMessage.*;
 public class SingletonState {
 	private ArrayList<AppListener> functions = new ArrayList<AppListener>();
 	private ArrayList<Order> orders = new ArrayList<Order>();
+	private ArrayList<Integer> invoiceNums = new ArrayList<>();
 	private DataClient dataClient;
 	private LocalFileBackup fileBackup;
 	private LabelPrinter printer;
@@ -50,19 +51,42 @@ public class SingletonState {
 	}
 	
 	public void addOrder(Order o) {
-		orders.add(o);	
+		if (!invoiceNums.contains(o.getInvoiceNumber())) {
+			orders.add(o);
+			invoiceNums.add(o.getInvoiceNumber());
+		}	
 		sendMessage(ADD_ORDER);
 		saveToFileAndServer(orders);
 	}
 	
+	public void addOrders(ArrayList<Order> ords) {
+		for (int ord = 0; ord < ords.size(); ord++) {
+			Order o = ords.get(ord);
+			if (!invoiceNums.contains(o.getInvoiceNumber())) {
+				orders.add(o);
+				invoiceNums.add(o.getInvoiceNumber());
+			}
+		}
+		sendMessage(ADD_ORDER);
+		saveToFileAndServer(orders);
+	}
+	
+	private void addInvNums(ArrayList<Order> ords) {
+		for (int o = 0; o < ords.size(); o++) {
+			invoiceNums.add(ords.get(o).getInvoiceNumber());
+		}
+	}
+	
 	public void removeOrder(Order o) {
 		orders.remove(o);
+		invoiceNums.remove(o.getInvoiceNumber());
 		sendMessage(REMOVE_ORDER);
 		saveToFileAndServer(orders);
 	}
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
+		addInvNums(orders);
 		saveToFileAndServer(orders);
 		sendMessage(SET_ORDERS);
 	}

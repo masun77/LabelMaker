@@ -32,7 +32,7 @@ public class DataSaver implements LocalFileBackup, DataClient {
 	
 	// Order constants
 	private final String ORDER_FILE_NAME = "resources/Orders.csv";
-	private final int ORDER_NUM_INDEX = 0;
+	private final int INVOICE_NUM_INDEX = 0;
 	private final int PO_INDEX = 1;
 	private final int SHIP_VIA_INDEX = 2;
 	private final int CUSTOMER_INDEX = 3;
@@ -74,7 +74,7 @@ public class DataSaver implements LocalFileBackup, DataClient {
 	        		CSVWriter.DEFAULT_LINE_END);
 
 	        for (int ord = 0; ord < orders.size(); ord++) {
-	        	writeOrder(orders.get(ord), writer, ord);
+	        	writeOrder(orders.get(ord), writer);
 	        }
 
 	        writer.close();
@@ -91,13 +91,13 @@ public class DataSaver implements LocalFileBackup, DataClient {
 	 * @param writer the writer to write with
 	 * @param orderNumber the order number, so orders are kept separate as needed
 	 */
-	private void writeOrder(Order order, CSVWriter writer, int orderNumber) {
+	private void writeOrder(Order order, CSVWriter writer) {
 		ArrayList<LabelableItem> items = order.getItems();
         List<String[]> data = new ArrayList<String[]>();
 		for (int i = 0; i < items.size(); i++) {
 			LabelableItem item = items.get(i);
 			String[] orderData = new String[11];
-			orderData[ORDER_NUM_INDEX] = Integer.toString(orderNumber);
+			orderData[INVOICE_NUM_INDEX] = Integer.toString(order.getInvoiceNumber());
 			orderData[PO_INDEX] = order.getPONum();
 			orderData[SHIP_VIA_INDEX] = order.getShipVia();
 			orderData[CUSTOMER_INDEX] = item.getCustomer();
@@ -146,14 +146,18 @@ public class DataSaver implements LocalFileBackup, DataClient {
 	 */
 	public ArrayList<Order> getOrdersFromList(List<String[]> allData) {
 		ArrayList<Order> orders = new ArrayList<Order>();
+		ArrayList<Integer> invNums = new ArrayList<>();
 		for (String[] row : allData) {
         	Order order = new Order();
-        	if (Integer.parseInt(row[ORDER_NUM_INDEX]) < orders.size()) {
-        		order = orders.get(Integer.parseInt(row[ORDER_NUM_INDEX]));
+        	int invNum = Integer.parseInt(row[INVOICE_NUM_INDEX]);
+        	if (invNums.contains(invNum)) {
+        		order = orders.get(invNums.indexOf(invNum));
         	}
         	else {
         		orders.add(order);
+        		invNums.add(invNum);
         	}
+        	order.setInvoiceNumber(invNum);
             order.setPONum(row[PO_INDEX]);
             order.setShipVia(row[SHIP_VIA_INDEX]);
             order.setCompany(row[CUSTOMER_INDEX]);
