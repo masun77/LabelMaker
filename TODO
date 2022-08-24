@@ -7,8 +7,7 @@ TODO:
 - ability to add note to label, eg ATTN 
 alphabetize items
 order orders by date
-delete selected not working w only 1 order
-edit selected not working w only 1 order
+don't show imported/added orders if not within current filter
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation
