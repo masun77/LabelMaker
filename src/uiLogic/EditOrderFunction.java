@@ -13,7 +13,7 @@ public class EditOrderFunction implements SideFunction {
 		Order currOrder = null;
 		for (int c = 0; c < companyBoxes.size(); c++) {
 			if (companyBoxes.get(c)) {
-				currOrder = AppState.getOrders().get(c);
+				currOrder = AppState.getFilteredOrders().get(c);
 				c = companyBoxes.size() + 1;
 			}
 		}

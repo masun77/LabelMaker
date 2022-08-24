@@ -1,13 +1,14 @@
 Hours:
 2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 
-7/22: 3.5 hrs; 7/27: 5hrs; 8/5: 3 hrs; 8/12: 3.5 hrs; 8/18: 3 hrs; 8/24: 7:30-
+7/22: 3.5 hrs; 7/27: 5hrs; 8/5: 3 hrs; 8/12: 3.5 hrs; 8/18: 3 hrs; 8/24: 4.5 hrs + 2:30pm-
 
 TODO: 
 
-- date filter not working
 - ability to add note to label, eg ATTN 
 alphabetize items
 order orders by date
+delete selected not working w only 1 order
+edit selected not working w only 1 order
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation

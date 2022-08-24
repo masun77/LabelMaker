@@ -1,6 +1,7 @@
 package uiDisplay;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.FocusEvent;
@@ -74,13 +75,18 @@ public class OrderDisplay implements HomeFunction {
 		
 		//setDates();	 todo
 		setPracticeDates();
+		initialize();
+	}
+	
+	private void initialize() {
 		addDateFilter();
 		setupPanels();
 
 		filterOrders();
-		createArrayValues();
-		
-		displayOrders();  
+		if (filteredOrders.size() > 0) {
+			createArrayValues();
+			displayOrders();
+		}  
 	}
 	
 	private void setDates() {		
@@ -97,7 +103,6 @@ public class OrderDisplay implements HomeFunction {
 	
 	private void setupPanels() {
 		scrollPane = new JScrollPane(qtysPanel);
-		qtysPanel.setAlignmentX(0);
 		scrollPane.setColumnHeaderView(headerRow);
 		scrollPane.setRowHeaderView(itemColumn);
 		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER, new JLabel("     ORDERS"));
@@ -129,11 +134,12 @@ public class OrderDisplay implements HomeFunction {
 				filteredOrders.add(o);
 			}
 		}
+		AppState.setFilteredOrders(filteredOrders);
 	}
 	
 	private void createArrayValues() {
-		for (int ord = 0; ord < orders.size(); ord++) {
-			Order currOrder = orders.get(ord);
+		for (int ord = 0; ord < filteredOrders.size(); ord++) {
+			Order currOrder = filteredOrders.get(ord);
 			ArrayList<LabelableItem> items = currOrder.getItems();
 			CompanyHeader ch = new CompanyHeader(getShortName(currOrder.getCompany(),12), currOrder.getPONum(), currOrder.getPackDate().getMMDD());
 			companyHeaders.add(ch);
@@ -248,6 +254,7 @@ public class OrderDisplay implements HomeFunction {
 	private void addQuantities() {
 		for (int row = 0; row < products.size(); row++) {
 			HPanel rowPanel = new HPanel();
+			rowPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			ArrayList<PrintCheckBox> checkBoxRow = new ArrayList<>();
 			checkBoxArray.add(checkBoxRow);
 			for (int ord = 0; ord < filteredOrders.size(); ord++) {
@@ -303,10 +310,8 @@ public class OrderDisplay implements HomeFunction {
 		quantities = new ArrayList<>();
 		itemArray = new ArrayList<>();
 
-		setupPanels();
-		filterOrders();
-		createArrayValues();
-		displayOrders(); 
+		initialize();
+		wholePanel.validate();
 	}
 
 	@Override

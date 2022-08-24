@@ -116,4 +116,12 @@ public class AppState {
 	public static void addOrders(ArrayList<Order> ords) {
 		singleton.addOrders(ords);
 	}
+	
+	public static ArrayList<Order> getFilteredOrders() {
+		return singleton.getFilteredOrders();
+	}
+	
+	public static void setFilteredOrders(ArrayList<Order> ords) {
+		singleton.setFilteredOrders(ords);
+	}
 }

@@ -1,5 +1,11 @@
 package main;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import database.DataClient;
 import database.RefreshFunction;
@@ -51,17 +57,35 @@ public class Application {
 		@Override
 	    public void run(){
 			while (true) {
-				System.out.println("updating");
-				DataClient dc = AppState.getDataClient();
-				ArrayList<Order> orders =  dc.getOrders();
-				if (orders.size() > 0) {
-					AppState.setOrders(orders);				}
-				try {
+				ExecutorService executor = Executors.newSingleThreadExecutor();
+		        Future<Integer> future = executor.submit(new Task());
+		        try {
+		            System.out.println("Started..");
+		            System.out.println(future.get(3, TimeUnit.SECONDS));
+		            System.out.println("Finished!");
+		        } catch (Exception e) {
+		            future.cancel(true);
+		            System.out.println("Terminated!");
+		        }
+		        executor.shutdownNow();
+		        try {
 				    Thread.sleep(300L * 1000L);
 				} catch (InterruptedException e) {
 				    e.printStackTrace();
 				}
 			}
+	    }
+	}
+	
+	private class Task implements Callable<Integer> {
+	    @Override
+	    public Integer call() throws Exception {
+			DataClient dc = AppState.getDataClient();
+			ArrayList<Order> orders =  dc.getOrders();
+			if (orders.size() > 0) {
+				AppState.setOrders(orders);				}
+			
+	        return 77;
 	    }
 	}
 }

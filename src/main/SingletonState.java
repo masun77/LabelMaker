@@ -21,7 +21,16 @@ public class SingletonState {
 	private ArrayList<Boolean> itemSelectedBooleanArray = new ArrayList<>();
 	private ArrayList<ArrayList<LabelableItem>> itemArray = new ArrayList<>();
 	private AppListener lastListener;
+	private ArrayList<Order> filteredOrders = new ArrayList<Order>();
 	
+	public ArrayList<Order> getFilteredOrders() {
+		return filteredOrders;
+	}
+
+	public void setFilteredOrders(ArrayList<Order> filteredOrders) {
+		this.filteredOrders = filteredOrders;
+	}
+
 	public SingletonState(ArrayList<Order> ords, LocalFileBackup f, LabelPrinter lp, DataClient dc) {
 		orders = ords;
 		fileBackup = f; 
@@ -79,13 +88,14 @@ public class SingletonState {
 	
 	public void removeOrder(Order o) {
 		orders.remove(o);
-		invoiceNums.remove(o.getInvoiceNumber());
+		invoiceNums.remove(invoiceNums.indexOf(o.getInvoiceNumber()));
 		sendMessage(REMOVE_ORDER);
 		saveToFileAndServer(orders);
 	}
 
 	public void setOrders(ArrayList<Order> orders) {
 		this.orders = orders;
+		invoiceNums = new ArrayList<>();
 		addInvNums(orders);
 		saveToFileAndServer(orders);
 		sendMessage(SET_ORDERS);
