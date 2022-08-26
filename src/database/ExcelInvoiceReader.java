@@ -213,14 +213,18 @@ public class ExcelInvoiceReader implements DataImporter {
 	}
 	
 	private Date getPackDateFromRow(Row row) {
-		String pd = row.getCell(packDateColumn).getStringCellValue();
-		return DateImp.parseDate(pd);
+		Cell cell = row.getCell(packDateColumn);
+		String pd = cell.getDateCellValue().toString();
+		System.out.println("pack date: " + pd);
+		return new DateImp();//DateImp.parseDate(pd);
 		
 	}
 	
 	private Date getShipDateFromRow(Row row) {
-		String sd = row.getCell(shipDateColumn).getStringCellValue();
-		return DateImp.parseDate(sd);
+		Cell cell = row.getCell(shipDateColumn);
+		String sd = cell.getDateCellValue().toString();
+		System.out.println(sd);
+		return new DateImp();//DateImp.parseDate(sd);
 	}
 	
 	private String getPONumFromRow(Row row) {

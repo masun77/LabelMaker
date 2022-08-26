@@ -9,11 +9,9 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import javax.swing.Box;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -26,10 +24,8 @@ import main.Order;
 import uiLogic.HomeFunction;
 import uiSubcomponents.CompanyCheckBox;
 import uiSubcomponents.CompanyHeader;
-import uiSubcomponents.DetailScrollListener;
 import uiSubcomponents.HPanel;
 import uiSubcomponents.ItemCheckBox;
-import uiSubcomponents.ItemScrollListener;
 import uiSubcomponents.PrintCheckBox;
 import uiSubcomponents.ProductInfo;
 import uiSubcomponents.VPanel;
@@ -65,7 +61,6 @@ public class OrderDisplay implements HomeFunction {
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension NUMBER_SIZE = new Dimension(90,30);
 	private final Dimension ITEM_NAME_SIZE = new Dimension(150,30);
-	private final Dimension HEADER_SIZE = new Dimension(165,50);
 	private final Dimension FILTER_SIZE = new Dimension(390,30);
 	private final Dimension DATE_SIZE = new Dimension(50,20);
 
@@ -131,10 +126,40 @@ public class OrderDisplay implements HomeFunction {
 		for (Order o: orders) {
 			Date packDate = o.getItems().get(0).getPackDate();
 			if (!packDate.dateEarlierThan(startDate) && !packDate.dateLaterThan(endDate)) {
-				filteredOrders.add(o);
+				insertOrder(filteredOrders, o);
 			}
 		}
 		AppState.setFilteredOrders(filteredOrders);
+	}
+	
+	private int insertOrder(ArrayList<Order> ords, Order o) {
+		int index = 0;
+		if (ords.size() == 0) {
+			ords.add(o);
+			return index;
+		}
+		Order currOrder = ords.get(index);
+		while (currOrder.getPackDate().dateEarlierThan(o.getPackDate())) {
+			index += 1;
+			currOrder = ords.get(index);
+		}
+		ords.add(index, o);
+		return index;
+	}
+	
+	private int insertProductInfo(ArrayList<ProductInfo> prods, ProductInfo newInfo) {
+		int index = 0;
+		if (prods.size() == 0) {
+			prods.add(newInfo);
+			return index;
+		}
+		ProductInfo currInfo = prods.get(index);
+		while (currInfo.getDisplayName().compareTo(newInfo.getDisplayName()) < 0) {
+			index += 1;
+			currInfo = prods.get(index);
+		}
+		prods.add(index, newInfo);
+		return index;
 	}
 	
 	private void createArrayValues() {

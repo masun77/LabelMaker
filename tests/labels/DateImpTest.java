@@ -69,6 +69,11 @@ class DateImpTest {
 	}
 	
 	@Test
+	void testDateCellParse() {
+		DateImp.parseCellDate("Tue Aug 02 00:00:00 PDT 2022");
+	}
+	
+	@Test
 	void testAddDays() {
 		Date d = new DateImp(4,1,22);
 		d.addDays(16);

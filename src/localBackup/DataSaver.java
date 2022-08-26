@@ -23,7 +23,7 @@ import printing.PrinterDescription;
 
 public class DataSaver implements LocalFileBackup, DataClient {
 	// Item data constants
-	private final String ITEM_FILE_NAME = "resources/itemData.csv";
+	private final String ITEM_FILE_NAME = "settings/itemData.csv";
 	private final int DATA_ITEM_CODE_INDEX = 0;
 	private final int DATA_DESCRIPTION_INDEX = 1;
 	private final int DATA_GTIN_INDEX = 2;
@@ -45,10 +45,10 @@ public class DataSaver implements LocalFileBackup, DataClient {
 	private final int PRICE_INDEX = 10;
 	
 	// Print constants
-	private final String PRINT_CONFIG_FILE_NAME = "resources/printerConfig.txt";
+	private final String PRINT_CONFIG_FILE_NAME = "settings/printerConfig.txt";
 	
 	// Server constants
-	private final String SERVER_CONFIG_FILE_NAME = "resources/serverConfig.txt";
+	private final String SERVER_CONFIG_FILE_NAME = "settings/serverConfig.txt";
 	private final int SERVER_IP = 0;
 	private final int SERVER_PORT = 1;
 	

@@ -10,6 +10,8 @@ import java.util.HashMap;
 public class DateImp implements Date {
 	private static HashMap<Integer, String> monthToMonthName = 
 			new HashMap<Integer,String>();
+	private static HashMap<String, Integer> monthNameToMonth = 
+			new HashMap<>();
 
 	private int dayOfMonth;
 	private int monthOfYear;
@@ -47,6 +49,20 @@ public class DateImp implements Date {
 			monthToMonthName.put(10, "October");
 			monthToMonthName.put(11, "November");
 			monthToMonthName.put(12, "December");
+		}
+		if (monthNameToMonth.get("Jan") == null) {
+			monthNameToMonth.put("Jan", 1);
+			monthNameToMonth.put("Feb", 2);
+			monthNameToMonth.put("Mar", 3);
+			monthNameToMonth.put("Apr", 4);
+			monthNameToMonth.put("May", 5);
+			monthNameToMonth.put("Jun", 6);
+			monthNameToMonth.put("Jul", 7);
+			monthNameToMonth.put("Aug", 8);
+			monthNameToMonth.put("Sep", 9);
+			monthNameToMonth.put("Oct", 10);
+			monthNameToMonth.put("Nov", 11);
+			monthNameToMonth.put("Dec", 12);
 		}
 		if (daysInMonths.get(1) == null) {
 			daysInMonths.put(1, 31);
@@ -147,6 +163,18 @@ public class DateImp implements Date {
 		}
 		
 		return new DateImp(Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(year));
+	}
+	
+	public static Date parseCellDate(String d) {
+		Date date = new DateImp();
+		int space = d.indexOf(" ") + 1;
+		String monthStr = d.substring(space, space + 3);
+		space = d.indexOf(" ", space) + 1;
+		String dayStr = d.substring(space, space + 2);
+		String yrStr = d.substring(d.length() - 4);
+		System.out.println(monthStr + "/" + dayStr + "/" + yrStr);
+		
+		return date;
 	}
 
 	@Override
