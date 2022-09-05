@@ -48,7 +48,7 @@ public class EntryForm implements SideFunction {
 	private Order editOrder = null;
 	
 	// Constants
-	private final int NUM_ITEMS = 25;
+	private final int NUM_ITEMS = 22;
 	private final int ROW_HEIGHT = 20;
 	private final Dimension LABEL_SIZE = new Dimension(120,ROW_HEIGHT);
 	private final Dimension QTY_SIZE = new Dimension(30,ROW_HEIGHT);

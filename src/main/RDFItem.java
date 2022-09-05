@@ -7,12 +7,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -101,9 +103,6 @@ public class RDFItem extends Item {
 			Graphics2D imgG = image.createGraphics();
 			setBackgroundWhite(imgG);
 			g2 = imgG;
-			g2.setRenderingHint(
-			        RenderingHints.KEY_TEXT_ANTIALIASING,
-			        RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
 			createLabel();
 			
 			g.drawImage(image, 0, 0, null);

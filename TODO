@@ -5,13 +5,15 @@ Hours:
 
 TODO: 
 
+Christina: meat labels
+- do you think they need to be able to do meat? how do it - by the lb? all 67 lbs in 1 label? 
 - ability to add note to label, eg ATTN 
+- need to black out ccof/organic part
+- could say, NOT organic
 
-alphabetize items
-order orders by date
-don't show imported/added orders if not within current filter
-how well is importing working? how fill fields if not on excel file? 
-change where fileimporter opens to? setting file... 
+Eva egg labels? 
+
+CSA labels... different format
 
 Test...see below
 
@@ -23,7 +25,7 @@ Maintainability -
 	clean up code - comment, test, broken down clearly
 
 	
-TEST - every function, multiple times, in diff orders
+TEST - every function, multiple times, in diff orders + with server running
 	
 TESTS:
 - print with 1 label
@@ -31,6 +33,7 @@ TESTS:
 - bar codes scannable- test with real life tests, eg all orders for a day and viewing and printing and scanning all of them
 
 LATER:
+ability to change label size...
 make label format editing function
 why does PTT25 scan wrong/not scan?
 archive orders - put in separate file, save file backup, client/server, etc.... 
@@ -51,6 +54,7 @@ alphabetize orders on insertion
 freeze header row and column
 check out React.js and Node
 consider web-app
+change where fileimporter opens to? setting file... 
 
 DONE:
 Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 

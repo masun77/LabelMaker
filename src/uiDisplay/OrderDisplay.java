@@ -57,7 +57,7 @@ public class OrderDisplay implements HomeFunction {
 	private ArrayList<ItemCheckBox> itemBoxes;
 	
 	// Sizes
-	private final Dimension NAME_SIZE = new Dimension(80,50);
+	private final Dimension COMPANY_NAME_SIZE = new Dimension(80,70);
 	private final Dimension SPACE = new Dimension(10,15);
 	private final Dimension NUMBER_SIZE = new Dimension(90,50);
 	private final Dimension ITEM_NAME_SIZE = new Dimension(200,50);
@@ -138,21 +138,25 @@ public class OrderDisplay implements HomeFunction {
 			ords.add(o);
 			return index;
 		}
+		
 		Order currOrder = ords.get(index);
-		while (index < ords.size() && currOrder.getPackDate().dateEarlierThan(o.getPackDate())) {
+		int max = 0;
+		while (index < ords.size() && currOrder.getPackDate().dateEarlierThan(o.getPackDate())) {			
 			index += 1;
 			if (index == ords.size()) {
 				break;
 			}
 			currOrder = ords.get(index);
 		}
-		while (index < ords.size() && currOrder.getCompany().compareTo(o.getCompany()) < 0) {
+		while (index < ords.size() && currOrder.getCompany().compareTo(o.getCompany()) < 0
+				&& o.getPackDate().dateEquals(currOrder.getPackDate())) {
 			index += 1;
 			if (index == ords.size()) {
 				break;
 			}
 			currOrder = ords.get(index);
 		}
+		
 		ords.add(index, o);
 		return index;
 	}
@@ -176,7 +180,7 @@ public class OrderDisplay implements HomeFunction {
 		for (int ord = 0; ord < filteredOrders.size(); ord++) {
 			Order currOrder = filteredOrders.get(ord);
 			ArrayList<LabelableItem> items = currOrder.getItems();
-			CompanyHeader ch = new CompanyHeader(getShortName(currOrder.getCompany(),10), currOrder.getPONum(), currOrder.getPackDate().getMMDD());
+			CompanyHeader ch = new CompanyHeader(getShortName(currOrder.getCompany(),19), currOrder.getPONum(), currOrder.getPackDate().getMMDD());
 			companyHeaders.add(ch);
 			for (int it = 0; it < items.size(); it++) {
 				LabelableItem item = items.get(it);
@@ -239,7 +243,7 @@ public class OrderDisplay implements HomeFunction {
 			CompanyHeader ch = companyHeaders.get(c);
 			JLabel nameLabel = new JLabel("<html>" + ch.getCompanyName() + "<br>" + ch.getPONum() 
 				+ "<br>" + ch.getDate() + "</html>");
-			Utilities.setMinMax(nameLabel, NAME_SIZE);
+			Utilities.setMinMax(nameLabel, COMPANY_NAME_SIZE);
 			CompanyCheckBox currCompany = new CompanyCheckBox(c);
 			headerRow.add(currCompany);
 			companyBoxes.add(currCompany);

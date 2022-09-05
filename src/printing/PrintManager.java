@@ -1,11 +1,13 @@
 package printing;
 
 import java.awt.Component;
+import java.awt.print.Printable;
 import java.awt.print.PrinterJob;
 import java.util.ArrayList;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 

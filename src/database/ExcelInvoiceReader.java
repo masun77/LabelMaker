@@ -201,7 +201,7 @@ public class ExcelInvoiceReader implements DataImporter {
 	}
 	
 	private String getUnitFromRow(Row row) {
-		String unit = "";
+		String unit = AppState.getFileBackup().getUnit(getItemCodeFromRow(row));
 		
 		Cell c = row.getCell(itemDescriptionColumn);
 		if (c != null) {
@@ -213,9 +213,6 @@ public class ExcelInvoiceReader implements DataImporter {
 					endIndex = s.length();
 				}
 				unit = s.substring(startIndex, endIndex);
-			}
-			else {
-				unit = AppState.getFileBackup().getUnit(getItemCodeFromRow(row));
 			}
 		}
 		
@@ -235,12 +232,10 @@ public class ExcelInvoiceReader implements DataImporter {
 		String pd;
 		try {
 			 pd = cell.getStringCellValue();
-			 System.out.println("string: " + pd);
 			 return DateImp.parseDate(pd);
 		}
 		catch (IllegalStateException e) {
 			pd = cell.getDateCellValue().toString();
-			 System.out.println("numberic: " + pd);
 			return DateImp.parseCellDate(pd);
 		}
 	}
@@ -250,12 +245,10 @@ public class ExcelInvoiceReader implements DataImporter {
 		String pd;
 		try {
 			 pd = cell.getStringCellValue();
-			 System.out.println("string: " + pd);
 			 return DateImp.parseDate(pd);
 		}
 		catch (IllegalStateException e) {
 			pd = cell.getDateCellValue().toString();
-			 System.out.println("numberic: " + pd);
 			return DateImp.parseCellDate(pd);
 		}
 	}
