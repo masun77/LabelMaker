@@ -201,7 +201,25 @@ public class ExcelInvoiceReader implements DataImporter {
 	}
 	
 	private String getUnitFromRow(Row row) {
-		return AppState.getFileBackup().getUnit(getItemCodeFromRow(row));
+		String unit = "";
+		
+		Cell c = row.getCell(itemDescriptionColumn);
+		if (c != null) {
+			String s = c.getStringCellValue();
+			if (s.contains(",")) {
+				int startIndex = s.indexOf(",") + 1;
+				int endIndex = s.indexOf("GLOBAL", startIndex);
+				if (endIndex < 0) {
+					endIndex = s.length();
+				}
+				unit = s.substring(startIndex, endIndex);
+			}
+			else {
+				unit = AppState.getFileBackup().getUnit(getItemCodeFromRow(row));
+			}
+		}
+		
+		return unit;
 	}
 	
 	private float getQtyFromRow(Row row) {
@@ -214,17 +232,32 @@ public class ExcelInvoiceReader implements DataImporter {
 	
 	private Date getPackDateFromRow(Row row) {
 		Cell cell = row.getCell(packDateColumn);
-		String pd = cell.getDateCellValue().toString();
-		System.out.println("pack date: " + pd);
-		return new DateImp();//DateImp.parseDate(pd);
-		
+		String pd;
+		try {
+			 pd = cell.getStringCellValue();
+			 System.out.println("string: " + pd);
+			 return DateImp.parseDate(pd);
+		}
+		catch (IllegalStateException e) {
+			pd = cell.getDateCellValue().toString();
+			 System.out.println("numberic: " + pd);
+			return DateImp.parseCellDate(pd);
+		}
 	}
 	
 	private Date getShipDateFromRow(Row row) {
 		Cell cell = row.getCell(shipDateColumn);
-		String sd = cell.getDateCellValue().toString();
-		System.out.println(sd);
-		return new DateImp();//DateImp.parseDate(sd);
+		String pd;
+		try {
+			 pd = cell.getStringCellValue();
+			 System.out.println("string: " + pd);
+			 return DateImp.parseDate(pd);
+		}
+		catch (IllegalStateException e) {
+			pd = cell.getDateCellValue().toString();
+			 System.out.println("numberic: " + pd);
+			return DateImp.parseCellDate(pd);
+		}
 	}
 	
 	private String getPONumFromRow(Row row) {

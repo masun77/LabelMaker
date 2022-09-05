@@ -1,13 +1,19 @@
 Hours:
 2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 
-7/22: 3.5 hrs; 7/27: 5hrs; 8/5: 3 hrs; 8/12: 3.5 hrs; 8/18: 3 hrs; 8/24: 4.5 hrs + 2:30pm-
+7/22: 3.5 hrs; 7/27: 5hrs; 8/5: 3 hrs; 8/12: 3.5 hrs; 8/18: 3 hrs; 8/24: 5.25 hrs; 
+9/5: 12pm-
 
 TODO: 
 
 - ability to add note to label, eg ATTN 
+
 alphabetize items
 order orders by date
 don't show imported/added orders if not within current filter
+how well is importing working? how fill fields if not on excel file? 
+change where fileimporter opens to? setting file... 
+
+Test...see below
 
 Maintainability - 
 	make code totally clean, tested, commented, interfaces - encapsulation

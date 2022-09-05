@@ -60,12 +60,9 @@ public class Application {
 				ExecutorService executor = Executors.newSingleThreadExecutor();
 		        Future<Integer> future = executor.submit(new Task());
 		        try {
-		            System.out.println("Started..");
 		            System.out.println(future.get(3, TimeUnit.SECONDS));
-		            System.out.println("Finished!");
 		        } catch (Exception e) {
 		            future.cancel(true);
-		            System.out.println("Terminated!");
 		        }
 		        executor.shutdownNow();
 		        try {

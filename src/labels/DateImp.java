@@ -141,7 +141,6 @@ public class DateImp implements Date {
 	}
 	
 	public static Date parseDate(String d) {
-		Date date = new DateImp();
 		String day = "1";
 		String month = "1";
 		String year = "2022";
@@ -166,15 +165,12 @@ public class DateImp implements Date {
 	}
 	
 	public static Date parseCellDate(String d) {
-		Date date = new DateImp();
 		int space = d.indexOf(" ") + 1;
 		String monthStr = d.substring(space, space + 3);
 		space = d.indexOf(" ", space) + 1;
 		String dayStr = d.substring(space, space + 2);
 		String yrStr = d.substring(d.length() - 4);
-		System.out.println(monthStr + "/" + dayStr + "/" + yrStr);
-		
-		return date;
+		return new DateImp(monthNameToMonth.get(monthStr), Integer.parseInt(dayStr), Integer.parseInt(yrStr));
 	}
 
 	@Override

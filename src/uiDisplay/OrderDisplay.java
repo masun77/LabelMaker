@@ -59,8 +59,8 @@ public class OrderDisplay implements HomeFunction {
 	// Sizes
 	private final Dimension NAME_SIZE = new Dimension(80,50);
 	private final Dimension SPACE = new Dimension(10,15);
-	private final Dimension NUMBER_SIZE = new Dimension(90,30);
-	private final Dimension ITEM_NAME_SIZE = new Dimension(150,30);
+	private final Dimension NUMBER_SIZE = new Dimension(90,50);
+	private final Dimension ITEM_NAME_SIZE = new Dimension(200,50);
 	private final Dimension FILTER_SIZE = new Dimension(390,30);
 	private final Dimension DATE_SIZE = new Dimension(50,20);
 
@@ -139,8 +139,18 @@ public class OrderDisplay implements HomeFunction {
 			return index;
 		}
 		Order currOrder = ords.get(index);
-		while (currOrder.getPackDate().dateEarlierThan(o.getPackDate())) {
+		while (index < ords.size() && currOrder.getPackDate().dateEarlierThan(o.getPackDate())) {
 			index += 1;
+			if (index == ords.size()) {
+				break;
+			}
+			currOrder = ords.get(index);
+		}
+		while (index < ords.size() && currOrder.getCompany().compareTo(o.getCompany()) < 0) {
+			index += 1;
+			if (index == ords.size()) {
+				break;
+			}
 			currOrder = ords.get(index);
 		}
 		ords.add(index, o);
@@ -166,7 +176,7 @@ public class OrderDisplay implements HomeFunction {
 		for (int ord = 0; ord < filteredOrders.size(); ord++) {
 			Order currOrder = filteredOrders.get(ord);
 			ArrayList<LabelableItem> items = currOrder.getItems();
-			CompanyHeader ch = new CompanyHeader(getShortName(currOrder.getCompany(),12), currOrder.getPONum(), currOrder.getPackDate().getMMDD());
+			CompanyHeader ch = new CompanyHeader(getShortName(currOrder.getCompany(),10), currOrder.getPONum(), currOrder.getPackDate().getMMDD());
 			companyHeaders.add(ch);
 			for (int it = 0; it < items.size(); it++) {
 				LabelableItem item = items.get(it);
@@ -246,7 +256,7 @@ public class OrderDisplay implements HomeFunction {
 		for (int it = 0; it < products.size(); it++) {
 			ProductInfo pi = products.get(it);
 			HPanel itemNamePanel = new HPanel();
-			JLabel prodName = new JLabel("<html>" + getShortName(pi.getDisplayName(),19) + "<br>" + pi.getUnit() +  "</html>");
+			JLabel prodName = new JLabel("<html>" + getShortName(pi.getDisplayName(),35) + "<br>" + pi.getUnit() +  "</html>");
 			Utilities.setMinMax(prodName, ITEM_NAME_SIZE);
 			ItemCheckBox itemBox = new ItemCheckBox(it);
 			itemBoxes.add(itemBox);

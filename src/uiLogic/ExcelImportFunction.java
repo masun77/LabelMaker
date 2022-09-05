@@ -26,7 +26,7 @@ public class ExcelImportFunction implements SideFunction {
 		    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			    di.setResourcePath(chooser.getSelectedFile().getAbsolutePath());
 			    ArrayList<Order> orders = di.readInvoices();
-			    System.out.println("orders: " + orders.size());
+			    System.out.println(orders.size());
 			    orders.get(0).printOrder();
 			    AppState.addOrders(orders);
 		    }
