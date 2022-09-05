@@ -53,7 +53,7 @@ public class SocketClient implements DataClient {
 	                 	ArrayList<LabelableItem> items = ord.getItems();
 	             		for (int i = 0; i < items.size(); i++) {
 	             			LabelableItem item = items.get(i);
-	                         String data = o + "|" + ord.getPONum() + "|" + ord.getShipVia() 
+	                         String data = ord.getInvoiceNumber() + "|" + ord.getPONum() + "|" + ord.getShipVia() 
 	                         		+ "|" + item.getCustomer() + "|" + item.getPackDate().getDateMMDDYYYY()
 	                         		+ "|" + item.getItemCode() + "|" + item.getGtin() + "|" + item.getProductName() 
 	                         		+ "|" + item.getUnit()
@@ -148,19 +148,5 @@ public class SocketClient implements DataClient {
 	public ArrayList<String> getItemData(String itemCode) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void addOrder(Order o) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeOrder(Order o) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
+	}	
 }

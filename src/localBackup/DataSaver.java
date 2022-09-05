@@ -364,16 +364,4 @@ public class DataSaver implements LocalFileBackup, DataClient {
 	        e.printStackTrace();
 	    }
 	}
-
-	@Override
-	public void addOrder(Order o) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeOrder(Order o) {
-		// TODO Auto-generated method stub
-		
-	}
 }
