@@ -1,0 +1,5 @@
+package freshStart;
+
+public enum HeaderOptions {
+	TYPE, COMPANY, SHIP_DATE, INVOICE_NUMBER, PO_NUMBER, SHIP_VIA, GTIN, ITEM_CODE, ITEM_DESCRIPTION, QUANTITY, PRICE;
+}

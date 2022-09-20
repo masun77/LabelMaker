@@ -1,0 +1,16 @@
+Format name: Quickbooks
+Types to save: Invoice
+Exclude customers: Market, TBFM, ThBFM
+Header row: 3
+Data start row: 5
+Type header: Type
+Company header: Name
+Ship Date header: Ship Date
+Invoice number header: Num
+PO header: P. O. #
+Ship Via header: Via
+GTIN header: GTIN NUMBER
+Item code header: Item
+Item description header: Item Description
+Quantity header: Qty
+Price header: Sales Price
