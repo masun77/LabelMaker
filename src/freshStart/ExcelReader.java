@@ -18,9 +18,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import labels.DateImp;
-import main.AppState;
-
 import static freshStart.HeaderOption.*;
 
 public class ExcelReader {		
@@ -147,7 +144,7 @@ public class ExcelReader {
 		int invNum = (int) row.getCell(headerTypeToColumn(INVOICE_NUMBER)).getNumericCellValue();
 		Order currOrder = getCorrespondingOrder(invNum, row);
 				
-		Item newIt = new Item(getCompanyFromRow(row), new DateImp(),
+		Item newIt = new Item(getCompanyFromRow(row), getShipDateFromRow(row),
 				getProdNameFromRow(row), 
 				getItemCodeFromRow(row), getGTINFromRow(row),
 				getUnitFromRow(row), getQtyFromRow(row), getPriceFromRow(row));
@@ -169,6 +166,7 @@ public class ExcelReader {
 			currOrder.setInvoiceNum(invNum);
 			currOrder.setPONum(getPONumFromRow(row));
 			currOrder.setCompany(getCompanyFromRow(row));
+			currOrder.setShipDate(getShipDateFromRow(row));
 			orders.add(currOrder);
 			orderNums.add(invNum);
 			return currOrder;
@@ -288,6 +286,26 @@ public class ExcelReader {
 			return Integer.toString((int)c.getNumericCellValue());
 		}
 		return c.getStringCellValue();
+	}
+	
+	/**
+	 * Get the ship date from the given row
+	 * @param row the row to get the ship date from
+	 * @return the ship date
+	 */
+	private Date getShipDateFromRow(Row row) {
+		Cell cell = row.getCell(headerTypeToColumn(SHIP_DATE));
+		if (cell == null) {
+			return new DateImp(1,1,2022);
+		}
+		try {
+			 String sd = cell.getStringCellValue();
+			 return DateImp.parseDate(sd);
+		}
+		catch (IllegalStateException e) {
+			String sd = cell.getDateCellValue().toString();
+			return DateImp.parseCellDate(sd);
+		}
 	}
 	
 	/**

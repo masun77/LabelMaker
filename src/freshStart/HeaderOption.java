@@ -1,3 +1,8 @@
+/**
+ * HeaderOption
+ * The possible types of headers for reading info from an Excel file
+ */
+
 package freshStart;
 
 public enum HeaderOption {

@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import labels.Date;
-import labels.DateImp;
+import freshStart.Date;
+import freshStart.DateImp;
 import labels.LabelableItem;
 import main.AppListenerMessage;
 import main.AppState;

@@ -1,4 +1,11 @@
-package labels;
+/**
+ * Date
+ * An interface for a date, providing methods to access the day, month, and year,
+ * to get the date in various string formats, to compare dates,
+ * and to add days to the date. 
+ */
+
+package freshStart;
 
 /**
  * Date interface.
@@ -7,31 +14,11 @@ package labels;
  *
  */
 public interface Date {
-	/**
-	 * @return the date as a String in the format mm/dd/yyyy.
-	 */
-	public String getDateMMDDYYYY();
 	
 	/**
-	 * @return the data in the form YYMMDD, no slashes
+	 * @return the day as a number, 1-31
 	 */
-	public String getDateYYMMDD();
-	
-	/**
-	 * @return the month name, January through December
-	 */
-	public String getMonthName();
-	
-	/**
-	 * @return the month name as a three-letter abbreviation, plus the day of the month
-	 */
-	public String getAsPackDate();
-	
-	/**
-	 * @return the month and day, eg. 05/14
-	 */
-	public String getMMDD();
-	
+	public int getDayOfMonth();
 	/**
 	 * @return the month as a number, 1-12
 	 */
@@ -43,9 +30,30 @@ public interface Date {
 	public int getYear();
 	
 	/**
-	 * @return the day as a number, 1-31
+	 * @return the month name, January through December
 	 */
-	public int getDayOfMonth();
+	public String getMonthName();
+	
+	
+	/**
+	 * @return the date as a String in the format mm/dd/yyyy.
+	 */
+	public String getDateMMDDYYYY();
+	
+	/**
+	 * @return the data in the form YYMMDD, no slashes
+	 */
+	public String getDateYYMMDD();
+	
+	/**
+	 * @return the month and day, eg. 05/14
+	 */
+	public String getMMDD();
+	
+	/**
+	 * @return the month name as a three-letter abbreviation, plus the day of the month
+	 */
+	public String getAsLabelDate();
 	
 	/**
 	 * @param d the Date to compare to

@@ -1,6 +1,9 @@
-package freshStart;
+/**
+ * Item
+ * Represents an item in an order.
+ */
 
-import labels.Date;
+package freshStart;
 
 public class Item {
 	private String company;

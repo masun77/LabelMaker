@@ -1,23 +1,25 @@
-package labels;
+/**
+ * DateImp
+ * A date implementation with getters 
+ * for month, day, and year. 
+ */
+
+package freshStart;
 
 import java.util.HashMap;
 
-/**
- * A simple date implementation with getters 
- * for month, day, and year. 
- *
- */
 public class DateImp implements Date {
+	private int dayOfMonth;
+	private int monthOfYear;
+	private int year;
+	
 	private static HashMap<Integer, String> monthToMonthName = 
 			new HashMap<Integer,String>();
 	private static HashMap<String, Integer> monthNameToMonth = 
 			new HashMap<>();
-
-	private int dayOfMonth;
-	private int monthOfYear;
-	private int year;
 	private static HashMap<Integer, Integer> daysInMonths = new HashMap<>();
-	
+	private static boolean initialized = false;
+
 	public DateImp(int m, int d, int y) {
 		dayOfMonth = d;
 		monthOfYear = m;
@@ -31,12 +33,15 @@ public class DateImp implements Date {
 	public DateImp() {
 		dayOfMonth = 1;
 		monthOfYear = 1;
-		year = 1900;
+		year = 2000;
 		initMonths();
 	}
 	
+	/**
+	 * Initialized month numbers and names, short names, and days in each month.  
+	 */
 	private void initMonths() {
-		if (monthToMonthName.get(1) == null) {
+		if (!initialized) {
 			monthToMonthName.put(1, "January");
 			monthToMonthName.put(2, "February");
 			monthToMonthName.put(3, "March");
@@ -49,8 +54,7 @@ public class DateImp implements Date {
 			monthToMonthName.put(10, "October");
 			monthToMonthName.put(11, "November");
 			monthToMonthName.put(12, "December");
-		}
-		if (monthNameToMonth.get("Jan") == null) {
+
 			monthNameToMonth.put("Jan", 1);
 			monthNameToMonth.put("Feb", 2);
 			monthNameToMonth.put("Mar", 3);
@@ -63,8 +67,7 @@ public class DateImp implements Date {
 			monthNameToMonth.put("Oct", 10);
 			monthNameToMonth.put("Nov", 11);
 			monthNameToMonth.put("Dec", 12);
-		}
-		if (daysInMonths.get(1) == null) {
+
 			daysInMonths.put(1, 31);
 			daysInMonths.put(2, 28);
 			daysInMonths.put(3, 31);
@@ -81,27 +84,10 @@ public class DateImp implements Date {
 	}
 	
 	@Override
-	public String getDateMMDDYYYY() {
-		String dateString = zerosHelper(monthOfYear);
-		dateString += "/";
-		dateString += zerosHelper(dayOfMonth);
-		dateString += "/";
-		dateString += year;		
-		return dateString;
+	public int getYear() {
+		return year;
 	}
 	
-	/**
-	 * Append a zero to numbers less than 10 and return.
-	 * @param number the number to return
-	 * @return the number as a String if it is greater than 10, otherwise the number preceded by a 0
-	 */
-	private String zerosHelper(int number) {
-		if (number < 10) {
-			return "0" + Integer.toString(number);
-		}
-		return Integer.toString(number);
-	}
-
 	@Override
 	public String getMonthName() {
 		return monthToMonthName.get(monthOfYear);
@@ -113,17 +99,22 @@ public class DateImp implements Date {
 	}
 
 	@Override
-	public int getYear() {
-		return year;
-	}
-
-	@Override
 	public int getDayOfMonth() {
 		return dayOfMonth;
 	}
 	
 	@Override
-	public String getAsPackDate() {
+	public String getDateMMDDYYYY() {
+		String dateString = zerosHelper(monthOfYear);
+		dateString += "/";
+		dateString += zerosHelper(dayOfMonth);
+		dateString += "/";
+		dateString += year;		
+		return dateString;
+	}
+	
+	@Override
+	public String getAsLabelDate() {
 		String mon = monthToMonthName.get(monthOfYear).substring(0,3);
 		mon += " ";
 		mon += zerosHelper(dayOfMonth);
@@ -140,37 +131,16 @@ public class DateImp implements Date {
 		return zerosHelper(monthOfYear) + "/" + zerosHelper(dayOfMonth);
 	}
 	
-	public static Date parseDate(String d) {
-		String day = "1";
-		String month = "1";
-		String year = "2022";
-		int slash = d.indexOf("/");
-		if (slash > 0) {
-			month = d.substring(0, slash > 2? 2 : slash);
+	/**
+	 * Append a zero to numbers less than 10 and return.
+	 * @param number the number to return
+	 * @return the number as a String if it is greater than 10, otherwise the number preceded by a 0
+	 */
+	private String zerosHelper(int number) {
+		if (number < 10) {
+			return "0" + Integer.toString(number);
 		}
-		slash += 1;
-		int secSlash = d.indexOf("/", slash);
-		if (secSlash > 0) {
-			day = d.substring(slash, secSlash - slash > 2? slash + 2 : secSlash);
-		}
-		secSlash += 1;
-		if (secSlash > 0 && secSlash < d.length() - 1) {
-			year = d.substring(secSlash, secSlash + 4 > d.length()? d.length() : secSlash + 4);
-		}
-		if (year.equals("22")) {
-			year = "2022";
-		}
-		
-		return new DateImp(Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(year));
-	}
-	
-	public static Date parseCellDate(String d) {
-		int space = d.indexOf(" ") + 1;
-		String monthStr = d.substring(space, space + 3);
-		space = d.indexOf(" ", space) + 1;
-		String dayStr = d.substring(space, space + 2);
-		String yrStr = d.substring(d.length() - 4);
-		return new DateImp(monthNameToMonth.get(monthStr), Integer.parseInt(dayStr), Integer.parseInt(yrStr));
+		return Integer.toString(number);
 	}
 
 	@Override
@@ -223,5 +193,49 @@ public class DateImp implements Date {
 				year += 1;
 			}
 		}
+	}
+	
+	/**
+	 * Parse a date from a given string. Assumes the string is in the format
+	 * mm/dd/yyyy, or mm/dd/yy.
+	 * @param d the String to parse
+	 * @return the Date parse form the string
+	 */
+	public static Date parseDate(String d) {
+		String day = "1";
+		String month = "1";
+		String year = "2022";
+		int slash = d.indexOf("/");
+		if (slash > 0) {
+			month = d.substring(0, slash > 2? 2 : slash);
+		}
+		slash += 1;
+		int secSlash = d.indexOf("/", slash);
+		if (secSlash > 0) {
+			day = d.substring(slash, secSlash - slash > 2? slash + 2 : secSlash);
+		}
+		secSlash += 1;
+		if (secSlash > 0 && secSlash < d.length() - 1) {
+			year = d.substring(secSlash, secSlash + 4 > d.length()? d.length() : secSlash + 4);
+		}
+		if (year.equals("22")) {
+			year = "2022";
+		}
+		
+		return new DateImp(Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(year));
+	}
+	
+	/**
+	 * Helper for Dates in Excel cells. Parses a Date from an Excel date cell
+	 * @param d the String contents of the cell to parse to a date
+	 * @return the parsed date
+	 */
+	public static Date parseCellDate(String d) {
+		int space = d.indexOf(" ") + 1;
+		String monthStr = d.substring(space, space + 3);
+		space = d.indexOf(" ", space) + 1;
+		String dayStr = d.substring(space, space + 2);
+		String yrStr = d.substring(d.length() - 4);
+		return new DateImp(monthNameToMonth.get(monthStr), Integer.parseInt(dayStr), Integer.parseInt(yrStr));
 	}
 }

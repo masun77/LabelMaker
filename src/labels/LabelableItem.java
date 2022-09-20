@@ -2,6 +2,8 @@ package labels;
 
 import java.awt.Component;
 
+import freshStart.Date;
+
 public interface LabelableItem {
 
 	/**

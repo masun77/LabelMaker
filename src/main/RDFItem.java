@@ -18,10 +18,10 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import freshStart.Date;
 import labels.Alignment;
 import labels.BarCodeGenerator;
 import labels.BarCodeImp;
-import labels.Date;
 import labels.RectangleBounds;
 import labels.VoicePickCodeGenerator;
 import labels.VoicePickImp;
@@ -154,7 +154,7 @@ public class RDFItem extends Item {
 		}
 		
 		private void addPackDate() {
-			addText(packDate.getAsPackDate(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black, packDateBounds,10);
+			addText(packDate.getAsLabelDate(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black, packDateBounds,10);
 			g2.drawRect(packDateBox.getStartX(), packDateBox.getStartY(), packDateBox.getWidth(), packDateBox.getHeight());
 		}
 		
