@@ -10,9 +10,8 @@ public class LabelFormat {
 	private Bounds labelDimensions = new Bounds();
 	private ArrayList<TextObject> textObjects = new ArrayList<>();
 	private ArrayList<RectangleObject> rectangles = new ArrayList<>();
-	private ArrayList<String> objectNames = new ArrayList<>();
 	private HashMap<String, LabelFieldOption> fieldTypes = new HashMap<>();
-	private ArrayList<LabelFieldOption> fieldTypesUsed = new ArrayList<>();
+	private HashMap<LabelFieldOption, String> fieldTypesUsed = new HashMap<>();
 	
 	private ArrayList<String> settings = new ArrayList<>();
 	
@@ -56,12 +55,11 @@ public class LabelFormat {
 	private void addTextFromFile(String value) {
 		ArrayList<String> strs = parseCommaSeparatedValues(value);
 		LabelFieldOption lf = fieldTypes.get(strs.get(0).toLowerCase());
-		fieldTypesUsed.add(lf);
+		fieldTypesUsed.put(lf, strs.get(1));
 		textObjects.add(new TextObject(strs.get(0), strs.get(1),
 				lf,
 				Integer.parseInt(strs.get(2)),Integer.parseInt(strs.get(3)),
 				Integer.parseInt(strs.get(4)),Integer.parseInt(strs.get(5))));
-		objectNames.add(strs.get(0));
 	}
 	
 	private void addRectangleFromFile(String value) {
@@ -71,7 +69,6 @@ public class LabelFormat {
 				Boolean.parseBoolean(strs.get(2)),
 				Integer.parseInt(strs.get(3)),Integer.parseInt(strs.get(4)),
 				Integer.parseInt(strs.get(5)),Integer.parseInt(strs.get(6))));
-		objectNames.add(strs.get(0));
 	}
 	
 	private Color getColorFromString(String s) {
@@ -136,5 +133,17 @@ public class LabelFormat {
 	}
 	public void setRectangles(ArrayList<RectangleObject> rectangles) {
 		this.rectangles = rectangles;
+	}
+
+	public HashMap<String, LabelFieldOption> getFieldTypes() {
+		return fieldTypes;
+	}
+
+	public HashMap<LabelFieldOption, String> getFieldTypesUsed() {
+		return fieldTypesUsed;
+	}
+
+	public ArrayList<String> getSettings() {
+		return settings;
 	}
 }

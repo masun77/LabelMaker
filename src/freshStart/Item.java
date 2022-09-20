@@ -33,4 +33,38 @@ public class Item {
 		+ itemCode + " GTIN: " + gtin
 		+ "\n\t\t" + unit + " at $" + price;
 	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public Date getShipDate() {
+		return shipDate;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public String getGtin() {
+		return gtin;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public float getQuantity() {
+		return quantity;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+	
+	
 }
