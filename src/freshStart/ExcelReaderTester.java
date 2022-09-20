@@ -17,7 +17,8 @@ class ExcelReaderTester {
 		efg.readExcelFormats();
 		orders = er.getOrdersFromFile("src/freshStart/7.27.xlsx", efg.getFormats().get(0));
 		for (Order o: orders) {
-			System.out.println(o.getCompany());
+			o.printOrder();
+			System.out.println();
 		}
 		assertEquals(8, orders.size());
 		assertEquals("Boulette's LLC", orders.get(0).getCompany());

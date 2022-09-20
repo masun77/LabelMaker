@@ -10,13 +10,24 @@ public class Order {
 	private ArrayList<Item> items = new ArrayList<>();
 	
 	public void printOrder() {
-		System.out.println("Invoice num: " + invoiceNum + "\nCompany:" + 
-					company + "\n\tPO: " + PONum + "\n\tShip via: " + shipVia);
-		//printItems();
+		System.out.println(this.toString());
+		printItems();
+	}
+	
+	private void printItems() {
+		for (Item i: items) {
+			System.out.print("\n\t" + i.toString());
+		}
 	}
 	
 	public void addItem(Item i) {
 		items.add(i);
+	}
+	
+	@Override
+	public String toString() {
+		return "Invoice num: " + invoiceNum + "\nCompany:" + 
+				company + "\n\tPO: " + PONum + "\n\tShip via: " + shipVia;
 	}
 	
 	// Getters and setters

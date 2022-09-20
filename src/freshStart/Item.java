@@ -22,4 +22,12 @@ public class Item {
 		quantity = qty;
 		price = prc;
 	}
+	
+	@Override
+	public String toString() {
+		return "Item: " + company + " " + shipDate.getDateMMDDYYYY()
+		+ "\n\t\t" + quantity + " " + productName + "\n\t\tItem code: "
+		+ itemCode + " GTIN: " + gtin
+		+ "\n\t\t" + unit + " at $" + price;
+	}
 }
