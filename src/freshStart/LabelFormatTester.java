@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Test;
 
 class LabelFormatTester {
 
-	@Test
 	void test() {
 		LabelFormatReader lfr = new LabelFormatReader();
 		ArrayList<LabelFormat> formats = lfr.readLabelFormats();
 		assertEquals(1, formats.size());
-		LabelFormat form = formats.get(0);
+		LabelFormat form = formats.get(0); 
 		assertTrue(form.getName().equals("RDF 4x3.5"));
 		assertEquals(form.getLabelDimensions().getxMax(),410);
 		assertEquals(form.getLabelDimensions().getyMax(),300);

@@ -1,6 +1,6 @@
 Name: RDF 4x3.5
 Label dimensions: 0,0,410,300
-Text: customer,,300,5,380,25
+Text: company,,300,5,380,25
 Text: humanReadableGTIN,,100,80,350,95
 Text: productName,,5,105,300,125
 Text: unit,,5,130,200,150

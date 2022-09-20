@@ -4,11 +4,21 @@ public class TextObject {
 	private String name = "";
 	private String text = "";
 	private Bounds bounds = new Bounds();
+	private LabelFieldOption fieldType;
 	
-	public TextObject(String n, String t, int xmin, int ymin, int xmax, int ymax) {
+	public TextObject(String n, String t, LabelFieldOption lf, int xmin, int ymin, int xmax, int ymax) {
 		name = n;
 		text = t;
 		bounds = new Bounds(xmin, ymin, xmax, ymax);
+		fieldType = lf;
+	}
+
+	public LabelFieldOption getFieldType() {
+		return fieldType;
+	}
+
+	public void setFieldType(LabelFieldOption fieldType) {
+		this.fieldType = fieldType;
 	}
 
 	public String getText() {

@@ -2,12 +2,17 @@ package freshStart;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
+import static freshStart.LabelFieldOption.*;
 
 public class LabelFormat {
 	private String name = "";
-	Bounds labelDimensions = new Bounds();
-	ArrayList<TextObject> textObjects = new ArrayList<>();
-	ArrayList<RectangleObject> rectangles = new ArrayList<>();
+	private Bounds labelDimensions = new Bounds();
+	private ArrayList<TextObject> textObjects = new ArrayList<>();
+	private ArrayList<RectangleObject> rectangles = new ArrayList<>();
+	private ArrayList<String> objectNames = new ArrayList<>();
+	private HashMap<String, LabelFieldOption> fieldTypes = new HashMap<>();
+	private ArrayList<LabelFieldOption> fieldTypesUsed = new ArrayList<>();
 	
 	private ArrayList<String> settings = new ArrayList<>();
 	
@@ -50,9 +55,13 @@ public class LabelFormat {
 	
 	private void addTextFromFile(String value) {
 		ArrayList<String> strs = parseCommaSeparatedValues(value);
-		textObjects.add(new TextObject(strs.get(0), strs.get(1), 
+		LabelFieldOption lf = fieldTypes.get(strs.get(0).toLowerCase());
+		fieldTypesUsed.add(lf);
+		textObjects.add(new TextObject(strs.get(0), strs.get(1),
+				lf,
 				Integer.parseInt(strs.get(2)),Integer.parseInt(strs.get(3)),
 				Integer.parseInt(strs.get(4)),Integer.parseInt(strs.get(5))));
+		objectNames.add(strs.get(0));
 	}
 	
 	private void addRectangleFromFile(String value) {
@@ -62,6 +71,7 @@ public class LabelFormat {
 				Boolean.parseBoolean(strs.get(2)),
 				Integer.parseInt(strs.get(3)),Integer.parseInt(strs.get(4)),
 				Integer.parseInt(strs.get(5)),Integer.parseInt(strs.get(6))));
+		objectNames.add(strs.get(0));
 	}
 	
 	private Color getColorFromString(String s) {
@@ -92,6 +102,15 @@ public class LabelFormat {
 		settings.add("label dimensions");    // 1
 		settings.add("text");    // 2
 		settings.add("rectangle");    // 3
+		
+		fieldTypes.put("company", COMPANY);
+		fieldTypes.put("humanreadablegtin", HUMAN_READABLE_GTIN);
+		fieldTypes.put("productname", PRODUCT_NAME);
+		fieldTypes.put("unit", UNIT);
+		fieldTypes.put("datelabel", DATE_LABEL);
+		fieldTypes.put("shipdate", SHIP_DATE);
+		fieldTypes.put("vpclarge", VPC_LARGE);
+		fieldTypes.put("vpcsmall", VPC_SMALL);
 	}
 	
 	public String getName() {

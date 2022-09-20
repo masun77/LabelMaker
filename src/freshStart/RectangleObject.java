@@ -14,4 +14,38 @@ public class RectangleObject {
 		color = c;
 		filled = f;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Bounds getBounds() {
+		return bounds;
+	}
+
+	public void setBounds(Bounds bounds) {
+		this.bounds = bounds;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public boolean isFilled() {
+		return filled;
+	}
+
+	public void setFilled(boolean filled) {
+		this.filled = filled;
+	}
+	
+	
 }
