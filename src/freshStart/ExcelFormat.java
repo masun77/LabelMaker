@@ -1,16 +1,16 @@
 /**
  * ExcelFormat
  * Each ExcelFormat represents the format an Excel file may be in
- * in order for company Orders to be successfully read from it.
+ * in order for company Orders to be successfully read from it with the ExcelReader class.
  * An ExcelFormat must have a name, header row number, data start row number,
- * 
+ * and may have other information including header names such as "Company name", "GTIN" etc.
  */
 
 package freshStart;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import static freshStart.HeaderOptions.*;
+import static freshStart.HeaderOption.*;
 
 public class ExcelFormat {
 	private ArrayList<String> settings = new ArrayList<>();
@@ -19,7 +19,7 @@ public class ExcelFormat {
 	private int dataStartRow = 1;
 	private String typesToSave = "";
 	private ArrayList<String> excludedCompanies = new ArrayList<>();
-	private HashMap<HeaderOptions, ExcelHeader> headers = new HashMap<>();
+	private ArrayList<ExcelHeader> headers = new ArrayList<>();
 	
 	public ExcelFormat() {
 		initializeSettings();
@@ -57,37 +57,37 @@ public class ExcelFormat {
 				saveExcludedCustomers(settingValue);
 				break;
 			case 5:
-				headers.put(TYPE, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(TYPE, settingValue));
 				break;
 			case 6:
-				headers.put(COMPANY, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(COMPANY, settingValue));
 				break;
 			case 7:
-				headers.put(SHIP_DATE, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(SHIP_DATE, settingValue));
 				break;
 			case 8:
-				headers.put(INVOICE_NUMBER, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(INVOICE_NUMBER, settingValue));
 				break;
 			case 9:
-				headers.put(PO_NUMBER, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(PO_NUMBER, settingValue));
 				break;
 			case 10:
-				headers.put(SHIP_VIA, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(SHIP_VIA, settingValue));
 				break;
 			case 11:
-				headers.put(GTIN, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(GTIN, settingValue));
 				break;
 			case 12:
-				headers.put(ITEM_CODE, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(ITEM_CODE, settingValue));
 				break;
 			case 13:
-				headers.put(ITEM_DESCRIPTION, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(ITEM_DESCRIPTION, settingValue));
 				break;
 			case 14:
-				headers.put(QUANTITY, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(QUANTITY, settingValue));
 				break;
 			case 15:
-				headers.put(PRICE, new ExcelHeader(TYPE, settingValue, 0));
+				headers.add(new ExcelHeader(PRICE, settingValue));
 				break;
 			default:
 				break;
@@ -149,7 +149,7 @@ public class ExcelFormat {
 		return settings;
 	}
 
-	public String getTypesToSave() {
+	public String getTypeToSave() {
 		return typesToSave;
 	}
 
@@ -157,7 +157,7 @@ public class ExcelFormat {
 		return excludedCompanies;
 	}
 
-	public HashMap<HeaderOptions, ExcelHeader> getHeaders() {
+	public ArrayList<ExcelHeader> getHeaders() {
 		return headers;
 	}
 }

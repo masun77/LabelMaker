@@ -1,21 +1,24 @@
+/**
+ * ExcelHeader
+ * Represents one header - the type of header, the String name in a given format, the column index of that header.
+ */
+
 package freshStart;
 
 public class ExcelHeader {
-	private HeaderOptions headerType;
+	private HeaderOption headerType;
 	private String header;
-	private int columnIndex;
 	
-	public ExcelHeader(HeaderOptions ht, String h, int col) {
+	public ExcelHeader(HeaderOption ht, String h) {
 		headerType = ht;
 		header = h;
-		columnIndex = col;
 	}
 
-	public HeaderOptions getHeaderType() {
+	public HeaderOption getHeaderType() {
 		return headerType;
 	}
 
-	public void setHeaderType(HeaderOptions headerType) {
+	public void setHeaderType(HeaderOption headerType) {
 		this.headerType = headerType;
 	}
 
@@ -25,13 +28,5 @@ public class ExcelHeader {
 
 	public void setHeader(String header) {
 		this.header = header;
-	}
-
-	public int getColumnIndex() {
-		return columnIndex;
-	}
-
-	public void setColumnIndex(int columnIndex) {
-		this.columnIndex = columnIndex;
 	}
 }
