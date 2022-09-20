@@ -18,7 +18,6 @@ import uiDisplay.RDFInterface;
 import uiLogic.DeleteOrderFunction;
 import uiLogic.DeselectAllFunction;
 import uiLogic.EditOrderFunction;
-import uiLogic.ExcelImportFunction;
 import uiLogic.LabelViewLogic;
 import uiLogic.SelectAllFunction;
 import uiLogic.UserInterface;
@@ -42,7 +41,6 @@ public class Application {
 		ui.addFunction(new DeleteOrderFunction(), "- Delete selected orders", "");
 		ui.addBreakBetweenFunctions();
 		ui.addFunction(new RefreshFunction(), "Update orders from server", "resources/reload.png");
-		ui.addFunction(new ExcelImportFunction(), "Import invoices from Excel file", "resources/import.png");
 		AppState.setLastListener((RDFInterface)ui);
 	}
 	
