@@ -16,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import freshStart.DateImp;
+import freshStart.HPanel;
+import freshStart.VPanel;
 import localBackup.LocalFileBackup;
 import main.AppState;
 import main.Item;
@@ -25,10 +27,8 @@ import main.RDFItem;
 import uiLogic.SideFunction;
 import uiSubcomponents.AmountListener;
 import uiSubcomponents.CodeListener;
-import uiSubcomponents.HPanel;
 import uiSubcomponents.PriceListener;
 import uiSubcomponents.SaveOrderListener;
-import uiSubcomponents.VPanel;
 
 public class EntryForm implements SideFunction {
 	private ArrayList<Order> orders;

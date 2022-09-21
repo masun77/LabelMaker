@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import database.DataClient;
+import freshStart.HPanel;
+import freshStart.VPanel;
 import localBackup.LocalFileBackup;
 import main.AppListener;
 import main.AppListenerMessage;
@@ -26,8 +28,6 @@ import main.Order;
 import uiLogic.HomeFunction;
 import uiLogic.SideFunction;
 import uiLogic.UserInterface;
-import uiSubcomponents.HPanel;
-import uiSubcomponents.VPanel;
 
 public class RDFInterface implements UserInterface, AppListener {
 	// Application variables

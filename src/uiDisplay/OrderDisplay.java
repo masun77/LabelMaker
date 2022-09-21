@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 
 import freshStart.Date;
 import freshStart.DateImp;
+import freshStart.HPanel;
+import freshStart.VPanel;
 import main.AppListenerMessage;
 import main.AppState;
 import main.LabelableItem;
@@ -24,11 +26,9 @@ import main.Order;
 import uiLogic.HomeFunction;
 import uiSubcomponents.CompanyCheckBox;
 import uiSubcomponents.CompanyHeader;
-import uiSubcomponents.HPanel;
 import uiSubcomponents.ItemCheckBox;
 import uiSubcomponents.PrintCheckBox;
 import uiSubcomponents.ProductInfo;
-import uiSubcomponents.VPanel;
 
 public class OrderDisplay implements HomeFunction {
 	// Orders

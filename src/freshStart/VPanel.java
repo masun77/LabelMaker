@@ -1,4 +1,4 @@
-package uiSubcomponents;
+package freshStart;
 
 import java.awt.Color;
 

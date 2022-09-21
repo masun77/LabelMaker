@@ -17,10 +17,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class LabelViewerG2 {
+public class LabelViewerG2 implements LabelView {
 	/**
 	 * Show the label on the screen for the given item and label format
 	 * @param i The item to show the label for
@@ -34,6 +33,31 @@ public class LabelViewerG2 {
 		JPanel tester = new LabelPanel(i, lf);
 		frame.add(tester);
 		frame.setVisible(true);
+	}
+	
+	@Override
+	public JPanel getSingleLabel(Item i, LabelFormat lf) {
+		return new LabelPanel(i, lf);
+	}
+
+	@Override
+	public ArrayList<JPanel> getLabelsForList(ArrayList<Item> items, LabelFormat lf) {
+		ArrayList<JPanel> labels = new ArrayList<>();
+		for (Item i: items) {
+			for (int lab = 0; lab < i.getQuantity(); lab++) {
+				labels.add(new LabelPanel(i, lf));
+			}
+		}
+		return labels;
+	}
+
+	@Override
+	public ArrayList<JPanel> getLabelsForItem(Item i, LabelFormat lf) {
+		ArrayList<JPanel> labels = new ArrayList<>();
+		for (int lab = 0; lab < i.getQuantity(); lab++) {
+			labels.add(new LabelPanel(i, lf));
+		}
+		return labels;
 	}
 	
 	/**

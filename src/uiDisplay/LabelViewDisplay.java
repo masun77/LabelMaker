@@ -8,12 +8,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import freshStart.VPanel;
 import main.AppState;
 import main.Item;
 import main.LabelableItem;
 import printing.LabelPrinter;
 import uiSubcomponents.PrintListener;
-import uiSubcomponents.VPanel;
 
 public class LabelViewDisplay implements LabelDisplayInterface {
 	private JFrame f = new JFrame("View Labels");
