@@ -10,9 +10,7 @@ public class Bounds {
 	private int yMin = 0;
 	private int yMax = 100;
 	
-	public Bounds() {
-		
-	}
+	public Bounds() {}
 	
 	public Bounds(int xmin, int ymin, int xmax, int ymax) {
 		xMin = xmin;

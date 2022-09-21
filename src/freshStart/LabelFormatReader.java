@@ -20,6 +20,10 @@ public class LabelFormatReader {
 	private ArrayList<String> formatNames = new ArrayList<>();
 	private String folderLocation = "settings/labelFormats";
 	
+	/**
+	 * Read and save the label formats from the folder settings/labelFormats.
+	 * @return a list of the read label formats
+	 */
 	public ArrayList<LabelFormat> readLabelFormats() {
 		formats = new ArrayList<>();
 		formatNames = new ArrayList<>();
@@ -30,6 +34,11 @@ public class LabelFormatReader {
 		return formats;
 	}
 	
+	/**
+	 * Create a new format and read in the settings for it
+	 * from its file.
+	 * @param f the file to read the settings from for the label format
+	 */
 	private void addNewFormat(File f) {
 		BufferedReader br;
 		try {

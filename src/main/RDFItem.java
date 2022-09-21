@@ -28,32 +28,6 @@ public class RDFItem extends Item {
 	 */
 	public class RDFLabel extends Component {
 //		
-//		private void addCustomer() {
-//			addText(customer.toUpperCase(), Font.BOLD, Alignment.RIGHT_ALIGN, Color.black,  customerBounds,34);
-//		}
-//		
-//		private void addOuterBorder() {
-//			g2.drawRect(borderBounds.getStartX(), borderBounds.getStartY(), borderBounds.getWidth(), borderBounds.getHeight());
-//		}
-//		
-//		private void addProductName() {
-//			addText(productName.toUpperCase(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black,  prodNameBounds,22);
-//		}
-//		
-//		private void addUnit() {
-//			addText(unit, Font.PLAIN, Alignment.LEFT_ALIGN, Color.black,  unitBounds,25);
-//		}
-//		
-//		private void addDateLabel() {
-//			addText(PACK_DATE, Font.PLAIN, Alignment.LEFT_ALIGN, Color.black,  dateLabelBounds,10);
-//		}
-//		
-//		private void addPackDate() {
-//			addText(packDate.getAsLabelDate(), Font.BOLD, Alignment.LEFT_ALIGN, Color.black, packDateBounds,10);
-//			g2.drawRect(packDateBox.getStartX(), packDateBox.getStartY(), packDateBox.getWidth(), packDateBox.getHeight());
-//		}
-//		
-//		
 //		
 	}
 

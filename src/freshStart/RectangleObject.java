@@ -1,3 +1,9 @@
+/**
+ * RectangleObject
+ * Represents a rectangle on a label with color, filled or not, 
+ * bounds and a name.
+ */
+
 package freshStart;
 
 import java.awt.Color;

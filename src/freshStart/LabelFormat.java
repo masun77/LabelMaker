@@ -1,3 +1,9 @@
+/**
+ * LabelFormat
+ * Represents the name, size, text, and rectangles for a specific
+ * label format. 
+ */
+
 package freshStart;
 
 import java.awt.Color;
@@ -19,6 +25,13 @@ public class LabelFormat {
 		initializeSettings();
 	}
 	
+	/**
+	 * Given one line from a label format file, add it to this object
+	 * as a property - whether name, dimensions, text object, or rectangle.
+	 * Each line has the following format:
+	 * 		propertyName: characteristic1, characteristic2...
+	 * @param line the text to parse into a label property
+	 */
 	public void addSetting(String line) {
 		int colon = line.indexOf(":");
 		if (colon < 0) {
@@ -33,26 +46,37 @@ public class LabelFormat {
 				name = settingValue;
 				break;
 			case 1:
-				setLabelDimensionsFromFile(settingValue);
+				setLabelDimensionsFromString(settingValue);
 				break;
 			case 2:
-				addTextFromFile(settingValue);
+				addTextFromString(settingValue);
 				break;
 			case 3:
-				addRectangleFromFile(settingValue);
+				addRectangleFromString(settingValue);
 				break;
 			default:
 				break;
 		}
 	}
 	
-	private void setLabelDimensionsFromFile(String value) {
+	/**
+	 * Set the labels dimensions given a string with its xmin, ymin, xmax,
+	 * and ymax as comma-separated values
+	 * @param value the string containing the label boundaries
+	 */
+	private void setLabelDimensionsFromString(String value) {
 		ArrayList<String> strs = parseCommaSeparatedValues(value);
 		labelDimensions = new Bounds(Integer.parseInt(strs.get(0)),Integer.parseInt(strs.get(1)),
 				Integer.parseInt(strs.get(2)),Integer.parseInt(strs.get(3)));
 	}
 	
-	private void addTextFromFile(String value) {
+	/**
+	 * Add text to the label format given a string containing the text's
+	 * color, name, value, and xmin, ymin, xmax,
+	 * and ymax as comma-separated values
+	 * @param value the string containing the text specifications
+	 */
+	private void addTextFromString(String value) {
 		ArrayList<String> strs = parseCommaSeparatedValues(value);
 		LabelFieldOption lf = fieldTypes.get(strs.get(1).toLowerCase());
 		fieldTypesUsed.put(lf, strs.get(2));
@@ -62,7 +86,13 @@ public class LabelFormat {
 				Integer.parseInt(strs.get(5)),Integer.parseInt(strs.get(6))));
 	}
 	
-	private void addRectangleFromFile(String value) {
+	/**
+	 * Add a rectangle to the label format given a string containing the rectangle's
+	 * name, color, whether it's filled or not, and xmin, ymin, xmax,
+	 * and ymax as comma-separated values
+	 * @param value the string containing the rectangle specifications
+	 */
+	private void addRectangleFromString(String value) {
 		ArrayList<String> strs = parseCommaSeparatedValues(value);
 		rectangles.add(new RectangleObject(strs.get(0), 
 				getColorFromString(strs.get(1)), 
@@ -71,6 +101,11 @@ public class LabelFormat {
 				Integer.parseInt(strs.get(5)),Integer.parseInt(strs.get(6))));
 	}
 	
+	/**
+	 * Convert a string like "black" to a Color object
+	 * @param s the string to convert
+	 * @return the corresponding Color
+	 */
 	private Color getColorFromString(String s) {
 		s = s.toLowerCase().strip();
 		if (s.equals("black")) {
@@ -82,6 +117,12 @@ public class LabelFormat {
 		return Color.red;
 	}
 	
+	/**
+	 * Parse a string of values separated by commas into an array
+	 * of strings with each value as one item in the arry
+	 * @param line the String to parse
+	 * @return an array of strings with each comma-separated item as one String
+	 */
 	private ArrayList<String> parseCommaSeparatedValues(String line) {
 		ArrayList<String> strs = new ArrayList<>();
 		int commaIndex = line.indexOf(",");

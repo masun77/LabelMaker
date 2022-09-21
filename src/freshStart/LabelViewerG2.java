@@ -1,5 +1,10 @@
-package freshStart;
+/**
+ * LabelViewerG2
+ * Displays a label to the screen using the Java
+ * Graphics2D and Swing libraries. 
+ */
 
+package freshStart;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,17 +21,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class LabelViewerG2 {
+	/**
+	 * Show the label on the screen for the given item and label format
+	 * @param i The item to show the label for
+	 * @param lf the format to show the information in
+	 */
 	public void showLabel(Item i, LabelFormat lf) {
 		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // todo change when using
 		frame.setSize(new Dimension(lf.getLabelDimensions().getxMax(), 
-				lf.getLabelDimensions().getyMax()));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+	        		lf.getLabelDimensions().getyMax()));
 		JPanel tester = new LabelPanel(i, lf);
 		frame.add(tester);
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Panel containing one label.
+	 *
+	 */
 	private class LabelPanel extends JPanel {
 		private Item item;
 		private LabelFormat format;
@@ -34,6 +47,11 @@ public class LabelViewerG2 {
 		private String smallVPC;
 		private String largeVPC;
 
+		/**
+		 * Set up the instance variables and get the bar code and voice pick code.
+		 * @param i the item to use for the label
+		 * @param lf the label's format
+		 */
 	    LabelPanel(Item i, LabelFormat lf) {
 	    	item = i;
 	    	format = lf;
@@ -47,6 +65,9 @@ public class LabelViewerG2 {
 			largeVPC = vpc.substring(2);
 	    }
 		
+	    /**
+	     * For any string which could be empty, set it to a nonempty string.
+	     */
 		public void checkItemData() {
 			if (item.getCompany().equals("")) {
 				item.setCompany(" ");
@@ -62,10 +83,18 @@ public class LabelViewerG2 {
 			}
 		}
 
+		/**
+		 * Set preferred size based on the label format.
+		 */
 	    public Dimension getPreferredSize() {
-	        return new Dimension(410,300);
+	        return new Dimension(format.getLabelDimensions().getxMax(), 
+	        		format.getLabelDimensions().getyMax());
 	    }
 
+	    /**
+	     * Set the background to white. Add the rectangles and text
+	     * given in the label format.
+	     */
 	    public void paintComponent(Graphics g) {
 	        super.paintComponent(g); 
 	        
@@ -94,7 +123,7 @@ public class LabelViewerG2 {
 	    
 	    /**
 		 * Set the background to white by filling it with a white rectangle.
-		 * @param g
+		 * @param g the graphics context
 		 */
 		private void setBackgroundWhite(Graphics2D g) {
 			this.setBackground(Color.white);
@@ -102,7 +131,11 @@ public class LabelViewerG2 {
 			g.fillRect(0, 0, getWidth(), getHeight());
 			g.setColor(getForeground());
 		}
-		
+		/**
+		 * Add the rectangles for the bar code for this label
+		 * @param r the bounds of the bar code
+		 * @param g2 the graphics context
+		 */
 		private void addBarRectangles(RectangleObject r, Graphics2D g2) {
 			Bounds b = r.getBounds();
 			int x = b.getxMin();
@@ -128,22 +161,14 @@ public class LabelViewerG2 {
 		}
 		
 		/**
-		 * Add text to this label.
-		 * @param startX the top left x coordinate
-		 * @param startY the top left y coordinate
-		 * @param text the text to add
-		 * @param fontSize the font size for the text
-		 * @param fontStyle the font style for the text
+		 * Add the given text to the label.
+		 * @param t the TextObject to add text from
+		 * @param g2 the graphics context
 		 */
 		private void addText(TextObject t, Graphics2D g2) {
 			Bounds b = t.getBounds();
-			int fontSize = b.getHeight();
 			String text = getItemField(item, t.getFieldType());
-			double ml = b.getWidth()/(6);
-			if (text.length() > ml) {
-				double fraction = ml / text.length();
-				fontSize = (int)Math.round(fontSize * fraction);
-			}
+			int fontSize = getFontSize(text, b);
 			Font font = new Font("SansSerif", Font.BOLD, fontSize);
 	        g2.setFont(font);
         	g2.setColor(t.getColor());
@@ -152,12 +177,36 @@ public class LabelViewerG2 {
 	        Rectangle2D textBounds = tl.getBounds(); 
 			int fontStartY = b.getyMin() + (int) textBounds.getHeight();
 			int fontStartX = b.getxMin();
-			if (t.getFieldType() == LabelFieldOption.COMPANY) {
+			if (t.getFieldType() == LabelFieldOption.COMPANY) {    // Right align
 				fontStartX = b.getxMax() - (int) b.getWidth();
 			}
 	        g2.drawString(text, fontStartX, fontStartY);
 		}
+		
+		/**
+		 * Get an appropriate font size for the given text within the given bounds
+		 * so that it fills the space but doesn't overflow it.
+		 * @param text the text to get the font size for
+		 * @param b the bounds within which to fit the text
+		 * @return a font size to fit the text to the bounds
+		 */
+		private int getFontSize(String text, Bounds b) {
+			int fontSize = b.getHeight();
+			double ml = b.getWidth()/(6);
+			if (text.length() > ml) {
+				double fraction = ml / text.length();
+				fontSize = (int)Math.round(fontSize * fraction);
+			}
+			return fontSize;
+		}
 	    
+		/**
+		 * Get the info from the Item corresponding to the 
+		 * fieldType specified by the label format
+		 * @param item the item to get data from
+		 * @param fieldType which data to get from the item
+		 * @return a String representation of the data
+		 */
 	    private String getItemField(Item item, LabelFieldOption fieldType) {
 			switch (fieldType) {
 			case COMPANY:

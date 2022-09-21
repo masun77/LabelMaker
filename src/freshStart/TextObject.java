@@ -1,3 +1,10 @@
+/**
+ * TextObject
+ * Represents text on a label with text, color, 
+ * bounds within which the text falls, a name, and a type
+ * for use with Items.
+ */
+
 package freshStart;
 
 import java.awt.Color;
