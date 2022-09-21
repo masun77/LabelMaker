@@ -11,6 +11,7 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 
+import freshStart.LabelPrintable;
 import main.AppState;
 import main.LabelableItem;
 

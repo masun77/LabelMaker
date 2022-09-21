@@ -1,4 +1,4 @@
-package printing;
+package freshStart;
 
 import java.awt.Component;
 import java.awt.Dimension;
