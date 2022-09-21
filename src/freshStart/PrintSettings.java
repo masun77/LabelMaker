@@ -11,6 +11,7 @@ import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -27,6 +28,7 @@ public class PrintSettings {
 	private LabelFormat format;
 	private PrintService[] pservices;
 	private JComboBox<String> printerList;
+	private JSpinner numCopiespinner = null;
 	
 	public PrintSettings(ArrayList<Item> items, LabelFormat lf) {
 		itemsToPrint = items;
@@ -84,10 +86,10 @@ public class PrintSettings {
 	private void addNumCopies(JPanel parent) {
 		SpinnerModel model =
 		        new SpinnerNumberModel(1,1,50,1);
-		JSpinner spinner = new JSpinner(model);
+		numCopiespinner = new JSpinner(model);
 		HPanel copyPanel = new HPanel();
 		copyPanel.add(new JLabel("Copies: "));
-		copyPanel.add(spinner);
+		copyPanel.add(numCopiespinner);
 		copyPanel.setMaximumSize(new Dimension(200,50));
 		parent.add(copyPanel);
 	}
@@ -106,11 +108,13 @@ public class PrintSettings {
 			PrinterJob pj = PrinterJob.getPrinterJob();
 			LabelPrintable lp = new LabelPrintable(labelList);
 			PrintService ps = pservices[printerList.getSelectedIndex()];
+			int numCopies = (int) numCopiespinner.getValue();
 			
 			PrinterDescription pd = new PrintConfigReader().readPrinterConfig();
 			PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
 			pras.add(pd.getPrintableArea());
 			pras.add(pd.getMediaName());
+			pras.add(new Copies(numCopies));
 			
 			try {
 				pj.setPrintService(ps);
