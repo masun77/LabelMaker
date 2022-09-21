@@ -3,8 +3,12 @@ package freshStart;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -84,9 +88,7 @@ public class LabelViewerG2 {
 	        }
 
 	        for (TextObject t: format.getTextObjects()) {
-	        	g2.setColor(t.getColor());
-	        	g2.drawString(getItemField(item, t.getFieldType()),t.getBounds().getxMin(),
-	        			t.getBounds().getyMax());
+	        	addText(t, g2);
 			}
 	    }  
 	    
@@ -124,15 +126,46 @@ public class LabelViewerG2 {
 				}
 			}
 		}
+		
+		/**
+		 * Add text to this label.
+		 * @param startX the top left x coordinate
+		 * @param startY the top left y coordinate
+		 * @param text the text to add
+		 * @param fontSize the font size for the text
+		 * @param fontStyle the font style for the text
+		 */
+		private void addText(TextObject t, Graphics2D g2) {
+			Bounds b = t.getBounds();
+			int fontSize = b.getHeight();
+			String text = getItemField(item, t.getFieldType());
+			double ml = b.getWidth()/(6);
+			if (text.length() > ml) {
+				double fraction = ml / text.length();
+				fontSize = (int)Math.round(fontSize * fraction);
+			}
+			Font font = new Font("SansSerif", Font.BOLD, fontSize);
+	        g2.setFont(font);
+        	g2.setColor(t.getColor());
+	        FontRenderContext frc = g2.getFontRenderContext();
+			TextLayout tl = new TextLayout(text, font, frc);
+	        Rectangle2D textBounds = tl.getBounds(); 
+			int fontStartY = b.getyMin() + (int) textBounds.getHeight();
+			int fontStartX = b.getxMin();
+			if (t.getFieldType() == LabelFieldOption.COMPANY) {
+				fontStartX = b.getxMax() - (int) b.getWidth();
+			}
+	        g2.drawString(text, fontStartX, fontStartY);
+		}
 	    
 	    private String getItemField(Item item, LabelFieldOption fieldType) {
 			switch (fieldType) {
 			case COMPANY:
-				return item.getCompany();
+				return item.getCompany().toUpperCase();
 			case HUMAN_READABLE_GTIN:
-				return item.getGtin();
+				return "(01)" + item.getGtin();
 			case PRODUCT_NAME:
-				return item.getProductName();
+				return item.getProductName().toUpperCase();
 			case UNIT:
 				return item.getUnit();
 			case DATE_LABEL:

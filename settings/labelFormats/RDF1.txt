@@ -6,7 +6,7 @@ Text: black, productName,,5,105,300,125
 Text: black, unit,,5,130,200,150
 Text: black, dateLabel,Pack Date,305,80,380,93
 Text: black, shipDate,,315,98,380,112
-Text: white, vpcSmall,,310,131,340,153
+Text: white, vpcSmall,,310,131,340,157
 Text: white, vpcLarge,,342,117,380,157
 Rectangle: border,black,false,3,27,390,160
 Rectangle: shipDateBox, black, false, 305,93,370,113

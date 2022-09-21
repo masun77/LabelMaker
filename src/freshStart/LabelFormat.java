@@ -55,7 +55,7 @@ public class LabelFormat {
 	private void addTextFromFile(String value) {
 		ArrayList<String> strs = parseCommaSeparatedValues(value);
 		LabelFieldOption lf = fieldTypes.get(strs.get(1).toLowerCase());
-		fieldTypesUsed.put(lf, strs.get(1));
+		fieldTypesUsed.put(lf, strs.get(2));
 		textObjects.add(new TextObject(getColorFromString(strs.get(0)), strs.get(1),
 				strs.get(2), lf,
 				Integer.parseInt(strs.get(3)),Integer.parseInt(strs.get(4)),
