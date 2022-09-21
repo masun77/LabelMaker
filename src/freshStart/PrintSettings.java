@@ -1,3 +1,10 @@
+/**
+ * PrintSettings
+ * Given a list of items and label format,
+ * displays the labels, allows the user to select print settings,
+ * and allows the user to print the labels. 
+ */
+
 package freshStart;
 
 import java.awt.Component;
@@ -35,6 +42,9 @@ public class PrintSettings {
 		format = lf;
 	}
 	
+	/**
+	 * Display the labels and print options on the screen. 
+	 */
 	public void showPrintDialog() {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // todo change when using
@@ -46,6 +56,10 @@ public class PrintSettings {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Adds the labels to the display.
+	 * @param parent the container to add the labels to.
+	 */
 	private void addLabels(JPanel parent) {
 		JPanel labelsPanel = new VPanel();
 		for (Item i: itemsToPrint) {
@@ -58,6 +72,10 @@ public class PrintSettings {
 		parent.add(labelsPanel);
 	}
 	
+	/**
+	 * Adds the print settings to the display.
+	 * @param parent the container to add the settings to
+	 */
 	private void addSettings(JPanel parent) {
 		VPanel settingsHolder = new VPanel();
 		addPrinterList(settingsHolder);
@@ -66,13 +84,17 @@ public class PrintSettings {
 		parent.add(settingsHolder);
 	}
 	
+	/**
+	 * Adds the printer-choice combo box to the display
+	 * @param parent the container to add the labels to.
+	 */
 	private void addPrinterList(JPanel parent) {
 		pservices = PrintServiceLookup.lookupPrintServices(null, null);
 		String[] printerNames = new String[pservices.length];
 		int setIndex = 0;
 		for (int i = 0; i < pservices.length; i++) {
 			String name = pservices[i].getName();
-			if (name.contains("PDF")) {
+			if (name.contains("PDF")) {    // Defaults to PDF
 				setIndex = i;
 			}
 			printerNames[i] = name;
@@ -83,6 +105,10 @@ public class PrintSettings {
 		parent.add(printerList);
 	}
 	
+	/**
+	 * Adds the number of copies choice to the display
+	 * @param parent the container to add the labels to.
+	 */
 	private void addNumCopies(JPanel parent) {
 		SpinnerModel model =
 		        new SpinnerNumberModel(1,1,50,1);
@@ -94,19 +120,30 @@ public class PrintSettings {
 		parent.add(copyPanel);
 	}
 	
+	/**
+	 * Adds the print button to the display. 
+	 * @param parent the container to add the labels to.
+	 */
 	private void addPrintButton(JPanel parent) {
 		JButton printButton = new JButton("Print Labels");
-		printButton.addActionListener(new PrintListener());  // todo
+		printButton.addActionListener(new PrintListener()); 
 		printButton.setMaximumSize(new Dimension(200,50));
 		parent.add(printButton);
 	}
 	
+	/**
+	 * When the print button is clicked, reads in the selected printer
+	 * and number of copies, reads the media size and printable area
+	 * from the configuration file, and uses these to print
+	 * the labels for the given items and label format.
+	 */
 	private class PrintListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			PrinterJob pj = PrinterJob.getPrinterJob();
 			LabelPrintable lp = new LabelPrintable(labelList);
+			
 			PrintService ps = pservices[printerList.getSelectedIndex()];
 			int numCopies = (int) numCopiespinner.getValue();
 			

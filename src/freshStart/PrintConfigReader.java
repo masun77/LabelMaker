@@ -1,3 +1,18 @@
+/**
+ * PrintConfigReader
+ * Reads in the configuration for the printer and media from the file
+ * settings/printerConfig.txt. 
+ * In the file, the first line should be the printer name,
+ *  second line should be the media type, 
+ *  and third line comma-separated startX, startY, width, and height
+ *  of the printable area.
+ *  
+ *  For example, printerConfig.txt might read as follows, excluding comments:
+ *  PDF					// printer name or unique substring of printer name
+ *  A6					// media name
+ *  .2,2.5,3.6,3.5		//	start x coordinate in inches, start y coordinate, width, height in inches
+ */
+
 package freshStart;
 
 import java.io.BufferedReader;
@@ -10,6 +25,11 @@ import java.util.ArrayList;
 public class PrintConfigReader {
 	private String configFileLocation = "settings/printerConfig.txt";
 	
+	/**
+	 * Reads in the printer configuration from the file and returns
+	 * a PrinterDescription object with that information. 
+	 * @return PrinterDescription containing the information in the file
+	 */
 	public PrinterDescription readPrinterConfig() {
 		BufferedReader br;
 		try {
@@ -26,15 +46,15 @@ public class PrintConfigReader {
 			for (int i = 0; i < 3; i++) {
 				String line = br.readLine();
 				if (line != null) {
-					switch (i) {
+					switch (i) {    // First line is printer name
 					case 0:
 						name = line.strip();
 						break;
 					case 1:
-						mName = line.strip();
+						mName = line.strip();    // Second line is media name
 						break;
 					case 2:
-						floats = parseFloats(line);
+						floats = parseFloats(line);   // Third line is starting coordinate and printable area dimensions
 					}
 				}
 			}
@@ -67,6 +87,11 @@ public class PrintConfigReader {
 		return strs;
 	}
 	
+	/**
+	 * Parse a comma-separated string into floats and return a list of them. 
+	 * @param line the STring to parse into floats
+	 * @return a list of the floats in the string 
+	 */
 	private ArrayList<Float> parseFloats(String line) {
 		ArrayList<String> strs = parseCommaSeparatedValues(line);
 		ArrayList<Float> floats = new ArrayList<Float>();

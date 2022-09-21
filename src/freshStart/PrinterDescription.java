@@ -1,3 +1,9 @@
+/**
+ * PrinterDescription
+ * Describes the printer, media size via media name, and printable
+ * area to print to. 
+ */
+
 package freshStart;
 
 import java.util.HashMap;
@@ -42,6 +48,10 @@ public class PrinterDescription {
 		this.printableArea = printableArea;
 	}	
 	
+	/**
+	 * Map strings to mediaSizeNames for use with the Java Print library. 
+	 * @return
+	 */
 	private Map<String, MediaSizeName> getMSNs() {
 		Map<String, MediaSizeName> msns = new HashMap<String,MediaSizeName>();
 		msns.put("A0", MediaSizeName.ISO_A0);

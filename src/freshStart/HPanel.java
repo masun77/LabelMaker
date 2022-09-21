@@ -1,3 +1,7 @@
+/**
+ * JPanel which puts children next to each other horizontally. 
+ */
+
 package freshStart;
 
 import java.awt.Color;

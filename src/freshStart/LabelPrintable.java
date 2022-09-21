@@ -1,3 +1,8 @@
+/**
+ * Printable implementation for a list of labels to use
+ * with the Java print library. 
+ */
+
 package freshStart;
 
 import java.awt.Component;

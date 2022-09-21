@@ -1,3 +1,7 @@
+/**
+ * JPanel which stacks children vertically. 
+ */
+
 package freshStart;
 
 import java.awt.Color;
