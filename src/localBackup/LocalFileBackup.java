@@ -2,8 +2,8 @@ package localBackup;
 
 import java.util.ArrayList;
 
+import freshStart.PrinterDescription;
 import main.Order;
-import printing.PrinterDescription;
 
 public interface LocalFileBackup {
 	public PrinterDescription getPrinterDescription();

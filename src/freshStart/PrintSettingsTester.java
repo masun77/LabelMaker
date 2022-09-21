@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import javax.print.attribute.standard.MediaPrintableArea;
+
 import org.junit.jupiter.api.Test;
 
 class PrintSettingsTester {
@@ -24,6 +26,15 @@ class PrintSettingsTester {
 		while(true) {
 			
 		}
+	}
+	
+	@Test
+	void testPrintConfigREader() {
+		PrintConfigReader pcr = new PrintConfigReader();
+		PrinterDescription pd = pcr.readPrinterConfig();
+		assertEquals(pd.getPrinterName(), "PDF");
+		assertTrue(pd.getMediaName().toString().equals("iso-a6"));
+		assertEquals(3, (int) pd.getPrintableArea().getWidth(MediaPrintableArea.INCH));
 	}
 
 }

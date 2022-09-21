@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -105,12 +107,15 @@ public class PrintSettings {
 			LabelPrintable lp = new LabelPrintable(labelList);
 			PrintService ps = pservices[printerList.getSelectedIndex()];
 			
-			// todo: area and size
+			PrinterDescription pd = new PrintConfigReader().readPrinterConfig();
+			PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+			pras.add(pd.getPrintableArea());
+			pras.add(pd.getMediaName());
 			
 			try {
 				pj.setPrintService(ps);
 				pj.setPrintable(lp);
-				pj.print();
+				pj.print(pras);
 			}
 			catch (Exception error) {
 				error.printStackTrace();

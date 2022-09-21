@@ -1,4 +1,4 @@
-package printing;
+package freshStart;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,20 +16,11 @@ public class PrinterDescription {
 	private final int MEDIA_NAME_INDEX = 1;
 	private final int PRINTABLE_AREA_INDEX = 2;
 	
-	public PrinterDescription(List<String[]> allData) {
-		printerName = allData.get(NAME_INDEX)[0];
-		mediaName = getMediaSizeNameFromString(allData.get(MEDIA_NAME_INDEX)[0]);
-		printableArea = getPrintableAreaFromString(allData.get(PRINTABLE_AREA_INDEX));
-	}
-	
-	private MediaSizeName getMediaSizeNameFromString(String str) {
-		Map<String, MediaSizeName> msns = getMSNs();
-		return msns.get(str);
-	}
-	
-	private MediaPrintableArea getPrintableAreaFromString(String[] strArray) {
-		return new MediaPrintableArea(Float.parseFloat(strArray[0]),Float.parseFloat(strArray[1]),
-				Float.parseFloat(strArray[2]),Float.parseFloat(strArray[3]),MediaPrintableArea.INCH);
+	public PrinterDescription(String pName, String medName, 
+			float xMin, float yMin, float width, float height) {
+		printerName = pName;
+		mediaName = getMSNs().get(medName);
+		printableArea = new MediaPrintableArea(xMin, yMin,width, height,MediaPrintableArea.INCH);
 	}
 	
 	public String getPrinterName() {

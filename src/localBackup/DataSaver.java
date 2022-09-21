@@ -16,10 +16,10 @@ import com.opencsv.CSVWriter;
 import database.DataClient;
 import freshStart.Date;
 import freshStart.DateImp;
+import freshStart.PrinterDescription;
 import main.LabelableItem;
 import main.Order;
 import main.RDFItem;
-import printing.PrinterDescription;
 
 public class DataSaver implements LocalFileBackup, DataClient {
 	// Item data constants
@@ -298,7 +298,7 @@ public class DataSaver implements LocalFileBackup, DataClient {
 	 
 	        List<String[]> allData = csvReader.readAll();
 	 
-	        return new PrinterDescription(allData);
+	        return new PrinterDescription("","",1,2,3,4);
 	    }
 	    catch (Exception e) {
 	        e.printStackTrace();
