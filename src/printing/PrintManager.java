@@ -11,8 +11,8 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 
-import labels.LabelableItem;
 import main.AppState;
+import main.LabelableItem;
 
 public class PrintManager implements LabelPrinter {
 	

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
-import labels.LabelableItem;
 import localBackup.DataSaver;
 import main.AppState;
+import main.LabelableItem;
 import main.Order;
 
 public class SocketClient implements DataClient {

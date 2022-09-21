@@ -1,4 +1,4 @@
-package labels;
+package freshStart;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,7 +9,7 @@ public class CRCTest {
 	private CRC16Generator crcgen = new CRC16Imp();
 
 	@Test
-	void test() {
+	public void test() {
 		assertEquals(crcgen.crc16("123456789"), 47933, .01);
 		assertEquals(crcgen.crc16("00000818181234"), 21913, .01);
 		assertEquals(crcgen.crc16("00000818181234220512"), 22695, .01);

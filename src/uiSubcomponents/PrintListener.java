@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import labels.LabelableItem;
 import main.AppState;
+import main.LabelableItem;
 import main.Order;
 import printing.LabelPrinter;
 import printing.PrintManager;

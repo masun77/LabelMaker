@@ -54,12 +54,12 @@ public class LabelFormat {
 	
 	private void addTextFromFile(String value) {
 		ArrayList<String> strs = parseCommaSeparatedValues(value);
-		LabelFieldOption lf = fieldTypes.get(strs.get(0).toLowerCase());
+		LabelFieldOption lf = fieldTypes.get(strs.get(1).toLowerCase());
 		fieldTypesUsed.put(lf, strs.get(1));
-		textObjects.add(new TextObject(strs.get(0), strs.get(1),
-				lf,
-				Integer.parseInt(strs.get(2)),Integer.parseInt(strs.get(3)),
-				Integer.parseInt(strs.get(4)),Integer.parseInt(strs.get(5))));
+		textObjects.add(new TextObject(getColorFromString(strs.get(0)), strs.get(1),
+				strs.get(2), lf,
+				Integer.parseInt(strs.get(3)),Integer.parseInt(strs.get(4)),
+				Integer.parseInt(strs.get(5)),Integer.parseInt(strs.get(6))));
 	}
 	
 	private void addRectangleFromFile(String value) {
@@ -72,8 +72,12 @@ public class LabelFormat {
 	}
 	
 	private Color getColorFromString(String s) {
-		if (s.toLowerCase().strip().equals("black")) {
+		s = s.toLowerCase().strip();
+		if (s.equals("black")) {
 			return Color.black;
+		}
+		else if (s.equals("white")) {
+			return Color.white;
 		}
 		return Color.red;
 	}

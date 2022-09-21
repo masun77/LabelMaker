@@ -1,4 +1,8 @@
-package labels;
+/**
+ * Implements VoiceiIckCodeGenerator. 
+ */
+
+package freshStart;
 
 public class VoicePickImp implements VoicePickCodeGenerator {
 

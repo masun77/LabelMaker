@@ -3,7 +3,6 @@ package main;
 import java.util.ArrayList;
 
 import database.DataClient;
-import labels.LabelableItem;
 import localBackup.LocalFileBackup;
 import printing.LabelPrinter;
 

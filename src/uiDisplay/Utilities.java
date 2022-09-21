@@ -5,7 +5,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
-import labels.LabelableItem;
+import main.LabelableItem;
 
 public class Utilities {
 	/**

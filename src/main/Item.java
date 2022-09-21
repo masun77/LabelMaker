@@ -2,7 +2,6 @@ package main;
 
 import freshStart.Date;
 import freshStart.DateImp;
-import labels.LabelableItem;
 
 /**
  * Represents a single item in an order

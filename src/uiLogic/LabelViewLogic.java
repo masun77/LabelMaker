@@ -2,8 +2,8 @@ package uiLogic;
 
 import java.util.ArrayList;
 
-import labels.LabelableItem;
 import main.AppState;
+import main.LabelableItem;
 import uiDisplay.LabelDisplayInterface;
 import uiDisplay.LabelViewDisplay;
 

@@ -8,9 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import labels.LabelableItem;
 import main.AppState;
 import main.Item;
+import main.LabelableItem;
 import printing.LabelPrinter;
 import uiSubcomponents.PrintListener;
 import uiSubcomponents.VPanel;

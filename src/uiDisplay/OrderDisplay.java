@@ -17,9 +17,9 @@ import javax.swing.JTextField;
 
 import freshStart.Date;
 import freshStart.DateImp;
-import labels.LabelableItem;
 import main.AppListenerMessage;
 import main.AppState;
+import main.LabelableItem;
 import main.Order;
 import uiLogic.HomeFunction;
 import uiSubcomponents.CompanyCheckBox;

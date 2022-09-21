@@ -2,7 +2,7 @@ package uiDisplay;
 
 import java.util.ArrayList;
 
-import labels.LabelableItem;
+import main.LabelableItem;
 import printing.LabelPrinter;
 
 public interface LabelDisplayInterface {

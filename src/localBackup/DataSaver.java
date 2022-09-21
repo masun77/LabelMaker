@@ -16,7 +16,7 @@ import com.opencsv.CSVWriter;
 import database.DataClient;
 import freshStart.Date;
 import freshStart.DateImp;
-import labels.LabelableItem;
+import main.LabelableItem;
 import main.Order;
 import main.RDFItem;
 import printing.PrinterDescription;

@@ -1,4 +1,10 @@
-package labels;
+/**
+ * BarCodeGenerator
+ * Generates an arrayList of the number of white and black modules
+ * in a GS1-128 bar code fora  given GTIN.
+ */
+
+package freshStart;
 
 import java.util.ArrayList;
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import freshStart.Date;
 import freshStart.DateImp;
-import labels.LabelableItem;
 
 public class Order {
 	private ArrayList<LabelableItem> items = null;

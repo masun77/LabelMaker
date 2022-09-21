@@ -1,3 +1,7 @@
+/**
+ * Bounds
+ * Represents the boundaries of a rectangle on the display. 
+ */
 package freshStart;
 
 public class Bounds {
@@ -40,5 +44,13 @@ public class Bounds {
 	}
 	public void setyMax(int yMax) {
 		this.yMax = yMax;
+	}
+	
+	public int getWidth() {
+		return xMax - xMin;
+	}
+	
+	public int getHeight() {
+		return yMax - yMin;
 	}
 }

@@ -1,4 +1,4 @@
-package labels;
+package freshStart;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +11,7 @@ class BarCodeTest {
 	private BarCodeGenerator bcg = new BarCodeImp();
 
 	@Test
-	void test() {
+	public void test() {
 		ArrayList<Integer> result = new ArrayList<Integer>(Arrays.asList(
 				10, // quiet zone
 				2,1,1,2,3,2, // startChar

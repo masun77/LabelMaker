@@ -1,4 +1,4 @@
-package labels;
+package main;
 
 import java.awt.Component;
 

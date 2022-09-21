@@ -1,4 +1,8 @@
-package labels;
+/**
+ * Implements CRC16Generator.
+ */
+
+package freshStart;
 
 /**
  * Generates the CRC16 hash for the given input String in ASCII. 

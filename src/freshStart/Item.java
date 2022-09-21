@@ -65,6 +65,38 @@ public class Item {
 	public float getPrice() {
 		return price;
 	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public void setShipDate(Date shipDate) {
+		this.shipDate = shipDate;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
+	public void setGtin(String gtin) {
+		this.gtin = gtin;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public void setQuantity(float quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
 	
 	
 }

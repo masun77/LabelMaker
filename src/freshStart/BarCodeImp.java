@@ -1,4 +1,9 @@
-package labels;
+/**
+ * BarCodeImp
+ * Implements BarCodeGenerator. 
+ */
+
+package freshStart;
 
 import java.util.ArrayList;
 

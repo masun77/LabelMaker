@@ -1,4 +1,4 @@
-package labels;
+package freshStart;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,7 +16,7 @@ class DateImpTest {
 
 	@Test
 	void testGetDate() {
-		assertEquals(d.getDateMMDDYYYY(), "01/01/1900");
+		assertEquals(d.getDateMMDDYYYY(), "01/01/2000");
 		assertEquals(d2.getDateMMDDYYYY(), "04/20/2022");
 	}
 
@@ -28,8 +28,8 @@ class DateImpTest {
 	
 	@Test
 	void testGetPackDateName() {
-		assertEquals(d.getAsPackDate(), "Jan 01");
-		assertEquals(d2.getAsPackDate(), "Apr 20");
+		assertEquals(d.getAsLabelDate(), "Jan 01");
+		assertEquals(d2.getAsLabelDate(), "Apr 20");
 	}
 	
 	@Test

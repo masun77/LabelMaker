@@ -16,10 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import freshStart.DateImp;
-import labels.LabelableItem;
 import localBackup.LocalFileBackup;
 import main.AppState;
 import main.Item;
+import main.LabelableItem;
 import main.Order;
 import main.RDFItem;
 import uiLogic.SideFunction;
@@ -252,9 +252,10 @@ public class EntryForm implements SideFunction {
 	private Item getItemFromRow(JPanel row) { 
 		Component[] rowData = row.getComponents();
 		ArrayList<String> itemData = fb.getItemData(((TextField)rowData[1]).getText());
-		return new RDFItem(company.getText(), itemData.get(1), itemData.get(2), itemData.get(0), 
-				DateImp.parseDate(date.getText()), Float.parseFloat(((TextField)rowData[0]).getText()),
-				Float.parseFloat(((TextField)rowData[3]).getText()),
-				((TextField)rowData[1]).getText());
+//		return new RDFItem(company.getText(), itemData.get(1), itemData.get(2), itemData.get(0), 
+//				DateImp.parseDate(date.getText()), Float.parseFloat(((TextField)rowData[0]).getText()),
+//				Float.parseFloat(((TextField)rowData[3]).getText()),
+//				((TextField)rowData[1]).getText());
+		return new RDFItem();
 	}
 }

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
 
-import labels.LabelableItem;
 import main.AppState;
+import main.LabelableItem;
 import uiDisplay.Utilities;
 
 public class PrintCheckBox extends JCheckBox {
