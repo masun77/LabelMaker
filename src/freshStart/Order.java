@@ -16,6 +16,18 @@ public class Order {
 	private Date shipDate = new DateImp(1,1,2022);
 	private ArrayList<Item> items = new ArrayList<>();
 	
+	public Order(String comp, String ponum, String sv, int invNum, Date sd) {
+		company = comp;
+		PONum = ponum;
+		shipVia = sv;
+		invoiceNum = invNum;
+		shipDate = sd;
+	}
+	
+	public Order() {
+		
+	}
+	
 	/** 
 	 * Print out all information about this order.
 	 */
@@ -43,9 +55,14 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return "Invoice num: " + invoiceNum + "\nCompany:" + 
+		String str = "Invoice num: " + invoiceNum + "\nCompany:" + 
 				company + "\n\tPO: " + PONum + 
 				"\n\tShip Date: " + shipDate.getDateMMDDYYYY() + "\n\tShip via: " + shipVia;
+		for (Item i: items) {
+			str += "\n\t" + i.toString();
+		}
+		
+		return str;
 	}
 	
 	// Getters and setters
