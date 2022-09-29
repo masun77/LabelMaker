@@ -105,6 +105,14 @@ public class Order {
 	public void setShipDate(Date shipDate) {
 		this.shipDate = shipDate;
 	}
+
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(ArrayList<Item> items) {
+		this.items = items;
+	}
 	
 	
 }

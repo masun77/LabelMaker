@@ -19,9 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 public class OrderDisplay {
-	private ArrayList<Order> ordersSelected = new ArrayList<Order>();
-	private ArrayList<JCheckBox> companyCheckBoxes = new ArrayList<>();
 	private ArrayList<Order> allOrders = new ArrayList<>();
+	private ArrayList<Order> ordersSelected = new ArrayList<Order>();
+	private ArrayList<Item> itemsSelected = new ArrayList<>();
 	
 	/**
 	 * Display the information about the given orders to the screen.
@@ -51,59 +51,57 @@ public class OrderDisplay {
 			Order o = allOrders.get(i);
 			VPanel p = new VPanel();
 			p.setBorder(blackline);
-			addCompanyAndSelection(p, o, i);
-			addStringsToPanel(p, o.toString());
+			addOrderToPanel(p, o);
 			panel.add(p);
 		}
 		panel.setPreferredSize(new Dimension(allOrders.size() * 200,500));
 		return panel;
 	}
 	
-	private void addCompanyAndSelection(JPanel panel, Order order, int index) {
+	private void addOrderToPanel(JPanel panel, Order order) {
 		HPanel compPanel = new HPanel();
-		JCheckBox box = new JCheckBox(); 
-		box.addActionListener(new CompanyCheckListener(box, index));
-		companyCheckBoxes.add(box);
+		JCheckBox box = new OrderCheckBox(ordersSelected, order); 
 		compPanel.add(box);
 		compPanel.add(new JLabel(order.getCompany()));
 		panel.add(compPanel);
+		addItemsToPanel(panel, order);
 	}
 	
-	/**
-	 * Given a string, add each new line in the string
-	 * to the panel as a separate label.
-	 * @param panel the panel to add the lines in the string to
-	 * @param str the string to add to the panel
-	 */
-	private void addStringsToPanel(JPanel panel, String str) {
-		while (str.contains("\n")) {
-			int index = str.indexOf("\n");
-			panel.add(new JLabel(str.substring(0, index)));
-			str = str.substring(index+1);
+	private void addItemsToPanel(JPanel parent, Order order) {
+		for (Item i: order.getItems()) {
+			JCheckBox box = new JCheckBox();
+			box.addActionListener(new ItemCheckListener(box, i));
+			HPanel itemPanel = new HPanel();
+			itemPanel.add(box);
+			itemPanel.add(new JLabel(i.getQuantity() + " " + i.getProductName()));
+			parent.add(itemPanel);
 		}
-		panel.add(new JLabel(str));
 	}
 	
 	public ArrayList<Order> getOrdersSelected() {
 		return ordersSelected;
 	}
 	
-	private class CompanyCheckListener implements ActionListener {
-		private int index;
+	public ArrayList<Item> getItemsSelected() {
+		return itemsSelected;
+	}
+	
+	private class ItemCheckListener implements ActionListener {
+		private Item item;
 		private JCheckBox box;
 		
-		public CompanyCheckListener(JCheckBox b, int i) {
-			index = i;
-			box = b;
+		public ItemCheckListener(JCheckBox b, Item i) {
+			box = b; 
+			item = i;
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (box.isSelected()) {
-				ordersSelected.add(allOrders.get(index));
+				itemsSelected.add(item);
 			}
 			else {
-				ordersSelected.remove(allOrders.get(index));
+				itemsSelected.remove(item);
 			}
 		}
 		
