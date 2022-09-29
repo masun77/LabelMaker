@@ -60,17 +60,17 @@ public class OrderDisplay {
 	
 	private void addOrderToPanel(JPanel panel, Order order) {
 		HPanel compPanel = new HPanel();
-		JCheckBox box = new OrderCheckBox(ordersSelected, order); 
+		OrderCheckBox box = new OrderCheckBox(ordersSelected, order); 
 		compPanel.add(box);
 		compPanel.add(new JLabel(order.getCompany()));
 		panel.add(compPanel);
-		addItemsToPanel(panel, order);
+		addItemsToPanel(panel, order, box);
 	}
 	
-	private void addItemsToPanel(JPanel parent, Order order) {
+	private void addItemsToPanel(JPanel parent, Order order, OrderCheckBox parentBox) {
 		for (Item i: order.getItems()) {
-			JCheckBox box = new JCheckBox();
-			box.addActionListener(new ItemCheckListener(box, i));
+			JCheckBox box = new ItemCheckBox(i, itemsSelected);
+			parentBox.addItemCheckBox(box);
 			HPanel itemPanel = new HPanel();
 			itemPanel.add(box);
 			itemPanel.add(new JLabel(i.getQuantity() + " " + i.getProductName()));
@@ -84,26 +84,5 @@ public class OrderDisplay {
 	
 	public ArrayList<Item> getItemsSelected() {
 		return itemsSelected;
-	}
-	
-	private class ItemCheckListener implements ActionListener {
-		private Item item;
-		private JCheckBox box;
-		
-		public ItemCheckListener(JCheckBox b, Item i) {
-			box = b; 
-			item = i;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (box.isSelected()) {
-				itemsSelected.add(item);
-			}
-			else {
-				itemsSelected.remove(item);
-			}
-		}
-		
 	}
 }
