@@ -24,8 +24,10 @@ public class ItemCheckBox extends JCheckBox {
 	
 	private void selectionHelper(JCheckBox box) {
 		if (box.isSelected()) {
-			itemsSelected.add(item);
-			System.out.println("selected: " + item.getQuantity() + item.getProductName() + " " + item.getCompany());
+			if (!itemsSelected.contains(item)) {
+				itemsSelected.add(item);
+				System.out.println("selected: " + item.getQuantity() + item.getProductName() + " " + item.getCompany());		
+			}
 		}
 		else {
 			itemsSelected.remove(item);

@@ -58,7 +58,7 @@ class OrderDisplayTester {
 	}
 	
 	// @Test
-	// Before closing the window, 
+	// To pass, before closing the window, 
 	// select the Maya order but nothing else
 	void testOrderSelection() {
 		JFrame f = od.displayOrders(orders);
@@ -71,9 +71,9 @@ class OrderDisplayTester {
 		assertTrue("Maya".equals(ordsSelected.get(0).getCompany()));
 	}
 	
-	// Before closing the window,
+	// To pass, before closing the window,
 	// select the lettuce and garlic items, in that order, but nothing else
-	@Test
+	//@Test
 	void testIndivItemSelection() {
 		JFrame f = od.displayOrders(orders);
 		while (windowOpen) {	
@@ -84,5 +84,27 @@ class OrderDisplayTester {
 		assertEquals(2, items.size());
 		assertTrue("Lettuce".equals(items.get(0).getProductName()));
 		assertTrue("Garlic".equals(items.get(1).getProductName()));
+	}
+	
+	// To pass, before closing the window,
+	// select the lettuce and garlic items, in that order, but nothing else
+	@Test
+	void testItemRowSelection() {
+		JFrame f = od.displayOrders(orders);
+		while (windowOpen) {	
+			windowOpen = f.isVisible();   
+		}
+
+		ArrayList<Item> items = od.getItemsSelected();
+		
+		System.out.println(items);
+		
+		assertEquals(2, items.size());
+		assertTrue("Lettuce".equals(items.get(0).getProductName()));
+		assertTrue("Maya".equals(items.get(0).getCompany()));
+		assertTrue("Lettuce".equals(items.get(1).getProductName()));
+		assertTrue("Joe".equals(items.get(1).getCompany()));
+		
+		
 	}
 }

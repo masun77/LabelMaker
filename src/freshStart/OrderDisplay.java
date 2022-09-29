@@ -7,9 +7,9 @@ package freshStart;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -22,6 +22,8 @@ public class OrderDisplay {
 	private ArrayList<Order> allOrders = new ArrayList<>();
 	private ArrayList<Order> ordersSelected = new ArrayList<Order>();
 	private ArrayList<Item> itemsSelected = new ArrayList<>();
+	private HashMap<String, ItemRowCheckBox> itemCheckBoxes = new HashMap<>();
+	private ArrayList<String> alphabetizedItemNames;
 	
 	/**
 	 * Display the information about the given orders to the screen.
@@ -47,6 +49,9 @@ public class OrderDisplay {
 	private JPanel getOrderPanel() {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		HPanel panel = new HPanel();
+		
+		addItemNamesToPanel(panel);
+		
 		for (int i = 0; i < allOrders.size(); i++) {
 			Order o = allOrders.get(i);
 			VPanel p = new VPanel();
@@ -56,6 +61,38 @@ public class OrderDisplay {
 		}
 		panel.setPreferredSize(new Dimension(allOrders.size() * 200,500));
 		return panel;
+	}
+	
+	private void addItemNamesToPanel(JPanel parent) {
+		alphabetizedItemNames = new ArrayList<>();
+		for (Order o: allOrders) {
+			for (Item i: o.getItems()) {
+				String name = i.getProductName();
+				if (!alphabetizedItemNames.contains(name)) {
+					insertAlphabetical(alphabetizedItemNames, name);
+				}
+			}
+		}
+		
+		VPanel itemList = new VPanel();
+		for (String name: alphabetizedItemNames) {
+			HPanel namePanel = new HPanel();
+			ItemRowCheckBox box = new ItemRowCheckBox();
+			namePanel.add(box);
+			namePanel.add(new JLabel(name));
+			itemList.add(namePanel);
+			
+			itemCheckBoxes.put(name, box);
+		}
+		parent.add(itemList);
+	}
+	
+	private void insertAlphabetical(ArrayList<String> list, String item) {
+		int index = 0;
+		while (index < list.size() && list.get(index).compareTo(item) < 0) {
+			index += 1;
+		}
+		list.add(index, item);
 	}
 	
 	private void addOrderToPanel(JPanel panel, Order order) {
@@ -68,14 +105,37 @@ public class OrderDisplay {
 	}
 	
 	private void addItemsToPanel(JPanel parent, Order order, OrderCheckBox parentBox) {
-		for (Item i: order.getItems()) {
-			JCheckBox box = new ItemCheckBox(i, itemsSelected);
-			parentBox.addItemCheckBox(box);
+		ArrayList<Item> currentItems = order.getItems();
+		HashMap<String, Item> itemNameMap = getItemNameMap(currentItems);
+		Set<String> names = itemNameMap.keySet();
+		for (String s: alphabetizedItemNames) {
+			JCheckBox box;
+			JLabel label = new JLabel();
+			if (names.contains(s)) {
+				Item item = itemNameMap.get(s);
+				box = new ItemCheckBox(item, itemsSelected);
+				parentBox.addItemCheckBox(box);
+				itemCheckBoxes.get(s).addItemCheckBox(box);
+				label.setText("" + item.getQuantity());
+			}
+			else {
+				box = new JCheckBox();
+				box.setEnabled(false);
+				label.setText("0");
+			}
 			HPanel itemPanel = new HPanel();
 			itemPanel.add(box);
-			itemPanel.add(new JLabel(i.getQuantity() + " " + i.getProductName()));
+			itemPanel.add(label);
 			parent.add(itemPanel);
 		}
+	}
+	
+	private HashMap<String, Item> getItemNameMap(ArrayList<Item> items) {
+		HashMap<String, Item> currItemNames = new HashMap<>();
+		for (Item i: items) {
+			currItemNames.put(i.getProductName(), i);
+		}
+		return currItemNames;
 	}
 	
 	public ArrayList<Order> getOrdersSelected() {
