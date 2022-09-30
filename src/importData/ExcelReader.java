@@ -43,6 +43,7 @@ public class ExcelReader {
 		format = ef;
 		FileInputStream fis = getFileInputStream(fileName);
 		if (fis == null || format == null) {
+			System.out.println("Bad file or format");
 			return new ArrayList<Order>();
 		}
 		

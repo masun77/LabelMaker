@@ -27,7 +27,7 @@ import printing.PrintSettingsDialog;
 public class MainFrame {
 	private OrderDisplay display;
 	private LabelFormat labelFormat;
-	private JFrame frame;
+	private JFrame frame = new JFrame();
 	private ExcelFormatGetter efg = new ExcelFormatGetter();
 	private ArrayList<Order> orders;
 	private ArrayList<Integer> invoiceNumbers = new ArrayList<>(); 
@@ -58,7 +58,7 @@ public class MainFrame {
 	 * Display the default orders to the screen. 
 	 */
 	public void showOrderDisplay() {
-		frame = new JFrame();
+		frame.getContentPane().removeAll();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		HPanel panel = new HPanel();
@@ -103,21 +103,21 @@ public class MainFrame {
 		
 	}
 	
-	// todo
+	// todo: clean
 	private class ImportListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser fc = new JFileChooser();
-			int returnVal = fc.showOpenDialog(null);
+			JFrame tempFrame = new JFrame();
+			tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			int returnVal = fc.showOpenDialog(tempFrame);
 
 	        if (returnVal == JFileChooser.APPROVE_OPTION) {
 	            File file = fc.getSelectedFile();
-	            String name = file.getName();
+	            String name = file.getAbsolutePath();
 	            if (name.substring(name.length() - 5).equals(".xlsx")) {
 	            	ArrayList<Order> newOrders = reader.getOrdersFromFile(name, efg.getFormats().get(0));
-	            	
-	            	System.out.println(newOrders.size());  // todo: order reading not working
 	            	for (Order o: newOrders) {
 	            		if (invoiceNumbers.contains(o.getInvoiceNum())) {
 	            			for (Order oldOrder: orders) {
@@ -128,7 +128,6 @@ public class MainFrame {
 	            		} 
 	            		orders.add(o);
 	            		invoiceNumbers.add(o.getInvoiceNum());
-	            		frame.dispose();
 	            		showOrderDisplay();
 	            	}
 	            }
