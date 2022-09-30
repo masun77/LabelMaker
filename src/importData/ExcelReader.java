@@ -147,7 +147,13 @@ public class ExcelReader {
 	 * @param row the row to read the item from
 	 */
 	protected void addItemToOrders(Row row) {
-		int invNum = (int) row.getCell(headerTypeToColumn(INVOICE_NUMBER)).getNumericCellValue();
+		int invNum;
+		try {
+			invNum = (int) row.getCell(headerTypeToColumn(INVOICE_NUMBER)).getNumericCellValue();
+		}
+		catch (Exception e) {
+			invNum = Integer.parseInt(row.getCell(headerTypeToColumn(INVOICE_NUMBER)).getStringCellValue());
+		}
 		Order currOrder = getCorrespondingOrder(invNum, row);
 				
 		Item newIt = new Item(getCompanyFromRow(row), getShipDateFromRow(row),
@@ -277,7 +283,13 @@ public class ExcelReader {
 	 * @return the quantity
 	 */
 	private float getQtyFromRow(Row row) {
-		return (float) row.getCell(headerTypeToColumn(QUANTITY)).getNumericCellValue();
+		try {
+			return (float) row.getCell(headerTypeToColumn(QUANTITY)).getNumericCellValue();
+		}
+		catch (Exception e)
+		{
+			return Float.parseFloat(row.getCell(headerTypeToColumn(QUANTITY)).getStringCellValue());
+		}
 	}
 	
 	/**
@@ -286,7 +298,13 @@ public class ExcelReader {
 	 * @return the price
 	 */
 	private float getPriceFromRow(Row row) {
-		return (float) row.getCell(headerTypeToColumn(PRICE)).getNumericCellValue();
+		try {
+			return (float) row.getCell(headerTypeToColumn(PRICE)).getNumericCellValue();
+		}
+		catch (Exception e)
+		{
+			return Float.parseFloat(row.getCell(headerTypeToColumn(PRICE)).getStringCellValue());
+		}
 	}
 	
 	/**
