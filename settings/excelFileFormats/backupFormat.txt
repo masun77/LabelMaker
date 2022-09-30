@@ -1,0 +1,17 @@
+Format name: Backup
+Types to save: Invoice
+Header row: 0
+Data start row: 1
+Type header: Type
+Company header: Company
+Ship Date header: Ship Date
+Invoice number header: Num
+PO header: P. O. #
+Ship Via header: Via
+GTIN header: GTIN
+Item code header: Code
+Item description header: Item Description
+Quantity header: Qty
+Price header: Price
+Unit header: Unit
+Product Name header: Product Name

@@ -17,25 +17,30 @@ class ExcelReaderTester {
 		assertEquals(0, orders.size());
 		ExcelFormatGetter efg = new ExcelFormatGetter();
 		efg.readExcelFormats();
-		orders = er.getOrdersFromFile("src/main/7.27.xlsx", efg.getFormats().get(0));
+		System.out.println(efg.getFormatNames());
+		orders = er.getOrdersFromFile("src/main/7.27.xlsx", efg.getFormats().get(1));
 //		for (Order o: orders) {
 //			o.printOrder();
 //			System.out.println();
 //		}
 		assertEquals(8, orders.size());
 		assertEquals("Boulette's LLC", orders.get(0).getCompany());
+		
+		orders = er.getOrdersFromFile("resources/test.xlsx", efg.getFormats().get(0));
+		assertEquals(4, orders.size());
+		System.out.println(orders.toString());
 	}
 	
 	@Test
 	void testBadOrders() {
 		ExcelFormatGetter efg = new ExcelFormatGetter();
 		efg.readExcelFormats();
-		ArrayList<Order>orders = er.getOrdersFromFile("src/main/test.xlsx", efg.getFormats().get(0));
+		ArrayList<Order>orders = er.getOrdersFromFile("resources/test.xlsx", efg.getFormats().get(0));
 		for (Order o: orders) {
 			o.printOrder();
 			System.out.println();
 		}
-		assertEquals(7, orders.size());
+		assertEquals(4, orders.size());
 		assertEquals("Boulette's LLC", orders.get(0).getCompany());
 	}
 	

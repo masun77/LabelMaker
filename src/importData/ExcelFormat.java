@@ -90,6 +90,12 @@ public class ExcelFormat {
 			case 15:
 				headers.add(new ExcelHeader(PRICE, settingValue));
 				break;
+			case 16:
+				headers.add(new ExcelHeader(UNIT, settingValue));
+				break;
+			case 17:
+				headers.add(new ExcelHeader(PRODUCT_NAME, settingValue));
+				break;
 			default:
 				break;
 		}
@@ -131,6 +137,8 @@ public class ExcelFormat {
 		settings.add("item description header");    // 13
 		settings.add("quantity header");    // 14
 		settings.add("price header");		    // 15
+		settings.add("unit header");		    // 16
+		settings.add("product name header");		    // 17
 	}
 	
 	// Getters

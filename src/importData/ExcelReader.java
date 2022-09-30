@@ -43,7 +43,7 @@ public class ExcelReader {
 		format = ef;
 		FileInputStream fis = getFileInputStream(fileName);
 		if (fis == null || format == null) {
-			System.out.println("Bad file or format");
+			System.out.println("Bad file or format: " + fileName);
 			return new ArrayList<Order>();
 		}
 		
@@ -103,7 +103,7 @@ public class ExcelReader {
 		int startRow = format.getDataStartRow();
 		for (int r = startRow; r < sheet.getLastRowNum(); r++) {
 			Row row = sheet.getRow(r);
-			if (isItemRow(row)) {
+			if (row != null && isItemRow(row)) {
 				addItemToOrders(row);
 			}
 		}
@@ -218,6 +218,10 @@ public class ExcelReader {
 	 * @return the product name
 	 */
 	private String getProdNameFromRow(Row row) {
+		if (options.contains(PRODUCT_NAME)) {
+			return row.getCell(headerTypeToColumn(PRODUCT_NAME)).getStringCellValue();
+		}
+		
 		String s = getItemDescriptionFromRow(row);
 		String descrip = "";
 		if (s.contains(",")) {
@@ -249,7 +253,11 @@ public class ExcelReader {
 	 * @param row the row to get the unit from
 	 * @return the unit
 	 */
-	private String getUnitFromRow(Row row) {		
+	private String getUnitFromRow(Row row) {
+		if (options.contains(UNIT)) {
+			return row.getCell(headerTypeToColumn(UNIT)).getStringCellValue();
+		}
+		
 		String descrip = getItemDescriptionFromRow(row);
 		if (descrip.contains(",")) {
 			int startIndex = descrip.indexOf(",") + 1;
