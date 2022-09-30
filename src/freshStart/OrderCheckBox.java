@@ -21,6 +21,27 @@ public class OrderCheckBox extends JCheckBox {
 		itemCheckBoxes.add(itemBox);
 	}
 	
+	@Override
+	public void setSelected(boolean selection) {
+		System.out.println("running " + order.getCompany());
+		super.setSelected(selection);
+		setChildBoxes(selection);
+		if (selection) {
+			if (!ordersSelected.contains(order)) {
+				ordersSelected.add(order);
+			}
+		}
+		else {
+			ordersSelected.remove(order);
+		}
+	}
+	
+	private void setChildBoxes(boolean selection) {
+		for (JCheckBox itemBox: itemCheckBoxes) {
+			itemBox.setSelected(selection);
+		}
+	}
+	
 	private class CompanyCheckListener implements ActionListener {
 		private JCheckBox box;
 		
@@ -28,21 +49,13 @@ public class OrderCheckBox extends JCheckBox {
 			box = b;
 		}
 		
-		private void setChildBoxes(boolean selection) {
-			for (JCheckBox itemBox: itemCheckBoxes) {
-				itemBox.setSelected(selection);
-			}
-		}
-		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (box.isSelected()) {
-				ordersSelected.add(order);
-				setChildBoxes(true);
+				box.setSelected(true);
 			}
 			else {
-				ordersSelected.remove(order);
-				setChildBoxes(false);				
+				box.setSelected(false);			
 			}
 		}
 		

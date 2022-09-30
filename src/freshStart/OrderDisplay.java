@@ -16,6 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
 public class OrderDisplay {
@@ -24,6 +25,7 @@ public class OrderDisplay {
 	private ArrayList<Item> itemsSelected = new ArrayList<>();
 	private HashMap<String, ItemRowCheckBox> itemCheckBoxes = new HashMap<>();
 	private ArrayList<String> alphabetizedItemNames;
+	private JScrollPane scrollPane = new JScrollPane();
 	
 	/**
 	 * Display the information about the given orders to the screen.
@@ -31,12 +33,14 @@ public class OrderDisplay {
 	 */
 	public JFrame displayOrders(ArrayList<Order> orders) {
 		JFrame frame = new JFrame();
+		scrollPane = new JScrollPane();
 		
 		allOrders = orders;
 		JPanel ordsPanel = getOrderPanel();
+		scrollPane.setViewportView(ordsPanel);
 		
-		frame.add(ordsPanel);
-		frame.setSize(ordsPanel.getPreferredSize());
+		frame.add(scrollPane);
+		frame.setSize(ordsPanel.getPreferredSize());  // todo
 		frame.setVisible(true);
 		return frame;
 	}
@@ -51,15 +55,17 @@ public class OrderDisplay {
 		HPanel panel = new HPanel();
 		
 		addItemNamesToPanel(panel);
-		
+
+		HPanel companyNameHeader = new HPanel();
 		for (int i = 0; i < allOrders.size(); i++) {
 			Order o = allOrders.get(i);
 			VPanel p = new VPanel();
 			p.setBorder(blackline);
-			addOrderToPanel(p, o);
-			panel.add(p);
+			addOrderToPanel(companyNameHeader, p, o);
+			panel.add(p);			
 		}
 		panel.setPreferredSize(new Dimension(allOrders.size() * 200,500));
+		scrollPane.setColumnHeaderView(companyNameHeader);
 		return panel;
 	}
 	
@@ -75,6 +81,7 @@ public class OrderDisplay {
 		}
 		
 		VPanel itemList = new VPanel();
+		itemList.add(new JLabel("Items"));
 		for (String name: alphabetizedItemNames) {
 			HPanel namePanel = new HPanel();
 			ItemRowCheckBox box = new ItemRowCheckBox();
@@ -84,7 +91,9 @@ public class OrderDisplay {
 			
 			itemCheckBoxes.put(name, box);
 		}
-		parent.add(itemList);
+
+		itemList.setPreferredSize(new Dimension(100,500));
+		scrollPane.setRowHeaderView(itemList);
 	}
 	
 	private void insertAlphabetical(ArrayList<String> list, String item) {
@@ -95,12 +104,12 @@ public class OrderDisplay {
 		list.add(index, item);
 	}
 	
-	private void addOrderToPanel(JPanel panel, Order order) {
+	private void addOrderToPanel(JPanel companyNameHeader, JPanel panel, Order order) {
 		HPanel compPanel = new HPanel();
 		OrderCheckBox box = new OrderCheckBox(ordersSelected, order); 
 		compPanel.add(box);
 		compPanel.add(new JLabel(order.getCompany()));
-		panel.add(compPanel);
+		companyNameHeader.add(compPanel);
 		addItemsToPanel(panel, order, box);
 	}
 	

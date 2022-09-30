@@ -20,7 +20,7 @@ class PrintSettingsTester {
 				"CAR25", "818181230", "25 lbs/cs", 1.14f, 75));
 		items.add(new Item("Chez Panisse", new DateImp(9,22,22), "Eggs", 
 				"AEGG", "818184440", "by the dozen", 5, 25));
-		PrintSettings ps = new PrintSettings(items, lf);
+		PrintSettingsDialog ps = new PrintSettingsDialog(items, lf);
 		ps.showPrintDialog();
 		
 		while(true) {

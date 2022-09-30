@@ -28,7 +28,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-public class PrintSettings {
+public class PrintSettingsDialog {
 	private LabelView lv = new LabelViewerG2();
 	private ArrayList<Item> itemsToPrint = new ArrayList<>();
 	private ArrayList<Component> labelList = new ArrayList<>();
@@ -37,7 +37,7 @@ public class PrintSettings {
 	private JComboBox<String> printerList;
 	private JSpinner numCopiespinner = null;
 	
-	public PrintSettings(ArrayList<Item> items, LabelFormat lf) {
+	public PrintSettingsDialog(ArrayList<Item> items, LabelFormat lf) {
 		itemsToPrint = items;
 		format = lf;
 	}
