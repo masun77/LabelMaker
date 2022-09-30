@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import importData.ExcelFormatGetter;
 import importData.ExcelReader;
+import importData.ExcelWriter;
 import labels.LabelFormat;
 import labels.LabelFormatReader;
 import main.Order;
@@ -32,6 +33,7 @@ public class MainFrame {
 	private ArrayList<Order> orders;
 	private ArrayList<Integer> invoiceNumbers = new ArrayList<>(); 
 	private ExcelReader reader = new ExcelReader();
+	private ExcelWriter writer = new ExcelWriter();
 	
 	public MainFrame() {
 		efg.readExcelFormats();
@@ -117,7 +119,7 @@ public class MainFrame {
 	            File file = fc.getSelectedFile();
 	            String name = file.getAbsolutePath();
 	            if (name.substring(name.length() - 5).equals(".xlsx")) {
-	            	ArrayList<Order> newOrders = reader.getOrdersFromFile(name, efg.getFormats().get(0));
+	            	ArrayList<Order> newOrders = reader.getOrdersFromFile(name, efg.getFormatByName("Quickbooks")); // todo let user choose format
 	            	for (Order o: newOrders) {
 	            		if (invoiceNumbers.contains(o.getInvoiceNum())) {
 	            			for (Order oldOrder: orders) {
@@ -129,6 +131,7 @@ public class MainFrame {
 	            		orders.add(o);
 	            		invoiceNumbers.add(o.getInvoiceNum());
 	            		showOrderDisplay();
+	            		writer.writeOrders(orders, efg.getFormatByName("Backup"));
 	            	}
 	            }
 	        } 

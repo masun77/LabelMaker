@@ -103,10 +103,8 @@ public class ExcelReader {
 		int startRow = format.getDataStartRow();
 		for (int r = startRow; r <= sheet.getLastRowNum(); r++) {
 			Row row = sheet.getRow(r);
-			System.out.println(r);
 			if (row != null && isItemRow(row)) {
 				addItemToOrders(row);
-				System.out.println("adding items");
 			}
 		}
 		return orders;

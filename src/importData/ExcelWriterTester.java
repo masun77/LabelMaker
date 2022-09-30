@@ -18,7 +18,7 @@ class ExcelWriterTester {
 		ArrayList<Order> orders = er.getOrdersFromFile("resources/test.xlsx", efg.getFormats().get(0));
 		
 		ExcelWriter ew = new ExcelWriter();
-		ew.writeOrders(orders, efg.getFormats().get(0));
+		ew.writeOrders(orders, efg.getFormatByName("Backup"));
 	}
 
 }
