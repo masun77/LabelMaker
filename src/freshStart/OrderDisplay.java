@@ -33,16 +33,21 @@ public class OrderDisplay {
 	 */
 	public JFrame displayOrders(ArrayList<Order> orders) {
 		JFrame frame = new JFrame();
-		scrollPane = new JScrollPane();
 		
+		scrollPane = getOrderDisplay(orders);
+		
+		frame.add(scrollPane);
+		frame.setSize(new Dimension(700,500));  // todo
+		frame.setVisible(true);
+		return frame;
+	}
+	
+	public JScrollPane getOrderDisplay(ArrayList<Order> orders) {
+		scrollPane = new JScrollPane();
 		allOrders = orders;
 		JPanel ordsPanel = getOrderPanel();
 		scrollPane.setViewportView(ordsPanel);
-		
-		frame.add(scrollPane);
-		frame.setSize(ordsPanel.getPreferredSize());  // todo
-		frame.setVisible(true);
-		return frame;
+		return scrollPane;
 	}
 	
 	/**
@@ -64,7 +69,7 @@ public class OrderDisplay {
 			addOrderToPanel(companyNameHeader, p, o);
 			panel.add(p);			
 		}
-		panel.setPreferredSize(new Dimension(allOrders.size() * 200,500));
+		panel.setPreferredSize(new Dimension(allOrders.size() * 200,alphabetizedItemNames.size() *25));
 		scrollPane.setColumnHeaderView(companyNameHeader);
 		return panel;
 	}
@@ -81,7 +86,6 @@ public class OrderDisplay {
 		}
 		
 		VPanel itemList = new VPanel();
-		itemList.add(new JLabel("Items"));
 		for (String name: alphabetizedItemNames) {
 			HPanel namePanel = new HPanel();
 			ItemRowCheckBox box = new ItemRowCheckBox();

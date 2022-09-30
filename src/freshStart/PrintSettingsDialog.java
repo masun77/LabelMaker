@@ -24,6 +24,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -47,7 +48,7 @@ public class PrintSettingsDialog {
 	 */
 	public void showPrintDialog() {
 		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);    // todo change when using
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);    // todo change when using
 		frame.setSize(700, 1000);
 		JPanel wholeDialog = new HPanel();
 		addLabels(wholeDialog);
@@ -69,7 +70,8 @@ public class PrintSettingsDialog {
 				labelList.add(label);
 			}
 		}
-		parent.add(labelsPanel);
+		JScrollPane scrollPane = new JScrollPane(labelsPanel);
+		parent.add(scrollPane);
 	}
 	
 	/**
