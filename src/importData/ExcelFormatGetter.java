@@ -42,6 +42,10 @@ public class ExcelFormatGetter {
 		return names;
 	}
 	
+	public ExcelFormat getFormatByName(String name) {
+		return formats.get(name);
+	}
+	
 	/**
 	 * Clears the old Excel formats and reads in all of the formats
 	 * in the excelFileFormats folder in settings. 

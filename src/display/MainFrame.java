@@ -36,8 +36,8 @@ public class MainFrame {
 	public MainFrame() {
 		efg.readExcelFormats();
 
-		orders = reader.getOrdersFromFile("src/main/7.27.xlsx", 
-				efg.getFormats().get(0)); // todo initialize from backup
+		orders = reader.getOrdersFromFile("resources/OrderBackup.xlsx", 
+				efg.getFormatByName("Backup"));
 		addOrdersToInvoiceNumbers(orders);
 		display = new OrderDisplay();
 		

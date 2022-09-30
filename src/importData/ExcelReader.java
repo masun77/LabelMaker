@@ -101,10 +101,12 @@ public class ExcelReader {
 		orders = new ArrayList<Order>();
 		orderNums = new ArrayList<>();
 		int startRow = format.getDataStartRow();
-		for (int r = startRow; r < sheet.getLastRowNum(); r++) {
+		for (int r = startRow; r <= sheet.getLastRowNum(); r++) {
 			Row row = sheet.getRow(r);
+			System.out.println(r);
 			if (row != null && isItemRow(row)) {
 				addItemToOrders(row);
+				System.out.println("adding items");
 			}
 		}
 		return orders;
@@ -247,11 +249,16 @@ public class ExcelReader {
 	private String getGTINFromRow(Row row) {
 		Cell c = row.getCell(headerTypeToColumn(GTIN));
 		if (c != null) {
-			return Integer.toString((int)c.getNumericCellValue());
+			try {
+				return Integer.toString((int)c.getNumericCellValue());
+			}
+			catch (Exception e)
+			{
+				return c.getStringCellValue();
+			}
 		}
 		
-		String itCode = getItemCodeFromRow(row);
-		return ""; //AppState.getFileBackup().getGTIN(itCode);   // TODO: put GTINs into quickbooks
+		return ""; // TODO: put GTINs into quickbooks
 	}
 	
 	/**
