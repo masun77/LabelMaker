@@ -17,6 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import importData.ExcelFormat;
 import importData.ExcelFormatGetter;
 import importData.ExcelReader;
 import importData.ExcelWriter;
@@ -105,38 +106,82 @@ public class MainFrame {
 		
 	}
 	
-	// todo: clean
-	private class ImportListener implements ActionListener {
+	/**
+	 * Open a new file chooser in a new frame, and return the 
+	 * return file selected or null if no file selected. 
+	 * @return the selected file to open, otherwise null
+	 */
+	private File getFileChooserFile() {
+		JFileChooser fc = new JFileChooser();
+		JFrame tempFrame = new JFrame();
+		tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		int returnVal = fc.showOpenDialog(tempFrame);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			return fc.getSelectedFile();
+		}
+		return null;
+		
+	}
+	
+	/**
+	 * Return whether the given file name ends in .xlsx
+	 * @param name the name of the file
+	 * @return true if it ends in .xlsx, false otherwise
+	 */
+	private boolean isExcelFile(String name) {
+		return name.substring(name.length() - 5).equals(".xlsx");
+	}
+	
+	/**
+	 * Write the given orders to the saved order file in the given format
+	 * @param orders the orders to write to the file
+	 * @param format the format to write them in
+	 */
+	private void backupOrders(ArrayList<Order> orders, ExcelFormat format) {
+		writer.writeOrders(orders, format);
+	}
+	
+	/**
+	 * Add the new orders to the existing list of orders.
+	 * If the order number is already present, replace it with the new order
+	 * of that number. Then, update the order display
+	 * and backup the orders to a file. 
+	 * @param newOrders the orders to add to the display
+	 */
+	private void addOrdersToExistingOrders(ArrayList<Order> newOrders) {
+		for (Order o: newOrders) {
+    		if (invoiceNumbers.contains(o.getInvoiceNum())) {
+    			for (Order oldOrder: orders) {
+    				if (oldOrder.getInvoiceNum() == o.getInvoiceNum()) {
+    					orders.remove(oldOrder);
+    				}
+    			}
+    		} 
+    		orders.add(o);
+    		invoiceNumbers.add(o.getInvoiceNum());
+    	}
+		showOrderDisplay();
+		backupOrders(orders, efg.getFormatByName("Backup"));
+	}
+	
 
+	/**
+	 * On click, open a file chooser window, get the file the user chooses,
+	 * read the orders from it if its an Excel file, 
+	 * and add them to the existing order list. 
+	 */
+	private class ImportListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JFileChooser fc = new JFileChooser();
-			JFrame tempFrame = new JFrame();
-			tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			int returnVal = fc.showOpenDialog(tempFrame);
-
-	        if (returnVal == JFileChooser.APPROVE_OPTION) {
-	            File file = fc.getSelectedFile();
+			File file = getFileChooserFile();
+	        if (file != null) {
 	            String name = file.getAbsolutePath();
-	            if (name.substring(name.length() - 5).equals(".xlsx")) {
+	            if (isExcelFile(name)) {
 	            	ArrayList<Order> newOrders = reader.getOrdersFromFile(name, efg.getFormatByName("Quickbooks")); // todo let user choose format
-	            	for (Order o: newOrders) {
-	            		if (invoiceNumbers.contains(o.getInvoiceNum())) {
-	            			for (Order oldOrder: orders) {
-	            				if (oldOrder.getInvoiceNum() == o.getInvoiceNum()) {
-	            					orders.remove(oldOrder);
-	            				}
-	            			}
-	            		} 
-	            		orders.add(o);
-	            		invoiceNumbers.add(o.getInvoiceNum());
-	            		showOrderDisplay();
-	            		writer.writeOrders(orders, efg.getFormatByName("Backup"));
-	            	}
+	            	addOrdersToExistingOrders(newOrders);
 	            }
 	        } 
 		}
-		
 	}
 	
 	/**

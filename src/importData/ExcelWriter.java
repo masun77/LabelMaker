@@ -1,3 +1,8 @@
+/**
+ * Write orders to an Excel file saved in the
+ * resources folder in the given format. 
+ */
+
 package importData;
 
 import java.io.FileOutputStream;
@@ -18,6 +23,12 @@ public class ExcelWriter {
 	private HashMap<HeaderOption, Integer> headerColumns = new HashMap<>();
 	private ExcelFormat format;
 
+	/**
+	 * Write the given orders to an Excel file in resources
+	 * in the given format. 
+	 * @param orders the orders to write to the Excel file
+	 * @param form the format to write the orders in
+	 */
 	public void writeOrders(ArrayList<Order> orders, ExcelFormat form) {
 		headerColumns = new HashMap<>();
 		format = form;
@@ -30,6 +41,10 @@ public class ExcelWriter {
         writeToFile(workbook);        
 	}
 	
+	/**
+	 * Write the header row for the Excel sheet
+	 * @param sheet the sheet to write the headers on
+	 */
 	private void writeHeaders(XSSFSheet sheet) {
         ArrayList<ExcelHeader> headers = format.getHeaders();
         Row headerRow = sheet.createRow(format.getHeaderRowIndex());
@@ -41,6 +56,11 @@ public class ExcelWriter {
         }
 	}
 	
+	/**
+	 * Write the items from the orders given to the given sheet 
+	 * @param orders the orders to write to the Excel sheet
+	 * @param sheet the sheet to write to
+	 */
 	private void writeOrders(ArrayList<Order> orders, XSSFSheet sheet) {
 		int rowIndex = format.getDataStartRow();
 		for (Order order: orders) {
@@ -52,6 +72,12 @@ public class ExcelWriter {
 		}
 	}
 	
+	/**
+	 * Write the data for the given item and order into the given row.
+	 * @param row the row to write the data to
+	 * @param item the item to write the data for
+	 * @param order the order containing the item, to get the order number, PO number, etc. 
+	 */
 	private void writeItemInfo(Row row, Item item, Order order) {
 		for (HeaderOption header: headerColumns.keySet()) {
 			Cell cell = row.createCell(headerColumns.get(header));
@@ -60,6 +86,10 @@ public class ExcelWriter {
 		}
 	}
 	
+	/**
+	 * Write the workbook object to an Excel file
+	 * @param workbook the workbook to write to
+	 */
 	private void writeToFile(Workbook workbook) {
 		try {
         	FileOutputStream outputStream = new FileOutputStream(fileName);
@@ -72,6 +102,14 @@ public class ExcelWriter {
         }
 	}
 	
+	/**
+	 * For the given headerType, get the corresponding value from the 
+	 * given item and order
+	 * @param headerType the type of data to get
+	 * @param item the item to get it from
+	 * @param order the order containing the item
+	 * @return the value corresponding to that header type, eg. the quantity or invoice number
+	 */
 	private String getValue(HeaderOption headerType, Item item, Order order) {
 		switch (headerType) {
 		case TYPE:
