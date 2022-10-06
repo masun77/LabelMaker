@@ -13,8 +13,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import importData.ExcelFormat;
@@ -35,6 +37,7 @@ public class MainFrame {
 	private ArrayList<Integer> invoiceNumbers = new ArrayList<>(); 
 	private ExcelReader reader = new ExcelReader();
 	private ExcelWriter writer = new ExcelWriter();
+	private JComboBox<String> excelFormatBox = null;
 	
 	public MainFrame() {
 		efg.readExcelFormats();
@@ -113,14 +116,55 @@ public class MainFrame {
 	 */
 	private File getFileChooserFile() {
 		JFileChooser fc = new JFileChooser();
+		fc.setApproveButtonText("Import Orders");
+		addFormatOptionToFileChooser(fc);
+		
 		JFrame tempFrame = new JFrame();
 		tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
 		int returnVal = fc.showOpenDialog(tempFrame);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			return fc.getSelectedFile();
 		}
 		return null;
+	}
+	
+	/**
+	 * Add to the file chooser a combobox allowing the user
+	 * to choose what format the Excel file to import is. 
+	 * @param chooser the fileCHooser to add the combobox to
+	 */
+	private void addFormatOptionToFileChooser(JFileChooser chooser) {
+		JComboBox<String> formatList = createFormatComboBox();
+		JPanel panel = (JPanel) chooser.getComponent(3);    // JPanel at bottom of filechooser
 		
+		HPanel formatPanel = new HPanel();
+		formatPanel.add(new JLabel("Excel Format Type: "));
+		formatPanel.add(formatList);
+		formatPanel.setBorder(null);
+		formatPanel.setBackground(null);
+		
+		panel.add(formatPanel, 3);
+	}
+	
+	/**
+	 * Create a comboBox containing as strings the names of all
+	 * the current excel file formats in the settings formats folder. 
+	 * @return a combobox with options of the names of all current excel file formats
+	 */
+	private JComboBox<String> createFormatComboBox() {
+		ArrayList<ExcelFormat> formats = efg.getFormats();
+		String[] formatNames = new String[formats.size()];
+		int setIndex = 0;
+		for (int i = 0; i < formats.size(); i++) {
+			formatNames[i] = formats.get(i).getName();
+			if (formats.get(i).getName().equals("Quickbooks")) {
+				setIndex = i;
+			}
+		}
+		excelFormatBox = new JComboBox<>(formatNames);
+		excelFormatBox.setSelectedIndex(setIndex);
+		return excelFormatBox;
 	}
 	
 	/**
@@ -163,8 +207,6 @@ public class MainFrame {
 		showOrderDisplay();
 		backupOrders(orders, efg.getFormatByName("Backup"));
 	}
-	
-
 	/**
 	 * On click, open a file chooser window, get the file the user chooses,
 	 * read the orders from it if its an Excel file, 
@@ -177,7 +219,8 @@ public class MainFrame {
 	        if (file != null) {
 	            String name = file.getAbsolutePath();
 	            if (isExcelFile(name)) {
-	            	ArrayList<Order> newOrders = reader.getOrdersFromFile(name, efg.getFormatByName("Quickbooks")); // todo let user choose format
+	            	ArrayList<Order> newOrders = reader.getOrdersFromFile(name, 
+	            			efg.getFormatByName(excelFormatBox.getSelectedItem().toString()));
 	            	addOrdersToExistingOrders(newOrders);
 	            }
 	        } 
