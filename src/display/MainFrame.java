@@ -12,7 +12,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -47,7 +49,7 @@ public class MainFrame {
 		addOrdersToInvoiceNumbers(orders);
 		display = new OrderDisplay();
 		
-		labelFormat = new LabelFormatReader().readLabelFormats().get(0);
+		labelFormat = new LabelFormatReader().readLabelFormats().get(0); 
 	}
 	
 	/**
@@ -83,15 +85,24 @@ public class MainFrame {
 	private void addButtons(JPanel parent) {
 		VPanel buttonPanel = new VPanel();
 		
-		JButton printButton = new JButton("Print Selected Labels");
-		printButton.addActionListener(new PrintListener());
-		buttonPanel.add(printButton);
-		
-		JButton importButton = new JButton("Import Orders From Excel File");
-		importButton.addActionListener(new ImportListener());
-		buttonPanel.add(importButton);
+		addFunction(buttonPanel, "Print Selected Labels", new PrintListener());
+		addFunction(buttonPanel, "Import Orders From Excel File", new ImportListener());
+		addFunction(buttonPanel, "Clear Selections", new ClearSelectionsListener());
 		
 		parent.add(buttonPanel);
+	}
+	
+	/**
+	 * Add a button to the parent panel with the given text and action listener.
+	 * @param parent the panel to add the buttom to
+	 * @param buttonText the text for the button
+	 * @param listener the action listener for the button
+	 */
+	private void addFunction(JPanel parent, String buttonText, ActionListener listener) {
+		JButton button = new JButton(buttonText);
+		button.addActionListener(listener);
+		parent.add(button);
+		parent.add(Box.createRigidArea(new Dimension(0, 10)));
 	}
 	
 	/**
@@ -224,6 +235,18 @@ public class MainFrame {
 	            	addOrdersToExistingOrders(newOrders);
 	            }
 	        } 
+		}
+	}
+	
+	/**
+	 * When the clear selections button is clicked,
+	 * clears the checked boxes in the order display.
+	 */
+	private class ClearSelectionsListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			display.clearSelections();
 		}
 	}
 	

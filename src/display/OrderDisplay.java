@@ -28,9 +28,10 @@ public class OrderDisplay {
 	private ArrayList<Order> ordersSelected = new ArrayList<Order>();
 	private ArrayList<Item> itemsSelected = new ArrayList<>();
 	private HashMap<String, ItemRowCheckBox> itemCheckBoxes = new HashMap<>();
+	private ArrayList<JCheckBox> allBoxes = new ArrayList<>();
 	private ArrayList<String> alphabetizedItemNames;
 	private JScrollPane scrollPane = new JScrollPane();
-	private Border blackline = BorderFactory.createLineBorder(Color.black);
+	private final Border blackline = BorderFactory.createLineBorder(Color.black);
 	
 	/**
 	 * Display the information about the given orders to the screen.
@@ -56,6 +57,10 @@ public class OrderDisplay {
 	 */
 	public JScrollPane getOrderDisplay(ArrayList<Order> orders) {
 		scrollPane = new JScrollPane();
+		allBoxes = new ArrayList<>();
+		itemsSelected = new ArrayList<>();
+		ordersSelected = new ArrayList<>();
+		itemCheckBoxes = new HashMap<>();
 		allOrders = orders;
 		JPanel ordsPanel = getOrderPanel();
 		scrollPane.setViewportView(ordsPanel);
@@ -105,6 +110,7 @@ public class OrderDisplay {
 		for (String name: alphabetizedItemNames) {
 			HPanel namePanel = new HPanel();
 			ItemRowCheckBox box = new ItemRowCheckBox();
+			allBoxes.add(box);
 			namePanel.add(box);
 			namePanel.add(new JLabel(name));
 			itemList.add(namePanel);
@@ -156,6 +162,7 @@ public class OrderDisplay {
 		HPanel compPanel = new HPanel();
 		OrderCheckBox box = new OrderCheckBox(ordersSelected, order); 
 		compPanel.add(box);
+		allBoxes.add(box);
 		compPanel.add(new JLabel(order.getCompany()));
 		companyNameHeader.add(compPanel);
 		addItemsToPanel(panel, order, box);
@@ -178,6 +185,7 @@ public class OrderDisplay {
 			if (names.contains(s)) {
 				Item item = itemNameMap.get(s);
 				box = new ItemCheckBox(item, itemsSelected);
+				allBoxes.add(box);
 				parentBox.addItemCheckBox(box);
 				itemCheckBoxes.get(s).addItemCheckBox(box);
 				label.setText("" + item.getQuantity());
@@ -205,6 +213,17 @@ public class OrderDisplay {
 			currItemNames.put(i.getProductName(), i);
 		}
 		return currItemNames;
+	}
+	
+	/**
+	 * Clears the selected items, orders, and their checkboxes. 
+	 */
+	public void clearSelections() {
+		ordersSelected.removeAll(ordersSelected);
+		itemsSelected.removeAll(itemsSelected);
+		for (JCheckBox box: allBoxes) {
+			box.setSelected(false);
+		}
 	}
 	
 	// Getters
