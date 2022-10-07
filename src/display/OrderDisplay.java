@@ -159,13 +159,27 @@ public class OrderDisplay {
 	 * @param order the order to add information from
 	 */
 	private void addOrderToPanel(JPanel companyNameHeader, JPanel panel, Order order) {
-		HPanel compPanel = new HPanel();
 		OrderCheckBox box = new OrderCheckBox(ordersSelected, order); 
-		compPanel.add(box);
-		allBoxes.add(box);
-		compPanel.add(new JLabel(order.getCompany()));
-		companyNameHeader.add(compPanel);
+		addCompanyHeader(companyNameHeader, box, order);
 		addItemsToPanel(panel, order, box);
+	}
+	
+	private void addCompanyHeader(JPanel parent, JCheckBox orderBox, Order order) {
+		VPanel totalPanel = new VPanel();
+		totalPanel.setBorder(blackline);
+		
+		HPanel compPanel = new HPanel();
+		compPanel.setBorder(null);
+		compPanel.add(orderBox);
+		allBoxes.add(orderBox);
+		compPanel.add(new JLabel(order.getCompany()));
+		
+		totalPanel.add(compPanel);
+		totalPanel.add(new JLabel(order.getShipDate().getMMDD() + ", "
+				+ order.getPONum()
+				+ ", " + order.getShipVia()));
+		totalPanel.add(new JLabel("what/"));
+		parent.add(totalPanel);
 	}
 	
 	/**
