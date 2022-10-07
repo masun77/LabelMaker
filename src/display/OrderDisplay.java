@@ -7,6 +7,7 @@
 package display;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -164,6 +165,13 @@ public class OrderDisplay {
 		addItemsToPanel(panel, order, box);
 	}
 	
+	/**
+	 * To the given parent panel, add the checkbox and order company,
+	 * followed by the order date, PO num, and ship via method.
+	 * @param parent the parent to add the info to
+	 * @param orderBox the checkbox to add
+	 * @param order the order to add information for
+	 */
 	private void addCompanyHeader(JPanel parent, JCheckBox orderBox, Order order) {
 		VPanel totalPanel = new VPanel();
 		totalPanel.setBorder(blackline);
@@ -173,12 +181,14 @@ public class OrderDisplay {
 		compPanel.add(orderBox);
 		allBoxes.add(orderBox);
 		compPanel.add(new JLabel(order.getCompany()));
-		
 		totalPanel.add(compPanel);
-		totalPanel.add(new JLabel(order.getShipDate().getMMDD() + ", "
+		
+		JLabel otherInfo = new JLabel(" " + order.getShipDate().getMMDD() + ", "
 				+ order.getPONum()
-				+ ", " + order.getShipVia()));
-		totalPanel.add(new JLabel("what/"));
+				+ ", " + order.getShipVia() + " ");
+		otherInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+		totalPanel.add(otherInfo);
+		
 		parent.add(totalPanel);
 	}
 	
