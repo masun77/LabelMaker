@@ -68,6 +68,20 @@ public interface Date {
 	public boolean dateLaterThan(Date d);
 	
 	/**
+	 * Return true if this date is earlier than or equal to the given date
+	 * @param d the date to compare to
+	 * @return true if this date is earlier than or equal to d, otherwise false
+	 */
+	public boolean dateEarlierThanOrEqualTo(Date d);
+	
+	/**
+	 * Return true if this date is later than or equal to the given date
+	 * @param d the date to compare to
+	 * @return true if this date is later than or equal to d, otherwise false
+	 */
+	public boolean dateLaterThanOrEqualTo(Date d);
+	
+	/**
 	 * @param d the Date to compare to
 	 * @return true if the two dates have the same year, month, and day, false otherwise
 	 */

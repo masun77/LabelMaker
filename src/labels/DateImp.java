@@ -238,4 +238,38 @@ public class DateImp implements Date {
 		String yrStr = d.substring(d.length() - 4);
 		return new DateImp(monthNameToMonth.get(monthStr), Integer.parseInt(dayStr), Integer.parseInt(yrStr));
 	}
+
+	@Override
+	public boolean dateEarlierThanOrEqualTo(Date d) {
+		if (year < d.getYear()) {
+			return true;
+		}
+		if (year > d.getYear()) {
+			return false;
+		}
+		if (monthOfYear < d.getMonthofYear()) {
+			return true;
+		}
+		if (monthOfYear > d.getMonthofYear()) {
+			return false;
+		}
+		return dayOfMonth <= d.getDayOfMonth();
+	}
+
+	@Override
+	public boolean dateLaterThanOrEqualTo(Date d) {
+		if (year > d.getYear()) {
+			return true;
+		}
+		if (year < d.getYear()) {
+			return false;
+		}
+		if (monthOfYear > d.getMonthofYear()) {
+			return true;
+		}
+		if (monthOfYear < d.getMonthofYear()) {
+			return false;
+		}
+		return dayOfMonth >= d.getDayOfMonth();
+	}
 }

@@ -9,25 +9,31 @@ package display;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import importData.ExcelFormat;
 import importData.ExcelFormatGetter;
 import importData.ExcelReader;
 import importData.ExcelWriter;
+import labels.Date;
+import labels.DateImp;
 import labels.LabelFormat;
 import labels.LabelFormatReader;
 import main.Order;
+import oldFiles.Utilities;
 import printing.PrintSettingsDialog;
 
 public class MainFrame {
@@ -36,12 +42,17 @@ public class MainFrame {
 	private JFrame frame = new JFrame();
 	private ExcelFormatGetter efg = new ExcelFormatGetter();
 	private ArrayList<Order> orders;
+	private ArrayList<Order> filteredOrders = new ArrayList<>();
 	private ArrayList<Integer> invoiceNumbers = new ArrayList<>(); 
 	private ExcelReader reader = new ExcelReader();
 	private ExcelWriter writer = new ExcelWriter();
 	private JComboBox<String> excelFormatBox = null;
+	private Date filterStartDate = new DateImp();
+	private Date filterEndDate = new DateImp();
 	
 	public MainFrame() {
+		setDates();
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		efg.readExcelFormats();
 
 		orders = reader.getOrdersFromFile("resources/OrderBackup.xlsx", 
@@ -67,15 +78,88 @@ public class MainFrame {
 	 */
 	public void showOrderDisplay() {
 		frame.getContentPane().removeAll();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		filterOrders();
 		
 		HPanel panel = new HPanel();
-		panel.add(display.getOrderDisplay(orders));
+		VPanel orderPanel = new VPanel();
+		addDateFilter(orderPanel);
+		orderPanel.add(display.getOrderDisplay(filteredOrders));
+		panel.add(orderPanel);
 		addButtons(panel);
 		
 		frame.add(panel);
 		frame.setSize(new Dimension(700,500));
 		frame.setVisible(true);
+	}
+	
+	/**
+	 * Set the start date for the date filter to today's date,
+	 * and the end date to today's date + 1. 
+	 */
+	private void setDates() {		
+		Calendar cal = Calendar.getInstance();
+		filterStartDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
+		filterEndDate = DateImp.parseDate(filterStartDate.getDateMMDDYYYY());
+		filterEndDate.addDays(2);
+	}
+	
+	/**
+	 * Add dates that fall between the filter start and end dates, inclusive,
+	 * to the list of filtered orders. 
+	 */
+	private void filterOrders() {
+		filteredOrders = new ArrayList<>();
+		for (Order o: orders) {
+			Date date = o.getShipDate();
+			if (date.dateLaterThanOrEqualTo(filterStartDate) 
+					&& date.dateEarlierThan(filterEndDate)) {
+				insertByDate(filteredOrders, o);
+			}
+		}
+	}
+	
+	/**
+	 * Insert the given String into the list of Strings in alphabetical order. 
+	 * @param list the list to insert into
+	 * @param item the item to insert
+	 */
+	private void insertByDate(ArrayList<Order> list, Order order) {
+		int index = 0;
+		while (index < list.size() && 
+				list.get(index).getShipDate().dateEarlierThan(order.getShipDate())) {
+			index += 1;
+		}
+		while (index < list.size() && list.get(index).getShipDate().dateEquals(order.getShipDate())
+				&& list.get(index).getCompany().compareTo(order.getCompany()) < 0) {
+			index += 1;
+		}
+		list.add(index, order);
+	}
+	
+	/**
+	 * Add a date filter to the given panel with a start date textfield
+	 * and end date textfield, with listeners to reset the order display
+	 * when they lose focus
+	 * @param parent the panel to add the datefilter to
+	 */
+	private void addDateFilter(JPanel parent) {
+		HPanel datePanel = new HPanel();
+		datePanel.setMaximumSize(new Dimension(300,100));
+		
+		JTextField startDateField = new JTextField();
+		JTextField endDateField = new JTextField();
+		
+		startDateField.setText(filterStartDate.getDateMMDDYYYY());
+		startDateField.addFocusListener(new DateFilter(startDateField, true));
+		endDateField.setText(filterEndDate.getDateMMDDYYYY());
+		endDateField.addFocusListener(new DateFilter(endDateField, false));
+		
+		datePanel.add(new JLabel("From: "));
+		datePanel.add(startDateField);
+		datePanel.add(new JLabel("To: "));
+		datePanel.add(endDateField);
+		
+		parent.add(datePanel);
 	}
 	
 	/**
@@ -247,6 +331,36 @@ public class MainFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			display.clearSelections();
+		}
+	}
+	
+	
+	/**
+	 * When the field loses focus, set its corresponding date to the 
+	 * date currently in its text, and reshow the order display 
+	 * with the orders filtered by the new date .
+	 */
+	private class DateFilter implements FocusListener {		
+		private JTextField field;
+		private boolean isStart;
+		
+		public DateFilter(JTextField f, boolean start) {
+			field = f;
+			isStart = start;
+		}
+		
+		@Override
+		public void focusGained(FocusEvent e) {		}
+
+		@Override
+		public void focusLost(FocusEvent e) {
+			if (isStart) {
+				filterStartDate = DateImp.parseDate(field.getText());
+			}
+			else {
+				filterEndDate = DateImp.parseDate(field.getText());
+			}
+			showOrderDisplay();
 		}
 	}
 	
