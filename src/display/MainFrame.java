@@ -33,7 +33,6 @@ import labels.DateImp;
 import labels.LabelFormat;
 import labels.LabelFormatReader;
 import main.Order;
-import oldFiles.Utilities;
 import printing.PrintSettingsDialog;
 
 public class MainFrame {
@@ -54,6 +53,7 @@ public class MainFrame {
 		setDates();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		efg.readExcelFormats();
+		frame.setSize(new Dimension(700,500));
 
 		orders = reader.getOrdersFromFile("resources/OrderBackup.xlsx", 
 				efg.getFormatByName("Backup"));
@@ -88,7 +88,6 @@ public class MainFrame {
 		addButtons(panel);
 		
 		frame.add(panel);
-		frame.setSize(new Dimension(700,500));
 		frame.setVisible(true);
 	}
 	

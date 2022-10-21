@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,6 +34,7 @@ public class OrderDisplay {
 	private ArrayList<String> alphabetizedItemNames;
 	private JScrollPane scrollPane = new JScrollPane();
 	private final Border blackline = BorderFactory.createLineBorder(Color.black);
+	private HashMap<Order, Integer> orderWidths = new HashMap<>();
 	
 	/**
 	 * Display the information about the given orders to the screen.
@@ -63,6 +65,8 @@ public class OrderDisplay {
 		ordersSelected = new ArrayList<>();
 		itemCheckBoxes = new HashMap<>();
 		allOrders = orders;
+
+		addItemNamesToPanel();	
 		JPanel ordsPanel = getOrderPanel();
 		scrollPane.setViewportView(ordsPanel);
 		return scrollPane;
@@ -71,32 +75,24 @@ public class OrderDisplay {
 	/**
 	 * Put the information from each order into a separate panel,
 	 * and return the parent panel containing all of the order panels.
-	 * @return a panel with one child panel containing the information for each order
+	 * @return a panel with one child panel for each order, 
+	 * 			containing the information for that order
 	 */
 	private JPanel getOrderPanel() {
-		HPanel panel = new HPanel();
-		
-		addItemNamesToPanel(panel);
-		addOrdersToPanel(panel);
-		panel.setPreferredSize(new Dimension(allOrders.size() * 200,alphabetizedItemNames.size() *25));
-		
-		return panel;
-	}
-	
-	/**
-	 * Add all the orders to the parent panel with their name and items.
-	 * @param parent the panel to add the orders to. 
-	 */
-	private void addOrdersToPanel(JPanel parent) {
+		VPanel holder = new VPanel();
+		HPanel parent = new HPanel();
 		HPanel companyNameHeader = new HPanel();
 		for (int i = 0; i < allOrders.size(); i++) {
 			Order o = allOrders.get(i);
-			VPanel panel = new VPanel();
-			panel.setBorder(blackline);
-			addOrderToPanel(companyNameHeader, panel, o);
-			parent.add(panel);			
+			VPanel orderColumn = new VPanel();
+			orderColumn.setBorder(blackline);
+			addIndividualOrder(companyNameHeader, orderColumn, o);
+			parent.add(orderColumn);			
 		}
 		scrollPane.setColumnHeaderView(companyNameHeader);
+		holder.add(parent);
+		holder.add(Box.createVerticalGlue());
+		return holder;
 	}
 	
 	/**
@@ -104,12 +100,14 @@ public class OrderDisplay {
 	 * to the panel as the row headers. 
 	 * @param parent the panel to add to. 
 	 */
-	private void addItemNamesToPanel(JPanel parent) {
+	private void addItemNamesToPanel() {
 		findUniqueItemNames();
 		
 		VPanel itemList = new VPanel();
 		for (String name: alphabetizedItemNames) {
 			HPanel namePanel = new HPanel();
+			namePanel.setBorder(null);
+			namePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			ItemRowCheckBox box = new ItemRowCheckBox();
 			allBoxes.add(box);
 			namePanel.add(box);
@@ -119,7 +117,6 @@ public class OrderDisplay {
 			itemCheckBoxes.put(name, box);
 		}
 
-		itemList.setPreferredSize(new Dimension(100, alphabetizedItemNames.size() * 25));
 		scrollPane.setRowHeaderView(itemList);
 	}
 	
@@ -159,7 +156,7 @@ public class OrderDisplay {
 	 * @param panel the panel to add the order's items to
 	 * @param order the order to add information from
 	 */
-	private void addOrderToPanel(JPanel companyNameHeader, JPanel panel, Order order) {
+	private void addIndividualOrder(JPanel companyNameHeader, JPanel panel, Order order) {
 		OrderCheckBox box = new OrderCheckBox(ordersSelected, order); 
 		addCompanyHeader(companyNameHeader, box, order);
 		addItemsToPanel(panel, order, box);
@@ -190,6 +187,8 @@ public class OrderDisplay {
 		totalPanel.add(otherInfo);
 		
 		parent.add(totalPanel);
+		
+		orderWidths.put(order, (int) totalPanel.getPreferredSize().getWidth());	
 	}
 	
 	/**
@@ -205,7 +204,8 @@ public class OrderDisplay {
 		Set<String> names = itemNameMap.keySet();
 		for (String s: alphabetizedItemNames) {
 			JCheckBox box;
-			JLabel label = new JLabel();
+			SetSizeLabel label = new SetSizeLabel();
+			label.setAllSizes(new Dimension(orderWidths.get(order)-17, 20));
 			if (names.contains(s)) {
 				Item item = itemNameMap.get(s);
 				box = new ItemCheckBox(item, itemsSelected);
@@ -222,6 +222,7 @@ public class OrderDisplay {
 			HPanel itemPanel = new HPanel();
 			itemPanel.add(box);
 			itemPanel.add(label);
+			itemPanel.setBorder(null);
 			parent.add(itemPanel);
 		}
 	}
