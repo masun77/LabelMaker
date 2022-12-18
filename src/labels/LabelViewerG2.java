@@ -9,6 +9,7 @@ package labels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
@@ -194,19 +195,20 @@ public class LabelViewerG2 implements LabelView {
 		private void addText(TextObject t, Graphics2D g2) {
 			Bounds b = t.getBounds();
 			String text = getItemField(item, t.getFieldType());
-			int fontSize = getFontSize(text, b);
-			Font font = new Font("SansSerif", Font.BOLD, fontSize);
+			
+			Font font = getFontForText(text, b, g2);
 	        g2.setFont(font);
         	g2.setColor(t.getColor());
-	        FontRenderContext frc = g2.getFontRenderContext();
-			TextLayout tl = new TextLayout(text, font, frc);
+			
+			TextLayout tl = new TextLayout(text, font, g2.getFontRenderContext());
 	        Rectangle2D textBounds = tl.getBounds(); 
 			int fontStartY = b.getyMin() + (int) textBounds.getHeight();
 			int fontStartX = b.getxMin();
-			if (t.getFieldType() == LabelFieldOption.COMPANY) {    // Right align
-				fontStartX = b.getxMax() - (int) b.getWidth();
+
+			if (t.getFieldType() == LabelFieldOption.COMPANY) {   // Right align company
+				fontStartX = b.getxMax() - g2.getFontMetrics(font).stringWidth(text) - 2;
 			}
-	        g2.drawString(text, fontStartX, fontStartY);
+			g2.drawString(text, fontStartX, fontStartY);
 		}
 		
 		/**
@@ -216,14 +218,26 @@ public class LabelViewerG2 implements LabelView {
 		 * @param b the bounds within which to fit the text
 		 * @return a font size to fit the text to the bounds
 		 */
-		private int getFontSize(String text, Bounds b) {
-			int fontSize = b.getHeight();
-			double ml = b.getWidth()/(6);
-			if (text.length() > ml) {
-				double fraction = ml / text.length();
-				fontSize = (int)Math.round(fontSize * fraction);
+		private Font getFontForText(String text, Bounds b, Graphics2D g2) {
+			int size = 20;
+			Font font = new Font("SansSerif", Font.BOLD, size);
+			FontMetrics metrics = g2.getFontMetrics(font);
+			int height = metrics.getHeight();
+			int width = metrics.stringWidth(text);
+			int boundHeight = b.getHeight();
+			int boundWidth = b.getWidth();
+
+			while (boundHeight < height || boundWidth < width) {
+				size -= 1;
+				font = new Font("SansSerif", Font.BOLD, size);
+				metrics = g2.getFontMetrics(font);
+				height = metrics.getHeight();
+				width = metrics.stringWidth(text);
+				boundHeight = b.getHeight();
+				boundWidth = b.getWidth();
 			}
-			return fontSize;
+			
+			return font;
 		}
 	    
 		/**
