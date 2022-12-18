@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterJob;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
@@ -32,6 +33,7 @@ import javax.swing.SpinnerNumberModel;
 import display.HPanel;
 import display.VPanel;
 import labels.LabelFormat;
+import labels.LabelFormatReader;
 import labels.LabelPrintable;
 import labels.LabelView;
 import labels.LabelViewerG2;
@@ -44,24 +46,32 @@ public class PrintSettingsDialog {
 	private LabelFormat format;
 	private PrintService[] pservices;
 	private JComboBox<String> printerList;
+	private JComboBox<String> labelFormatList;
 	private JSpinner numCopiespinner = null;
+	private LabelFormatReader lfr = new LabelFormatReader();
+	JPanel labelsPanel = new VPanel();
+	VPanel settingsHolder = new VPanel();
+	JFrame frame = new JFrame();
 	
 	public PrintSettingsDialog(ArrayList<Item> items, LabelFormat lf) {
 		itemsToPrint = items;
 		format = lf;
+		lfr.readLabelFormats();
+
+		JPanel wholeDialog = new HPanel();
+		wholeDialog.add(labelsPanel);
+		wholeDialog.add(settingsHolder);
+		frame.add(wholeDialog);
 	}
 	
 	/**
 	 * Display the labels and print options on the screen. 
 	 */
 	public void showPrintDialog() {
-		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);    // todo change when using
 		frame.setSize(700, 1000);
-		JPanel wholeDialog = new HPanel();
-		addLabels(wholeDialog);
-		addSettings(wholeDialog);
-		frame.add(wholeDialog);
+		addLabels();
+		addSettings();
 		frame.setVisible(true);
 	}
 	
@@ -69,29 +79,29 @@ public class PrintSettingsDialog {
 	 * Adds the labels to the display.
 	 * @param parent the container to add the labels to.
 	 */
-	private void addLabels(JPanel parent) {
-		JPanel labelsPanel = new VPanel();
+	private void addLabels() {
+		JPanel localPanel = new VPanel();
+		labelList.removeAll(labelList);
 		for (Item i: itemsToPrint) {
 			ArrayList<JPanel> labels = lv.getLabelsForItem(i, format);
 			for (JPanel label: labels) {
-				labelsPanel.add(label);
+				localPanel.add(label);
 				labelList.add(label);
 			}
 		}
-		JScrollPane scrollPane = new JScrollPane(labelsPanel);
-		parent.add(scrollPane);
+		JScrollPane scrollPane = new JScrollPane(localPanel);
+		labelsPanel.add(scrollPane);
 	}
 	
 	/**
 	 * Adds the print settings to the display.
 	 * @param parent the container to add the settings to
 	 */
-	private void addSettings(JPanel parent) {
-		VPanel settingsHolder = new VPanel();
+	private void addSettings() {
 		addPrinterList(settingsHolder);
 		addNumCopies(settingsHolder);
+		addLabelFormatList(settingsHolder);
 		addPrintButton(settingsHolder);		
-		parent.add(settingsHolder);
 	}
 	
 	/**
@@ -113,6 +123,30 @@ public class PrintSettingsDialog {
 		printerList.setSelectedIndex(setIndex);
 		printerList.setMaximumSize(new Dimension(200,50));
 		parent.add(printerList);
+	}
+	
+	/**
+	 * Adds the printer-choice combo box to the display
+	 * @param parent the container to add the labels to.
+	 */
+	private void addLabelFormatList(JPanel parent) {
+		Set<String> names =  lfr.getFormatNames();
+		String[] formatNames = new String[names.size()];
+		int counter = 0;
+		for (String name: names) {
+			formatNames[counter] = name;
+			counter += 1;
+		}
+		int setIndex = 0;
+		labelFormatList = new JComboBox<>(formatNames);
+		labelFormatList.setSelectedIndex(setIndex);
+		labelFormatList.addActionListener(new FormatListener());
+		
+		HPanel formatPanel = new HPanel();
+		formatPanel.add(new JLabel("Label Format: "));
+		formatPanel.add(labelFormatList);
+		formatPanel.setMaximumSize(new Dimension(200,50));
+		parent.add(formatPanel);
 	}
 	
 	/**
@@ -171,6 +205,16 @@ public class PrintSettingsDialog {
 			catch (Exception error) {
 				error.printStackTrace();
 			}
+		}
+	}
+	
+	private class FormatListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			format = lfr.getFormatByName(labelFormatList.getSelectedItem().toString());
+			labelsPanel.removeAll();
+			addLabels();
+			frame.setVisible(true);
 		}
 	}
 }

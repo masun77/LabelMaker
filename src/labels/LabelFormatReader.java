@@ -14,11 +14,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class LabelFormatReader {
 	private ArrayList<LabelFormat> formats = new ArrayList<>();
-	private ArrayList<String> formatNames = new ArrayList<>();
 	private String folderLocation = "settings/labelFormats";
+	private Map<String, LabelFormat> formatsByName = new HashMap<String, LabelFormat>();
 	
 	/**
 	 * Read and save the label formats from the folder settings/labelFormats.
@@ -26,12 +28,16 @@ public class LabelFormatReader {
 	 */
 	public ArrayList<LabelFormat> readLabelFormats() {
 		formats = new ArrayList<>();
-		formatNames = new ArrayList<>();
+		formatsByName = new HashMap<String, LabelFormat>();
 		File formatFolder = new File(folderLocation);
 		for (File f: formatFolder.listFiles()) {
 			addNewFormat(f);
 		}
 		return formats;
+	}
+	
+	public Set<String> getFormatNames() {
+		return formatsByName.keySet();
 	}
 	
 	/**
@@ -55,8 +61,8 @@ public class LabelFormatReader {
 				labelForm.addSetting(line);
 				line = br.readLine();
 			}
-			formatNames.add(labelForm.getName());
 			formats.add(labelForm);
+			formatsByName.put(labelForm.getName(), labelForm);
 			br.close();
 		}
 		catch (IOException e) {}
@@ -64,6 +70,10 @@ public class LabelFormatReader {
 	
 	public ArrayList<LabelFormat> getFormats() {
 		return formats;
+	}
+	
+	public LabelFormat getFormatByName(String name) {
+		return formatsByName.get(name);
 	}
 	
 }

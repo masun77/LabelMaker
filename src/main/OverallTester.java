@@ -2,6 +2,8 @@ package main;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import javax.swing.JFrame;
+
 import org.junit.jupiter.api.Test;
 
 import display.MainFrame;
@@ -12,7 +14,7 @@ class OverallTester {
 	@Test
 	void test() {
 
-		MainFrame main = new MainFrame();
+		MainFrame main = new MainFrame(JFrame.DISPOSE_ON_CLOSE);
 		main.showOrderDisplay();
 		
 		while(windowOpen) {

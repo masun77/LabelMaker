@@ -16,7 +16,8 @@ public class TextObject {
 	private Bounds bounds = new Bounds();
 	private LabelFieldOption fieldType;
 	
-	public TextObject(Color c, String n, String t, LabelFieldOption lf, int xmin, int ymin, int xmax, int ymax) {
+	public TextObject(Color c, String n, String t, 
+			LabelFieldOption lf, int xmin, int ymin, int xmax, int ymax) {
 		name = n;
 		text = t;
 		bounds = new Bounds(xmin, ymin, xmax, ymax);
@@ -63,6 +64,4 @@ public class TextObject {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
-	
 }

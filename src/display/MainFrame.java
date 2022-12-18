@@ -49,9 +49,9 @@ public class MainFrame {
 	private Date filterStartDate = new DateImp();
 	private Date filterEndDate = new DateImp();
 	
-	public MainFrame() {
+	public MainFrame(int frameCloseOperation) {
 		setDates();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(frameCloseOperation);
 		efg.readExcelFormats();
 		frame.setSize(new Dimension(700,500));
 
@@ -196,13 +196,11 @@ public class MainFrame {
 	 * labels for the currently selected items. 
 	 */
 	private class PrintListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			PrintSettingsDialog dialog = new PrintSettingsDialog(display.getItemsSelected(), labelFormat);
 			dialog.showPrintDialog();
 		}
-		
 	}
 	
 	/**

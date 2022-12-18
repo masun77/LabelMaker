@@ -18,7 +18,7 @@ class ExcelReaderTester {
 		ExcelFormatGetter efg = new ExcelFormatGetter();
 		efg.readExcelFormats();
 		System.out.println(efg.getFormatNames());
-		orders = er.getOrdersFromFile("src/main/7.27.xlsx", efg.getFormats().get(1));
+		orders = er.getOrdersFromFile("resources/7.27.xlsx", efg.getFormats().get(1));
 //		for (Order o: orders) {
 //			o.printOrder();
 //			System.out.println();
@@ -47,7 +47,7 @@ class ExcelReaderTester {
 	@Test
 	void testGetFile() {
 		assertEquals(null, er.getFileInputStream(""));
-		assertNotEquals(null, er.getFileInputStream("src/main/7.27.xlsx"));
+		assertNotEquals(null, er.getFileInputStream("resources/7.27.xlsx"));
 		assertEquals(null, er.getFileInputStream("hello.xlsx"));
 	}
 }
