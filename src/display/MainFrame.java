@@ -48,6 +48,7 @@ public class MainFrame {
 	private JComboBox<String> excelFormatBox = null;
 	private Date filterStartDate = new DateImp();
 	private Date filterEndDate = new DateImp();
+	private VPanel orderPanel = new VPanel();
 	
 	public MainFrame(int frameCloseOperation) {
 		setDates();
@@ -77,11 +78,11 @@ public class MainFrame {
 	 * Display the default orders to the screen. 
 	 */
 	public void showOrderDisplay() {
+		orderPanel = new VPanel();
 		frame.getContentPane().removeAll();
 		filterOrders();
 		
 		HPanel panel = new HPanel();
-		VPanel orderPanel = new VPanel();
 		addDateFilter(orderPanel);
 		orderPanel.add(display.getOrderDisplay(filteredOrders));
 		panel.add(orderPanel);
@@ -173,6 +174,7 @@ public class MainFrame {
 		addFunction(buttonPanel, "Print Selected Labels", new PrintListener());
 		addFunction(buttonPanel, "Import Orders From Excel File", new ImportListener());
 		addFunction(buttonPanel, "Clear Selections", new ClearSelectionsListener());
+		addFunction(buttonPanel, "Delete Selected Orders", new DeleteOrdersListener());
 		
 		parent.add(buttonPanel);
 	}
@@ -330,6 +332,20 @@ public class MainFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			display.clearSelections();
+		}
+	}
+	
+	/**
+	 * When the clear selections button is clicked,
+	 * clears the checked boxes in the order display.
+	 */
+	private class DeleteOrdersListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			orders = display.deleteSelectedOrders();
+			showOrderDisplay();
+			backupOrders(orders, efg.getFormatByName("Backup"));
 		}
 	}
 	

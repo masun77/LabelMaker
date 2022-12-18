@@ -58,6 +58,7 @@ public class ExcelReader {
 		
 		try {
 			workbook.close();
+			fis.close();
 		}
 		catch (IOException e){	}
 		

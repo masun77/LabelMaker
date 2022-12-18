@@ -251,6 +251,11 @@ public class OrderDisplay {
 		}
 	}
 	
+	public ArrayList<Order> deleteSelectedOrders() {
+		allOrders.removeAll(ordersSelected);
+		return allOrders;
+	}
+	
 	// Getters
 	public ArrayList<Order> getOrdersSelected() {
 		return ordersSelected;
