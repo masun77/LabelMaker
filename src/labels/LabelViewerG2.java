@@ -195,8 +195,12 @@ public class LabelViewerG2 implements LabelView {
 		private void addText(TextObject t, Graphics2D g2) {
 			Bounds b = t.getBounds();
 			String text = getItemField(item, t.getFieldType());
+			int size = 30;
+			if (t.getFieldType() == LabelFieldOption.VPC_LARGE) {
+				size = 40;
+			}
 			
-			Font font = getFontForText(text, b, g2);
+			Font font = getFontForText(text, b, g2, size);
 	        g2.setFont(font);
         	g2.setColor(t.getColor());
 			
@@ -218,8 +222,7 @@ public class LabelViewerG2 implements LabelView {
 		 * @param b the bounds within which to fit the text
 		 * @return a font size to fit the text to the bounds
 		 */
-		private Font getFontForText(String text, Bounds b, Graphics2D g2) {
-			int size = 20;
+		private Font getFontForText(String text, Bounds b, Graphics2D g2, int size) {
 			Font font = new Font("SansSerif", Font.BOLD, size);
 			FontMetrics metrics = g2.getFontMetrics(font);
 			int height = metrics.getHeight();
@@ -227,6 +230,10 @@ public class LabelViewerG2 implements LabelView {
 			int boundHeight = b.getHeight();
 			int boundWidth = b.getWidth();
 
+			if (text.length() == 2) {   // For VPC, just leave it large
+				return font;
+			}
+			
 			while (boundHeight < height || boundWidth < width) {
 				size -= 1;
 				font = new Font("SansSerif", Font.BOLD, size);
