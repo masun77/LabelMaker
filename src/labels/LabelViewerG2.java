@@ -197,7 +197,7 @@ public class LabelViewerG2 implements LabelView {
 			String text = getItemField(item, t.getFieldType());
 			int size = 30;
 			if (t.getFieldType() == LabelFieldOption.VPC_LARGE) {
-				size = 40;
+				size = 50;
 			}
 			else if (t.getFieldType() == LabelFieldOption.VPC_SMALL) {
 				size = 20;
