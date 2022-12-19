@@ -173,6 +173,7 @@ public class MainFrame {
 		
 		addFunction(buttonPanel, "Print Selected Labels", new PrintListener());
 		addFunction(buttonPanel, "Import Orders From Excel File", new ImportListener());
+		addFunction(buttonPanel, "Select All", new SelectAllListener());
 		addFunction(buttonPanel, "Clear Selections", new ClearSelectionsListener());
 		addFunction(buttonPanel, "Delete Selected Orders", new DeleteOrdersListener());
 		
@@ -214,6 +215,10 @@ public class MainFrame {
 		JFileChooser fc = new JFileChooser();
 		fc.setApproveButtonText("Import Orders");
 		addFormatOptionToFileChooser(fc);
+		fc.setCurrentDirectory(new File  
+				(System.getProperty("user.home") 
+						+ System.getProperty("file.separator")
+						+ "Desktop"));
 		
 		JFrame tempFrame = new JFrame();
 		tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -349,6 +354,13 @@ public class MainFrame {
 		}
 	}
 	
+	private class SelectAllListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			display.selectAllBoxes();
+		}
+	}	
 	
 	/**
 	 * When the field loses focus, set its corresponding date to the 

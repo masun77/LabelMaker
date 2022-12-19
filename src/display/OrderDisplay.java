@@ -256,6 +256,13 @@ public class OrderDisplay {
 		return allOrders;
 	}
 	
+	public void selectAllBoxes() {
+		for (JCheckBox box: allBoxes) {
+			box.setSelected(true);
+		}
+		System.out.println(ordersSelected + "\n" + itemsSelected);
+	}
+	
 	// Getters
 	public ArrayList<Order> getOrdersSelected() {
 		return ordersSelected;
