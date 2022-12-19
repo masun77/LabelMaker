@@ -28,6 +28,7 @@ import importData.ExcelFormat;
 import importData.ExcelFormatGetter;
 import importData.ExcelReader;
 import importData.ExcelWriter;
+import importData.FileChooserLocationGetter;
 import labels.Date;
 import labels.DateImp;
 import labels.LabelFormat;
@@ -215,10 +216,12 @@ public class MainFrame {
 		JFileChooser fc = new JFileChooser();
 		fc.setApproveButtonText("Import Orders");
 		addFormatOptionToFileChooser(fc);
+		FileChooserLocationGetter lg = new FileChooserLocationGetter();
+		String path = lg.getFolderPath();
 		fc.setCurrentDirectory(new File  
 				(System.getProperty("user.home") 
 						+ System.getProperty("file.separator")
-						+ "Desktop"));
+						+ path));
 		
 		JFrame tempFrame = new JFrame();
 		tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

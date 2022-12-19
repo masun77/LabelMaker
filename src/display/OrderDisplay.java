@@ -260,7 +260,6 @@ public class OrderDisplay {
 		for (JCheckBox box: allBoxes) {
 			box.setSelected(true);
 		}
-		System.out.println(ordersSelected + "\n" + itemsSelected);
 	}
 	
 	// Getters
