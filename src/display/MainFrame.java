@@ -99,11 +99,11 @@ public class MainFrame {
 	 */
 	private void setDates() {		
 		Calendar cal = Calendar.getInstance();
-//		filterStartDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
-//		filterEndDate = DateImp.parseDate(filterStartDate.getDateMMDDYYYY());
-//		filterEndDate.addDays(2); todo switch
-		filterStartDate = new DateImp(1,1,2022);
-		filterEndDate = new DateImp(11,1,2022);
+		filterStartDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
+		filterEndDate = DateImp.parseDate(filterStartDate.getDateMMDDYYYY());
+		filterEndDate.addDays(4);
+//		filterStartDate = new DateImp(1,1,2022);
+//		filterEndDate = new DateImp(1,1,2023);
 	}
 	
 	/**

@@ -5,12 +5,12 @@ Header row: 3
 Data start row: 5
 Type header: Type
 Company header: Name
-Ship Date header: Ship Date
+Ship Date header: Date
 Invoice number header: Num
 PO header: P. O. #
 Ship Via header: Via
 GTIN header: GTIN NUMBER
 Item code header: Item
-Item description header: Item Description
+Item description header: Memo
 Quantity header: Qty
 Price header: Sales Price

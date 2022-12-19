@@ -177,7 +177,7 @@ public class ExcelReader {
 	private Order getCorrespondingOrder(int invNum, Row row) {
 		if (!orderNums.contains(invNum)) {
 			Order currOrder = new Order();
-			currOrder.setShipVia(row.getCell(headerTypeToColumn(SHIP_VIA)).getStringCellValue());
+			currOrder.setShipVia(getStringCheckNull(row.getCell(headerTypeToColumn(SHIP_VIA))));
 			currOrder.setInvoiceNum(invNum);
 			currOrder.setPONum(getPONumFromRow(row));
 			currOrder.setCompany(getCompanyFromRow(row));
@@ -190,13 +190,20 @@ public class ExcelReader {
 		return orders.get(orderNums.indexOf(invNum));
 	}
 	
+	private String getStringCheckNull(Cell c) {
+		if (c != null) {
+			return c.getStringCellValue();
+		}
+		return "";
+	}
+	
 	/**
 	 * Get the company from the given row
 	 * @param row the row to get the company from
 	 * @return the company
 	 */
 	private String getCompanyFromRow(Row row) {
-		return row.getCell(headerTypeToColumn(COMPANY)).getStringCellValue();
+		return getStringCheckNull(row.getCell(headerTypeToColumn(COMPANY)));
 	}
 	
 	/**
@@ -205,7 +212,7 @@ public class ExcelReader {
 	 * @return the item description
 	 */
 	private String getItemDescriptionFromRow(Row row) {
-		return row.getCell(headerTypeToColumn(ITEM_DESCRIPTION)).getStringCellValue();
+		return getStringCheckNull(row.getCell(headerTypeToColumn(ITEM_DESCRIPTION)));
 	}
 	
 	/**
@@ -214,7 +221,7 @@ public class ExcelReader {
 	 * @return the item code
 	 */
 	private String getItemCodeFromRow(Row row) {
-		String itCode = row.getCell(headerTypeToColumn(ITEM_CODE)).getStringCellValue();
+		String itCode = getStringCheckNull(row.getCell(headerTypeToColumn(ITEM_CODE)));
 		while (itCode.contains(":")) {
 			itCode = itCode.substring(itCode.indexOf(":") + 1);
 		}
@@ -228,7 +235,7 @@ public class ExcelReader {
 	 */
 	private String getProdNameFromRow(Row row) {
 		if (options.contains(PRODUCT_NAME)) {
-			return row.getCell(headerTypeToColumn(PRODUCT_NAME)).getStringCellValue();
+			return getStringCheckNull(row.getCell(headerTypeToColumn(PRODUCT_NAME)));
 		}
 		
 		String s = getItemDescriptionFromRow(row);
@@ -322,6 +329,9 @@ public class ExcelReader {
 	 */
 	private String getPONumFromRow(Row row) {
 		Cell c = row.getCell(headerTypeToColumn(PO_NUMBER));
+		if (c == null) {
+			return "";
+		}
 		if (c.getCellType() == CellType.NUMERIC.getCode()) {
 			return Integer.toString((int)c.getNumericCellValue());
 		}
@@ -339,12 +349,12 @@ public class ExcelReader {
 			return new DateImp(1,1,2022);
 		}
 		try {
-			 String sd = cell.getStringCellValue();
-			 return DateImp.parseDate(sd);
-		}
-		catch (IllegalStateException e) {
 			String sd = cell.getDateCellValue().toString();
 			return DateImp.parseCellDate(sd);
+		}
+		catch (IllegalStateException e) {
+			String sd = cell.getStringCellValue();
+			return DateImp.parseDate(sd);			
 		}
 	}
 	
