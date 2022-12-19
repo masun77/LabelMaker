@@ -24,6 +24,7 @@ public class LabelPrintable implements Printable {
 		if (pageIndex >= labels.size()) { // Print one page for each label
 			return NO_SUCH_PAGE;
 		} else {
+			System.out.println("printing");
 			Component currLabel = labels.get(pageIndex);
 									
 			double maxHeight = pf.getImageableHeight();

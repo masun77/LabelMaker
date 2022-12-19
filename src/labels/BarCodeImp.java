@@ -19,7 +19,7 @@ public class BarCodeImp implements BarCodeGenerator {
 		appendSymbolCheck(barCode, gtin);
 		appendStopCharacter(barCode);
 		appendQuietZone(barCode);
-		
+				
 		return barCode;
 	}
 	

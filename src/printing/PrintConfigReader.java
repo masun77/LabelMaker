@@ -48,10 +48,10 @@ public class PrintConfigReader {
 				if (line != null) {
 					switch (i) {    // First line is printer name
 					case 0:
-						name = line.strip();
+						name = line.trim();
 						break;
 					case 1:
-						mName = line.strip();    // Second line is media name
+						mName = line.trim();    // Second line is media name
 						break;
 					case 2:
 						floats = parseFloats(line);   // Third line is starting coordinate and printable area dimensions
@@ -78,11 +78,11 @@ public class PrintConfigReader {
 		ArrayList<String> strs = new ArrayList<>();
 		int commaIndex = line.indexOf(",");
 		while(commaIndex >= 0) {
-			strs.add(line.substring(0,commaIndex).strip());
+			strs.add(line.substring(0,commaIndex).trim());
 			line = line.substring(commaIndex + 1);
 			commaIndex = line.indexOf(",");
 		}
-		strs.add(line.strip());
+		strs.add(line.trim());
 		
 		return strs;
 	}

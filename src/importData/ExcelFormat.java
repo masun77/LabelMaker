@@ -11,7 +11,6 @@ package importData;
 import static importData.HeaderOption.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ExcelFormat {
 	private ArrayList<String> settings = new ArrayList<>();
@@ -37,8 +36,8 @@ public class ExcelFormat {
 		if (colon < 0) {
 			return;
 		}
-		String settingName = line.substring(0,colon).strip().toLowerCase();
-		String settingValue = line.substring(colon +1).strip();
+		String settingName = line.substring(0,colon).trim().toLowerCase();
+		String settingValue = line.substring(colon +1).trim();
 		int settingNum = settings.indexOf(settingName);
 		
 		switch (settingNum) {
@@ -110,11 +109,11 @@ public class ExcelFormat {
 	private void saveExcludedCustomers(String line) {
 		int commaIndex = line.indexOf(",");
 		while(commaIndex > 0) {
-			excludedCompanies.add(line.substring(0,commaIndex).strip());
+			excludedCompanies.add(line.substring(0,commaIndex).trim());
 			line = line.substring(commaIndex + 1);
 			commaIndex = line.indexOf(",");
 		}
-		excludedCompanies.add(line.strip());
+		excludedCompanies.add(line.trim());
 	}
 	
 	/**

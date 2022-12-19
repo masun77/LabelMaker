@@ -6,9 +6,8 @@
 
 package printing;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.MediaSizeName;
@@ -53,7 +52,7 @@ public class PrinterDescription {
 	 * @return
 	 */
 	private Map<String, MediaSizeName> getMSNs() {
-		Map<String, MediaSizeName> msns = new HashMap<String,MediaSizeName>();
+		Map<String, MediaSizeName> msns = new ConcurrentHashMap<String,MediaSizeName>();
 		msns.put("A0", MediaSizeName.ISO_A0);
 		msns.put("A1", MediaSizeName.ISO_A1);
 		msns.put("A2", MediaSizeName.ISO_A2);

@@ -6,18 +6,18 @@
 
 package labels;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DateImp implements Date {
 	private int dayOfMonth;
 	private int monthOfYear;
 	private int year;
 	
-	private static HashMap<Integer, String> monthToMonthName = 
-			new HashMap<Integer,String>();
-	private static HashMap<String, Integer> monthNameToMonth = 
-			new HashMap<>();
-	private static HashMap<Integer, Integer> daysInMonths = new HashMap<>();
+	private static ConcurrentHashMap<Integer, String> monthToMonthName = 
+			new ConcurrentHashMap<Integer,String>();
+	private static ConcurrentHashMap<String, Integer> monthNameToMonth = 
+			new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<Integer, Integer> daysInMonths = new ConcurrentHashMap<>();
 	private static boolean initialized = false;
 
 	public DateImp(int m, int d, int y) {

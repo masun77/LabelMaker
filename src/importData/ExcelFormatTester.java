@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 

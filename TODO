@@ -5,6 +5,9 @@ Hours:
 
 TODO: 
 
+- what's the single print problem??
+- test can scan barcode
+
 CLEAN UP CODE and clarify - 
 	make code totally clean, tested, commented, interfaces - encapsulation
 	what could vary? how would they change it? 
@@ -37,22 +40,13 @@ TEST - every function, multiple times, in diff orders + with server running
 LATER:
 ability to change label size...
 make label format editing function
-why does PTT25 scan wrong/not scan?
-archive orders - put in separate file, save file backup, client/server, etc.... 
-	home button to archive, to view archived; there to unarchive selected, to delete archived orders etc
-	auto-archive when? maybe if today is a monday? archive last weeks and delete older? 
-better method for changing items - maybe do need to add/switch to an excel reader so can update from the excel spreadsheet?
 implement better http server idea from Nick 
 - indication - checks or colors or something - of picked, packed, labeled; and ability to set
 implement better database idea from Nick
-more than 20 items in an order - 
 search for all todos, system printlns - 
 Get a new computer - solid state, Dell
-reset settings from config files while running? vs just closing and reopening the app?
-add missing items? eg meats
 check out React.js and Node
 consider web-app
-change where fileimporter opens to? setting file... 
 
 DONE:
 Solved printing problem! After trying many attributes, pageformats, classes... I had to pick a close-enough media-size-name 

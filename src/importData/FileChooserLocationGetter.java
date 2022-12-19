@@ -6,14 +6,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import printing.PrinterDescription;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FileChooserLocationGetter {
 	private String configFilePath = "settings/fileChooserConfig";
-	private HashMap<String, ExcelFormat> formats = new HashMap<>();
+	private ConcurrentHashMap<String, ExcelFormat> formats = new ConcurrentHashMap<>();
 		
 	/**
 	 * Return a list of the existing Excel formats.
@@ -31,7 +28,7 @@ public class FileChooserLocationGetter {
 		try {
 			String line = br.readLine();
 			int colonIndex = line.indexOf(":");
-			String defaultLocation = line.substring(colonIndex+1).strip();				
+			String defaultLocation = line.substring(colonIndex+1).trim();				
 			br.close();
 			
 			return checkIfHome(defaultLocation);

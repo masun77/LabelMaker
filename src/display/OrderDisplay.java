@@ -10,8 +10,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -29,12 +29,12 @@ public class OrderDisplay {
 	private ArrayList<Order> allOrders = new ArrayList<>();
 	private ArrayList<Order> ordersSelected = new ArrayList<Order>();
 	private ArrayList<Item> itemsSelected = new ArrayList<>();
-	private HashMap<String, ItemRowCheckBox> itemCheckBoxes = new HashMap<>();
+	private ConcurrentHashMap<String, ItemRowCheckBox> itemCheckBoxes = new ConcurrentHashMap<>();
 	private ArrayList<JCheckBox> allBoxes = new ArrayList<>();
 	private ArrayList<String> alphabetizedItemNames;
 	private JScrollPane scrollPane = new JScrollPane();
 	private final Border blackline = BorderFactory.createLineBorder(Color.black);
-	private HashMap<Order, Integer> orderWidths = new HashMap<>();
+	private ConcurrentHashMap<Order, Integer> orderWidths = new ConcurrentHashMap<>();
 	
 	/**
 	 * Display the information about the given orders to the screen.
@@ -63,7 +63,7 @@ public class OrderDisplay {
 		allBoxes = new ArrayList<>();
 		itemsSelected = new ArrayList<>();
 		ordersSelected = new ArrayList<>();
-		itemCheckBoxes = new HashMap<>();
+		itemCheckBoxes = new ConcurrentHashMap<>();
 		allOrders = orders;
 
 		addItemNamesToPanel();	
@@ -200,7 +200,7 @@ public class OrderDisplay {
 	 */
 	private void addItemsToPanel(JPanel parent, Order order, OrderCheckBox parentBox) {
 		ArrayList<Item> currentItems = order.getItems();
-		HashMap<String, Item> itemNameMap = getItemNameMap(currentItems);
+		ConcurrentHashMap<String, Item> itemNameMap = getItemNameMap(currentItems);
 		Set<String> names = itemNameMap.keySet();
 		for (String s: alphabetizedItemNames) {
 			JCheckBox box;
@@ -232,8 +232,8 @@ public class OrderDisplay {
 	 * @param items the list of items to map with their names
 	 * @return a map of the name of each item in the given list, linked to that item. 
 	 */
-	private HashMap<String, Item> getItemNameMap(ArrayList<Item> items) {
-		HashMap<String, Item> currItemNames = new HashMap<>();
+	private ConcurrentHashMap<String, Item> getItemNameMap(ArrayList<Item> items) {
+		ConcurrentHashMap<String, Item> currItemNames = new ConcurrentHashMap<>();
 		for (Item i: items) {
 			currItemNames.put(i.getProductName(), i);
 		}

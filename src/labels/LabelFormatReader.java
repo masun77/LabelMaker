@@ -13,14 +13,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LabelFormatReader {
 	private ArrayList<LabelFormat> formats = new ArrayList<>();
 	private String folderLocation = "settings/labelFormats";
-	private Map<String, LabelFormat> formatsByName = new HashMap<String, LabelFormat>();
+	private Map<String, LabelFormat> formatsByName = new ConcurrentHashMap<String, LabelFormat>();
 	
 	/**
 	 * Read and save the label formats from the folder settings/labelFormats.
@@ -28,7 +28,7 @@ public class LabelFormatReader {
 	 */
 	public ArrayList<LabelFormat> readLabelFormats() {
 		formats = new ArrayList<>();
-		formatsByName = new HashMap<String, LabelFormat>();
+		formatsByName = new ConcurrentHashMap<String, LabelFormat>();
 		File formatFolder = new File(folderLocation);
 		for (File f: formatFolder.listFiles()) {
 			addNewFormat(f);

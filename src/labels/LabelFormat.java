@@ -10,15 +10,15 @@ import static labels.LabelFieldOption.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LabelFormat {
 	private String name = "";
 	private Bounds labelDimensions = new Bounds();
 	private ArrayList<TextObject> textObjects = new ArrayList<>();
 	private ArrayList<RectangleObject> rectangles = new ArrayList<>();
-	private HashMap<String, LabelFieldOption> fieldTypes = new HashMap<>();
-	private HashMap<LabelFieldOption, String> fieldTypesUsed = new HashMap<>();
+	private ConcurrentHashMap<String, LabelFieldOption> fieldTypes = new ConcurrentHashMap<>();
+	private ConcurrentHashMap<LabelFieldOption, String> fieldTypesUsed = new ConcurrentHashMap<>();
 	
 	private ArrayList<String> settings = new ArrayList<>();
 	
@@ -38,8 +38,8 @@ public class LabelFormat {
 		if (colon < 0) {
 			return;
 		}
-		String settingName = line.substring(0,colon).strip().toLowerCase();
-		String settingValue = line.substring(colon +1).strip();
+		String settingName = line.substring(0,colon).trim().toLowerCase();
+		String settingValue = line.substring(colon +1).trim();
 		int settingNum = settings.indexOf(settingName);
 		
 		switch (settingNum) {
@@ -108,7 +108,7 @@ public class LabelFormat {
 	 * @return the corresponding Color
 	 */
 	private Color getColorFromString(String s) {
-		s = s.toLowerCase().strip();
+		s = s.toLowerCase().trim();
 		if (s.equals("black")) {
 			return Color.black;
 		}
@@ -128,11 +128,11 @@ public class LabelFormat {
 		ArrayList<String> strs = new ArrayList<>();
 		int commaIndex = line.indexOf(",");
 		while(commaIndex >= 0) {
-			strs.add(line.substring(0,commaIndex).strip());
+			strs.add(line.substring(0,commaIndex).trim());
 			line = line.substring(commaIndex + 1);
 			commaIndex = line.indexOf(",");
 		}
-		strs.add(line.strip());
+		strs.add(line.trim());
 		
 		return strs;
 	}
@@ -181,11 +181,11 @@ public class LabelFormat {
 		this.rectangles = rectangles;
 	}
 
-	public HashMap<String, LabelFieldOption> getFieldTypes() {
+	public ConcurrentHashMap<String, LabelFieldOption> getFieldTypes() {
 		return fieldTypes;
 	}
 
-	public HashMap<LabelFieldOption, String> getFieldTypesUsed() {
+	public ConcurrentHashMap<LabelFieldOption, String> getFieldTypesUsed() {
 		return fieldTypesUsed;
 	}
 

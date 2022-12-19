@@ -133,11 +133,14 @@ public class PrintSettingsDialog {
 		Set<String> names =  lfr.getFormatNames();
 		String[] formatNames = new String[names.size()];
 		int counter = 0;
+		int setIndex = 0;
 		for (String name: names) {
 			formatNames[counter] = name;
+			if (name.contains("RDF")) {
+				setIndex = counter;
+			}
 			counter += 1;
 		}
-		int setIndex = 0;
 		labelFormatList = new JComboBox<>(formatNames);
 		labelFormatList.setSelectedIndex(setIndex);
 		labelFormatList.addActionListener(new FormatListener());

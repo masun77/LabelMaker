@@ -12,11 +12,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ExcelFormatGetter {
 	private String folderLocation = "settings/excelFileFormats";
-	private HashMap<String, ExcelFormat> formats = new HashMap<>();
+	private ConcurrentHashMap<String, ExcelFormat> formats = new ConcurrentHashMap<>();
 		
 	/**
 	 * Return a list of the existing Excel formats.
@@ -51,7 +51,7 @@ public class ExcelFormatGetter {
 	 * in the excelFileFormats folder in settings. 
 	 */
 	public void readExcelFormats() {
-		formats = new HashMap<>();
+		formats = new ConcurrentHashMap<>();
 		File formatFolder = new File(folderLocation);
 		for (File f: formatFolder.listFiles()) {
 			addNewFormat(f);

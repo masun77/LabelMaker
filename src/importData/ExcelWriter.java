@@ -7,7 +7,7 @@ package importData;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,7 +20,7 @@ import main.Order;
 
 public class ExcelWriter {
 	private String fileName = "resources/OrderBackup.xlsx";
-	private HashMap<HeaderOption, Integer> headerColumns = new HashMap<>();
+	private ConcurrentHashMap<HeaderOption, Integer> headerColumns = new ConcurrentHashMap<>();
 	private ExcelFormat format;
 
 	/**
@@ -30,7 +30,7 @@ public class ExcelWriter {
 	 * @param form the format to write the orders in
 	 */
 	public void writeOrders(ArrayList<Order> orders, ExcelFormat form) {
-		headerColumns = new HashMap<>();
+		headerColumns = new ConcurrentHashMap<>();
 		format = form;
 		
 		XSSFWorkbook workbook = new XSSFWorkbook();

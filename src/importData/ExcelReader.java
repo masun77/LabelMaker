@@ -322,7 +322,7 @@ public class ExcelReader {
 	 */
 	private String getPONumFromRow(Row row) {
 		Cell c = row.getCell(headerTypeToColumn(PO_NUMBER));
-		if (c.getCellType().equals(CellType.NUMERIC)) {
+		if (c.getCellType() == CellType.NUMERIC.getCode()) {
 			return Integer.toString((int)c.getNumericCellValue());
 		}
 		return c.getStringCellValue();

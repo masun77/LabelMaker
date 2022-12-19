@@ -199,6 +199,9 @@ public class LabelViewerG2 implements LabelView {
 			if (t.getFieldType() == LabelFieldOption.VPC_LARGE) {
 				size = 40;
 			}
+			else if (t.getFieldType() == LabelFieldOption.VPC_SMALL) {
+				size = 20;
+			}
 			
 			Font font = getFontForText(text, b, g2, size);
 	        g2.setFont(font);
