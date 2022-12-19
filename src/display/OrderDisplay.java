@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.Border;
+import javax.swing.plaf.metal.MetalCheckBoxIcon;
 
 import main.Item;
 import main.Order;
@@ -31,7 +32,7 @@ public class OrderDisplay {
 	private ArrayList<Item> itemsSelected = new ArrayList<>();
 	private ConcurrentHashMap<String, ItemRowCheckBox> itemCheckBoxes = new ConcurrentHashMap<>();
 	private ArrayList<JCheckBox> allBoxes = new ArrayList<>();
-	private ArrayList<String> alphabetizedItemNames;
+	private ArrayList<String> alphabetizedItemNameUnit;
 	private JScrollPane scrollPane = new JScrollPane();
 	private final Border blackline = BorderFactory.createLineBorder(Color.black);
 	private ConcurrentHashMap<Order, Integer> orderWidths = new ConcurrentHashMap<>();
@@ -104,14 +105,14 @@ public class OrderDisplay {
 		findUniqueItemNames();
 		
 		VPanel itemList = new VPanel();
-		for (String name: alphabetizedItemNames) {
+		for (String name: alphabetizedItemNameUnit) {
 			HPanel namePanel = new HPanel();
 			namePanel.setBorder(null);
 			namePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			ItemRowCheckBox box = new ItemRowCheckBox();
 			allBoxes.add(box);
 			namePanel.add(box);
-			namePanel.add(new JLabel(name));
+			namePanel.add(new TextSizeLabel(name));
 			itemList.add(namePanel);
 			
 			itemCheckBoxes.put(name, box);
@@ -125,12 +126,12 @@ public class OrderDisplay {
 	 * to a list. 
 	 */
 	private void findUniqueItemNames() {
-		alphabetizedItemNames = new ArrayList<>();
+		alphabetizedItemNameUnit = new ArrayList<>();
 		for (Order o: allOrders) {
 			for (Item i: o.getItems()) {
-				String name = i.getProductName();
-				if (!alphabetizedItemNames.contains(name)) {
-					insertAlphabetical(alphabetizedItemNames, name);
+				String name = i.getProductName() + ", " + i.getUnit();
+				if (!alphabetizedItemNameUnit.contains(name)) {
+					insertAlphabetical(alphabetizedItemNameUnit, name);
 				}
 			}
 		}
@@ -177,10 +178,10 @@ public class OrderDisplay {
 		compPanel.setBorder(null);
 		compPanel.add(orderBox);
 		allBoxes.add(orderBox);
-		compPanel.add(new JLabel(order.getCompany()));
+		compPanel.add(new TextSizeLabel(order.getCompany()));
 		totalPanel.add(compPanel);
 		
-		JLabel otherInfo = new JLabel(" " + order.getShipDate().getMMDD() + ", "
+		JLabel otherInfo = new TextSizeLabel(" " + order.getShipDate().getMMDD() + ", "
 				+ order.getPONum()
 				+ ", " + order.getShipVia() + " ");
 		otherInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -202,10 +203,10 @@ public class OrderDisplay {
 		ArrayList<Item> currentItems = order.getItems();
 		ConcurrentHashMap<String, Item> itemNameMap = getItemNameMap(currentItems);
 		Set<String> names = itemNameMap.keySet();
-		for (String s: alphabetizedItemNames) {
+		for (String s: alphabetizedItemNameUnit) {
 			JCheckBox box;
 			SetSizeLabel label = new SetSizeLabel();
-			label.setAllSizes(new Dimension(orderWidths.get(order)-17, 20));
+			label.setAllSizes(new Dimension(orderWidths.get(order)-17, 27));
 			if (names.contains(s)) {
 				Item item = itemNameMap.get(s);
 				box = new ItemCheckBox(item, itemsSelected);
@@ -235,7 +236,7 @@ public class OrderDisplay {
 	private ConcurrentHashMap<String, Item> getItemNameMap(ArrayList<Item> items) {
 		ConcurrentHashMap<String, Item> currItemNames = new ConcurrentHashMap<>();
 		for (Item i: items) {
-			currItemNames.put(i.getProductName(), i);
+			currItemNames.put(i.getProductName() + ", " + i.getUnit(), i);
 		}
 		return currItemNames;
 	}

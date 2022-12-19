@@ -13,12 +13,16 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
+import javax.swing.plaf.metal.MetalCheckBoxIcon;
 
 public class ItemRowCheckBox extends JCheckBox {
 	private ArrayList<JCheckBox> itemCheckBoxes = new ArrayList<>();
 	
 	public ItemRowCheckBox() {
 		addActionListener(new ItemRowListener(this));
+		setIcon (new MetalCheckBoxIcon () {
+		    protected int getControlSize() { return 20; }
+		});
 	}
 	
 	/**

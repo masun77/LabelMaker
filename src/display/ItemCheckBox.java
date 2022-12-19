@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JCheckBox;
+import javax.swing.plaf.metal.MetalCheckBoxIcon;
 
 import main.Item;
 
@@ -22,6 +23,10 @@ public class ItemCheckBox extends JCheckBox {
 		item = i;
 		itemsSelected = itemsSelect;
 		addActionListener(new ItemCheckListener(this));
+
+		setIcon (new MetalCheckBoxIcon () {
+		    protected int getControlSize() { return 20; }
+		});
 	}
 	
 	@Override
