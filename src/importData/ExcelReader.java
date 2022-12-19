@@ -32,6 +32,7 @@ public class ExcelReader {
 	private ArrayList<Order> orders = new ArrayList<>();
 	private ArrayList<Integer> orderNums = new ArrayList<>();
 	private ExcelFormat format = null;
+	private GTINGetter gg = new GTINGetter();
 	
 	/**
 	 * Returns the orders represented in an Excel file given the file name and format.
@@ -161,6 +162,7 @@ public class ExcelReader {
 				getProdNameFromRow(row), 
 				getItemCodeFromRow(row), getGTINFromRow(row),
 				getUnitFromRow(row), getQtyFromRow(row), getPriceFromRow(row));
+		checkGTIN(newIt);
 		currOrder.addItem(newIt);
 	}
 	
@@ -374,6 +376,12 @@ public class ExcelReader {
 		}
 		catch (FileNotFoundException e){
 			return null;
+		}
+	}
+	
+	private void checkGTIN(Item newIt) {
+		if (newIt.getGtin().length() == 0) {
+			newIt.setGtin(gg.getGTINForItemCode(newIt.getItemCode()));
 		}
 	}
 }
