@@ -33,9 +33,19 @@ public class FileChooserLocationGetter {
 			int colonIndex = line.indexOf(":");
 			String defaultLocation = line.substring(colonIndex+1).strip();				
 			br.close();
-			return defaultLocation;
+			
+			return checkIfHome(defaultLocation);
 		}
 		catch (IOException e) {}
 		return null;
+	}
+	
+	private String checkIfHome(String path) {
+		if (path.contains("\\") || path.contains("/") || path.contains(":")) {
+			return path;
+		}
+		return System.getProperty("user.home") 
+				+ System.getProperty("file.separator")
+				+ path;
 	}
 }

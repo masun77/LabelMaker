@@ -218,10 +218,7 @@ public class MainFrame {
 		addFormatOptionToFileChooser(fc);
 		FileChooserLocationGetter lg = new FileChooserLocationGetter();
 		String path = lg.getFolderPath();
-		fc.setCurrentDirectory(new File  
-				(System.getProperty("user.home") 
-						+ System.getProperty("file.separator")
-						+ path));
+		fc.setCurrentDirectory(new File(path));
 		
 		JFrame tempFrame = new JFrame();
 		tempFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
