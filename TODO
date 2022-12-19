@@ -1,7 +1,7 @@
 Hours:
 2 + 6/22: 6.5; 6/24 2.5hrs; 6/29: 3 hrs; 7/1: 5 hrs; 7/8: 4 hrs; 7/20: 4 hrs; 
 7/22: 3.5 hrs; 7/27: 5hrs; 8/5: 3 hrs; 8/12: 3.5 hrs; 8/18: 3 hrs; 8/24: 5.25 hrs; 
-9/5: 3 hrs; 12 hrs 9/20; 9/26: 10am-
+9/5: 3 hrs; 12 hrs 9/20; 9/26: 2 hrs; +20 hrs say; 12/18
 
 TODO: 
 
@@ -47,13 +47,9 @@ implement better http server idea from Nick
 implement better database idea from Nick
 more than 20 items in an order - 
 search for all todos, system printlns - 
-if you edit the server data so that the order numbers are no longer in order/not sequential, error on reading in dataSaver
 Get a new computer - solid state, Dell
 reset settings from config files while running? vs just closing and reopening the app?
 add missing items? eg meats
-alphabetize items on insertion
-alphabetize orders on insertion
-freeze header row and column
 check out React.js and Node
 consider web-app
 change where fileimporter opens to? setting file... 

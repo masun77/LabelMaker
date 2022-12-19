@@ -1,0 +1,3 @@
+Name: Test
+Label dimensions: 0,0,410,300
+Text: black, company,,300,5,380,25
