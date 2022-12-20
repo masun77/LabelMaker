@@ -169,7 +169,7 @@ public class LabelViewerG2 implements LabelView {
 			int x = b.getxMin();
 			int y = b.getyMin();
 			int barHeight = b.getHeight();
-			int barWidth = (int) b.getWidth() / 100;
+			int barWidth = 2;
 			Color[] colors = {Color.white, Color.black};
 			int currColor = 0;
 			for (int block = 0; block < barCode.size(); block++) {

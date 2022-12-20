@@ -3,12 +3,12 @@ Label dimensions: 0,0,400,300
 Text: black, company,,100,5,400,25
 Text: black, humanReadableGTIN,,100,103,350,125
 Text: black, productName,,5,125,300,150
-Text: black, unit,,5,155,200,175
-Text: black, dateLabel,Pack Date,305,70,400,93
-Text: black, shipDate,,315,95,400,125
-Text: white, vpcSmall,,310,145,340,185
-Text: white, vpcLarge,,342,130,390,178
+Text: black, unit,,5,150,200,180
+Text: black, dateLabel,Pack Date,305,105,400,120
+Text: black, shipDate,,315,120,400,135
+Text: white, vpcSmall,,310,150,340,175
+Text: white, vpcLarge,,342,135,390,185
 Rectangle: border,black,false,3,27,400,180
-Rectangle: shipDateBox, black, false, 305,93,395,125
-Rectangle: voicePickCodeBackground, black, true, 307, 130, 400, 178
-Rectangle: barCode,white,false,5,30,300,100
+Rectangle: shipDateBox, black, false, 305,120,395,135
+Rectangle: voicePickCodeBackground, black, true, 307, 135, 400, 178
+Rectangle: barCode,white,false,5,30,380,100
