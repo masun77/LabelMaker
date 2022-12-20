@@ -105,9 +105,6 @@ public class OrderDisplay {
 	private void addItemNamesToPanel() {
 		findUniqueItemNames();
 		
-		HPanel totalItemList = new HPanel();
-		VPanel itemUnitList = new VPanel();
-		itemUnitList.setAlignmentY(Component.TOP_ALIGNMENT);
 		VPanel itemNameList = new VPanel();
 		itemNameList.setAlignmentY(Component.TOP_ALIGNMENT);
 		for (String name: alphabetizedItemNameUnit) {
@@ -116,19 +113,20 @@ public class OrderDisplay {
 			namePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			ItemRowCheckBox box = new ItemRowCheckBox();
 			allBoxes.add(box);
-			namePanel.add(box);
-			int commaIndex = name.indexOf(",");
-			namePanel.add(new TextSizeLabel(name.substring(0,commaIndex), true, 300));
-			itemNameList.add(namePanel);
-			itemUnitList.add(new TextSizeLabel(name.substring(commaIndex + 2), true, 100));
 			
+			VPanel nameUnitPanel = new VPanel();
+			int comma = name.indexOf(",");	
+			nameUnitPanel.add(new ItemNameLabel(name.substring(0, comma), 15));
+			nameUnitPanel.add(new ItemNameLabel("      " + name.substring(comma +2, 
+					comma + 15 > name.length()? name.length():comma + 15), 12));
+			
+			namePanel.add(box);
+			namePanel.add(nameUnitPanel);
+			
+			itemNameList.add(namePanel);
 			itemCheckBoxes.put(name, box);
 		}
-
-		totalItemList.add(itemNameList);
-		totalItemList.add(itemUnitList);
-		System.out.println(itemNameList.size() + " " + itemUnitList.size());
-		scrollPane.setRowHeaderView(totalItemList);
+		scrollPane.setRowHeaderView(itemNameList);
 	}
 	
 	/**
@@ -188,10 +186,10 @@ public class OrderDisplay {
 		compPanel.setBorder(null);
 		compPanel.add(orderBox);
 		allBoxes.add(orderBox);
-		compPanel.add(new TextSizeLabel(order.getCompany()));
+		compPanel.add(new JLabel(order.getCompany()));
 		totalPanel.add(compPanel);
 		
-		JLabel otherInfo = new TextSizeLabel(" " + order.getShipDate().getMMDD() + ", "
+		JLabel otherInfo = new JLabel(" " + order.getShipDate().getMMDD() + ", "
 				+ order.getPONum()
 				+ ", " + order.getShipVia() + " ");
 		otherInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -216,7 +214,7 @@ public class OrderDisplay {
 		for (String s: alphabetizedItemNameUnit) {
 			JCheckBox box;
 			SetSizeLabel label = new SetSizeLabel();
-			label.setAllSizes(new Dimension(orderWidths.get(order)-17, 28));
+			label.setAllSizes(new Dimension(orderWidths.get(order)-17, 38));
 			if (names.contains(s)) {
 				Item item = itemNameMap.get(s);
 				box = new ItemCheckBox(item, itemsSelected);
