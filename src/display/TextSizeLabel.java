@@ -33,6 +33,8 @@ public class TextSizeLabel extends JLabel {
 		setup();
 		resizeText = resize;
 		maxLength = ml;
+		setPreferredSize(new Dimension(maxLength,25));
+		setMinimumSize(new Dimension(50,28));
 	}
 	
 	private void setup() {	
@@ -46,7 +48,6 @@ public class TextSizeLabel extends JLabel {
 			g.setFont(font);
 			this.setFont(font);	
 			this.setBorder(new MatteBorder(1, 0, 0, 0, Color.BLACK));
-			
 		}
         super.paintComponent(g);
     }

@@ -107,7 +107,9 @@ public class OrderDisplay {
 		
 		HPanel totalItemList = new HPanel();
 		VPanel itemUnitList = new VPanel();
+		itemUnitList.setAlignmentY(Component.TOP_ALIGNMENT);
 		VPanel itemNameList = new VPanel();
+		itemNameList.setAlignmentY(Component.TOP_ALIGNMENT);
 		for (String name: alphabetizedItemNameUnit) {
 			HPanel namePanel = new HPanel();
 			namePanel.setBorder(null);
@@ -125,6 +127,7 @@ public class OrderDisplay {
 
 		totalItemList.add(itemNameList);
 		totalItemList.add(itemUnitList);
+		System.out.println(itemNameList.size() + " " + itemUnitList.size());
 		scrollPane.setRowHeaderView(totalItemList);
 	}
 	
