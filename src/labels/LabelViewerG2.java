@@ -103,6 +103,7 @@ public class LabelViewerG2 implements LabelView {
 				item.setProductName(" "); 
 			}
 			if (item.getGtin().equals("")) {
+				System.out.println("hmm");
 				item.setGtin("818181020000");
 			}
 			if (item.getUnit().equals("")) {

@@ -62,7 +62,8 @@ public class MainFrame {
 		addOrdersToInvoiceNumbers(orders);
 		display = new OrderDisplay();
 		
-		labelFormat = new LabelFormatReader().readLabelFormats().get(0); 
+		labelFormat = new LabelFormatReader().readLabelFormats().get(0);
+		System.out.println(orders);
 	}
 	
 	/**
@@ -102,7 +103,7 @@ public class MainFrame {
 		filterStartDate = DateImp.parseDate(cal.get(Calendar.MONTH)+1 + "/" + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR));
 		filterEndDate = DateImp.parseDate(filterStartDate.getDateMMDDYYYY());
 		filterEndDate.addDays(4);
-//		filterStartDate = new DateImp(1,1,2022);
+		filterStartDate = new DateImp(1,1,2022); // todo change
 //		filterEndDate = new DateImp(1,1,2023);
 	}
 	

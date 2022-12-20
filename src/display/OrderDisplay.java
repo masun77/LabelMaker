@@ -91,6 +91,7 @@ public class OrderDisplay {
 			parent.add(orderColumn);			
 		}
 		scrollPane.setColumnHeaderView(companyNameHeader);
+		parent.setAlignmentX(Component.LEFT_ALIGNMENT);
 		holder.add(parent);
 		holder.add(Box.createVerticalGlue());
 		return holder;
@@ -104,7 +105,9 @@ public class OrderDisplay {
 	private void addItemNamesToPanel() {
 		findUniqueItemNames();
 		
-		VPanel itemList = new VPanel();
+		HPanel totalItemList = new HPanel();
+		VPanel itemUnitList = new VPanel();
+		VPanel itemNameList = new VPanel();
 		for (String name: alphabetizedItemNameUnit) {
 			HPanel namePanel = new HPanel();
 			namePanel.setBorder(null);
@@ -112,13 +115,17 @@ public class OrderDisplay {
 			ItemRowCheckBox box = new ItemRowCheckBox();
 			allBoxes.add(box);
 			namePanel.add(box);
-			namePanel.add(new TextSizeLabel(name));
-			itemList.add(namePanel);
+			int commaIndex = name.indexOf(",");
+			namePanel.add(new TextSizeLabel(name.substring(0,commaIndex), true, 300));
+			itemNameList.add(namePanel);
+			itemUnitList.add(new TextSizeLabel(name.substring(commaIndex + 2), true, 100));
 			
 			itemCheckBoxes.put(name, box);
 		}
 
-		scrollPane.setRowHeaderView(itemList);
+		totalItemList.add(itemNameList);
+		totalItemList.add(itemUnitList);
+		scrollPane.setRowHeaderView(totalItemList);
 	}
 	
 	/**
@@ -206,7 +213,7 @@ public class OrderDisplay {
 		for (String s: alphabetizedItemNameUnit) {
 			JCheckBox box;
 			SetSizeLabel label = new SetSizeLabel();
-			label.setAllSizes(new Dimension(orderWidths.get(order)-17, 27));
+			label.setAllSizes(new Dimension(orderWidths.get(order)-17, 28));
 			if (names.contains(s)) {
 				Item item = itemNameMap.get(s);
 				box = new ItemCheckBox(item, itemsSelected);
@@ -218,7 +225,8 @@ public class OrderDisplay {
 			else {
 				box = new JCheckBox();
 				box.setEnabled(false);
-				label.setText("0");
+				box.setVisible(false);
+				label.setText("");
 			}
 			HPanel itemPanel = new HPanel();
 			itemPanel.add(box);
